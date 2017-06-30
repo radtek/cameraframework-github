@@ -1,0 +1,367 @@
+<?xml version="1.0"?>
+<CaseRoot>
+    <CaseList attrib=".\CaseListLastWorkingTree.xml"/>
+    <CaseList attrib="test cmd">
+        <CaseName attrib="CaseSetupDBUSEnv">
+            <CaseID>001_SetEnv</CaseID>
+            <CaseInput>.  /tmp/envars.sh</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'GetCameraState' string:'{}'</CaseInput>
+            <CaseInput>cd /fs/etfs/adas/bin</CaseInput>
+            <CaseInput>ls -l</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="CheckBuildNum">
+            <CaseID>none</CaseID>
+            <CaseInput>cat /etc/version.txt</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="TearDown">
+            <CaseID>none</CaseID>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "WrkLtTgleSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "ParkBrkSwitch::1" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::440000" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>dbus-send --session --type=signal --dest="com.harman.service.ScaniaOnOff" /com/harman/service/ScaniaOnOff com.harman.ServiceIpc.Emit string:"CameraStatusInfo" string:'{"CameraOneStatus":0,"CameraTwoStatus":0}'</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="etfswrite">
+            <CaseID>111</CaseID>
+            <CaseInput>touch /fs/etfs/data/ETFSWRITE</CaseInput>
+            <CaseInput>shutdown -S reboot</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="debug cmd for SCANIA">
+            <CaseID>000_Reset</CaseID>
+            <CaseInput>slay -9 adas</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>export LD_LIBRARY_PATH=/fs/etfs/radio/screen-j6/usr/lib:/fs/etfs/radio/screen-j6/usr/lib/graphics/jacinto6/:$LD_LIBRARY_PATH</CaseInput>
+            <CaseInput>cd /fs/etfs/adas/bin/</CaseInput>
+            <CaseInput>./adas -uiSkipFrames=10 -iVariant=0 &amp;</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="chmod">
+            <CaseID>none</CaseID>
+            <CaseInput>sync</CaseInput>
+            <CaseInput>chmod 777 /fs/etfs/adas/bin/adas</CaseInput>
+            <CaseInput>chmod 777 /fs/etfs/adas/bin/libGraphics.so.1</CaseInput>
+            <CaseInput>chmod 777 /fs/etfs/adas/bin/libAbase.so.1</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="kill">
+            <CaseID>none</CaseID>
+            <CaseInput>slay -9 adas</CaseInput>
+            <CaseInput>slay -9 AdasServerSocket </CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="kill and rm bins">
+            <CaseID>none</CaseID>
+            <CaseInput>slay -9 adas</CaseInput>
+            <CaseInput>rm /fs/etfs/adas/bin/adas</CaseInput>
+            <CaseInput>rm /fs/etfs/adas/bin/libGraphics.so.1</CaseInput>
+            <CaseInput>rm /fs/etfs/adas/bin/libAbase.so.1</CaseInput>
+            <CaseInput>rm /fs/etfs/adas/bin/AdasServerSocket </CaseInput>
+            <CaseInput>rm /fs/etfs/adas/bin/libLocalSIPC.so.1</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="SetUpIP">
+            <CaseID>none</CaseID>
+            <CaseInput>echo "Debug10::15" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>touch /fs/etfs/SKIP_EOLCRCCHECK</CaseInput>
+            <CaseInput>touch /fs/etfs/data/SKIP_EOLCRCCHECK</CaseInput>
+            <CaseInput>sync</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="1234">
+            <CaseID>none</CaseID>
+            <CaseExpected>abcd</CaseExpected>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera1","Value":"On"}'</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera1","Value":"Off"}'</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="get  camera state">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected123</CaseExpected>
+            <CaseInput>echo "autoTestInfo::tag1111111111111111" &gt;&gt; /pps/can/Diag/skipframe</CaseInput>
+            <CaseInput>echo "autoTestInfo::CaseName:" &gt;&gt; /pps/can/Diag/skipframe</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>ls -l</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="reset target">
+            <CaseID>111</CaseID>
+            <CaseInput>echo "skipframe::10" &gt;&gt; /pps/can/Diag/skipframe</CaseInput>
+            <CaseInput>slay -9 adas</CaseInput>
+            <CaseInput>cd /fs/etfs/adas/bin/</CaseInput>
+            <CaseInput>export LD_LIBRARY_PATH=/fs/etfs/radio/screen-j6/usr/lib:/fs/etfs/radio/screen-j6/usr/lib/graphics/jacinto6/:$LD_LIBRARY_PATH</CaseInput>
+            <CaseInput>./adas -uiSkipFrames=10 -iVariant=0 -uiSigDelay=0 &amp;</CaseInput>
+            <CaseInput>.  /tmp/envars.sh</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera1","Value":"On"}'</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera2","Value":"On"}'</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ToggleSwitchCamera"}'</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera1","Value":"Off"}'</CaseInput>
+            <CaseInput>find / -name adas| grep adas</CaseInput>
+            <CaseInput> pidin -f abn | grep adas</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="CaseClientSetup-serial mode-setup env before run server app">
+            <CaseID>none</CaseID>
+            <CaseInput>ifconfig</CaseInput>
+            <CaseInput>cd /fs/etfs/adas/bin/</CaseInput>
+            <CaseInput>slay -9 AdasServerSocket </CaseInput>
+            <CaseInput>chmod 777 /fs/etfs/adas/bin/AdasServerSocket</CaseInput>
+            <CaseInput>export LD_LIBRARY_PATH=/fs/etfs/radio/screen-j6/usr/lib:/fs/etfs/radio/screen-j6/usr/lib/graphics/jacinto6/:$LD_LIBRARY_PATH</CaseInput>
+            <CaseInput>.  /tmp/envars.sh</CaseInput>
+            <CaseInput>/fs/etfs/adas/bin/AdasServerSocket &amp;</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="123">
+            <CaseID>none</CaseID>
+            <CaseInput>222</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="SCAINA SetUp">
+        <CaseName attrib="ResetEOL_SetR1G2_ReverseTimer3">
+            <CaseID>setup</CaseID>
+            <CaseInput>slay -9 adas</CaseInput>
+            <CaseInput>sleep 2</CaseInput>
+            <CaseInput>echo "Screen_startup::0" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera1::2" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera2::1" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_GeneralCameraActivationWorklightCamera1::1" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_GeneralCameraActivationWorklightCamera2::1" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera1ReverseGeneralForwardDeactivationSpeed::10" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera2ReverseGeneralForwardDeactivationSpeed::10" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera1ReverseGeneralForwardHysteresis::5" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera2ReverseGeneralForwardHysteresis::5" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_FrontCameraUpperSpeedLimit::20" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_FrontCameraUpperSpeedHysteresis::10" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_ReverseCameraActiveTimer::3" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>export LD_LIBRARY_PATH=/fs/etfs/radio/screen-j6/usr/lib:/fs/etfs/radio/screen-j6/usr/lib/graphics/jacinto6/:$LD_LIBRARY_PATH</CaseInput>
+            <CaseInput>cd /fs/etfs/adas/bin/</CaseInput>
+            <CaseInput>./adas -uiSkipFrames=10 -iVariant=0 &amp;</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="ResetEOL_SetG1R2_ReverseTimer3">
+            <CaseID>setup</CaseID>
+            <CaseInput>slay -9 adas</CaseInput>
+            <CaseInput>sleep 2</CaseInput>
+            <CaseInput>echo "Screen_startup::0" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera1::1" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera2::2" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_GeneralCameraActivationWorklightCamera1::1" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_GeneralCameraActivationWorklightCamera2::1" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera1ReverseGeneralForwardDeactivationSpeed::10" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera2ReverseGeneralForwardDeactivationSpeed::10" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera1ReverseGeneralForwardHysteresis::5" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera2ReverseGeneralForwardHysteresis::5" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_FrontCameraUpperSpeedLimit::20" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_FrontCameraUpperSpeedHysteresis::10" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_ReverseCameraActiveTimer::3" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>export LD_LIBRARY_PATH=/fs/etfs/radio/screen-j6/usr/lib:/fs/etfs/radio/screen-j6/usr/lib/graphics/jacinto6/:$LD_LIBRARY_PATH</CaseInput>
+            <CaseInput>cd /fs/etfs/adas/bin/</CaseInput>
+            <CaseInput>./adas -uiSkipFrames=10 -iVariant=0 &amp;</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="ResetEOL_SetR1G2_ReverseTimer60">
+            <CaseID>setup</CaseID>
+            <CaseInput>slay -9 adas</CaseInput>
+            <CaseInput>sleep 2</CaseInput>
+            <CaseInput>echo "Screen_startup::0" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera1::2" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera2::1" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_GeneralCameraActivationWorklightCamera1::1" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_GeneralCameraActivationWorklightCamera2::1" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera1ReverseGeneralForwardDeactivationSpeed::10" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera2ReverseGeneralForwardDeactivationSpeed::10" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera1ReverseGeneralForwardHysteresis::5" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera2ReverseGeneralForwardHysteresis::5" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_FrontCameraUpperSpeedLimit::20" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_FrontCameraUpperSpeedHysteresis::10" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_ReverseCameraActiveTimer::60" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>export LD_LIBRARY_PATH=/fs/etfs/radio/screen-j6/usr/lib:/fs/etfs/radio/screen-j6/usr/lib/graphics/jacinto6/:$LD_LIBRARY_PATH</CaseInput>
+            <CaseInput>cd /fs/etfs/adas/bin/</CaseInput>
+            <CaseInput>./adas -uiSkipFrames=10 -iVariant=0 &amp;</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="ResetEOL_SetF1R2_ReverseTimer3">
+            <CaseID>setup</CaseID>
+            <CaseInput>slay -9 adas</CaseInput>
+            <CaseInput>sleep 2</CaseInput>
+            <CaseInput>echo "Screen_startup::0" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera1::3" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera2::2" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_GeneralCameraActivationWorklightCamera1::0" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_GeneralCameraActivationWorklightCamera2::1" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera1ReverseGeneralForwardDeactivationSpeed::10" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera2ReverseGeneralForwardDeactivationSpeed::10" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera1ReverseGeneralForwardHysteresis::5" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera2ReverseGeneralForwardHysteresis::5" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_FrontCameraUpperSpeedLimit::20" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_FrontCameraUpperSpeedHysteresis::10" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_ReverseCameraActiveTimer::3" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>export LD_LIBRARY_PATH=/fs/etfs/radio/screen-j6/usr/lib:/fs/etfs/radio/screen-j6/usr/lib/graphics/jacinto6/:$LD_LIBRARY_PATH</CaseInput>
+            <CaseInput>cd /fs/etfs/adas/bin/</CaseInput>
+            <CaseInput>./adas -uiSkipFrames=10 -iVariant=0 &amp;</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="ResetEOL_SetF1R2_ReverseTimer60">
+            <CaseID>setup</CaseID>
+            <CaseInput>slay -9 adas</CaseInput>
+            <CaseInput>sleep 2</CaseInput>
+            <CaseInput>echo "Screen_startup::0" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera1::3" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera2::2" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_GeneralCameraActivationWorklightCamera1::0" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_GeneralCameraActivationWorklightCamera2::1" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera1ReverseGeneralForwardDeactivationSpeed::10" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera2ReverseGeneralForwardDeactivationSpeed::10" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera1ReverseGeneralForwardHysteresis::5" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera2ReverseGeneralForwardHysteresis::5" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_FrontCameraUpperSpeedLimit::20" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_FrontCameraUpperSpeedHysteresis::10" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_ReverseCameraActiveTimer::60" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>export LD_LIBRARY_PATH=/fs/etfs/radio/screen-j6/usr/lib:/fs/etfs/radio/screen-j6/usr/lib/graphics/jacinto6/:$LD_LIBRARY_PATH</CaseInput>
+            <CaseInput>cd /fs/etfs/adas/bin/</CaseInput>
+            <CaseInput>./adas -uiSkipFrames=10 -iVariant=0 &amp;</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="ResetEOL_SetR1G2_ReverseTimer0">
+            <CaseID>setup</CaseID>
+            <CaseInput>slay -9 adas</CaseInput>
+            <CaseInput>sleep 2</CaseInput>
+            <CaseInput>echo "Screen_startup::0" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera1::2" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera2::1" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_GeneralCameraActivationWorklightCamera1::0" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_GeneralCameraActivationWorklightCamera2::1" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera1ReverseGeneralForwardDeactivationSpeed::10" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera2ReverseGeneralForwardDeactivationSpeed::10" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera1ReverseGeneralForwardHysteresis::5" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera2ReverseGeneralForwardHysteresis::5" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_ReverseCameraActiveTimer::0" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>export LD_LIBRARY_PATH=/fs/etfs/radio/screen-j6/usr/lib:/fs/etfs/radio/screen-j6/usr/lib/graphics/jacinto6/:$LD_LIBRARY_PATH</CaseInput>
+            <CaseInput>cd /fs/etfs/adas/bin/</CaseInput>
+            <CaseInput>./adas -uiSkipFrames=10 -iVariant=0 &amp;</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="ResetEOL_SetR1R2_ReverseTimer60">
+            <CaseID>setup</CaseID>
+            <CaseInput>slay -9 adas</CaseInput>
+            <CaseInput>sleep 2</CaseInput>
+            <CaseInput>echo "Screen_startup::0" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera1::2" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera2::2" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_GeneralCameraActivationWorklightCamera1::0" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_GeneralCameraActivationWorklightCamera2::1" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera1ReverseGeneralForwardDeactivationSpeed::10" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera2ReverseGeneralForwardDeactivationSpeed::10" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera1ReverseGeneralForwardHysteresis::5" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera2ReverseGeneralForwardHysteresis::5" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_FrontCameraUpperSpeedLimit::20" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_FrontCameraUpperSpeedHysteresis::10" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_ReverseCameraActiveTimer::1" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>export LD_LIBRARY_PATH=/fs/etfs/radio/screen-j6/usr/lib:/fs/etfs/radio/screen-j6/usr/lib/graphics/jacinto6/:$LD_LIBRARY_PATH</CaseInput>
+            <CaseInput>cd /fs/etfs/adas/bin/</CaseInput>
+            <CaseInput>./adas -uiSkipFrames=10 -iVariant=0 &amp;</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+</CaseRoot>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<CaseRoot>
+    <CaseList attrib="CaseClientSetuo(Run in Serial Mode ONLY)">
+        <CaseName attrib="CaseClientSetup">
+            <CaseID>none</CaseID>
+            <CaseInput>cd /fs/etfs/adas/bin/</CaseInput>
+            <CaseInput>slay -9 adas</CaseInput>
+            <CaseInput>slay -9 AdasServerSocket </CaseInput>
+            <CaseInput>export LD_LIBRARY_PATH=/fs/etfs/radio/screen-j6/usr/lib:/fs/etfs/radio/screen-j6/usr/lib/graphics/jacinto6/:$LD_LIBRARY_PATH</CaseInput>
+            <CaseInput>.  /tmp/envars.sh</CaseInput>
+            <CaseInput>chmod 777 /fs/etfs/adas/bin/AdasServerSocket</CaseInput>
+            <CaseInput>/fs/etfs/adas/bin/AdasServerSocket &amp;</CaseInput>
+            <CaseInput>ifconfig</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+</CaseRoot>

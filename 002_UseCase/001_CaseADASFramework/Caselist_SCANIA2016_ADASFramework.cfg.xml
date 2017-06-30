@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+<CaseRoot>
+    <CaseList attrib="E:\kids\04_proj\100_gitProj\CaseAssistant\CaseView01\CaseCfg\working\Caselist_SCANIA2016_ADASFramework.cfg.xml"/>
+    <CaseList attrib="Online Case List"/>
+    <CaseList attrib="E:\kids\04_proj\100_gitProj\CaseAssistant\CaseView01\CaseCfg\working\Caselist_SCANIA2016_ADASFramework.cfg.xml"/>
+    <CaseList attrib="SCANIA_ADASFramework_IPC">
+        <CaseName attrib="IPC_CONNECT">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>ADASFrameWork</CaseType>
+            <CaseType>IPC</CaseType>
+            <CaseType>DBUS</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="IPC_DISCONNECT">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>ADASFrameWork</CaseType>
+            <CaseType>IPC</CaseType>
+            <CaseType>DBUS</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="IPC_FoundServer">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>ADASFrameWork</CaseType>
+            <CaseType>IPC</CaseType>
+            <CaseType>DBUS</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="IPC_CreateServer">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>ADASFrameWork</CaseType>
+            <CaseType>IPC</CaseType>
+            <CaseType>DBUS</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="IPC_emitMsg">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>ADASFrameWork</CaseType>
+            <CaseType>IPC</CaseType>
+            <CaseType>DBUS</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="IPC_InvolkeMethod">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>ADASFrameWork</CaseType>
+            <CaseType>IPC</CaseType>
+            <CaseType>DBUS</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="SCANIA_ADASFramework_Client">
+        <CaseName attrib="ClientCreate">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>ADASFrameWork</CaseType>
+            <CaseType>Client</CaseType>
+            <CaseType>Client</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="ClientRegister">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>ADASFrameWork</CaseType>
+            <CaseType>Client</CaseType>
+            <CaseType>Client</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="ClientOnInvolke">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>ADASFrameWork</CaseType>
+            <CaseType>Client</CaseType>
+            <CaseType>Client</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="ClientOnSignal">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>ADASFrameWork</CaseType>
+            <CaseType>Client</CaseType>
+            <CaseType>Client</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="ClientConnect">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>ADASFrameWork</CaseType>
+            <CaseType>Client</CaseType>
+            <CaseType>Client</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="SCANIA_ADASFramework_AdasState">
+        <CaseName attrib="State_On">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>ADASFrameWork</CaseType>
+            <CaseType>AdasState</CaseType>
+            <CaseType>AdasState</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="State_Offf">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>ADASFrameWork</CaseType>
+            <CaseType>AdasState</CaseType>
+            <CaseType>AdasState</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="State_Exit">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>ADASFrameWork</CaseType>
+            <CaseType>AdasState</CaseType>
+            <CaseType>AdasState</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="State_Standby">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>ADASFrameWork</CaseType>
+            <CaseType>AdasState</CaseType>
+            <CaseType>AdasState</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="SCANIA_ADASFramework_EventManager">
+        <CaseName attrib="EventRegister">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>ADASFrameWork</CaseType>
+            <CaseType>EventManager</CaseType>
+            <CaseType>Event</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="EventDispatch">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>ADASFrameWork</CaseType>
+            <CaseType>EventManager</CaseType>
+            <CaseType>Event</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="EventBuffering">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>ADASFrameWork</CaseType>
+            <CaseType>EventManager</CaseType>
+            <CaseType>Event</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="EventMutex">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>ADASFrameWork</CaseType>
+            <CaseType>EventManager</CaseType>
+            <CaseType>Event</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+    </CaseList>
+</CaseRoot>

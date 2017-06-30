@@ -1,0 +1,12 @@
+
+1. make sure to copy Adas to /bin on motherboard
+
+2. make sure there is libAbase.so.1 in /lib on motherboard
+   if not, build the library and copy it from //Unicorn/Base/arm
+
+3. To configure the dbus enviroment
+   $>.  /tmp/envars.sh
+
+4. To debug the program
+   $> Adas
+

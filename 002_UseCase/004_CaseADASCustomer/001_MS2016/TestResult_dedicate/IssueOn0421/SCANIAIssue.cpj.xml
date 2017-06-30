@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ProjRoot>
+    <CaseListFile xmlDirectory="D:\workSpace\UseCase_MS\004_ADASCustomer\001_MS2016\TestResult_dedicate\0421\DedicateCaseIssue_1.xml"/>
+    <CaseListFile xmlDirectory="D:\workSpace\UseCase_MS\004_ADASCustomer\001_MS2016\TestResult_dedicate\0421\DedicateCaseIssue_2.xml"/>
+    <CaseListFile xmlDirectory="D:\workSpace\UseCase_MS\004_ADASCustomer\001_MS2016\TestResult_dedicate\0421\DedicateCaseIssue_3.xml"/>
+    <CaseListFile xmlDirectory="D:\workSpace\UseCase_MS\004_ADASCustomer\001_MS2016\TestResult_dedicate\0421\DedicateCaseIssue_4.xml"/>
+    <CaseListFile xmlDirectory="D:\workSpace\UseCase_MS\004_ADASCustomer\001_MS2016\TestResult_dedicate\0421\DedicateCaseIssue_5.xml"/>
+    <CaseListFile xmlDirectory="D:\workSpace\UseCase_MS\004_ADASCustomer\001_MS2016\TestResult_dedicate\0421\DedicateCaseIssue_10.xml"/>
+    <CaseListFile xmlDirectory="D:\workSpace\UseCase_MS\004_ADASCustomer\001_MS2016\TestResult_dedicate\0421\DedicateCaseIssue_8.xml"/>
+    <CaseListFile xmlDirectory="D:\workSpace\UseCase_MS\004_ADASCustomer\001_MS2016\TestResult_dedicate\0421\DedicateCaseIssue_9.xml"/>
+</ProjRoot>

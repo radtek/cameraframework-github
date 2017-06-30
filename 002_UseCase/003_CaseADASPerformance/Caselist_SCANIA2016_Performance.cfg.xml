@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<CaseRoot>
+    <CaseList attrib="E:\002_deskProjs\CaseAssistant\CaseView01\CaseCfg\working\Caselist_SCANIA2016_Performance.cfg.xml"/>
+    <CaseList attrib="Online Case List"/>
+    <CaseList attrib="E:\002_deskProjs\CaseAssistant\CaseView01\CaseCfg\working\Caselist_SCANIA2016_Performance.cfg.xml"/>
+    <CaseList attrib="Performace_Time_Response">
+        <CaseName attrib="FastToggle">
+            <CaseID>none</CaseID>
+            <CaseExpected>10 event with 100ms and 10 response</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Performace</CaseType>
+            <CaseType>Time</CaseType>
+            <CaseType>Response</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="FastPreview">
+            <CaseID>none</CaseID>
+            <CaseExpected>10 event with 100ms and 10 response</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Performace</CaseType>
+            <CaseType>Time</CaseType>
+            <CaseType>Response</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="FastCAN">
+            <CaseID>none</CaseID>
+            <CaseExpected>10 event with 100ms and 10 response</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Performace</CaseType>
+            <CaseType>Time</CaseType>
+            <CaseType>Response</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="FastHradPin">
+            <CaseID>none</CaseID>
+            <CaseExpected>10 event with 100ms and 10 response</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Performace</CaseType>
+            <CaseType>Time</CaseType>
+            <CaseType>Response</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="Performace_MassRequest_SwitchOnOff">
+        <CaseName attrib="RepeatOnOff">
+            <CaseID>none</CaseID>
+            <CaseExpected>10 event with 100ms and 10 response</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Performace</CaseType>
+            <CaseType>MassRequest</CaseType>
+            <CaseType>OnOff</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="RepeatOff">
+            <CaseID>none</CaseID>
+            <CaseExpected>10 event with 100ms and 10 response</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Performace</CaseType>
+            <CaseType>MassRequest</CaseType>
+            <CaseType>OnOff</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="RepeatOn">
+            <CaseID>none</CaseID>
+            <CaseExpected>10 event with 100ms and 10 response</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Performace</CaseType>
+            <CaseType>MassRequest</CaseType>
+            <CaseType>OnOff</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="Performace_StartUp_Camera">
+        <CaseName attrib="FastAdasOn">
+            <CaseID>none</CaseID>
+            <CaseExpected>timer result to be check</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Performace</CaseType>
+            <CaseType>StartUp</CaseType>
+            <CaseType>Camera</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="NormalSwitchOn">
+            <CaseID>none</CaseID>
+            <CaseExpected>timer result to be check</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Performace</CaseType>
+            <CaseType>StartUp</CaseType>
+            <CaseType>Camera</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="NormalSwitchBetween">
+            <CaseID>none</CaseID>
+            <CaseExpected>timer result to be check</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Performace</CaseType>
+            <CaseType>StartUp</CaseType>
+            <CaseType>Camera</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="Performace_StartUp_Graphic">
+        <CaseName attrib="GuideLine720P">
+            <CaseID>none</CaseID>
+            <CaseExpected>timer result to be check</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Performace</CaseType>
+            <CaseType>StartUp</CaseType>
+            <CaseType>Graphic</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="GuideLine1080P">
+            <CaseID>none</CaseID>
+            <CaseExpected>timer result to be check</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Performace</CaseType>
+            <CaseType>StartUp</CaseType>
+            <CaseType>Graphic</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="SV1080P">
+            <CaseID>none</CaseID>
+            <CaseExpected>timer result to be check</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Performace</CaseType>
+            <CaseType>StartUp</CaseType>
+            <CaseType>Graphic</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="Performace_Driver_FPS">
+        <CaseName attrib="1080PCAM">
+            <CaseID>none</CaseID>
+            <CaseExpected>timer result to be check</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Performace</CaseType>
+            <CaseType>Driver</CaseType>
+            <CaseType>FPS</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="720PCAM">
+            <CaseID>none</CaseID>
+            <CaseExpected>timer result to be check</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Performace</CaseType>
+            <CaseType>Driver</CaseType>
+            <CaseType>FPS</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="720ICAM">
+            <CaseID>none</CaseID>
+            <CaseExpected>timer result to be check</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Performace</CaseType>
+            <CaseType>Driver</CaseType>
+            <CaseType>FPS</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+    </CaseList>
+</CaseRoot>

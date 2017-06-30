@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="源文件\libAFoundation">
+      <UniqueIdentifier>{a7fc0950-037a-4e53-861d-7b06cf6fa186}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\libAGraphic">
+      <UniqueIdentifier>{55159803-667c-4298-9651-2508c36b90a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\libACaseClient">
+      <UniqueIdentifier>{7f4b783b-5d69-442d-9e81-4da7e93c280f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\libABase">
+      <UniqueIdentifier>{57d980b5-e699-4ff0-b590-40ecc4e12704}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\libAFoundation">
+      <UniqueIdentifier>{5537e57b-e7a3-41fc-b2e4-2124fd80070e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\libAGraphic">
+      <UniqueIdentifier>{605dd128-2390-4c17-b4ac-e191f3dbec6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\libACaseClient">
+      <UniqueIdentifier>{747e5c24-4825-454b-a026-e779232c214e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\libABase">
+      <UniqueIdentifier>{5b2d0df0-b5eb-4bc0-9864-0d6921cf065b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\libABase\cam">
+      <UniqueIdentifier>{76a078f8-673d-4fb9-a817-5270ef3b74d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\libABase\pdc">
+      <UniqueIdentifier>{0c35af80-ffd0-4c96-9ef0-da502ba64bd6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\000_Framework\libAFoundation\include\CEvent.h">
+      <Filter>头文件\libAFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\000_Framework\libAFoundation\include\CMessage.h">
+      <Filter>头文件\libAFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\000_Framework\libAFoundation\include\CMessageHandler.h">
+      <Filter>头文件\libAFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\000_Framework\libAFoundation\include\CMessageQueue.h">
+      <Filter>头文件\libAFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\000_Framework\libAFoundation\include\CMQRunnableService.h">
+      <Filter>头文件\libAFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\000_Framework\libAFoundation\include\CRunableBase.h">
+      <Filter>头文件\libAFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\000_Framework\libAFoundation\include\platformdef.h">
+      <Filter>头文件\libAFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\000_Framework\libAFoundation\include\TraceMacros.h">
+      <Filter>头文件\libAFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\000_Framework\CaseClient\include\CSocketIPC.h">
+      <Filter>头文件\libACaseClient</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\000_Framework\libABase\include\ABase.h">
+      <Filter>头文件\libABase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\000_Framework\libABase\src\ADASManager\CAdasManager.h">
+      <Filter>头文件\libABase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\000_Framework\libAFoundation\include\TypeDefine.h">
+      <Filter>头文件\libAFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\000_Framework\libAFoundation\include\AFoundation.h">
+      <Filter>头文件\libAFoundation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\CAdasManagerGWMv2.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\..\000_Framework\libAFoundation\src\CEvent.cpp">
+      <Filter>源文件\libAFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\000_Framework\libAFoundation\src\CMessage.cpp">
+      <Filter>源文件\libAFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\000_Framework\libAFoundation\src\CMessageHandler.cpp">
+      <Filter>源文件\libAFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\000_Framework\libAFoundation\src\CMessageQueue.cpp">
+      <Filter>源文件\libAFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\000_Framework\libAFoundation\src\CMQRunnableService.cpp">
+      <Filter>源文件\libAFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\000_Framework\libAFoundation\src\CRunableBase.cpp">
+      <Filter>源文件\libAFoundation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\000_Framework\libABase\src\ADASManager\CAdasManager.cpp">
+      <Filter>源文件\libABase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\CAdasManagerGWMv2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

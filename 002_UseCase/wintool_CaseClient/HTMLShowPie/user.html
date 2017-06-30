@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>add new sub type under </title>
+	<script type="text/javascript">
+  var h1_element;
+  var obj = [];
+  var SubTypenum;
+  window.onload = function(){             
+    obj = window.dialogArguments;
+    h1_element =  document.getElementById('1');
+    h1_element.innerHTML = h1_element.innerHTML+obj[0].toString();
+    if (parseInt(obj[1]) != 0) 
+    {
+      document.getElementById('t_target').style.display="none";
+      document.getElementById('n_target').style.display="none";
+    }
+  }
+
+
+	function dosubmit(){
+		var SubTypename =document.getElementById('name').value;
+    SubTypename = trim(SubTypename);
+    SubTypenum =document.getElementById('value').value;
+    SubTypenum = trim(SubTypenum);
+    
+    var reg = /^[a-zA-Z0-9_\s?]+$/  //low or high case characters, numbers, or underline
+    if(!reg.test(SubTypename)){
+        var warn_msg = document.getElementById('WARNING');
+        warn_msg.innerHTML = "Typename should only contains low or high case characters, space, numbers, or underline";  
+        //alert("Typename should only contains low or high case characters, numbers, or underline");
+        return false;
+    }
+
+    var numRegex = /^[0-9]+$/; //only number
+    if(!numRegex.test(SubTypenum)){
+        var warn_msg = document.getElementById('WARNING');
+        warn_msg.innerHTML = "Target_numnber can only be positive int";  
+        //alert("Target_numnber can only be positive int");
+        return false;
+    }
+
+    if (parseInt(obj[1]) != 0) 
+     {
+       cef.uiapp.addNew(SubTypename);
+   	}else{
+       var pass_val = []
+       pass_val.push(SubTypename);
+       pass_val.push(SubTypenum);
+       cef.uiapp.addRoot(SubTypename,SubTypenum);
+    }
+    window.close(); 
+    window.returnValue = SubTypename;
+    return true;
+  }
+
+
+  function trim(str){
+    return str.replace(/(^\s*)|(\s*$)/g, "");
+  }
+
+	</script>
+  </head>
+  
+  <body>
+  	<h3 id="1">Add new Subtype under </h3>
+  	<table>
+  		<tr>
+  			<td>New type name:</td>
+  			<td><input type="text" id="name" value="New_Type"/></td>
+  		</tr>
+  		<tr>
+  			<td id="t_target">Target Number: </td>
+        <td id="n_target"><input type="text" id="value" value="0"/></td>
+      </tr>
+      <tr> </tr><tr> </tr>
+      <tr>
+  			<td></td><td><input type="button" value="Submit" onclick="dosubmit();"/>
+  			<input type="button" value="Cancel" onclick="window.close();"/></td>
+  		</tr>
+  	</table>
+    <b id="WARNING" style=" "></b>
+  </body>
+</html>

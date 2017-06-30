@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<CaseRoot>
+    <CaseList attrib=".\CaseListLastWorkingTree.xml"/>
+    <CaseList attrib="YourNewCaseList">
+        <CaseName attrib="test1">
+            <CaseID>none</CaseID>
+            <CaseExpected>log from project</CaseExpected>
+            <CaseExpected>log from project</CaseExpected>
+            <CaseExpected>log from project</CaseExpected>
+            <CaseExpected>log from project</CaseExpected>
+            <CaseInput>kill -n 15 $(pidof adasmain)</CaseInput>
+            <CaseInput>ls</CaseInput>
+            <CaseInput>ls</CaseInput>
+            <CaseInput>ls</CaseInput>
+            <CaseInput>ls</CaseInput>
+            <CaseInput>ls</CaseInput>
+            <CaseInput>ls</CaseInput>
+            <CaseInput>ls</CaseInput>
+            <CaseInput>0,0,aaaaaaaaaa1232</CaseInput>
+            <CaseInput>1,1aaaaaaaaaaaaa</CaseInput>
+            <CaseInput>2,1,caaaaaaaaaaaaa</CaseInput>
+            <CaseInput>3441,4552,caaaaaaaaaa123</CaseInput>
+            <CaseInput>ModeSysCall</CaseInput>
+            <CaseInput>ModeApiCall</CaseInput>
+            <CaseInput>/usr/bin/adasmain &amp;</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/4)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="setup caseclient- run by seriral mode only">
+            <CaseID>none</CaseID>
+            <CaseInput>kill -n 15 $(pidof CaseClientDeamon)</CaseInput>
+            <CaseInput>CaseClientDeamon &amp;</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="YourNewCaseList">
+        <CaseName attrib="GWMv2 CaseClient adapter">
+            <CaseID>none</CaseID>
+            <CaseExpected>GWMv2 case client adapter  received one msg</CaseExpected>
+            <CaseInput>ModeApiCall</CaseInput>
+            <CaseInput>1,2,this is GWMv2 Msg data!!</CaseInput>
+            <CaseInput>ModeSysCall</CaseInput>
+            <CaseInput>pwd</CaseInput>
+            <IMG_CASE_RESU_PASS>(1/1)</IMG_CASE_RESU_PASS>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="22222222222222">
+            <CaseID>none</CaseID>
+            <CaseExpected>GWMv2 case client adapter  received one msg</CaseExpected>
+            <CaseInput>ModeApiCall</CaseInput>
+            <CaseInput>1,2,this is GWMv2 Msg data!!</CaseInput>
+            <CaseInput>ModeSysCall</CaseInput>
+            <CaseInput>pwd</CaseInput>
+            <IMG_CASE_RESU_PASS>(1/1)</IMG_CASE_RESU_PASS>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+    </CaseList>
+</CaseRoot>

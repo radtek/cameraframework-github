@@ -1,0 +1,1015 @@
+<?xml version="1.0"?>
+<CaseRoot>
+    <CaseList attrib="D:\localToVm\00_code\103_GitProj\CaseAssistant\CaseView01\CaseCfg\working\TI_dss"/>
+    <CaseList attrib="D:\localToVm\00_code\103_GitProj\CaseAssistant\CaseView01\CaseCfg\working\TI_dss"/>
+    <CaseList attrib="VID2  CRC popup RGBA4444">
+        <CaseName attrib="DISPC_VID2_ATTRIBUTES 0x5800 115C">
+            <CaseID>bit1~4 format - 0x5: ARGB16-4444</CaseID>
+            <CaseExpected>DISABLE DIV BIT0=1</CaseExpected>
+            <CaseExpected>BIT28 PREMULTIPHYALPHA =0</CaseExpected>
+            <CaseExpected>0x0######: Primary LCD output selected.</CaseExpected>
+            <CaseExpected>crc result vid2 on EVM</CaseExpected>
+            <CaseInput>md 0x5800115C 4</CaseInput>
+            <CaseInput>omapconf read 0x5800115C </CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/4)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="DISPC_VID2_POSITION 0x5800 1154">
+            <CaseID>none</CaseID>
+            <CaseExpected>CRC TEXT layer on EVM</CaseExpected>
+            <CaseInput>md 0x58001154</CaseInput>
+            <CaseInput>mw  0x58001154  0x002d0118</CaseInput>
+            <CaseInput>mw  0x58001154  0x00000000</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="DISPC_VID2_SIZE 0x5800 1158">
+            <CaseID>none</CaseID>
+            <CaseExpected>SET CRC ERROR POPUP ON VID2</CaseExpected>
+            <CaseInput>md  0x58001158 4</CaseInput>
+            <CaseInput>mw 0x58001158 0x01DF02CF</CaseInput>
+            <CaseInput>mw 0x58001158 0x01E002A8</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="set z-zorder">
+            <CaseID>none</CaseID>
+            <CaseExpected>zorder -0 0x02## ####</CaseExpected>
+            <CaseExpected>zorder -1 0x06## ####</CaseExpected>
+            <CaseExpected>zorder -2 0x0a## ####</CaseExpected>
+            <CaseExpected>zorder -3 0x0e## ####</CaseExpected>
+            <CaseInput>md 0x5800115C 4</CaseInput>
+            <CaseInput>mw 0x5800115C 0x0220086b</CaseInput>
+            <CaseInput>mw 0x5800115C 0x0620086b</CaseInput>
+            <CaseInput>mw 0x5800115C 0x0a20086b</CaseInput>
+            <CaseInput>mw 0x5800115C 0x0e20086b</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/4)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="disable z-zorder">
+            <CaseID>none</CaseID>
+            <CaseInput>md 0x5800115C 4</CaseInput>
+            <CaseInput>mw 0x5800115C 0x0020086b</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="disable vid2">
+            <CaseID>none</CaseID>
+            <CaseInput>md 0x5800115C 4</CaseInput>
+            <CaseInput>mw 0x5800115C 0x0620086a</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="enable vid2">
+            <CaseID>none</CaseID>
+            <CaseInput>md 0x5800115C 4</CaseInput>
+            <CaseInput>mw 0x5800115C 0x0620086b</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="enable vid2 pre mulitipl alpha">
+            <CaseID>none</CaseID>
+            <CaseInput>md 0x5800115C 4</CaseInput>
+            <CaseInput>mw 0x5800115C 0x1620086b</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="diable vid2 pre mulitipl alpha">
+            <CaseID>none</CaseID>
+            <CaseInput>md 0x5800115C 4</CaseInput>
+            <CaseInput>mw 0x5800115C 0x0620086b</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="set to primary LCD">
+            <CaseID>none</CaseID>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="set to second LCD">
+            <CaseID>none</CaseID>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="VID3 camera  YUV422">
+        <CaseName attrib="DISPC_VID3_ATTRIBUTES 0x5800 1370">
+            <CaseID>bit1~4 format - 0xa: YUV2 4:2:2 co-sited</CaseID>
+            <CaseExpected>DISABLE DIV BIT0=0</CaseExpected>
+            <CaseExpected>DISABLE DIV BIT0=1</CaseExpected>
+            <CaseExpected>zorder -2 0x0a## ####</CaseExpected>
+            <CaseExpected>0x0: Primary LCD output selected.</CaseExpected>
+            <CaseExpected>camera layer on EVM</CaseExpected>
+            <CaseInput>md 0x58001370 4</CaseInput>
+            <CaseInput>mw 0x58001370 0x0A200A34</CaseInput>
+            <CaseInput>mw 0x58001370 0x0A200A35</CaseInput>
+            <CaseInput>omapconf read 0x58001370 </CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/5)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="DISPC_VID3_POSITION 0x5800 139C">
+            <CaseID>26:16 POSY 10:0 POSX left top 0 window size</CaseID>
+            <CaseInput>md 0x5800139C</CaseInput>
+            <CaseInput>mw  0x5800139C  0x000a00118</CaseInput>
+            <CaseInput>mw  0x5800139C  0x00000000</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="DISPC_VID3_SIZE 0x5800 13A8">
+            <CaseID>27:16 POSY 10:0 POSX left top 0 window size</CaseID>
+            <CaseExpected>0x01DF02CF = 480 * 720 = Y* X</CaseExpected>
+            <CaseExpected>0x02CF04FF= 720 * 1280 = Y* X</CaseExpected>
+            <CaseInput>md  0x580013A8 4</CaseInput>
+            <CaseInput>mw 0x580013A8 0x01DF02CF</CaseInput>
+            <CaseInput>mw 0x580013A8 0x02CF04FF</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/2)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="set z-zorder">
+            <CaseID>none</CaseID>
+            <CaseExpected>zorder -0 0x02## ####</CaseExpected>
+            <CaseExpected>zorder -1 0x06## ####</CaseExpected>
+            <CaseExpected>zorder -2 0x0a## ####</CaseExpected>
+            <CaseExpected>zorder -3 0x0e## ####</CaseExpected>
+            <CaseInput>md 0x58001370 4</CaseInput>
+            <CaseInput>mw 0x58001370 0x02200A35</CaseInput>
+            <CaseInput>mw 0x58001370 0x06200A35</CaseInput>
+            <CaseInput>mw 0x58001370 0x0A200A35</CaseInput>
+            <CaseInput>mw 0x58001370 0x0E200A35</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/4)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="disable z-zorder">
+            <CaseID>none</CaseID>
+            <CaseInput>md 0x58001370 4</CaseInput>
+            <CaseInput>mw 0x58001370 0x00200A35</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="set to primary LCD">
+            <CaseID>none</CaseID>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="set to second LCD">
+            <CaseID>none</CaseID>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="DISPC_VID3_FIR 0x5800 1390">
+            <CaseID>none</CaseID>
+            <CaseExpected>scale vid3 window size</CaseExpected>
+            <CaseInput>md  0x58001390 4</CaseInput>
+            <CaseInput>mw 0x58001390 0x08000400</CaseInput>
+            <CaseInput>mw 0x58001390 0x04000400</CaseInput>
+            <CaseInput>mw 0x58001390 0x02CF04FF</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="the primary LCD">
+        <CaseName attrib="DISPC_DEFAULT_COLOR0">
+            <CaseID>none</CaseID>
+            <CaseExpected>solid background color for the primary LCD</CaseExpected>
+            <CaseInput>md 0x5800104C 4</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="DISPC_CONFIG1">
+            <CaseID>Display Controller module for the primary LCD</CaseID>
+            <CaseInput>md 0x58001044 4</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="DISPC_TRANS_COLOR0 0x5800 1054">
+            <CaseID>none</CaseID>
+            <CaseExpected>transparency color value for the video/graphics overlays for the primary LCD</CaseExpected>
+            <CaseInput>md 0x58001054 4</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="set LCD background color">
+            <CaseID>none</CaseID>
+            <CaseInput>md 0x5800104C 4</CaseInput>
+            <CaseInput>mw 0x5800104C 0xFFFFFFFF</CaseInput>
+            <CaseInput>mw 0x5800104C 0x00000010</CaseInput>
+            <CaseInput>mw 0x5800104C 0x00000000</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="enable color key  source mode">
+            <CaseID>none</CaseID>
+            <CaseInput>mw 0x58001044 0x00000C04</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="enable color key  dest mode">
+            <CaseID>none</CaseID>
+            <CaseInput>mw 0x58001044 0x00000404</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="diable color key  mode">
+            <CaseID>none</CaseID>
+            <CaseExpected>enable color key - bit 11 0= dest 1= source ;bit10 1= enable</CaseExpected>
+            <CaseInput>mw 0x58001044 0x00000004</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="transparency color key value for the video/graphics overlays for the primary LCD">
+            <CaseID>none</CaseID>
+            <CaseInput>md 0x58001054 4</CaseInput>
+            <CaseInput>mw 0x58001054 0xFFFFFFFF</CaseInput>
+            <CaseInput>mw 0x58001054 0x00000000</CaseInput>
+            <CaseInput>mw 0x58001054 0x00000FFF</CaseInput>
+            <CaseInput>mw 0x58001054 0x00000010</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="DISPC_CONTROL1 0x5800 1040 ">
+            <CaseID>shadow register reflash test</CaseID>
+            <CaseInput>./omapconf read 0x58001040 </CaseInput>
+            <CaseInput>./omapconf write 0x58001040 0001932B </CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="the third LCD">
+        <CaseName attrib="DISPC_DEFAULT_COLOR3">
+            <CaseID>none</CaseID>
+            <CaseExpected>solid background color for the third LCD - poc</CaseExpected>
+            <CaseInput>md 0x58001814 4</CaseInput>
+            <CaseInput>omapconf read 0x58001814 </CaseInput>
+            <CaseInput>omapconf write 0x58001814 0x0000aaaa</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="DISPC_TRANS_COLOR3 0x5800 1818 ">
+            <CaseID>none</CaseID>
+            <CaseInput>md 0x58001814 4</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="DISPC_CONFIG3 0x5800 184C ">
+            <CaseID>none</CaseID>
+            <CaseInput>omapconf write 0x5800184C 0x0000aaaa</CaseInput>
+            <CaseInput>omapconf read 0x5800184C</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="GRX Pipe">
+        <CaseName attrib="DISPC_GFX_ATTRIBUTES  0x5800 10A0">
+            <CaseID>none</CaseID>
+            <CaseInput>md 0x580010A0 4</CaseInput>
+            <CaseInput>mw 0x580010A0 0x0e0000a0</CaseInput>
+            <CaseInput>omapconf read 0x580010A0 </CaseInput>
+            <CaseInput>./omapconf read 0x580010A0 </CaseInput>
+            <CaseInput>./omapconf write 0x580010A0 0x0e004099</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="PREMULTIPLYALPHA bit 28 1: premultiplyalpha data">
+            <CaseID>none</CaseID>
+            <CaseExpected>set to zorder 3 and set multiplayalpha</CaseExpected>
+            <CaseInput>./omapconf read 0x580010A0 </CaseInput>
+            <CaseInput>./omapconf write 0x580010A0 0x0f004099</CaseInput>
+            <CaseInput>./omapconf write 0x580010A0 0x0e004099</CaseInput>
+            <CaseInput>./omapconf write 0x580010A0 0x02004099</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="VID1">
+        <CaseName attrib="DISPC_VID1_ATTRIBUTES  0x5800 10CC ">
+            <CaseID>none</CaseID>
+            <CaseInput>md 0x580010CC 4</CaseInput>
+            <CaseInput>omapconf read 0x580010CC </CaseInput>
+            <CaseInput>omapconf write  0x580010CC 0x02A04098  </CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="DISPC_GLOBAL ">
+        <CaseName attrib="DISPC_GLOBAL_ALPHA">
+            <CaseID>none</CaseID>
+            <CaseInput>md 0x58001074 4</CaseInput>
+            <CaseInput>mw 0x58001074 0xFFFFFFFF</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="set VID1 transparent">
+            <CaseID>none</CaseID>
+            <CaseInput>md 0x58001074 4</CaseInput>
+            <CaseInput>mw 0x58001074 0xFFFF00FF</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="set VID2 transparent">
+            <CaseID>none</CaseID>
+            <CaseInput>md 0x58001074 4</CaseInput>
+            <CaseInput>mw 0x58001074 0xFF00FFFF</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="set VID3 transparent">
+            <CaseID>none</CaseID>
+            <CaseInput>md 0x58001074 4</CaseInput>
+            <CaseInput>mw 0x58001074 0x00FFFFFF</CaseInput>
+            <CaseInput>mw 0x58001074 0xA0FFFFFF</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="set GFX transparent">
+            <CaseID>none</CaseID>
+            <CaseInput>md 0x58001074 4</CaseInput>
+            <CaseInput>mw 0x58001074 0xFFFFFF00</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="TI EVM CASE -primary LCD- color key mode dest mode to transprarent - but color key mode is proper for color of all the video layer will be trans?">
+        <CaseName attrib="VID2  CRC popup RGBA4444 zorder 1">
+            <CaseID>none</CaseID>
+            <CaseInput>mw 0x5800115C 0x0620086b</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="VID3 camera  YUV422 zorder 0">
+            <CaseID>none</CaseID>
+            <CaseInput>mw 0x58001370 0x02200A35</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="VID3 camera  YUV422 zorder 2 - not working">
+            <CaseID>none</CaseID>
+            <CaseInput>mw 0x58001370 0x0A200A35</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="set global alpha">
+            <CaseID>none</CaseID>
+            <CaseInput>mw 0x58001074 0xFFFFFFFF</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="set LCD background color">
+            <CaseID>none</CaseID>
+            <CaseInput>md 0x5800104C 4</CaseInput>
+            <CaseInput>mw 0x5800104C 0xFFFFFFFF</CaseInput>
+            <CaseInput>mw 0x5800104C 0x00000010</CaseInput>
+            <CaseInput>mw 0x5800104C 0x0000AAAA</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="transparency color value for the video/graphics overlays for the primary LCD">
+            <CaseID>none</CaseID>
+            <CaseExpected>when target color  = white color  , all non-white color is set to top</CaseExpected>
+            <CaseInput>md 0x58001054 4</CaseInput>
+            <CaseInput>mw 0x58001054 0x00000000</CaseInput>
+            <CaseInput>mw 0x58001054 0x00FFFFFF</CaseInput>
+            <CaseInput>mw 0x58001054 0x00000010</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="enable dest mode">
+            <CaseID>none</CaseID>
+            <CaseExpected>dest is take the video layers,each pixel on this layer have this color will be transperant</CaseExpected>
+            <CaseExpected>only overlapped graphic region will be transparent</CaseExpected>
+            <CaseInput>md 0x58001044 4</CaseInput>
+            <CaseInput>mw 0x58001044 0x00000404</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/2)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="TI EVM CASE -primary LCD- color key mode source mode to transprarent - source must set zoder 3 - it works fine">
+        <CaseName attrib="VID2  CRC popup RGBA4444 zorder 1">
+            <CaseID>none</CaseID>
+            <CaseInput>mw 0x5800115C 0x0620086b</CaseInput>
+            <CaseInput>./omapconf write 0x5800115C 0x0620086b</CaseInput>
+            <CaseInput>./omapconf read 0x5800115C </CaseInput>
+            <CaseInput>md 0x5800115C 4</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="VID2  CRC popup RGBA4444 zorder 3  - works fine">
+            <CaseID>none</CaseID>
+            <CaseInput>mw 0x5800115C 0x0e20086b</CaseInput>
+            <CaseInput>./omapconf read 0x5800115C </CaseInput>
+            <CaseInput>./omapconf write 0x5800115C 0x0e20086b</CaseInput>
+            <CaseInput>md 0x5800115C 4</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="VID3 camera  YUV422 zorder 3 - works fine">
+            <CaseID>none</CaseID>
+            <CaseInput>mw 0x58001370 0x0E200A35</CaseInput>
+            <CaseInput>md 0x58001370 4</CaseInput>
+            <CaseInput>./omapconf read 0x58001370 </CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="VID3 camera  YUV422 zorder 2 - not working , must on 3">
+            <CaseID>none</CaseID>
+            <CaseInput>mw 0x58001370 0x0a200A35</CaseInput>
+            <CaseInput>./omapconf write 0x58001370  0x0a200A35</CaseInput>
+            <CaseInput>md 0x58001370 4</CaseInput>
+            <CaseInput>./omapconf read 0x58001370 </CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="set global alpha">
+            <CaseID>none</CaseID>
+            <CaseInput>mw 0x58001074 0xFFFFFFFF</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="set LCD background color">
+            <CaseID>none</CaseID>
+            <CaseInput>md 0x5800104C 4</CaseInput>
+            <CaseInput>mw 0x5800104C 0x0000AAAA</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="transparency color value for the video/graphics overlays for the primary LCD">
+            <CaseID>none</CaseID>
+            <CaseExpected>when target color  = white color  , all non-white color is set to top</CaseExpected>
+            <CaseInput>md 0x58001054 4</CaseInput>
+            <CaseInput>mw 0x58001054 0x00FFFFFF</CaseInput>
+            <CaseInput>./omapconf write 0x58001054 0x00000000</CaseInput>
+            <CaseInput>mw 0x58001054 0x00000000</CaseInput>
+            <CaseInput>./omapconf write 0x58001054 0x00FFFFFF</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="enable source mode">
+            <CaseID>none</CaseID>
+            <CaseInput>mw 0x58001044 0x00000C04</CaseInput>
+            <CaseInput>./omapconf write 0x58001044 0x00000C04</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="VID3 camera  YUV422 window size">
+            <CaseID>27:16 POSY 10:0 POSX left top 0 window size</CaseID>
+            <CaseExpected>0x01DF02CF = 480 * 720 = Y* X</CaseExpected>
+            <CaseExpected>0x02CF04FF= 720 * 1280 = Y* X</CaseExpected>
+            <CaseInput>md  0x580013A8 4</CaseInput>
+            <CaseInput>mw 0x580013A8 0x01DF02CF</CaseInput>
+            <CaseInput>mw 0x580013A8 0x02CF04FF</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/2)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="VID3 camera  YUV422 window position">
+            <CaseID>26:16 POSY 10:0 POSX left top 0 window size</CaseID>
+            <CaseInput>md 0x5800139C</CaseInput>
+            <CaseInput>mw  0x5800139C  0x000a00118</CaseInput>
+            <CaseInput>mw  0x5800139C  0x00000000</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="UI Grpx primary LCD zorder 0 - set to zorder 3 and auto back to 0 , but color key works fine">
+            <CaseID>none</CaseID>
+            <CaseInput>md 0x580010A0 4</CaseInput>
+            <CaseInput>mw 0x580010A0 0x0e0000a0</CaseInput>
+            <CaseInput>omapconf read 0x580010A0 </CaseInput>
+            <CaseInput>./omapconf read 0x580010A0 </CaseInput>
+            <CaseInput>./omapconf write 0x580010A0 0x0e004099</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="TI EVM Debug">
+        <CaseName attrib="send tool to system">
+            <CaseID>none</CaseID>
+            <CaseInput>su</CaseInput>
+            <CaseInput>mount -o remount,rw /system
+
+</CaseInput>
+            <CaseInput>mount ¨Ct vfat /dev/block/sda1 /data</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="mount sd card">
+            <CaseID>none</CaseID>
+            <CaseInput>mounts </CaseInput>
+            <CaseInput>@@@@@sudo mount -t vfat /dev/mmcblk0p1  /data/diskdebug</CaseInput>
+            <CaseInput>@@@@@mount -t vfat /dev/mmcblk0p1  /data/test</CaseInput>
+            <CaseInput>cp  /mnt/media_rw/6E7FaABAE/omapconf  /data/test</CaseInput>
+            <CaseInput>cp ./omapconf  /data/test</CaseInput>
+            <CaseInput>cp ./omapconf  /system/bin</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="check android surface">
+            <CaseID>none</CaseID>
+            <CaseInput>adb shell dumpsys SurfaceFlinger</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="POC CASE -third LCD- color key mode source mode to transprarent - source must set zoder 3 - it works fine">
+        <CaseName attrib="VID2   CRC text RGBA4444 zorder 1">
+            <CaseID>8620 086b</CaseID>
+            <CaseInput>mw 0x5800115C 0x0620086b</CaseInput>
+            <CaseInput>md 0x5800115C 4</CaseInput>
+            <CaseInput>omapconf read 0x5800115C </CaseInput>
+            <CaseInput>omapconf write 0x5800115C  0x8620086b</CaseInput>
+            <CaseInput>omapconf write 0x5800115C  0x8620086a</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="VID2  CRC popup RGBA4444 zorder 3  - works fine">
+            <CaseID>none</CaseID>
+            <CaseInput>mw 0x5800115C 0x0e20086b</CaseInput>
+            <CaseInput>md 0x5800115C 4</CaseInput>
+            <CaseInput>omapconf read 0x5800115C </CaseInput>
+            <CaseInput>omapconf write 0x5800115C  0x8e20086b</CaseInput>
+            <CaseInput>omapconf write 0x5800115C  0x8e20086a</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="VID3 camera  YUV422 zorder 2 - works fine">
+            <CaseID>8a200a74</CaseID>
+            <CaseInput>mw 0x58001370 0x0E200A35</CaseInput>
+            <CaseInput>omapconf read 0x58001370 </CaseInput>
+            <CaseInput>omapconf write  0x58001370 0x8a200a74</CaseInput>
+            <CaseInput>omapconf write  0x58001370 0x8a200a75</CaseInput>
+            <CaseInput>md 0x58001370 4</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="VID3 camera  YUV422 zorder 2 - not working , must on 3">
+            <CaseID>none</CaseID>
+            <CaseInput>mw 0x58001370 0x0a200A35</CaseInput>
+            <CaseInput>md 0x58001370 4</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="set global alpha">
+            <CaseID>none</CaseID>
+            <CaseInput>mw 0x58001074 0xFFFFFFFF</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="VID3 camera  YUV422 window size">
+            <CaseID>27:16 POSY 10:0 POSX left top 0 window size</CaseID>
+            <CaseExpected>0x01DF02CF = 480 * 720 = Y* X</CaseExpected>
+            <CaseExpected>0x02CF04FF= 720 * 1280 = Y* X</CaseExpected>
+            <CaseInput>md  0x580013A8 4</CaseInput>
+            <CaseInput>mw 0x580013A8 0x01DF02CF</CaseInput>
+            <CaseInput>mw 0x580013A8 0x02CF04FF</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/2)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="VID3 camera  YUV422 window position">
+            <CaseID>26:16 POSY 10:0 POSX left top 0 window size</CaseID>
+            <CaseInput>md 0x5800139C</CaseInput>
+            <CaseInput>mw  0x5800139C  0x000a00118</CaseInput>
+            <CaseInput>mw  0x5800139C  0x00000000</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="Grpx zorder 0  hmi 0xC: ARGB32-8888">
+            <CaseID>82004099</CaseID>
+            <CaseInput>md 0x580010A0 4</CaseInput>
+            <CaseInput>mw 0x580010A0 0x0e0000a0</CaseInput>
+            <CaseInput>omapconf read 0x580010A0 </CaseInput>
+            <CaseInput>omapconf write 0x580010A0  0x82004098</CaseInput>
+            <CaseInput>omapconf write 0x580010A0  0x82004099</CaseInput>
+            <CaseInput>omapconf write 0x580010A0  0xe2004099</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="VID1 nothing">
+            <CaseID>82808400</CaseID>
+            <CaseInput>md 0x580010CC 4</CaseInput>
+            <CaseInput>omapconf read 0x580010CC </CaseInput>
+            <CaseInput>omapconf write  0x580010CC 0x82808400  </CaseInput>
+            <CaseInput>omapconf write  0x580010CC 0x82808401  </CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="solid background color for the third LCD - poc">
+            <CaseID>none</CaseID>
+            <CaseExpected>solid background color for the third LCD - poc</CaseExpected>
+            <CaseInput>md 0x58001814 4</CaseInput>
+            <CaseInput>omapconf read 0x58001814 </CaseInput>
+            <CaseInput>omapconf write 0x58001814 0x0000aaaa</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="transparency color value for the video/graphics overlays for the thirdLCD">
+            <CaseID>none</CaseID>
+            <CaseInput>md 0x58001818 4</CaseInput>
+            <CaseInput>omapconf write 0x58001818 0x00000000</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="set lcd3 source color mode  0x5800 184C ">
+            <CaseID>none</CaseID>
+            <CaseInput>omapconf write 0x5800184C 0x00000C04</CaseInput>
+            <CaseInput>omapconf read 0x5800184C</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="set alpha  mode - no third LCD alpha mode????">
+            <CaseID>bit 18 bit 1 enable LCD alpha blender mode</CaseID>
+            <CaseInput>mw 0x58001044 0x00000C04</CaseInput>
+            <CaseInput>./omapconf write 0x58001044 0x00040004</CaseInput>
+            <CaseInput>./omapconf read 0x58001044</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="TI EVM CASE -primary LCD- alpha to transprarent  -- only primary LCD support this?? ">
+        <CaseName attrib="VID2  CRC popup RGBA4444 zorder 1">
+            <CaseID>none</CaseID>
+            <CaseInput>mw 0x5800115C 0x0620086b</CaseInput>
+            <CaseInput>./omapconf write 0x5800115C 0x0620086b</CaseInput>
+            <CaseInput>./omapconf read 0x5800115C </CaseInput>
+            <CaseInput>md 0x5800115C 4</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="VID2  CRC popup RGBA4444 zorder 3  - works fine">
+            <CaseID>none</CaseID>
+            <CaseInput>mw 0x5800115C 0x0e20086b</CaseInput>
+            <CaseInput>./omapconf read 0x5800115C </CaseInput>
+            <CaseInput>./omapconf write 0x5800115C 0x0e20086b</CaseInput>
+            <CaseInput>md 0x5800115C 4</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="VID3 camera  YUV422 zorder 3 - works fine">
+            <CaseID>none</CaseID>
+            <CaseInput>mw 0x58001370 0x0E200A35</CaseInput>
+            <CaseInput>md 0x58001370 4</CaseInput>
+            <CaseInput>./omapconf read 0x58001370 </CaseInput>
+            <CaseInput>mw  0x58001370 0x0E200A35</CaseInput>
+            <CaseInput>./omapconf write  0x58001370 0x0e200A35</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="VID3 camera  YUV422 zorder 2 - not working , must on 3">
+            <CaseID>none</CaseID>
+            <CaseInput>mw 0x58001370 0x0a200A35</CaseInput>
+            <CaseInput>md 0x58001370 4</CaseInput>
+            <CaseInput>./omapconf read 0x58001370 </CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="set global alpha">
+            <CaseID>none</CaseID>
+            <CaseInput>mw 0x58001074 0xFFFFFFFF</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="set LCD background color">
+            <CaseID>none</CaseID>
+            <CaseInput>md 0x5800104C 4</CaseInput>
+            <CaseInput>mw 0x5800104C 0x0000AAAA</CaseInput>
+            <CaseInput>./omapconf read 0x5800104c</CaseInput>
+            <CaseInput>./omapconf write 0x5800104C 0x0000AAAA</CaseInput>
+            <CaseInput>./omapconf write 0x5800104C 0x0000000</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="transparency color value for the video/graphics overlays for the primary LCD">
+            <CaseID>none</CaseID>
+            <CaseExpected>when target color  = white color  , all non-white color is set to top</CaseExpected>
+            <CaseInput>md 0x58001054 4</CaseInput>
+            <CaseInput>mw 0x58001054 0x00FFFFFF</CaseInput>
+            <CaseInput>./omapconf write 0x58001054 0x00000000</CaseInput>
+            <CaseInput>mw 0x58001054 0x00000000</CaseInput>
+            <CaseInput>./omapconf write 0x58001054 0x00FFFFFF</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="set alpha  mode - android not change zorder back on this change....but we need a srceen ">
+            <CaseID>bit 18 bit 1 enable LCD alpha blender mode</CaseID>
+            <CaseInput>mw 0x58001044 0x00000C04</CaseInput>
+            <CaseInput>./omapconf write 0x58001044 0x00040004</CaseInput>
+            <CaseInput>./omapconf read 0x58001044</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="VID3 camera  YUV422 window size">
+            <CaseID>27:16 POSY 10:0 POSX left top 0 window size</CaseID>
+            <CaseExpected>0x01DF02CF = 480 * 720 = Y* X</CaseExpected>
+            <CaseExpected>0x02CF04FF= 720 * 1280 = Y* X</CaseExpected>
+            <CaseInput>md  0x580013A8 4</CaseInput>
+            <CaseInput>mw 0x580013A8 0x01DF02CF</CaseInput>
+            <CaseInput>mw 0x580013A8 0x02CF04FF</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/2)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="VID3 camera  YUV422 window position">
+            <CaseID>26:16 POSY 10:0 POSX left top 0 window size</CaseID>
+            <CaseInput>md 0x5800139C</CaseInput>
+            <CaseInput>mw  0x5800139C  0x000a00118</CaseInput>
+            <CaseInput>mw  0x5800139C  0x00000000</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="UI Grpx primary LCD zorder 0 - set to zorder 3 and auto back to 0 , but color key works fine">
+            <CaseID>none</CaseID>
+            <CaseInput>md 0x580010A0 4</CaseInput>
+            <CaseInput>mw 0x580010A0 0x0e0000a0</CaseInput>
+            <CaseInput>omapconf read 0x580010A0 </CaseInput>
+            <CaseInput>./omapconf read 0x580010A0 </CaseInput>
+            <CaseInput>./omapconf write 0x580010A0 0x0e004099</CaseInput>
+            <CaseInput>./omapconf write 0x580010A0 0x02004099</CaseInput>
+            <CaseInput>./omapconf write 0x580010A0 0x02004098</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="VID2  CRC popup RGBA4444 zorder 1 set to lcd3">
+            <CaseID>none</CaseID>
+            <CaseInput>./omapconf read 0x5800115C </CaseInput>
+            <CaseInput>./omapconf write 0x5800115C 0x0620086a</CaseInput>
+            <CaseInput>./omapconf write 0x5800115C 0x8620086a</CaseInput>
+            <CaseInput>./omapconf write 0x5800115C 0x8620086b</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="VID3 camera  YUV422 zorder 2 - not working , must on 3 set to lcd3">
+            <CaseID>none</CaseID>
+            <CaseInput>./omapconf write 0x58001370  0x0a200A34</CaseInput>
+            <CaseInput>./omapconf write 0x58001370  0x8a200A34</CaseInput>
+            <CaseInput>./omapconf write 0x58001370  0x8a200A35</CaseInput>
+            <CaseInput>./omapconf read 0x58001370 </CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="UI Grpx primary LCD zorder 0 - set to zorder 3 set to lcd3">
+            <CaseID>none</CaseID>
+            <CaseInput>./omapconf read 0x580010A0 </CaseInput>
+            <CaseInput>./omapconf write 0x580010A0 0x0e004098</CaseInput>
+            <CaseInput>./omapconf write 0x580010A0 0x8e004098</CaseInput>
+            <CaseInput>./omapconf write 0x580010A0 0x8e004099</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+</CaseRoot>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<ProjRoot>
+    <CaseListFile xmlDirectory="D:\workSpace\UseCase_MS\004_ADASCustomer\001_MS2016\TestResult_dedicate\ticket1980791\DedicateCaseO1F2.xml"/>
+    <CaseListFile xmlDirectory="D:\workSpace\UseCase_MS\004_ADASCustomer\001_MS2016\TestResult_dedicate\ticket1980791\DedicateCaseO1R2.xml"/>
+    <CaseListFile xmlDirectory="D:\workSpace\UseCase_MS\004_ADASCustomer\001_MS2016\TestResult_dedicate\ticket1980791\DedicateCaseO1G2.xml"/>
+    <CaseListFile xmlDirectory="D:\workSpace\UseCase_MS\004_ADASCustomer\001_MS2016\TestResult_dedicate\ticket1980791\DedicateCaseF1G2.xml"/>
+    <CaseListFile xmlDirectory="D:\workSpace\UseCase_MS\004_ADASCustomer\001_MS2016\TestResult_dedicate\ticket1980791\DedicateCaseR1F2.xml"/>
+    <CaseListFile xmlDirectory="D:\workSpace\UseCase_MS\004_ADASCustomer\001_MS2016\TestResult_dedicate\ticket1980791\DedicateCaseG1R2.xml"/>
+</ProjRoot>

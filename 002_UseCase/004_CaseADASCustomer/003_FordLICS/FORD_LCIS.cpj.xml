@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<ProjRoot name="D:\localToVm\00_code\103_GitProj\UseCase_MS\FordLICS\FORD_LICS.cpj.xml">
+    <CaseListFile xmlDirectory="D:\localToVm\00_code\103_GitProj\UseCase_MS\FordLICS\Caselist_FordLICS_PDC.cfg.xml"/>
+    <CaseListFile xmlDirectory="D:\localToVm\00_code\103_GitProj\UseCase_MS\FordLICS\Caselist_FordLICS_APA.cfg.xml"/>
+    <CaseListFile xmlDirectory="D:\localToVm\00_code\103_GitProj\UseCase_MS\FordLICS\Caselist_FordLCIS_debug.cfg.xml"/>
+</ProjRoot>

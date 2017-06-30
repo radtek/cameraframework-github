@@ -1,0 +1,587 @@
+<?xml version="1.0"?>
+<CaseRoot>
+    <CaseList attrib="D:\localToVm\00_code\103_GitProj\UseCase_MS\MS2016\Caselist_MAN2016_RearCam.cfg.xml"/>
+    <CaseList attrib="MAN R1G2">
+        <CaseName attrib="R1G2:cam1RearActive-ReargearDeact-cam1keep active-highSpeedCam1Off:delays after state5 for signal detection is not ready">
+            <CaseID>R1G2  CASE001</CaseID>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":5,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-2},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseInput>.  /tmp/envars.sh</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "RevSwtch::1" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>sleep 5</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "ParkBrkSwitch::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::40000" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/3)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="R1G2:cam1ManuallyActive--highSpeedCam1O- manually off">
+            <CaseID>R1G2  CASE001</CaseID>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":5,"CameraType":2,"Show":true,"TriggerMethod":2},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":2},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseInput>.  /tmp/envars.sh</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "ParkBrkSwitch::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera1","Value":"On"}'</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::40000" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'GetCameraState' string:'{}'</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera1","Value":"Off"}'</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/3)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="R1G2:cam1RearActive-ReargearDeact-cam1keep active-manually active cam2 on cam off-manually deact cam2 off">
+            <CaseID>R1G2  CASE002</CaseID>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":5,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":5,"CameraType":1,"Show":true,"TriggerMethod":2}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":1,"CameraType":1,"Show":true,"TriggerMethod":2}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "RevSwtch::1" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera2","Value":"On"}'</CaseInput>
+            <CaseInput>sleep 4</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera2","Value":"Off"}'</CaseInput>
+            <CaseInput>sleep 5</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/5)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="R1G2:cam1RearActive-manually active cam2 on override-manually deact cam2 off- all off">
+            <CaseID>R1G2  CASE003</CaseID>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":5,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":5,"CameraType":1,"Show":true,"TriggerMethod":2}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":1,"CameraType":1,"Show":true,"TriggerMethod":2}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseInput>.  /tmp/envars.sh</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "RevSwtch::1" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>sleep 5</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera2","Value":"On"}'</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera2","Value":"Off"}'</CaseInput>
+            <CaseInput>sleep 4</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>sleep 5</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/5)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="R1G2:cam1RearActive-toggle cam2 on override-toggle cam1 on - rear gear disengaged - speed high but not cancelled auto deactivated">
+            <CaseID>R1G2  CASE004</CaseID>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":5,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":5,"CameraType":1,"Show":true,"TriggerMethod":2}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":1,"CameraType":1,"Show":true,"TriggerMethod":2}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":5,"CameraType":2,"Show":true,"TriggerMethod":2},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":2},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":2},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":2},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "RevSwtch::1" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>sleep 5</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ToggleSwitchCamera"}'</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ToggleSwitchCamera"}'</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "ParkBrkSwitch::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>sleep 2</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::40000" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>sleep 5</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'GetCameraState' string:'{}'</CaseInput>
+            <CaseInput>sleep 2</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera1","Value":"Off"}'</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/9)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="R1G2:cam1on-cam1off(A2Mstate)-standby(simulate)-cam1on-outofstandby-manuallyclosedcamera1">
+            <CaseID>R1G2  CASE00x</CaseID>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":5,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>signal {"powerMode":2,"powerModeEvent":18} com.harman.service.ScaniaOnOff. SigalName is powerModeInfo</CaseExpected>
+            <CaseExpected>signal {"powerMode":4,"powerModeEvent":23} com.harman.service.ScaniaOnOff. SigalName is powerModeInfo</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseInput>.  /tmp/envars.sh</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "RevSwtch::1" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest='com.harman.service.ScaniaOnOff'  /com/harman/service/ScaniaOnOff com.harman.ServiceIpc.Invoke  string:onOffPmodePostEvent   string:'{"event":18}'</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>echo "RevSwtch::1" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera1","Value":"Off"}'</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/6)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="R1G2:c2 Hardpin enable -  c1 rear active - c2 hardpin disable -rear deact - high speed - cam1 deactive">
+            <CaseID>R1G2  customer</CaseID>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":5,"CameraType":1,"Show":true,"TriggerMethod":0}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":1,"CameraType":1,"Show":true,"TriggerMethod":0}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":5,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-2},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseInput>.  /tmp/envars.sh</CaseInput>
+            <CaseInput>dbus-send --session --type=signal --dest="com.harman.service.ScaniaOnOff" /com/harman/service/ScaniaOnOff com.harman.ServiceIpc.Emit string:"CameraStatusInfo" string:'{"CameraOneStatus":0,"CameraTwoStatus":1}'</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>echo "RevSwtch::1" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>dbus-send --session --type=signal --dest="com.harman.service.ScaniaOnOff" /com/harman/service/ScaniaOnOff com.harman.ServiceIpc.Emit string:"CameraStatusInfo" string:'{"CameraOneStatus":0,"CameraTwoStatus":0}'</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "ParkBrkSwitch::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>sleep 1</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::40000" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>sleep 1</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>sleep 5</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/5)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="(need not expected)R1G2:c2 Hardpin enable -  c1 rear active - rear deactive-hard pin disable - cam1 deactive">
+            <CaseID>R1G2  customer</CaseID>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":5,"CameraType":1,"Show":true,"TriggerMethod":0}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":1,"CameraType":1,"Show":true,"TriggerMethod":0}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":1,"CameraType":1,"Show":true,"TriggerMethod":0}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseInput>dbus-send --session --type=signal --dest="com.harman.service.ScaniaOnOff" /com/harman/service/ScaniaOnOff com.harman.ServiceIpc.Emit string:"CameraStatusInfo" string:'{"CameraOneStatus":0,"CameraTwoStatus":1}'</CaseInput>
+            <CaseInput>sleep 2</CaseInput>
+            <CaseInput>echo "RevSwtch::1" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>sleep 1</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'GetCameraState' string:'{}'</CaseInput>
+            <CaseInput>sleep 1</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>dbus-send --session --type=signal --dest="com.harman.service.ScaniaOnOff" /com/harman/service/ScaniaOnOff com.harman.ServiceIpc.Emit string:"CameraStatusInfo" string:'{"CameraOneStatus":0,"CameraTwoStatus":0}'</CaseInput>
+            <CaseInput>sleep 5</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/4)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="R1G2: c1 rear active - c2 Hardpin enable -c2 Hardpin disable  - rear deactive - highspeed - c1 keep show -manully deac c1">
+            <CaseID>R1G2  customer</CaseID>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":5,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":5,"CameraType":1,"Show":true,"TriggerMethod":0}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":1,"CameraType":1,"Show":true,"TriggerMethod":0}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":5,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "RevSwtch::1" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>sleep 4</CaseInput>
+            <CaseInput>dbus-send --session --type=signal --dest="com.harman.service.ScaniaOnOff" /com/harman/service/ScaniaOnOff com.harman.ServiceIpc.Emit string:"CameraStatusInfo" string:'{"CameraOneStatus":0,"CameraTwoStatus":1}'</CaseInput>
+            <CaseInput>sleep 4</CaseInput>
+            <CaseInput>dbus-send --session --type=signal --dest="com.harman.service.ScaniaOnOff" /com/harman/service/ScaniaOnOff com.harman.ServiceIpc.Emit string:"CameraStatusInfo" string:'{"CameraOneStatus":0,"CameraTwoStatus":0}'</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>sleep 2</CaseInput>
+            <CaseInput>echo "ParkBrkSwitch::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::40000" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>sleep 1</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'GetCameraState' string:'{}'</CaseInput>
+            <CaseInput>sleep 1</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>sleep 1</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera1","Value":"Off"}'</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>sleep 5</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/8)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="R1G2:c2  c1 rear active - Hardkey toggle c2 - rear deactive - highspeed - c2 keep show-manully deac c2 ">
+            <CaseID>R1G2  customer</CaseID>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":5,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":5,"CameraType":1,"Show":true,"TriggerMethod":2}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":1,"CameraType":1,"Show":true,"TriggerMethod":2}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":1,"CameraType":1,"Show":true,"TriggerMethod":2}]</CaseExpected>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "RevSwtch::1" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>sleep 2</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ToggleSwitchCamera"}'</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>echo "ParkBrkSwitch::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::40000" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'GetCameraState' string:'{}'</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera2","Value":"Off"}'</CaseInput>
+            <CaseInput>sleep 1</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>sleep 5</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/5)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="test cmd">
+        <CaseName attrib="getstate">
+            <CaseID>001_SetEnv</CaseID>
+            <CaseInput>.  /tmp/envars.sh</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'GetCameraState' string:'{}'</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera1","Value":"On"}'</CaseInput>
+            <CaseInput>cd /fs/etfs/adas/bin</CaseInput>
+            <CaseInput>ls -l</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="CheckBuildNum">
+            <CaseID>none</CaseID>
+            <CaseInput>cat /etc/version.txt</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="TearDown">
+            <CaseID>none</CaseID>
+            <CaseInput>echo "ParkBrkSwitch::1" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>dbus-send --session --type=signal --dest="com.harman.service.ScaniaOnOff" /com/harman/service/ScaniaOnOff com.harman.ServiceIpc.Emit string:"CameraStatusInfo" string:'{"CameraOneStatus":0,"CameraTwoStatus":0}'</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="SetUpIP">
+            <CaseID>none</CaseID>
+            <CaseInput>echo "Debug10::15" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>touch /fs/etfs/SKIP_EOLCRCCHECK</CaseInput>
+            <CaseInput>touch /fs/etfs/data/SKIP_EOLCRCCHECK</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="CaseSetupDBUSEnv">
+            <CaseID>001_SetEnv</CaseID>
+            <CaseInput>.  /tmp/envars.sh</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'GetCameraState' string:'{}'</CaseInput>
+            <CaseInput>cd /fs/etfs/adas/bin</CaseInput>
+            <CaseInput>ls -l</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="CheckBuildNum">
+            <CaseID>none</CaseID>
+            <CaseInput>cat /etc/version.txt</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="TearDown">
+            <CaseID>none</CaseID>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "WrkLtTgleSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "ParkBrkSwitch::1" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::440000" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>dbus-send --session --type=signal --dest="com.harman.service.ScaniaOnOff" /com/harman/service/ScaniaOnOff com.harman.ServiceIpc.Emit string:"CameraStatusInfo" string:'{"CameraOneStatus":0,"CameraTwoStatus":0}'</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="etfswrite">
+            <CaseID>111</CaseID>
+            <CaseInput>touch /fs/etfs/data/ETFSWRITE</CaseInput>
+            <CaseInput>shutdown -S reboot</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="chmod">
+            <CaseID>none</CaseID>
+            <CaseInput>sync</CaseInput>
+            <CaseInput>chmod 777 /fs/etfs/adas/bin/adas</CaseInput>
+            <CaseInput>chmod 777 /fs/etfs/adas/bin/libGraphics.so.1</CaseInput>
+            <CaseInput>chmod 777 /fs/etfs/adas/bin/libAbase.so.1</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="kill and rm bins">
+            <CaseID>none</CaseID>
+            <CaseInput>slay -9 adas</CaseInput>
+            <CaseInput>rm /fs/etfs/adas/bin/adas</CaseInput>
+            <CaseInput>rm /fs/etfs/adas/bin/libGraphics.so.1</CaseInput>
+            <CaseInput>rm /fs/etfs/adas/bin/libAbase.so.1</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="get  camera state">
+            <CaseID>none</CaseID>
+            <CaseInput>.  /tmp/envars.sh</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'GetCameraState' string:'{}'</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera1","Value":"On"}'</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="Setup">
+        <CaseName attrib="R1R2">
+            <CaseID>000_Reset</CaseID>
+            <CaseInput>slay -9 adas</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>echo "Screen_startup::3" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Camera_Control::3" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Camera2_control_on_CAN::3" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "System_Camera1::1" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "System_Camera2::1" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Startup_screen::0" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "System_RestrictionsWhileDriving_Camera::1" &gt;&gt;/pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>export LD_LIBRARY_PATH=/fs/etfs/radio/screen-j6/usr/lib:/fs/etfs/radio/screen-j6/usr/lib/graphics/jacinto6/:$LD_LIBRARY_PATH</CaseInput>
+            <CaseInput>cd /fs/etfs/adas/bin/</CaseInput>
+            <CaseInput>./adas -uiSkipFrames=10 -iVariant=1 &amp;</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="R1G2">
+            <CaseID>000_Reset</CaseID>
+            <CaseInput>slay -9 adas</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>echo "Screen_startup::3" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Camera_Control::3" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Camera2_control_on_CAN::2" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "System_Camera1::1" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "System_Camera2::1" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Startup_screen::0" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "System_RestrictionsWhileDriving_Camera::1" &gt;&gt;/pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>export LD_LIBRARY_PATH=/fs/etfs/radio/screen-j6/usr/lib:/fs/etfs/radio/screen-j6/usr/lib/graphics/jacinto6/:$LD_LIBRARY_PATH</CaseInput>
+            <CaseInput>cd /fs/etfs/adas/bin/</CaseInput>
+            <CaseInput>./adas -uiSkipFrames=10 -iVariant=1 &amp;</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="MAN R1R2">
+        <CaseName attrib="R1R2: rear gear on - R1 on - rear off -r1 on- speed high - all off">
+            <CaseID>R1R2  CASE001</CaseID>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":5,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":1,"CameraType":2,"Show":false,"TriggerMethod":1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":1,"CameraType":2,"Show":false,"TriggerMethod":1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":1,"CameraType":2,"Show":false,"TriggerMethod":1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-2},{"CameraPos":2,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-2}]</CaseExpected>
+            <CaseInput>.  /tmp/envars.sh</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "RevSwtch::1" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'GetCameraState' string:'{}'</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>echo "ParkBrkSwitch::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::40000" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/4)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="R1R2: rear gear on - R1 on -manually off c1">
+            <CaseID>R1R2  CASE001</CaseID>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":5,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":1,"CameraType":2,"Show":false,"TriggerMethod":1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":1,"CameraType":2,"Show":false,"TriggerMethod":1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseInput>.  /tmp/envars.sh</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "RevSwtch::1" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera1","Value":"Off"}'</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/3)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="R1R2: rear gear on - R1 on -manually on c2 -manually off c2">
+            <CaseID>R1R2  CASE001</CaseID>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":5,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":1,"CameraType":2,"Show":false,"TriggerMethod":1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":1,"CameraType":2,"Show":false,"TriggerMethod":1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":5,"CameraType":2,"Show":true,"TriggerMethod":2}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":2}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseInput>.  /tmp/envars.sh</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "RevSwtch::1" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera2","Value":"On"}'</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera2","Value":"Off"}'</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/5)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="R1R2: rear gear on - R1 on -manually on c2 -high speed not hide cam- rear off rear on c1- rear off-high speed off">
+            <CaseID>R1R2  CASE001</CaseID>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":5,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":1,"CameraType":2,"Show":false,"TriggerMethod":1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":1,"CameraType":2,"Show":false,"TriggerMethod":1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":5,"CameraType":2,"Show":true,"TriggerMethod":2}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":2}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":2}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":5,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":1,"CameraType":2,"Show":false,"TriggerMethod":1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":1,"CameraType":2,"Show":false,"TriggerMethod":1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-2},{"CameraPos":2,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-2}]</CaseExpected>
+            <CaseInput>.  /tmp/envars.sh</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "RevSwtch::1" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera2","Value":"On"}'</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::40000" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'GetCameraState' string:'{}'</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>echo "RevSwtch::1" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::40000" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/8)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="R1R2: rear gear on - R1 on -toggle on c2 -high speed not hide cam-toggle- manually off - on driveing forward rear gear speed state cancelled">
+            <CaseID>R1R2  CASE001</CaseID>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":5,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":1,"CameraType":2,"Show":false,"TriggerMethod":1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":1,"CameraType":2,"Show":false,"TriggerMethod":1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":5,"CameraType":2,"Show":true,"TriggerMethod":2}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":2}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":5,"CameraType":2,"Show":true,"TriggerMethod":2},{"CameraPos":2,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":2},{"CameraPos":2,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":5,"CameraType":2,"Show":true,"TriggerMethod":2}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":2}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":1,"CameraType":2,"Show":true,"TriggerMethod":2}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":2,"CameraType":2,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseInput>.  /tmp/envars.sh</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "RevSwtch::1" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ToggleSwitchCamera"}'</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ToggleSwitchCamera"}'</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ToggleSwitchCamera"}'</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::40000" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'GetCameraState' string:'{}'</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera2","Value":"Off"}'</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'GetCameraState' string:'{}'</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::40000" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'GetCameraState' string:'{}'</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/12)</IMG_CASE_RESU_FAIL>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+    </CaseList>
+</CaseRoot>

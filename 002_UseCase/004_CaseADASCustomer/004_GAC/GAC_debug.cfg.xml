@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<CaseRoot>
+    <CaseList attrib=".\CaseListLastWorkingTree.xml"/>
+    <CaseList attrib="GAC_debug">
+        <CaseName attrib="login and root">
+            <CaseID>none</CaseID>
+            <CaseInput>. /tmp/envars.sh</CaseInput>
+            <CaseInput>dbus-send --session --type=signal /com/harman/service/onOff com.harman.ServiceIpc.Emit string:"powerMode" string:'{"value":3}'</CaseInput>
+            <CaseInput>ifconfig</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="kill and run">
+            <CaseID>none</CaseID>
+            <CaseInput>kill -9 $(pidof ParkAssist)</CaseInput>
+            <CaseInput>kill -9 $(pidof ParkAssist1)</CaseInput>
+            <CaseInput>rm  /usr/bin/ParkAssist1</CaseInput>
+            <CaseInput>mv /usr/bin/ParkAssist  /usr/bin/ParkAssist1</CaseInput>
+            <CaseInput>sync</CaseInput>
+            <CaseInput>/usr/bin/ParkAssist1 &amp;</CaseInput>
+            <CaseInput>ps | grep ParkAssist</CaseInput>
+            <CaseInput>pmap $(pidof ParkAssist1)</CaseInput>
+            <CaseInput>ls /usr/bin | grep lib</CaseInput>
+            <CaseInput>ls /usr/lib | grep liblodepng.so</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+</CaseRoot>

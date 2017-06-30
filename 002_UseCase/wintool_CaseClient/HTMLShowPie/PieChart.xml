@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<ProjRoot name="D:\localToVm\00_code\103_GitProj\UseCase_MS\SCANIA2016.cpj.xml" TotalNumber="131" TargetNumber="200">
+    <CaseType name="Performace" TotalNumber="21" TargetNumber="20">
+        <CaseType name="Time" TotalNumber="4">
+            <CaseType name="Response" TotalNumber="4" PassedNumber="3"/>
+        </CaseType>
+        <CaseType name="MassRequest" TotalNumber="3">
+            <CaseType name="OnOff" TotalNumber="3" PassedNumber="3"/>
+        </CaseType>
+        <CaseType name="StartUp" TotalNumber="6">
+            <CaseType name="Camera" TotalNumber="3" PassedNumber="2"/>
+            <CaseType name="Graphic" TotalNumber="3" PassedNumber="3"/>
+        </CaseType>
+        <CaseType name="Driver" TotalNumber="3">
+            <CaseType name="FPS" TotalNumber="3" PassedNumber="3"/>
+        </CaseType>
+        <CaseType name="Thread" TotalNumber="5">
+            <CaseType name="Thread" TotalNumber="5" PassedNumber="4"/>
+        </CaseType>
+    </CaseType>
+    <CaseType name="Customer" TotalNumber="72" TargetNumber="100">
+        <CaseType name="R1G2" TotalNumber="44">
+            <CaseType name="Override" TotalNumber="13" PassedNumber="10"/>
+            <CaseType name="Timer60" TotalNumber="5" PassedNumber="5"/>
+            <CaseType name="AutoHide" TotalNumber="7" PassedNumber="7"/>
+            <CaseType name="ManuallySwitch" TotalNumber="4" PassedNumber="4"/>
+            <CaseType name="HardPin" TotalNumber="6" PassedNumber="6"/>
+            <CaseType name="CanSwitch" TotalNumber="6" PassedNumber="6"/>
+            <CaseType name="NoTimer" TotalNumber="3" PassedNumber="3"/>
+        </CaseType>
+        <CaseType name="F1R2" TotalNumber="16">
+            <CaseType name="Override" TotalNumber="11" PassedNumber="8"/>
+            <CaseType name="ManuallySwitch" TotalNumber="3" PassedNumber="3"/>
+            <CaseType name="AuoHide" TotalNumber="2" PassedNumber="2"/>
+        </CaseType>
+        <CaseType name="R1OFF2" TotalNumber="1">
+            <CaseType name="ManuallySwitch" TotalNumber="1" PassedNumber="0"/>
+        </CaseType>
+        <CaseType name="R1R2" TotalNumber="1">
+            <CaseType name="ManuallySwitch" TotalNumber="1" PassedNumber="0"/>
+        </CaseType>
+        <CaseType name="G1R2" TotalNumber="3">
+            <CaseType name="Standby" TotalNumber="1" PassedNumber="1"/>
+            <CaseType name="CanSwitch" TotalNumber="2" PassedNumber="2"/>
+        </CaseType>
+        <CaseType name="F1G2" TotalNumber="7">
+            <CaseType name="CameraNotConnect" TotalNumber="3" PassedNumber="2"/>
+            <CaseType name="ActiveFrontCam" TotalNumber="4" PassedNumber="3"/>
+        </CaseType>
+    </CaseType>
+    <CaseType name="Platform" TotalNumber="19" TargetNumber="30">
+        <CaseType name="IPC" TotalNumber="9">
+            <CaseType name="DBUS" TotalNumber="9" PassedNumber="6"/>
+        </CaseType>
+        <CaseType name="QUEUE" TotalNumber="5">
+            <CaseType name="MSGQUEUE" TotalNumber="5" PassedNumber="4"/>
+        </CaseType>
+        <CaseType name="TIMER" TotalNumber="5">
+            <CaseType name="TIMER" TotalNumber="5" PassedNumber="4"/>
+        </CaseType>
+    </CaseType>
+    <CaseType name="ADASFrameWork" TotalNumber="19" TargetNumber="50">
+        <CaseType name="IPC" TotalNumber="6">
+            <CaseType name="DBUS" TotalNumber="6" PassedNumber="4"/>
+        </CaseType>
+        <CaseType name="Client" TotalNumber="5">
+            <CaseType name="Client" TotalNumber="5" PassedNumber="5"/>
+        </CaseType>
+        <CaseType name="AdasState" TotalNumber="4">
+            <CaseType name="AdasState" TotalNumber="4" PassedNumber="3"/>
+        </CaseType>
+        <CaseType name="EventManager" TotalNumber="4">
+            <CaseType name="Event" TotalNumber="4" PassedNumber="4"/>
+        </CaseType>
+    </CaseType>
+</ProjRoot>

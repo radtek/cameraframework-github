@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<CaseRoot>
+    <CaseList attrib="D:\localToVm\00_code\103_GitProj\UseCase_MS\FordLICS\Caselist_FordLICS_APA.cfg.xml"/>
+    <CaseList attrib="1 1	Architectural ">
+        <CaseName attrib="1.1  ParkAssistManager Client">
+            <CaseID>APA-CLD-REQ-013903</CaseID>
+            <CaseExpected>the interface of the Active Park Assist Manager (APAM) feature</CaseExpected>
+            <CaseExpected>displaying the available Active Park Assist (APA) modes to the user.</CaseExpected>
+            <CaseExpected>accepts input from the driver for selection of the desired APA mode</CaseExpected>
+            <CaseExpected>transmits the selection via CAN signal to the ActiveParkAssistManagerServer</CaseExpected>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="1.2  ParkAssit Client">
+            <CaseID>APA-CLD-REQ-013965</CaseID>
+            <CaseExpected> the interface of the Active Park Assist (APA) feature</CaseExpected>
+            <CaseExpected>displaying the APA maneuver messages and/or graphics to driver during an APA session</CaseExpected>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="Customer;IPC_CAN_APA;TX;">
+        <CaseName attrib="request APA MODE_inactive">
+            <CaseID>MD-REQ-013905</CaseID>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>Customer</CaseType>
+            <CaseType>IPC_CAN_APA</CaseType>
+            <CaseType>TX</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="request APA MODE_sapp">
+            <CaseID>MD-REQ-013905</CaseID>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>Customer</CaseType>
+            <CaseType>IPC_CAN_APA</CaseType>
+            <CaseType>TX</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="request APA MODE_ppa">
+            <CaseID>MD-REQ-013905</CaseID>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>Customer</CaseType>
+            <CaseType>IPC_CAN_APA</CaseType>
+            <CaseType>TX</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="request APA MODE_poa">
+            <CaseID>MD-REQ-013905</CaseID>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>Customer</CaseType>
+            <CaseType>IPC_CAN_APA</CaseType>
+            <CaseType>TX</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="request APA MODE_off">
+            <CaseID>MD-REQ-013905</CaseID>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>Customer</CaseType>
+            <CaseType>IPC_CAN_APA</CaseType>
+            <CaseType>TX</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="Customer;IPC_CAN_APA;RX;">
+        <CaseName attrib="Notify APA MODE_null">
+            <CaseID>MD-REQ-128765</CaseID>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>Customer</CaseType>
+            <CaseType>IPC_CAN_APA</CaseType>
+            <CaseType>RX</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="Notify APA MODE_off">
+            <CaseID>MD-REQ-128765</CaseID>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>Customer</CaseType>
+            <CaseType>IPC_CAN_APA</CaseType>
+            <CaseType>RX</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="Notify APA MODE_on">
+            <CaseID>MD-REQ-128765</CaseID>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>Customer</CaseType>
+            <CaseType>IPC_CAN_APA</CaseType>
+            <CaseType>RX</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="Notify APA MODE_overspeed">
+            <CaseID>MD-REQ-128765</CaseID>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>Customer</CaseType>
+            <CaseType>IPC_CAN_APA</CaseType>
+            <CaseType>RX</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="Notify APA MODE_apacancelled">
+            <CaseID>MD-REQ-128765</CaseID>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>Customer</CaseType>
+            <CaseType>IPC_CAN_APA</CaseType>
+            <CaseType>RX</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="Notify APA MODE_NotAccessible">
+            <CaseID>MD-REQ-128765</CaseID>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>Customer</CaseType>
+            <CaseType>IPC_CAN_APA</CaseType>
+            <CaseType>RX</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="Notify APA MODE_Finished">
+            <CaseID>MD-REQ-128765</CaseID>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>Customer</CaseType>
+            <CaseType>IPC_CAN_APA</CaseType>
+            <CaseType>RX</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="Notify APA MODE_Faulty">
+            <CaseID>MD-REQ-128765</CaseID>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>Customer</CaseType>
+            <CaseType>IPC_CAN_APA</CaseType>
+            <CaseType>RX</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+</CaseRoot>

@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{DA225857-C79C-4026-8D2F-57A2D3FF079C}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v100</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\..\..\..\external\poco-1.7.8\Foundation\include;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Include;$(WindowsSdkDir)include;$(VC_IncludePath);$(FrameworkSDKDir)\include</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">E:\kids\04_proj\CommonX\001_Project\external\poco-1.7.8\bin;..\..\..\..\..\external\poco-1.7.8\lib;..\..\..\..\..\external\poco-1.7.8\bin;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ExcludePath>
+    </ExcludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>D:\localToVm\00_code\103_GitProj\CommonX\02_Graphic\Builds\Windows;..\..\..\..\Builds\Windows;..\..\..\OGLES2\gpu\Shell;..\..\..\OGLES2\gpu\Utility;..\..\..\OGLES2;..\..\..\..\Builds\OGLES2\Include;..\..\..\..\Builds\OGLES2\WindowsPC\Include;..\..\..\..\Builds\OGLES2\Include\GLES2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN_OS;WIN32;_DEBUG;_WINDOWS;BUILD_OGLES2;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>PocoFoundationd.lib;libEGL.lib;libGLESv2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)OGLES2HelloTriangle.exe</OutputFile>
+      <AdditionalLibraryDirectories>E:\kids\04_proj\CommonX\001_Project\external\poco-1.7.8\bin;..\..\..\..\..\external\poco-1.7.8\bin;..\..\..\..\..\external\poco-1.7.8\lib;..\..\..\..\Builds\OGLES2\WindowsPC\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(OutDir)OGLES2HelloTriangle.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\..\..\..\Builds\OGLES2\Include;..\..\..\..\..\Builds\OGLES2\WindowsPC\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;BUILD_OGLES2;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libEGL.lib;libGLESv2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)OGLES2HelloTriangle.exe</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\..\..\Builds\OGLES2\WindowsPC\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\GlShell.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\GraphicVDT.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\GraphicVPAFord.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\IGraphicPDC.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\IGraphicVDT.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\lineBorderOp.cpp" />
+    <ClCompile Include="..\..\..\..\..\libappcore\CEvent.cpp" />
+    <ClCompile Include="..\..\..\..\..\libappcore\CMessage.cpp" />
+    <ClCompile Include="..\..\..\..\..\libappcore\CMessageHandler.cpp" />
+    <ClCompile Include="..\..\..\..\..\libappcore\CRunableBase.cpp" />
+    <ClCompile Include="..\..\OGLES2HelloTriangle_Windows.cpp" />
+    <ClCompile Include="..\..\OGLES2Interface.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\GlShell.h" />
+    <ClInclude Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\GraphicVDT.h" />
+    <ClInclude Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\HeadDefine.h" />
+    <ClInclude Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\IGraphicPDC.h" />
+    <ClInclude Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\IGraphicVDT.h" />
+    <ClInclude Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\lineBorderOp.h" />
+    <ClInclude Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\lodepng.h" />
+    <ClInclude Include="..\..\..\..\..\libappcore\CEvent.h" />
+    <ClInclude Include="..\..\..\..\..\libappcore\CMessage.h" />
+    <ClInclude Include="..\..\..\..\..\libappcore\CMessageHandler.h" />
+    <ClInclude Include="..\..\..\..\..\libappcore\CRunableBase.h" />
+    <ClInclude Include="..\..\..\..\..\libappcore\platformdef.h" />
+    <ClInclude Include="..\..\..\..\..\libappcore\TraceMacros.h" />
+    <ClInclude Include="..\..\OGLES2Interface.h" />
+    <ClInclude Include="..\..\RVSDefine.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\pdcusr.cfg" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

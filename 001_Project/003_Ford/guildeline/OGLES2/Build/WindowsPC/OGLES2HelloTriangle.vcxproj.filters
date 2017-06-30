@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\utility">
+      <UniqueIdentifier>{e5c93f04-1608-445b-8258-04a6d623798d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\shell">
+      <UniqueIdentifier>{da496105-f7d2-46c2-84fa-ab2a7f7bd0cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\fordguideline">
+      <UniqueIdentifier>{38b8982b-5641-4e9a-8998-bee0186ba05d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\appcore">
+      <UniqueIdentifier>{b99c1ea6-ccec-4aec-98fd-3598f7fe16ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\fordguideline\app">
+      <UniqueIdentifier>{6bf90199-c30e-4116-8816-3da56296d9d1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\OGLES2HelloTriangle_Windows.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\OGLES2Interface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\GlShell.cpp">
+      <Filter>Source Files\fordguideline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\GraphicVDT.cpp">
+      <Filter>Source Files\fordguideline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\IGraphicPDC.cpp">
+      <Filter>Source Files\fordguideline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\IGraphicVDT.cpp">
+      <Filter>Source Files\fordguideline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\lineBorderOp.cpp">
+      <Filter>Source Files\fordguideline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\GraphicVPAFord.cpp">
+      <Filter>Source Files\fordguideline\app</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\libappcore\CEvent.cpp">
+      <Filter>Source Files\appcore</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\libappcore\CMessage.cpp">
+      <Filter>Source Files\appcore</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\libappcore\CMessageHandler.cpp">
+      <Filter>Source Files\appcore</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\libappcore\CRunableBase.cpp">
+      <Filter>Source Files\appcore</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\RVSDefine.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\OGLES2Interface.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\GlShell.h">
+      <Filter>Source Files\fordguideline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\GraphicVDT.h">
+      <Filter>Source Files\fordguideline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\HeadDefine.h">
+      <Filter>Source Files\fordguideline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\IGraphicPDC.h">
+      <Filter>Source Files\fordguideline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\IGraphicVDT.h">
+      <Filter>Source Files\fordguideline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\lineBorderOp.h">
+      <Filter>Source Files\fordguideline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\lodepng.h">
+      <Filter>Source Files\fordguideline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\libappcore\CEvent.h">
+      <Filter>Source Files\appcore</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\libappcore\CMessage.h">
+      <Filter>Source Files\appcore</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\libappcore\CMessageHandler.h">
+      <Filter>Source Files\appcore</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\libappcore\CRunableBase.h">
+      <Filter>Source Files\appcore</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\libappcore\platformdef.h">
+      <Filter>Source Files\appcore</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\libappcore\TraceMacros.h">
+      <Filter>Source Files\appcore</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\..\..\002_UserStory\002_Ford\pdc\graphiclib\pdcusr.cfg">
+      <Filter>Source Files\fordguideline</Filter>
+    </None>
+  </ItemGroup>
+</Project>

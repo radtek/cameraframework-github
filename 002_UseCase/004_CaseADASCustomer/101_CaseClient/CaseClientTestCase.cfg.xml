@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<CaseRoot>
+    <CaseList attrib="test cmd">
+        <CaseName attrib="CaseSetupDBUSEnv">
+            <CaseID>001_SetEnv</CaseID>
+            <CaseInput>.  /tmp/envars.sh</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'GetCameraState' string:'{}'</CaseInput>
+            <CaseInput>cd /fs/etfs/adas/bin</CaseInput>
+            <CaseInput>ls -l</CaseInput>
+            <CaseInput>sleep 3</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="TearDown">
+            <CaseID>none</CaseID>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "WrkLtTgleSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "ParkBrkSwitch::1" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::440000" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>dbus-send --session --type=signal --dest="com.harman.service.ScaniaOnOff" /com/harman/service/ScaniaOnOff com.harman.ServiceIpc.Emit string:"CameraStatusInfo" string:'{"CameraOneStatus":0,"CameraTwoStatus":0}'</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="chmod">
+            <CaseID>none</CaseID>
+            <CaseInput>sync</CaseInput>
+            <CaseInput>chmod 777 /fs/etfs/adas/bin/adas</CaseInput>
+            <CaseInput>chmod 777 /fs/etfs/adas/bin/libGraphics.so.1</CaseInput>
+            <CaseInput>chmod 777 /fs/etfs/adas/bin/libAbase.so.1</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="kill and rm bins">
+            <CaseID>none</CaseID>
+            <CaseInput>slay -9 adas</CaseInput>
+            <CaseInput>rm /fs/etfs/adas/bin/adas</CaseInput>
+            <CaseInput>rm /fs/etfs/adas/bin/libGraphics.so.1</CaseInput>
+            <CaseInput>rm /fs/etfs/adas/bin/libAbase.so.1</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="get  camera state">
+            <CaseID>none</CaseID>
+            <CaseInput>.  /tmp/envars.sh</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'GetCameraState' string:'{}'</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="tset">
+            <CaseID>111</CaseID>
+            <CaseInput>echo "skipframe::10" &gt;&gt; /pps/can/Diag/skipframe</CaseInput>
+            <CaseInput>slay -9 adas</CaseInput>
+            <CaseInput>cd /fs/etfs/adas/bin/</CaseInput>
+            <CaseInput>export LD_LIBRARY_PATH=/fs/etfs/radio/screen-j6/usr/lib:/fs/etfs/radio/screen-j6/usr/lib/graphics/jacinto6/:$LD_LIBRARY_PATH</CaseInput>
+            <CaseInput>./adas -uiSkipFrames=10 -iVariant=0 -uiSigDelay=0 &amp;</CaseInput>
+            <CaseInput>.  /tmp/envars.sh</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera1","Value":"On"}'</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera2","Value":"On"}'</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ToggleSwitchCamera"}'</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera1","Value":"Off"}'</CaseInput>
+            <CaseInput>find / -name adas| grep adas</CaseInput>
+            <CaseInput> pidin -f abn | grep adas</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="CaseClientSetup">
+            <CaseID>none</CaseID>
+            <CaseInput>dhcp.client -i en0</CaseInput>
+            <CaseInput>ifconfig</CaseInput>
+            <CaseInput>chmod 777 /fs/etfs/adas/bin/AdasServerSocket</CaseInput>
+            <CaseInput>/fs/etfs/adas/bin/AdasServerSocket &amp;</CaseInput>
+            <CaseInput>slay -9 AdasServerSocket </CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="CaseClientLoopTest1">
+        <CaseName attrib="LoopTest1-1">
+            <CaseInput>CaseClientLoopTestInput1-1-1</CaseInput>
+            <CaseInput>CaseClientLoopTestInput1-1-2</CaseInput>
+            <CaseInput>CaseClientLoopTestInput1-1-3</CaseInput>
+            <CaseExpected>CaseClientLoopTestExpect1-1-1</CaseExpected>
+            <CaseExpected>CaseClientLoopTestExpect1-1-2</CaseExpected>
+            <CaseExpected>CaseClientLoopTestExpect1-1-3</CaseExpected>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="LoopTest1-2">
+            <CaseInput>CaseClientLoopTestInput1-2-1</CaseInput>
+            <CaseInput>CaseClientLoopTestInput1-2-2</CaseInput>
+            <CaseInput>CaseClientLoopTestInput1-2-3</CaseInput>
+            <CaseExpected>CaseClientLoopTestExpect1-2-1</CaseExpected>
+            <CaseExpected>CaseClientLoopTestExpect1-2-2</CaseExpected>
+            <CaseExpected>CaseClientLoopTestExpect1-2-3</CaseExpected>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+</CaseRoot>

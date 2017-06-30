@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Demo</title>
+
+        <script src="Chart.js"></script>
+        <script src="MultiLevelPieChart.js"></script>
+        <script src="Please.js"></script>
+    </head>
+    <body style="width: 750px; height: 750px;">
+
+        <ul id="legend"></ul>
+        <div id="div1">
+              <ul>
+                   <li id="add_new">Add new subtype here</li>
+                   <li id="test_all">Test all the cases of that type</li>
+             </ul>
+        </div>
+
+        <div id="div2" style="width: 50%; min-width: 680px; height: 50%; min-height: 680px;">
+            <canvas id="demo" width="500" height="500"></canvas>
+        </div>
+        <button id="resolve_xml">Resolve XML</button>
+        <script>
+            var canvas = document.getElementById('demo'),
+                ctx = canvas.getContext('2d'),
+                config = {
+                    responsive: true
+                };
+
+            // color backup
+            var backgroundColor = [
+                    "#46BFBD",
+                    "#F7464A",
+                    "#FDB45C",
+                    "#949FB1",
+                    "#4D5360"
+                ];
+
+            var randomColorFactor = function() {
+                return Math.round(Math.random() * 255);
+            };
+            var randomColor = function(opacity) {
+                return 'rgba(' + randomColorFactor() + ',' + randomColorFactor() + ',' + randomColorFactor() + ',' + (opacity || '.3') + ')';
+            };
+
+//---------------------------------------global value------------------------------------------
+            var orderDoc;
+            var label_name_for_native;
+            var label_value_for_native;
+            var parents_for_native;
+            var SubTypename;
+            orderDoc=loadXmlFile("PieChart.xml");
+            var mydata = [];
+            var chart;
+//---------------------------------------------Utility----------------------------------       
+            window.onload = function(){
+                orderDoc=loadXmlFile("PieChart.xml");
+                getContent();
+                draw_pie(mydata);
+                draw_legend();
+            } 
+
+            function draw_pie(data_){
+                chart = new Chart(ctx).MultiLevelPie(data_, config, ctx);
+            }
+
+            function redraw_pie(){
+                chart.destroy();
+
+                window.onload();
+                //var legend = chart.generateLegend();
+            }
+ 
+//------------------------get the context menu (interface)-----------------------------
+            canvas.oncontextmenu= function(evt){
+                var activePoints = chart.getSegmentsAtEvent(evt);
+                if(activePoints[0]==null) return;
+                label_name_for_native = activePoints[0].label;
+                label_value_for_native =  activePoints[0].value;
+                parents_for_native = activePoints[0].Parents;
+                
+                var oEvent=evt||event;
+                var oDiv=document.getElementById('div1');
+                oDiv.style.display='block';
+                oDiv.style.left=oEvent.clientX+'px';
+                oDiv.style.top=oEvent.clientY+'px';
+
+                var add_newcase_interface = document.getElementById("add_new");
+                add_newcase_interface.onclick = function(evt){
+                SubTypename = "";
+                var oDiv=document.getElementById('div1');   
+                oDiv.style.display='none';
+                var pass_value = []; 
+                pass_value.push(label_name_for_native);
+                pass_value.push(parents_for_native.length);
+                SubTypename=window.showModalDialog('user.html',pass_value,'dialogWidth=400px;dialogHeight=270px;status=no;help=no;scollbar=no');
+                // add new content in this format to define add_case function in native code
+                if(SubTypename !=null){
+                    chart.destroy();
+                    setTimeout(window.onload(),10000);                     
+                }
+
+                }
+
+                var test_all_interface = document.getElementById("test_all");
+                if(parents_for_native.length == 0){
+                    test_all_interface.style.display="none";
+                }else{
+                    test_all_interface.style.display="inline";
+                }
+
+                test_all_interface.onclick = function(evt){
+                // add new content in this format to define add_case function in native code
+                cef.uiapp.testAll(label_name_for_native);
+                var oDiv=document.getElementById('div1');   
+                oDiv.style.display='none';
+                }
+                return false;
+            };
+
+            var new_root = [];
+            canvas.onclick=function(evt)
+            {
+                var oDiv=document.getElementById('div1');   
+                oDiv.style.display='none';
+
+                //-------------------------new Pie show rate--------------
+                //var activePoints = chart.getSegmentsAtEvent(evt);
+                //if (activePoints[0].Parents.length == 0) {
+                //    new_root = mydata;
+                //    new_root[0].color =  ;
+                //}
+
+                /*
+                var activePoints = chart.getSegmentsAtEvent(evt);
+                if (activePoints[0].Parents.length == 0) {
+                    new_root = mydata;
+                    for ( var i = 0 ; i< mydata[0].children.length; i++){
+                        var new_subtype_S = []
+                        new_subtype_S.push(mydata[0].children[i]);
+                        new_subtype_S.value = mydata[0].children[i].value * parseInt(mydata[0].children[i].rate) /100;
+                        //alert(new_subtype_S.value);
+                        new_subtype_S.color = "#46BFBD";
+                        new_subtype_S.children = [];
+                        var new_subtype_F = [];
+                        new_subtype_F.push(mydata[0].children[i]);
+                        new_subtype_F.value = mydata[0].children[i].value - new_subtype_S.value;
+                        new_subtype_F.color = "#F7464A";
+                        new_root[0].children.push(new_subtype_F);
+                        new_root[0].children.push(new_subtype_S);
+                    }
+                    redraw_pie(new_root);
+                    //alert(new_root.children.length);
+                    
+                }*/
+
+            };
+
+
+//----------------------------for load xml file--------------------------------------
+
+           function loadXmlFile(xmlFile){
+                var xmlDom = null;
+                if (window.ActiveXObject){
+                    xmlDom = new ActiveXObject("Microsoft.XMLDOM");
+                    xmlDom.async=false;
+                    xmlDom.load(xmlFile)||xmlDom.loadXML(xmlFile);
+                }else if (document.implementation && document.implementation.createDocument){
+                    var xmlhttp = new window.XMLHttpRequest();
+                    xmlhttp.open("GET", xmlFile, false);
+                    xmlhttp.send(null);
+                    xmlDom = xmlhttp.responseXML;
+                }else{
+                    xmlDom = null;
+                } 
+                return xmlDom;
+            } 
+
+            function isnull(objt) {
+                var nodevalue = ""; 
+                if(objt.childNodes[0] != null) 
+                {
+                    nodevalue =objt.childNodes[0].nodeValue;
+                } 
+                return nodevalue; 
+            }
+
+
+                
+//------------------------- Read xml and construct the data according to the format above!!!----------------------
+            function getContent(){
+               //orderDoc=loadXmlFile("test.xml");
+                mydata = [];                
+                var inner_root= orderDoc.childNodes[0];
+                var xlabelname = inner_root.getAttribute("name");
+                var xlanbelnumber = inner_root.getAttribute("TargetNumber");  
+                var root_color = "#fff"; 
+                var inner_insert = {
+                    label: xlabelname.toString(),
+                    value: parseInt(xlanbelnumber),
+                    color:  root_color,
+                    FValue: parseInt(inner_root.getAttribute("TotalNumber")),
+                    text : "#"+"Toltal / Target : = "+inner_root.getAttribute("TotalNumber") +"/" +xlanbelnumber,
+                    children: [],
+                    Parents:[]
+                }          
+
+                 root_item = inner_root.childNodes;
+                 root_count = (root_item.length -1)/2;
+
+                 for (var i = root_count; i >= 5; i--) {
+                     backgroundColor.push(Please.make_color()[0]);
+                 }
+//-----------------------------------------------to do -- change it to adjust mutiple layer ---------------------
+                for (var i = 1; i < root_item.length-1; i= i+2) {                    
+                    var xlabelname = root_item[i].getAttribute("name");
+                    var xlanbelnumber = root_item[i].getAttribute("TargetNumber");
+                    root_color = backgroundColor[(i-1)/2];
+                    var root_insert = {
+                        label: xlabelname.toString(),
+                        value: parseInt(xlanbelnumber),
+                        color:  root_color,
+                        //color: Please.make_color()[0],
+                        FValue: parseInt(root_item[i].getAttribute("TotalNumber")),
+                        children: [],
+                        Parents:[]
+                    };
+                    root_insert.Parents.push(root_insert.label.toString());
+                    
+
+                    //Second layer----------------------------
+                    var sub_count = root_item[i].childNodes.length;
+                    var sub_item = root_item[i].childNodes;
+
+                    if (sub_count!= 0) {                           
+                        for (var j = 1; j<sub_count-1; j+=2) {
+
+                            var xlabelname = sub_item[j].getAttribute("name");
+                            var xlanbelnumber = sub_item[j].getAttribute("TotalNumber");
+                            var sub_insert = {
+                                label: xlabelname.toString(),
+                                value: parseInt(xlanbelnumber),
+                                color:  root_color,
+                                SValue: parseInt(xlanbelnumber),
+                                //color: Please.make_color()[0],
+                                children: [],
+                                Parents:[]
+                            }
+                            sub_insert.Parents.push(root_insert.label.toString());
+                            sub_insert.Parents.push(sub_insert.label.toString());
+
+                            //Third layer----------------------------
+                            var third_count = sub_item[j].childNodes.length;
+                            var third_item = sub_item[j].childNodes;
+                            if (third_count!=0) {
+                                for (var m = 1; m<third_count-1; m+=2) {
+                                    ;
+                                    var xlabelname = third_item[m].getAttribute("name");
+                                    //alert("Did I get the label????"+xlabelname);
+                                    var xlanbelnumber = third_item[m].getAttribute("PassedNumber");
+                                    var third_insert = {
+                                        label: xlabelname.toString(),
+                                        value: parseInt(xlanbelnumber),
+                                        color:  root_color,
+                                        TValue: third_item[m].getAttribute("TotalNumber"),
+                                        children: [],
+                                        Parents:[]
+                                    }
+                                    third_insert.Parents.push(root_insert.label.toString());
+                                    third_insert.Parents.push(sub_insert.label.toString());
+                                    third_insert.Parents.push(third_insert.label.toString());
+                                    sub_insert.children.push(third_insert);
+                                }                            
+                            }
+                            root_insert.children.push(sub_insert); 
+                        }                        
+                    }
+                    inner_insert.children.push(root_insert);
+                }
+                mydata.push(inner_insert);
+            }
+
+            var btn2 = document.getElementById("resolve_xml");
+            btn2.addEventListener("click", function() {
+                getContent();
+                redraw_pie();
+            });
+
+            //drew legend use my own function 
+
+            function draw_legend(){
+                var legend_canvas = document.getElementById("legend");
+                legend_canvas.innerHTML= "";
+                for (var i = 0; i < mydata[0].children.length; i++) {
+                    legend_canvas.innerHTML += '<span>____</span><span>        ' +(mydata[0].children[i].label)+'  ,  </span>';
+                    var tempt = document.getElementsByTagName("span")[i*2];
+                    tempt.style.backgroundColor = mydata[0].children[i].color;
+                }
+                legend_canvas.style.textAlign="center";
+            } 
+ 
+
+        </script>
+
+        <style type="text/css">
+            div, ul, li { margin:0; padding:0; }
+            ul { list-style-type:none; }
+            #div1 { position:absolute; display:none; }
+            #div1 ul { position:absolute; float:left; border:1px solid #979797;background:#f1f1f1; padding:2px; box-shadow:2px 2px 2px rgba(0, 0, 0, .6); width:230px; overflow:hidden; }
+            #div1 ul li { float:left; clear:both; height:24px; cursor:pointer; line-height:24px; white-space:nowrap; padding:0 30px; width:100%; display:inline-block; }
+            #div1 ul li:hover { background:#E6EDF6; border:1px solid #B4D2F6; }
+        </style>
+    </body>
+</html>

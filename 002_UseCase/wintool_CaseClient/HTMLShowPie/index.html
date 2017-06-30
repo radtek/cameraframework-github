@@ -1,0 +1,375 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>ADAS TEST CASES</title>
+
+
+		<script type="text/javascript" src="jquery.min.js"></script>
+		<style type="text/css">
+${demo.css}
+		</style>
+		<script type="text/javascript">
+        
+        var colors;
+        var showMenu =false;
+        var total_num = 0;
+        var passed_num = 0;
+        var zeroLayer_Data = [];
+        var firstLayer_Data = [];
+        var secondLayer_Data = [];
+        var thirdLayer_Data = [];
+        var label_name_for_native;
+        var parents_for_native;
+        var backgroundColor = [
+        "#7cb5ec", 
+        "#f15c80",
+        "#f7a35c", 
+        "#8085e9", 
+        "#f45b5b",
+        "#e4d354", 
+        "#2b908f", 
+        "#90ed7d",
+        "#91e8e1"];
+        var initialize = function(){
+            total_num = 0;
+            passed_num = 0;
+            zeroLayer_Data = [];
+            firstLayer_Data = [];
+            secondLayer_Data = [];
+            thirdLayer_Data = [];
+        }
+        window.onload = function(){
+            initialize();
+            ShowPie();
+        }
+        var ShowPie  = function () {
+            colors = Highcharts.getOptions().colors;
+            var orderDoc = loadXmlFile("PieChart.xml");
+            var root_item = orderDoc.childNodes[0].childNodes;
+            var categories = [];
+            var root_count = (root_item.length -1)/2;
+
+            for (var i = root_count; i >9; i--) {
+                backgroundColor.push(Please.make_color()[0]);
+            }
+            //var data = [];
+            for (var i = 1; i < root_item.length-1; i= i+2) {
+                var xlabelname = root_item[i].getAttribute("name");
+                categories.push(xlabelname);
+                var xTargetnum = root_item[i].getAttribute("TargetNumber");
+                var firstinsert = {
+                    name: xlabelname.toString(),
+                    y: parseInt(xTargetnum),
+                    color: backgroundColor[(i-1)/2],
+                    //color: colors[(i-1)/2+6],
+                    tag: "Target",
+                    Parents : []
+                };
+                firstinsert.Parents.push(xlabelname.toString());
+                firstLayer_Data.push(firstinsert);
+
+                var sub_count = root_item[i].childNodes.length;
+                var sub_item = root_item[i].childNodes;
+                
+                if (sub_count!= 0) {
+                    for (var j = 1; j<sub_count-1; j+=2) {
+                        var xlabelname = sub_item[j].getAttribute("name");
+                        var xTotalnum = sub_item[j].getAttribute("TotalNumber");
+                        total_num +=parseInt(xTotalnum);
+                        var secondinsert = {
+                            name: xlabelname.toString(),
+                            y: parseInt(xTotalnum),
+                            color: backgroundColor[(i-1)/2] ,
+                            //color: colors[(i-1)/2+6],
+                            tag: "Total",
+                            Parents : []
+                        };
+                        secondinsert.Parents.push( root_item[i].getAttribute("name").toString());
+                        secondinsert.Parents.push( sub_item[j].getAttribute("name").toString());
+                        secondLayer_Data.push(secondinsert);
+
+                        var third_count = sub_item[j].childNodes.length;
+                        var third_item = sub_item[j].childNodes;
+                        var third_total = 0;
+                        if (third_count!=0) {
+                            for (var m = 1; m<third_count-1; m+=2) {
+                                var xlabelname = third_item[m].getAttribute("name");
+                                var xPassednum =  parseInt(third_item[m].getAttribute("PassedNumber"));
+                                passed_num +=  parseInt(xPassednum);
+                                var xFailednum = parseInt(third_item[m].getAttribute("TotalNumber"))- parseInt(xPassednum);
+                                third_total+= parseInt(xPassednum);
+                        
+                                var thirdinsert = {
+                                y: parseInt(xPassednum),
+                                name: xlabelname,
+                                tag: "Passed",
+                                color: parseInt(xPassednum) == 0? "#fff":backgroundColor[(i-1)/2],
+                                //color: parseInt(xPassednum) == 0? "#fff":colors[(i-1)/2+6],
+                                
+                                };
+                                thirdLayer_Data.push(thirdinsert);
+                                
+                                if(xFailednum>0){
+                                    var thirdfaild = {
+                                        y: parseInt(xFailednum),
+                                        name: xlabelname ,
+                                        color: "#fff",
+                                        tag: "Failed"  
+                                    }
+                                    thirdLayer_Data.push(thirdfaild);
+                                }
+                            }
+                            
+                           
+                        }
+
+                    }                    
+                }
+                var EmptyElement = {
+                    y:  parseInt(root_item[i].getAttribute("TargetNumber")) - parseInt(root_item[i].getAttribute("TotalNumber")),
+                    name: root_item[i].getAttribute("name"),
+                    color: "#fff",
+                    tag: "Missing"
+
+                }
+                thirdLayer_Data.push(EmptyElement);
+                secondLayer_Data.push(EmptyElement);
+
+                zeroLayer_Data = [{
+                    name: "  Coverage:" +total_num +"/" + parseInt(orderDoc.childNodes[0].getAttribute("TargetNumber"))+"<br>Pass Rate:"+  passed_num +"/"+ total_num +"<br>",
+                    color: "#fff",
+                    tag: "Target",
+                    y: parseInt(orderDoc.childNodes[0].getAttribute("TargetNumber")),
+                    Parents: []
+                }];
+            };
+
+
+        for (var i = secondLayer_Data.length - 1; i >= 0; i--) {
+            brightness = 0.2 - (j / secondLayer_Data.length) / 5;
+            if(secondLayer_Data[i].color != "#fff")
+                secondLayer_Data[i].color = Highcharts.Color(secondLayer_Data[i].color).brighten(brightness).get();
+        }
+        for (var i = thirdLayer_Data.length - 1; i >= 0; i--) {
+            brightness = 0.23 - (j / thirdLayer_Data.length) / 5;
+            if(thirdLayer_Data[i].color != "#fff"){
+                thirdLayer_Data[i].color = Highcharts.Color(thirdLayer_Data[i].color).brighten(brightness).get();
+            }
+        }
+
+    // Create the chart
+    $('#container').highcharts({
+        chart: {
+            type: 'pie',
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: 'ADAS TEST CASES'
+        },
+        subtitle: {
+            text: orderDoc.childNodes[0].getAttribute("name")
+        },
+        yAxis: {
+            title: {
+                text: 'Total percent market share'
+            }
+        },
+        plotOptions: {
+            pie: {
+                //allowPointSelect: true,
+                shadow: false,
+                //center: ['50%', '50%']
+                //,showInLegend: false
+            },
+            series: {
+                events: {
+                    click: function(event) {
+                       GetThePoint(event);
+                    }
+                }
+            }   
+
+        },
+        tooltip: {
+            pointFormat: '{point.tag}: <b>{point.y}</b>'
+        },
+        series: [
+                {
+            name: 'Target',
+            data: zeroLayer_Data,
+            size: '35%',
+            dataLabels: {
+                formatter: function () {
+                    return this.y > 5 ? this.point.name  : null;
+                },
+                color: colors[1],
+                distance: -110
+            }
+        },
+        {
+            name: 'Target',
+            data: firstLayer_Data,
+            size: '60%',
+            innerSize: '35%',
+            dataLabels: {
+                formatter: function () {
+                    return this.y > 5 ? this.point.name  : null;
+                },
+                color: '#ffffff',
+                distance: -50
+            }
+        }, {
+            name: 'Total',
+            data: secondLayer_Data,
+            size: '80%',
+            innerSize: '60%',
+            dataLabels: {
+                formatter: function () {
+                    return null;
+                }
+            }
+        },
+        {
+            name: 'Total',
+            data: thirdLayer_Data,
+            size: '100%',
+            innerSize: '80%',
+            dataLabels: {
+                formatter: function () {
+                    // display only if larger than 1
+                    //console.log(this.xxx);
+                    return this.color == "#fff" ? null :'<b>' + this.point.name + ':</b> ' + this.y ;
+                }
+            }
+        }]
+    });
+}
+//----------------------------for load xml file--------------------------------------
+
+    function loadXmlFile(xmlFile){
+        var xmlDom = null;
+        if (window.ActiveXObject){
+            xmlDom = new ActiveXObject("Microsoft.XMLDOM");
+            xmlDom.async=false;
+            xmlDom.load(xmlFile)||xmlDom.loadXML(xmlFile);
+        }else if (document.implementation && document.implementation.createDocument){
+            var xmlhttp = new window.XMLHttpRequest();
+            xmlhttp.open("GET", xmlFile, false);
+            xmlhttp.send(null);
+            xmlDom = xmlhttp.responseXML;
+        }else{
+            xmlDom = null;
+        } 
+        return xmlDom;
+    } 
+
+    function isnull(objt) {
+        var nodevalue = ""; 
+        if(objt.childNodes[0] != null) 
+        {
+            nodevalue =objt.childNodes[0].nodeValue;
+        } 
+        return nodevalue; 
+    }
+//-----------------------------------------------------------------------------------------
+
+    // click the the point to show the menu
+    function GetThePoint(evt){
+        var activePoints = evt.point;
+        var oDiv=document.getElementById('div1');
+
+        // if it not a active point, return
+        if(activePoints==null) return;
+
+        //if the color there is while and no parents value, (expected or failed element) then make the menu invisible and return
+        if(activePoints.Parents == null) {
+            oDiv.style.display='none';
+            showMenu = false;
+            return;
+        }
+
+        // get the lable name and the parents array of this point
+        label_name_for_native = activePoints.name;
+        parents_for_native = activePoints.Parents;
+        if (parents_for_native.length==0) {label_name_for_native = "All Cases"}
+
+        var oEvent=evt||event;
+        if(showMenu == false){
+            oDiv.style.display='block';
+            oDiv.style.left=oEvent.clientX+'px';
+            oDiv.style.top=oEvent.clientY+'px';
+            showMenu =true;
+        }else{
+            oDiv.style.display='none';
+            showMenu = false;
+        }
+
+
+        var add_newcase_interface = document.getElementById("add_new");
+        add_newcase_interface.onclick = function(evt){
+            SubTypename = "";
+            oDiv.style.display='none';
+            showMenu =false;
+            var pass_value = []; 
+            pass_value.push(label_name_for_native);
+            pass_value.push(parents_for_native.length);
+            SubTypename=window.showModalDialog('user.html',pass_value,'dialogWidth=400px;dialogHeight=250px;status=no;help=no;scollbar=no');
+            // add new content in this format to define add_case function in native code
+            if(SubTypename !=null){
+                setTimeout(window.onload(),10000);                     
+            }
+        };
+
+
+
+        var test_all_interface = document.getElementById("test_all");
+        if(parents_for_native.length == 0){
+            test_all_interface.style.display="none";
+        }else{
+            test_all_interface.style.display="inline";
+        }
+
+        test_all_interface.onclick = function(evt){
+            // add new content in this format to define add_case function in native code
+            cef.uiapp.testAll(label_name_for_native); 
+            oDiv.style.display='none';
+            showMenu =false;
+        };
+               
+    }
+    // override the default contexnemu of CEF && make m_menu invisible
+    document.oncontextmenu = function() {
+        var oDiv=document.getElementById('div1');
+        oDiv.style.display='none';
+        showMenu = false;
+        return false;};
+
+//---------------------------------------------------------------------------
+		</script>
+	</head>
+	<body>
+    <script src="highcharts.src.js"></script>
+    <script src="Please.js"></script>
+    <script src="exporting.js"></script>
+    <div id="container" style="width: 50%; min-width: 1000px; height: 50%; min-height: 680px;">
+    </div>
+    <div id="div1">
+              <ul>
+                   <li id="add_new">Add new subtype here</li>
+                   <li id="test_all">Test all the cases of that type</li>
+             </ul>
+    </div>
+
+        <style type="text/css">
+            div, ul, li { margin:0; padding:0; }
+            ul { list-style-type:none; }
+            #div1 { position:absolute; display:none; }
+            #div1 ul { position:absolute; float:left; border:1px solid #979797;background:#f1f1f1; padding:2px; box-shadow:2px 2px 2px rgba(0, 0, 0, .6); width:230px; overflow:hidden; }
+            #div1 ul li { float:left; clear:both; height:24px; cursor:pointer; line-height:24px; white-space:nowrap; padding:0 30px; width:100%; display:inline-block; }
+            #div1 ul li:hover { background:#E6EDF6; border:1px solid #B4D2F6; }
+        </style>
+	</body style="width: 1000px; height: 800px">
+</html>

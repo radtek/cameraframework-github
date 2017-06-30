@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ProjRoot name="All Cases" TotalNumber="150" TargetNumber="190">
+    <CaseType name="Performace" TotalNumber="8" TargetNumber="10">
+    </CaseType>
+    <CaseType name="Customer" TotalNumber="50" TargetNumber="69">
+    </CaseType>
+    <CaseType name="Platform" TotalNumber="28" TargetNumber="33">
+    </CaseType>
+    <CaseType name="ADASFrameWork" TotalNumber="64" TargetNumber="78">
+    </CaseType>
+</ProjRoot>

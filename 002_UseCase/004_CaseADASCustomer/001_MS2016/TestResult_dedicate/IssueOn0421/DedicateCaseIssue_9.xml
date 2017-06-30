@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+<CaseRoot>
+    <CaseList attrib="D:\workSpace\UseCase_MS\004_ADASCustomer\001_MS2016\TestResult_dedicate\0421\DedicateCaseIssue_9.xml"/>
+    <CaseList attrib="Static_SetUp">
+        <CaseName attrib="ResetEOL_SetG1O2">
+            <CaseID>setup</CaseID>
+            <CaseInput>cd /fs/etfs/adas/bin</CaseInput>
+            <CaseInput>ifconfig</CaseInput>
+            <CaseInput>slay -9 AdasServerSocket</CaseInput>
+            <CaseInput>chmod  777 ./AdasServerSocket</CaseInput>
+            <CaseInput>.  /tmp/envars.sh</CaseInput>
+            <CaseInput>./AdasServerSocket &amp;</CaseInput>
+            <CaseInput>slay -9 adas</CaseInput>
+            <CaseInput>echo "Function_Camera1::1" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera2::0" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_GeneralCameraActivationWorklightCamera1::1" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_GeneralCameraActivationWorklightCamera2::1" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "System_SteeringWheelPosition::1"&gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera1ReverseGeneralForwardDeactivationSpeed::40" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera2ReverseGeneralForwardDeactivationSpeed::40" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera1ReverseGeneralForwardHysteresis::10" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_Camera2ReverseGeneralForwardHysteresis::10" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_FrontCameraUpperSpeedLimit::20" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo "Function_FrontCameraUpperSpeedHysteresis::5" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>.  /tmp/envars.sh</CaseInput>
+            <CaseInput>export LD_LIBRARY_PATH=/fs/etfs/radio/screen-j6/usr/lib:/fs/etfs/radio/screen-j6/usr/lib/graphics/jacinto6/:$LD_LIBRARY_PATH</CaseInput>
+            <CaseInput>cd /fs/etfs/adas/bin/</CaseInput>
+            <CaseInput>echo "Screen_startup::0" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo Function_Camera1StartupTime::5" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>echo Function_Camera2StartupTime::5" &gt;&gt; /pps/Diag/EOL</CaseInput>
+            <CaseInput>./adas -uiSkipFrames=10 -iVariant=0 -uiSigDelay=30 &amp;</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "ParkBrkSwitch::1" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "DirIndRight::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "DirIndLeft::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "WrkLtTgleSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera1","Value":"Off"}'</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera2","Value":"Off"}'</CaseInput>
+            <CaseInput>echo "FrntVwCam::0" &gt;&gt; /pps/can/Camera</CaseInput>
+            <CaseInput>echo "RearVwCam::0" &gt;&gt; /pps/can/Camera</CaseInput>
+            <CaseInput>echo "GenCam1::0" &gt;&gt; /pps/can/Camera</CaseInput>
+            <CaseInput>echo "GenCam2::0" &gt;&gt; /pps/can/Camera</CaseInput>
+            <CaseInput>dbus-send --session --type=signal --dest="com.harman.service.ScaniaOnOff" /com/harman/service/ScaniaOnOff com.harman.ServiceIpc.Emit string:"CameraStatusInfo" string:'{"CameraOneStatus":0}'</CaseInput>
+            <CaseInput>dbus-send --session --type=signal --dest="com.harman.service.ScaniaOnOff" /com/harman/service/ScaniaOnOff com.harman.ServiceIpc.Emit string:"CameraStatusInfo" string:'{"CameraTwoStatus":0}'</CaseInput>
+            <CaseInput>sleep 1</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="Customer;G1O2;ManuallySwitch;">
+        <CaseName attrib="LastSate:G1_OFF,F2_OFF; action:Camera1_Manually_ON">
+            <CaseID>Dedicate_Case1</CaseID>
+            <CaseExpected>signal {"powerMode":2,"powerModeEvent":18} com.harman.service.ScaniaOnOff. SigalName is powerModeInfo</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":5,"CameraType":1,"Show":true,"TriggerMethod":2},{"CameraPos":2,"CameraStatus":4,"CameraType":0,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":4,"CameraType":0,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest='com.harman.service.ScaniaOnOff'  /com/harman/service/ScaniaOnOff com.harman.ServiceIpc.Invoke  string:onOffPmodePostEvent   string:'{"event":18}'</CaseInput>
+            <CaseInput>sleep 1</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera1","Value":"On"}'</CaseInput>
+            <CaseInput>sleep 1</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera1","Value":"Off"}'</CaseInput>
+            <CaseInput>sleep 1</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "ParkBrkSwitch::1" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "DirIndRight::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "DirIndLeft::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "WrkLtTgleSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera1","Value":"Off"}'</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera2","Value":"Off"}'</CaseInput>
+            <CaseInput>echo "FrntVwCam::0" &gt;&gt; /pps/can/Camera</CaseInput>
+            <CaseInput>echo "RearVwCam::0" &gt;&gt; /pps/can/Camera</CaseInput>
+            <CaseInput>echo "GenCam1::0" &gt;&gt; /pps/can/Camera</CaseInput>
+            <CaseInput>echo "GenCam2::0" &gt;&gt; /pps/can/Camera</CaseInput>
+            <CaseInput>dbus-send --session --type=signal --dest="com.harman.service.ScaniaOnOff" /com/harman/service/ScaniaOnOff com.harman.ServiceIpc.Emit string:"CameraStatusInfo" string:'{"CameraOneStatus":0}'</CaseInput>
+            <CaseInput>dbus-send --session --type=signal --dest="com.harman.service.ScaniaOnOff" /com/harman/service/ScaniaOnOff com.harman.ServiceIpc.Emit string:"CameraStatusInfo" string:'{"CameraTwoStatus":0}'</CaseInput>
+            <CaseInput>sleep 1</CaseInput>
+            <IMG_CASE_RESU_FAIL>(0/3)</IMG_CASE_RESU_FAIL>
+            <CaseType>Customer</CaseType>
+            <CaseType>G1O2</CaseType>
+            <CaseType>ManuallySwitch</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="Customer;G1O2;CanONOFF;">
+        <CaseName attrib="LastSate:G1_OFF,F2_OFF; action:CanCmd_General1_ON">
+            <CaseID>Dedicate_Case2</CaseID>
+            <CaseExpected>signal {"powerMode":2,"powerModeEvent":18} com.harman.service.ScaniaOnOff. SigalName is powerModeInfo</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":5,"CameraType":1,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":4,"CameraType":0,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":4,"CameraType":0,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest='com.harman.service.ScaniaOnOff'  /com/harman/service/ScaniaOnOff com.harman.ServiceIpc.Invoke  string:onOffPmodePostEvent   string:'{"event":18}'</CaseInput>
+            <CaseInput>sleep 1</CaseInput>
+            <CaseInput>echo "GenCam1::1" &gt;&gt; /pps/can/Camera</CaseInput>
+            <CaseInput>sleep 1</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "ParkBrkSwitch::1" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "DirIndRight::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "DirIndLeft::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "WrkLtTgleSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera1","Value":"Off"}'</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera2","Value":"Off"}'</CaseInput>
+            <CaseInput>echo "FrntVwCam::0" &gt;&gt; /pps/can/Camera</CaseInput>
+            <CaseInput>echo "RearVwCam::0" &gt;&gt; /pps/can/Camera</CaseInput>
+            <CaseInput>echo "GenCam1::0" &gt;&gt; /pps/can/Camera8</CaseInput>
+            <CaseInput>echo "GenCam1::0" &gt;&gt; /pps/can/Camera</CaseInput>
+            <CaseInput>echo "GenCam2::0" &gt;&gt; /pps/can/Camera</CaseInput>
+            <CaseInput>dbus-send --session --type=signal --dest="com.harman.service.ScaniaOnOff" /com/harman/service/ScaniaOnOff com.harman.ServiceIpc.Emit string:"CameraStatusInfo" string:'{"CameraOneStatus":0}'</CaseInput>
+            <CaseInput>dbus-send --session --type=signal --dest="com.harman.service.ScaniaOnOff" /com/harman/service/ScaniaOnOff com.harman.ServiceIpc.Emit string:"CameraStatusInfo" string:'{"CameraTwoStatus":0}'</CaseInput>
+            <CaseInput>sleep 1</CaseInput>
+            <IMG_CASE_RESU_PASS>(3/3)</IMG_CASE_RESU_PASS>
+            <CaseType>Customer</CaseType>
+            <CaseType>G1O2</CaseType>
+            <CaseType>CanONOFF</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="Customer;G1O2;CanSwitch;">
+        <CaseName attrib="LastSate:G1_OFF,F2_OFF; action:ParkBrkSwitch_OFF,WrkLtTgleSwtch_ON">
+            <CaseID>Dedicate_Case3</CaseID>
+            <CaseExpected>signal {"powerMode":2,"powerModeEvent":18} com.harman.service.ScaniaOnOff. SigalName is powerModeInfo</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":5,"CameraType":1,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":4,"CameraType":0,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":4,"CameraType":0,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest='com.harman.service.ScaniaOnOff'  /com/harman/service/ScaniaOnOff com.harman.ServiceIpc.Invoke  string:onOffPmodePostEvent   string:'{"event":18}'</CaseInput>
+            <CaseInput>sleep 1</CaseInput>
+            <CaseInput>echo "ParkBrkSwitch::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "WrkLtTgleSwtch::1" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>sleep 1</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "ParkBrkSwitch::1" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "DirIndRight::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "DirIndLeft::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "WrkLtTgleSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera1","Value":"Off"}'</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera2","Value":"Off"}'</CaseInput>
+            <CaseInput>echo "FrntVwCam::0" &gt;&gt; /pps/can/Camera</CaseInput>
+            <CaseInput>echo "RearVwCam::0" &gt;&gt; /pps/can/Camera</CaseInput>
+            <CaseInput>echo "GenCam1::0" &gt;&gt; /pps/can/Camera</CaseInput>
+            <CaseInput>echo "GenCam2::0" &gt;&gt; /pps/can/Camera</CaseInput>
+            <CaseInput>dbus-send --session --type=signal --dest="com.harman.service.ScaniaOnOff" /com/harman/service/ScaniaOnOff com.harman.ServiceIpc.Emit string:"CameraStatusInfo" string:'{"CameraOneStatus":0}'</CaseInput>
+            <CaseInput>dbus-send --session --type=signal --dest="com.harman.service.ScaniaOnOff" /com/harman/service/ScaniaOnOff com.harman.ServiceIpc.Emit string:"CameraStatusInfo" string:'{"CameraTwoStatus":0}'</CaseInput>
+            <CaseInput>sleep 1</CaseInput>
+            <IMG_CASE_RESU_PASS>(3/3)</IMG_CASE_RESU_PASS>
+            <CaseType>Customer</CaseType>
+            <CaseType>G1O2</CaseType>
+            <CaseType>CanSwitch</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="LastSate:G1_OFF,F2_OFF; action:ParkBrkSwitch_OFF,DirInd_Right_ON,DirInd_Left_OFF,WrkLtTgleSwtch_OFF">
+            <CaseID>Dedicate_Case4</CaseID>
+            <CaseExpected>signal {"powerMode":2,"powerModeEvent":18} com.harman.service.ScaniaOnOff. SigalName is powerModeInfo</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":5,"CameraType":1,"Show":true,"TriggerMethod":1},{"CameraPos":2,"CameraStatus":4,"CameraType":0,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseExpected>emitCameraState: [{"CameraPos":1,"CameraStatus":2,"CameraType":1,"Show":false,"TriggerMethod":-1},{"CameraPos":2,"CameraStatus":4,"CameraType":0,"Show":false,"TriggerMethod":-1}]</CaseExpected>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest='com.harman.service.ScaniaOnOff'  /com/harman/service/ScaniaOnOff com.harman.ServiceIpc.Invoke  string:onOffPmodePostEvent   string:'{"event":18}'</CaseInput>
+            <CaseInput>sleep 1</CaseInput>
+            <CaseInput>echo "ParkBrkSwitch::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "DirIndRight::1" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "DirIndLeft::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "WrkLtTgleSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>sleep 1</CaseInput>
+            <CaseInput>echo "WhlVehSpeed::0" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "ParkBrkSwitch::1" &gt;&gt; /pps/can/CruiseVehSpeed</CaseInput>
+            <CaseInput>echo "RevSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "DirIndRight::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "DirIndLeft::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>echo "WrkLtTgleSwtch::0" &gt;&gt; /pps/can/CuvInfo</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke stýýýý</CaseInput>
+            <CaseInput>dbus-send --print-reply --type=method_call --dest=com.harman.service.adas /com/harman/service/adas com.harman.ServiceIpc.Invoke string:'SetAttribute' string:'{"AttributeName":"Command","ItemName":"ShowCamera2","Value":"Off"}'</CaseInput>
+            <CaseInput>echo "FrntVwCam::0" &gt;&gt; /pps/can/Camera</CaseInput>
+            <CaseInput>echo "RearVwCam::0" &gt;&gt; /pps/can/Camera</CaseInput>
+            <CaseInput>echo "GenCam1::0" &gt;&gt; /pps/can/Camera</CaseInput>
+            <CaseInput>echo "GenCam2::0" &gt;&gt; /pps/can/Camera</CaseInput>
+            <CaseInput>dbus-send --session --type=signal --dest="com.harman.service.ScaniaOnOff" /com/harman/service/ScaniaOnOff com.harman.ServiceIpc.Emit string:"CameraStatusInfo" string:'{"CameraOneStatus":0}'</CaseInput>
+            <CaseInput>dbus-send --session --type=signal --dest="com.harman.service.ScaniaOnOff" /com/harman/service/ScaniaOnOff com.harman.ServiceIpc.Emit string:"CameraStatusInfo" string:'{"CameraTwoStatus":0}'</CaseInput>
+            <CaseInput>sleep 1</CaseInput>
+            <IMG_CASE_RESU_PASS>(3/3)</IMG_CASE_RESU_PASS>
+            <CaseType>Customer</CaseType>
+            <CaseType>G1O2</CaseType>
+            <CaseType>CanSwitch</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+    </CaseList>
+</CaseRoot>

@@ -1,0 +1,232 @@
+<?xml version="1.0"?>
+<CaseRoot>
+    <CaseList attrib="E:\kids\04_proj\100_gitProj\CaseAssistant\CaseView01\CaseCfg\working\Caselist_SCANIA2016_Platform.cfg.xml"/>
+    <CaseList attrib="Online Case List"/>
+    <CaseList attrib="E:\kids\04_proj\100_gitProj\CaseAssistant\CaseView01\CaseCfg\working\Caselist_SCANIA2016_Platform.cfg.xml"/>
+    <CaseList attrib="SCANIA_PlatForm_IPC_DBUS">
+        <CaseName attrib="IPC_CONNECT">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Platform</CaseType>
+            <CaseType>IPC</CaseType>
+            <CaseType>DBUS</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="IPC_DISCONNECT">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Platform</CaseType>
+            <CaseType>IPC</CaseType>
+            <CaseType>DBUS</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="IPC_FoundServer">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Platform</CaseType>
+            <CaseType>IPC</CaseType>
+            <CaseType>DBUS</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="IPC_CreateServer">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Platform</CaseType>
+            <CaseType>IPC</CaseType>
+            <CaseType>DBUS</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="IPC_emitMsg">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Platform</CaseType>
+            <CaseType>IPC</CaseType>
+            <CaseType>DBUS</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="IPC_InvolkeMethod">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Platform</CaseType>
+            <CaseType>IPC</CaseType>
+            <CaseType>DBUS</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="SCANIA_PlatForm_Msg_Que">
+        <CaseName attrib="MsgQueSetSize">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Platform</CaseType>
+            <CaseType>QUEUE</CaseType>
+            <CaseType>MSGQUEUE</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="MsgQueCreate">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Platform</CaseType>
+            <CaseType>QUEUE</CaseType>
+            <CaseType>MSGQUEUE</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="MsgQueRemoveMsg">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Platform</CaseType>
+            <CaseType>QUEUE</CaseType>
+            <CaseType>MSGQUEUE</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="MsgQueFull">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Platform</CaseType>
+            <CaseType>QUEUE</CaseType>
+            <CaseType>MSGQUEUE</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="MsgQueEmpty">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Platform</CaseType>
+            <CaseType>QUEUE</CaseType>
+            <CaseType>MSGQUEUE</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="SCANIA_PlatForm_IPC_PPS">
+        <CaseName attrib="PPS_createNode">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Platform</CaseType>
+            <CaseType>IPC</CaseType>
+            <CaseType>DBUS</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="PPS_FindNode">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Platform</CaseType>
+            <CaseType>IPC</CaseType>
+            <CaseType>DBUS</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="PPS_CheckValue">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Platform</CaseType>
+            <CaseType>IPC</CaseType>
+            <CaseType>DBUS</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="SCANIA_PlatForm_Timer">
+        <CaseName attrib="Timer_Create">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Platform</CaseType>
+            <CaseType>TIMER</CaseType>
+            <CaseType>TIMER</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="Timer_Delete">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Platform</CaseType>
+            <CaseType>TIMER</CaseType>
+            <CaseType>TIMER</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="Timer_Stop">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Platform</CaseType>
+            <CaseType>TIMER</CaseType>
+            <CaseType>TIMER</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="Timer_Start">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Platform</CaseType>
+            <CaseType>TIMER</CaseType>
+            <CaseType>TIMER</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="Timer_TimerOut">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Platform</CaseType>
+            <CaseType>TIMER</CaseType>
+            <CaseType>TIMER</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="SCANIA_PlatForm_Thread">
+        <CaseName attrib="Thread_Create">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Performace</CaseType>
+            <CaseType>Thread</CaseType>
+            <CaseType>Thread</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="Thread_Delete">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Performace</CaseType>
+            <CaseType>Thread</CaseType>
+            <CaseType>Thread</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="Thread_Stop">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Performace</CaseType>
+            <CaseType>Thread</CaseType>
+            <CaseType>Thread</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+        <CaseName attrib="Thread_Pending">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Performace</CaseType>
+            <CaseType>Thread</CaseType>
+            <CaseType>Thread</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="Thread_Resume">
+            <CaseID>none</CaseID>
+            <CaseExpected>:YourNewCaseExpected</CaseExpected>
+            <IMG_CASE_RESU_FAIL>(0/1)</IMG_CASE_RESU_FAIL>
+            <CaseType>Performace</CaseType>
+            <CaseType>Thread</CaseType>
+            <CaseType>Thread</CaseType>
+            <CaseResult>Passed</CaseResult>
+        </CaseName>
+    </CaseList>
+</CaseRoot>
