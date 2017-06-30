@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\src">
+      <UniqueIdentifier>{dae51f70-67ea-4976-942b-566718d5c956}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\inc">
+      <UniqueIdentifier>{3e75c21b-b58b-4345-8e03-4ae7b164045e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="libAFoundationX86.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\CEvent.h">
+      <Filter>Source Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\CMessage.h">
+      <Filter>Source Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\CMessageHandler.h">
+      <Filter>Source Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\CMessageQueue.h">
+      <Filter>Source Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\CMQRunnableService.h">
+      <Filter>Source Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\CRunableBase.h">
+      <Filter>Source Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\platformdef.h">
+      <Filter>Source Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\TraceMacros.h">
+      <Filter>Source Files\inc</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AssemblyInfo.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Stdafx.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\CEvent.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\CMessage.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\CMessageHandler.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\CMessageQueue.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\CMQRunnableService.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\CRunableBase.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="libAFoundationX86.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+    <None Include="app.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="app.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
