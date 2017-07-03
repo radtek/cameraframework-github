@@ -1,0 +1,22 @@
+#pragma once
+#include "stdafx.h"
+#include <string>
+#include <vector>
+#include <hash_map>
+using namespace std;
+
+class CaseClientRegister;
+class CaseClientServer
+{
+public:
+	static CaseClientServer*     getInstance();
+	static void             delInstance();
+	void vRegClientInterfce(string, CaseClientRegister*);
+	void vEnableClientInterfce();
+	~CaseClientServer();
+
+private:
+	hash_map<string, CaseClientRegister*> m_ICaseStubFuncMap;
+	static CaseClientServer*  s_pInstance;
+	CaseClientServer();
+};

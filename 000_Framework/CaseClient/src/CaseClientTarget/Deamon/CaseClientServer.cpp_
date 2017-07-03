@@ -1,0 +1,38 @@
+#include "stdafx.h"
+#include "CaseClientServer.h"
+
+
+CaseClientServer*  CaseClientServer::s_pInstance = NULL;
+CaseClientServer::CaseClientServer()
+{
+}
+
+
+CaseClientServer::~CaseClientServer()
+{
+}
+
+CaseClientServer* CaseClientServer::getInstance()
+{
+	if (s_pInstance == NULL)
+	{
+		s_pInstance = new CaseClientServer();
+	}
+	return s_pInstance;
+}
+
+
+void CaseClientServer::delInstance()
+{
+	delete s_pInstance;
+	s_pInstance = NULL;
+}
+
+void CaseClientServer::vRegClientInterfce(string str1, CaseClientRegister* Register)
+{
+	;
+}
+void CaseClientServer::vEnableClientInterfce()
+{
+	;
+}
