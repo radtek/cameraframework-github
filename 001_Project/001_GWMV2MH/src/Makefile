@@ -60,7 +60,6 @@ all: build
 build:	$(OBJS)
 #	$(CPP) -c $(CFLAGS) $(SRCS)
 	$(CPP) $(CFLAGS) -lpthread -o $(TARGET) $(addprefix $(OBJS_PATH), $^) $(LDFLAGS)
-	cp $(TARGET) /usr/bin
 #	$(RM) $(OBJS)
 
 clean:
