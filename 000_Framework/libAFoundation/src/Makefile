@@ -56,7 +56,6 @@ CFLAGS += -D LINUX_OS -fPIC
 
 all:$(OBJS)
 	$(CPP) -shared -fPIC $(CFLAGS) $(LDFLAGS) -o $(TARGET_PATH)/$(TARGET) $(OBJS)
-	cp $(TARGET_PATH)/$(TARGET) /usr/lib
 
 ${DIR_OBJ}/%.o : $(SRC_PATH)/%.cpp
 	@echo Compiling $< ...
