@@ -13,7 +13,7 @@ SRC_PATH   := ./
 
 ## target exec file name
 TARGET     := libACaseSocket.so
-TARGET_PATH  := ../../lib/linux
+TARGET_PATH  := ../../lib/Linux
 
 ## get all source files
 SRCS       := $(wildcard $(SRC_PATH)/*.cpp)
@@ -34,7 +34,7 @@ INCLUDE_PATH += ../../../libAFoundation/include/
 INCLUDE_PATH += ../../include/
 ## used include librarys file path
 LIBRARY_PATH := ../../../libAFoundation/lib/linux
-LIBRARY_PATH += ../../lib/linux
+LIBRARY_PATH += ../../lib/Linux
 
 ## debug for debug info, when use gdb to debug
 ifeq (1, ${DBG_ENABLE})
@@ -59,7 +59,6 @@ CFLAGS += -D LINUX_OS -fPIC
 
 all:$(OBJS)
 	$(CPP) -shared -fPIC $(CFLAGS) $(LDFLAGS) -o $(TARGET_PATH)/$(TARGET) $(OBJS)
-	cp $(TARGET_PATH)/$(TARGET) /usr/lib
 	
 ${DIR_OBJ}/%.o : $(SRC_PATH)/%.cpp
 	@echo Compiling $< ...
