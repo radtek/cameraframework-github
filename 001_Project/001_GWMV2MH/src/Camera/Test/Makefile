@@ -23,6 +23,7 @@ OBJS       := $(SRCS:.cpp=.o)
 ## need libs, add at here
 LIBS := AFoundation
 LIBS += ABase
+LIBS += ACaseSocket
 
 ## used headers  file path
 INCLUDE_PATH := ../../../include
@@ -30,8 +31,9 @@ INCLUDE_PATH += ../../../../../000_Framework/libAFoundation/include
 INCLUDE_PATH += ../../../../../000_Framework/libABase/include
 
 ## used include librarys file path
-LIBRARY_PATH := ../../../../000_Framework/libAFoundation/lib/linux
-LIBRARY_PATH += ../../../../000_Framework/libABase/lib/linux
+LIBRARY_PATH := ../../../../../000_Framework/libAFoundation/lib/linux
+LIBRARY_PATH += ../../../../../000_Framework/libABase/lib/linux
+LIBRARY_PATH += ../../../../../000_Framework/CaseClient/lib/Linux
 
 ## debug for debug info, when use gdb to debug
 ifeq (1, ${DBG_ENABLE})
