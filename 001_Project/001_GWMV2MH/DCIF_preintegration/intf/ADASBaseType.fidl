@@ -1,0 +1,72 @@
+package com.harman.ADAS
+
+typeCollection AVMBaseType
+{
+	version 
+	{
+      major 1
+      minor 0
+    }
+   /*read for EOL and runtime status*/
+   enumeration enAVMStatus
+   {
+   	 e_AVM_NOT_CONFIGURED
+   	 e_AVM_ON
+   	 e_AVM_OFF
+   	 e_AVM_OFF_OVERSPEED
+   	 e_AVM_ERR
+   }
+   
+   enumeration enAVMViewMode
+   {
+   	 e_AVM_TOP_VIEW
+   	 e_AVM_FRONT_VIEW
+   	 e_AVM_REAR_VIEW
+   	 e_AVM_RIGHT_VIEW
+   	 e_AVM_LEFT_VIEW
+   	 e_AVM_TOP_REAR_VIEW
+   	 e_AVM_TOP_FRONT_VIEW
+   	 e_AVM_TOP_RIGHT_VIEW
+   	 e_AVM_TOP_LEFT_VIEW
+   }
+}
+
+typeCollection CTABaseType
+{
+	version 
+	{
+      major 1
+      minor 0
+    }
+   
+   enumeration enCTAStatus
+   {
+   	 e_CTA_NOT_CONFIGURED
+   	 e_CTA_ON
+   	 e_CTA_OFF
+   	 e_CTA_ERR
+   }
+   
+}
+
+typeCollection PASBaseType
+{
+	version 
+	{
+      major 1
+      minor 0
+    }
+   /*read for EOL and runtime status*/
+   enumeration enPASStatus
+   {
+   	 e_PAS_NOT_CONFIGURED
+   	 e_PAS_ON
+   	 e_PAS_OFF
+   	 e_PAS_ERR
+   }
+   enumeration enPASViewStatus
+   {
+   	 e_PASVIEW_ENABLE
+   	 e_PASVIEW_DISABLE
+   }
+}
