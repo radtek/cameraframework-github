@@ -14,13 +14,13 @@ namespace ADASManager {
 
 VOID FrontCamera::OpenCamera()
 {
-    ALOGI("OpenCamera!\n");
+    ALOGI("FrontCamera::OpenCamera!\n");
     m_pStateMachine->SendMessage(new MessageForQueue(0 /*not used now*/, eCameraStateTriggerEvent_OpenCamera, "FrontCamera"));
 }
 
 VOID FrontCamera::CloseCamera()
 {
-    ALOGI("CloseCamera!\n");
+    ALOGI("FrontCamera::CloseCamera!\n");
     m_pStateMachine->SendMessage(new MessageForQueue(0 /*not used now*/, eCameraStateTriggerEvent_CloseCamera, "FrontCamera"));
 }
 

@@ -15,7 +15,7 @@ namespace AFoundation {
 
 VOID StateMachine::StateMachineHandler::_handle(UInt32 uiType, UInt32 uiID, const string& pData)
 {
-    ALOGI("StateMachine begine handl message : uiID = %d \n", uiID);
+    ALOGI("StateMachine begine handl message : uiID = %u \n", uiID);
 
     if (m_bIsConstructionCompleted) {
         /** Normal path */
@@ -24,9 +24,9 @@ VOID StateMachine::StateMachineHandler::_handle(UInt32 uiType, UInt32 uiID, cons
         ALOGI("end ProcessMsg !!!\n");
     } else if (!m_bIsConstructionCompleted && (uiID == eMessageType_SM_INIT_COMPLETE)) {
         /** Initial one time path. */
+        InvokeEnterMethods(0, m_bIsConstructionCompleted);
         m_bIsConstructionCompleted = TRUE;
-        InvokeEnterMethods(0);
-        ALOGI("init statemachine complete !!!\n");
+        ALOGI("\033[31minit statemachine complete !!!\033[0m \n");
     } else {
         ALOGE("error path !!!!!! \n");
     }
@@ -168,7 +168,7 @@ Int32 StateMachine::StateMachineHandler::StateToInt(shared_ptr<StateInfo> common
     return m_pStateMachine->m_mapStateMapInt[commonStateInfo->m_pState->GetStateName()];
 }
 
-VOID StateMachine::StateMachineHandler::InvokeEnterMethods(const Int32 stateStackEnteringIndex)
+VOID StateMachine::StateMachineHandler::InvokeEnterMethods(const Int32 stateStackEnteringIndex, BOOLEAN isNotFirst)
 {
     for (Int32 i = stateStackEnteringIndex; i <= m_iStateStackTopIndex; i++) {
         //cout << "invokeEnterMethods:  " << m_vStateStack[i]->m_pState->GetStateName() << endl;
@@ -177,11 +177,15 @@ VOID StateMachine::StateMachineHandler::InvokeEnterMethods(const Int32 stateStac
     }
 
     shared_ptr<StateInfo> curStateInfo = m_vStateStack.at(m_iStateStackTopIndex);
-    if(m_pStateMachine->m_pOwner != nullptr){
-        ALOGI("Subject : %s begin to call Notify !!!!!! \n", m_pStateMachine->m_pOwner->GetSubjectName().c_str());
-        m_pStateMachine->m_pOwner->Notify(StateToInt(curStateInfo));
+    if(isNotFirst) {
+        if(m_pStateMachine->m_pOwner != nullptr){
+            ALOGI("Subject : %s begin to call Notify !!!!!! \n", m_pStateMachine->m_pOwner->GetSubjectName().c_str());
+            m_pStateMachine->m_pOwner->Notify(StateToInt(curStateInfo));
+        } else {
+            ALOGW("m_pStateMachine->m_pOwner = nullptr !!!!!! \n");
+        }
     } else {
-        ALOGW("m_pStateMachine->m_pOwner = nullptr !!!!!! \n");
+        ALOGW("init statemachine, do not Notify observers !!!!!! \n");
     }
 }
 
@@ -228,7 +232,7 @@ VOID StateMachine::StateMachineHandler::PerformTransitions()
         shared_ptr<StateInfo> commonStateInfo = SetupTempStateStackWithStatesToEnter(destState);
         InvokeExitMethods(commonStateInfo);
         Int32 stateStackEnteringIndex = MoveTempStateStackToStateStack();
-        InvokeEnterMethods(stateStackEnteringIndex);
+        InvokeEnterMethods(stateStackEnteringIndex, m_bIsConstructionCompleted);
 
 //        /**
 //         * Since we have transitioned to a new state we need to have

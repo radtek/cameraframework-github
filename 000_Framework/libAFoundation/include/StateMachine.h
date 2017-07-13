@@ -119,7 +119,7 @@ private:
         /**
          * Invoke the enter method starting at the entering index to top of state stack
          */
-        VOID InvokeEnterMethods(const Int32 stateStackEnteringIndex);
+        VOID InvokeEnterMethods(const Int32 stateStackEnteringIndex, BOOLEAN isNotFirst);
 
         /**
          * Do any transitions

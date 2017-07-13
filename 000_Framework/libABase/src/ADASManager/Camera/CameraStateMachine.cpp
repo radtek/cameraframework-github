@@ -36,6 +36,11 @@ CameraStateMachine::CameraStateMachine(const string& name)
     // Start();
 }
 
+void CameraStateMachine::SetDriverProvider(CameraDriverProvider* provider)
+{
+    m_pCameraDriverProvider = provider;
+}
+
 } // namespace ADASManager
 } // namespace ABase
 } // namespace AFramework
