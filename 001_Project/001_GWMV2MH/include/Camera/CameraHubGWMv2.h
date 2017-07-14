@@ -32,14 +32,10 @@ public:
     *****************************************************************/
 
     /* get instance when do not support c++11 */
-    static CameraHubGWMv2* GetInstanceC98(BYTE cameraCreatFlag = 5);
+    static CameraHubGWMv2* GetInstanceC98(BYTE cameraCreatFlag = 4);
 
     /* get instance when support c++11 */
-    static CameraHubGWMv2* GetInstanceC11(BYTE cameraCreatFlag = 5);
-
-    //static VOID DelInstance();
-
-    VOID Update(Subject* subject, Int32 status) override;
+    static CameraHubGWMv2* GetInstanceC11(BYTE cameraCreatFlag = 4);
 
     CameraHubGWMv2(const CameraHubGWMv2&) = delete;
     CameraHubGWMv2& operator=(const CameraHubGWMv2&) = delete;
@@ -47,7 +43,7 @@ public:
     ~CameraHubGWMv2();
 
 private:
-    CameraHubGWMv2(const string& name, BYTE cameraCreatFlag);
+    CameraHubGWMv2(BYTE cameraCreatFlag);
 
 private:
     static mutex mMutex;

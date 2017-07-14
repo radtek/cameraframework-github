@@ -29,16 +29,18 @@ map<string, string> CameraDriverProviderFactory::m_mapCameraMapDevicePath =
 
 CameraDriverProvider* CameraDriverProviderFactory::CreateCameraDriverProvider(const string& cameraName)
 {
-    Enum_TheWayToTalkWithCameraDriver way = m_mapCameraMapProvider[cameraName];
+    switch(m_mapCameraMapProvider[cameraName]){
+        case eTalkWithCameraDriver_V4L2 :
+            ALOGI("cameraName : %s, choose provider : id = %d !\n", cameraName.c_str(), eTalkWithCameraDriver_V4L2);
+            return new V4L2CameraDriverProvider(cameraName);
+        case eTalkWithCameraDriver_OTHERS :
+            ALOGE("cameraName : %s, choose provider : id = %d do not implement !\n", cameraName.c_str(), eTalkWithCameraDriver_OTHERS);
+            //return new OtherCameraDriverProvider(cameraName);
+            return nullptr;
+        default :
+            ALOGE("cameraName : %s, choose provider : id unknow !\n", cameraName.c_str());
+            return nullptr;
 
-    ALOGI("cameraName : %s, choose provider : id = %d !\n", cameraName.c_str(), way);
-
-    if(way == eTalkWithCameraDriver_V4L2){
-        return new V4L2CameraDriverProvider(cameraName);
-    } else if (way == eTalkWithCameraDriver_OTHERS){
-        //return new OtherCameraDriverProvider(cameraName);
-    } else {
-        return nullptr;
     }
 }
 

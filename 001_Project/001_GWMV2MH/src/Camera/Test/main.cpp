@@ -67,50 +67,51 @@ public:
         , m_pHub(hub)
     {
         m_pReserveCamera = m_pHub->SubscribeToReserveCamera(this);
-        m_pRightCamera = m_pHub->SubscribeToRightCamera(this);
-
-        //sleep(1);
+        //m_pRightCamera = m_pHub->SubscribeToRightCamera(this);
 
         m_CamerasState[RESERVECAMERANAME] = m_pReserveCamera->GetCameraState();
         ALOGI("FakeRVC : init : %s with state : %d !!!\n", RESERVECAMERANAME, m_CamerasState[RESERVECAMERANAME]);
-        m_CamerasState[RIGHTCAMERANAME] = m_pRightCamera->GetCameraState();
-        ALOGI("FakeRVC : init : %s with state : %d !!!\n", RIGHTCAMERANAME, m_CamerasState[RIGHTCAMERANAME]);
-
-        //sleep(1);
+        // m_CamerasState[RIGHTCAMERANAME] = m_pRightCamera->GetCameraState();
+        // ALOGI("FakeRVC : init : %s with state : %d !!!\n", RIGHTCAMERANAME, m_CamerasState[RIGHTCAMERANAME]);
 
         m_pReserveCamera->OpenCamera();
-        m_pRightCamera->OpenCamera();
+        //m_pRightCamera->OpenCamera();
 
-        sleep(3);  //because sleep 2s in state machine for test ,so just bigger than 2
+        sleep(2);  //because sleep 500ms in state machine for test ,so just bigger than 500ms
 
         m_pReserveCamera->CloseCamera();
-        m_pRightCamera->CloseCamera();
+        //m_pRightCamera->CloseCamera();
     }
 
     VOID Update(Subject* subject, Int32 status) {
-        if(subject->GetSubjectName().compare(FRONTCAMERANAME) == 0){
-            ALOGI("m_CamerasState Update by : %s with state : %d !!!\n", FRONTCAMERANAME, status);
-        } else if (subject->GetSubjectName().compare(RESERVECAMERANAME) == 0){
-            ALOGI("m_CamerasState Update by : %s with state : %d !!!\n", RESERVECAMERANAME, status);
-        } else if (subject->GetSubjectName().compare(LEFTCAMERANAME) == 0){
-            ALOGI("m_CamerasState Update by : %s with state : %d !!!\n", LEFTCAMERANAME, status);
-        } else if (subject->GetSubjectName().compare(RIGHTCAMERANAME) == 0){
-            ALOGI("m_CamerasState Update by : %s with state : %d !!!\n", RIGHTCAMERANAME, status);
-        } else {
-            ALOGE("m_CamerasState Update by unknow camera with state : %d !!!\n", status);
-        }
+        // if(subject->GetSubjectName().compare(FRONTCAMERANAME) == 0){
+        //     ALOGI("m_CamerasState Update by : %s with state : %d !!!\n", FRONTCAMERANAME, status);
+        // } else if (subject->GetSubjectName().compare(RESERVECAMERANAME) == 0){
+        //     ALOGI("m_CamerasState Update by : %s with state : %d !!!\n", RESERVECAMERANAME, status);
+        // } else if (subject->GetSubjectName().compare(LEFTCAMERANAME) == 0){
+        //     ALOGI("m_CamerasState Update by : %s with state : %d !!!\n", LEFTCAMERANAME, status);
+        // } else if (subject->GetSubjectName().compare(RIGHTCAMERANAME) == 0){
+        //     ALOGI("m_CamerasState Update by : %s with state : %d !!!\n", RIGHTCAMERANAME, status);
+        // } else {
+        //     ALOGE("m_CamerasState Update by unknow camera with state : %d !!!\n", status);
+        // }
+
+        ALOGI("m_CamerasState Update by : %s with state : %d !!!\n", subject->GetSubjectName().c_str(), status);
 
         m_CamerasState[subject->GetSubjectName()] = status;
     }
 
-    ~FakeRVC() {}
+    ~FakeRVC() {
+        m_pHub->CancelSubscribeToReserveCamera(this);
+        //m_pHub->CancelSubscribeToRightCamera(this);
+    }
 
 private:
     map<string, Int32> m_CamerasState;
     CameraHub* m_pHub;
 
     Camera* m_pReserveCamera;
-    Camera* m_pRightCamera;
+    //Camera* m_pRightCamera;
 };
 
 int main(int argc, char** argv) {
@@ -122,7 +123,7 @@ int main(int argc, char** argv) {
     cout << endl;
     cout << endl;
 
-    Observer* o = new FakeRVC("FakeRVC", CameraHubGWMv2::GetInstanceC11(5));
+    Observer* o = new FakeRVC("FakeRVC", CameraHubGWMv2::GetInstanceC11(4));
 
     //main thread wait here
     getchar();

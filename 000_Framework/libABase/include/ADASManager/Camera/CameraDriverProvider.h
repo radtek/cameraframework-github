@@ -20,24 +20,27 @@ public:
     {}
 
 protected:
-    virtual int OpenDriver() = 0;
-    virtual void SetParam() = 0;
-    virtual void AllocMemory() = 0;
-    virtual void GetCapture() = 0;
-    virtual void CloseDriver() = 0;
-    virtual BOOLEAN IsOpen() = 0;
+    virtual Int32 OpenDriver() = 0;
+    virtual VOID SetParam() = 0;
+    virtual VOID AllocMemory() = 0;
+    virtual VOID GetCapture() = 0;
+    virtual VOID CloseDriver() = 0;
 
-    virtual void ShowInfo() = 0;
+    virtual VOID ShowInfo() = 0;
 
 public:
-    int OpenCamera();
+    virtual Int32 OpenCamera() final;
 
-    int CloseCamera();
+    virtual Int32 CloseCamera() final;   // just stop provider data, do not close(fd)
+
+    virtual Int32 PowOffCamera() final;  // close(fd)
 
     virtual ~CameraDriverProvider() {}
 
 protected:
     Int32 m_iFd = -1;
+    BOOLEAN m_bIsOpened = FALSE;
+
     const string m_strCameraName;
     const string m_strDriverPath;
 };

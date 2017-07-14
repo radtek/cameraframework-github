@@ -22,12 +22,10 @@ namespace AFramework {
 namespace ABase {
 namespace ADASManager {
 
-class CameraHub : public Observer
+class CameraHub
 {
 public:
-    CameraHub(const string& name)
-        : Observer(name)
-    {}
+    //CameraHub();
 
     //VOID DispatchMessage(shared_ptr<MessageForQueue> m);
 
@@ -46,8 +44,8 @@ public:
     ~CameraHub() {}
 
 public:
-    map<string, Int32> m_CamerasState;
-    map<string, Camera*> m_CamerasMap;
+    //map<string, Int32> m_CamerasState;
+    //map<string, Camera*> m_CamerasMap;
 
     Camera* m_pFrontCamera = nullptr;
     Camera* m_pReserveCamera = nullptr;

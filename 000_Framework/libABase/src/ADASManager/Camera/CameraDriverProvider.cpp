@@ -7,10 +7,11 @@ namespace AFramework {
 namespace ABase {
 namespace ADASManager {
 
-int CameraDriverProvider::OpenCamera()
+Int32 CameraDriverProvider::OpenCamera()
 {
-    if(!IsOpen()){
-        OpenDriver();
+    if(!m_bIsOpened && (-1 == OpenDriver()) ){
+        ALOGE("CameraDriverProvider : OpenDriver failed !!! \n");
+        return -1;
     }
 
     SetParam();
@@ -22,13 +23,20 @@ int CameraDriverProvider::OpenCamera()
     return 0;
 }
 
-int CameraDriverProvider::CloseCamera()
+Int32 CameraDriverProvider::CloseCamera()
 {
-    if(IsOpen()){
-        CloseDriver();
+    if(m_bIsOpened){
+        //StopGetCapture(); ~~~~~~~~~~~~~~~~~~~~~~~~
     }
 
     return 0;
+}
+
+Int32 CameraDriverProvider::PowOffCamera()
+{
+    if(m_bIsOpened){
+        CloseDriver();
+    }
 }
 
 } // namespace ADASManager
