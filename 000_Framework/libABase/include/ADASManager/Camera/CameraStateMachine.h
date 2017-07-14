@@ -6,6 +6,7 @@
 #include "State.h"
 #include "StateMachine.h"
 #include "CameraEventDefine.h"
+#include "CameraDriverProvider.h"
 
 using namespace std;
 
@@ -24,6 +25,16 @@ class CameraStateMachine : public StateMachine
 public:
     CameraStateMachine(const string& name);
 
+    ~CameraStateMachine()
+    {
+        if(nullptr != m_pCameraDriverProvider) {
+            delete m_pCameraDriverProvider;
+            m_pCameraDriverProvider = nullptr;
+        }
+    }
+
+    void SetDriverProvider(CameraDriverProvider* provider);
+
 public:
     //DefaultState
     shared_ptr<State> m_pDefaultState;
@@ -33,6 +44,11 @@ public:
 
     //EnableState
     shared_ptr<State> m_pEnableState;
+
+private:
+    friend class OffState;
+    friend class EnableState;
+    CameraDriverProvider* m_pCameraDriverProvider = nullptr;
 };
 
 } // namespace ADASManager

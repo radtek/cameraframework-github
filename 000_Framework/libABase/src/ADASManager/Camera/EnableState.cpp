@@ -73,7 +73,14 @@ BOOLEAN EnableState::ProcessMessage(UInt32 uiType, UInt32 uiMessageID, const str
             ClearTimmer();
             csm = dynamic_cast<CameraStateMachine*>(m_pStateMachine);
             if (csm != nullptr) {
-                m_pStateMachine->TransitionTo(csm->m_pOffState);
+                Int32 ret = csm->m_pCameraDriverProvider->CloseCamera();
+                if(0 == ret){
+                    ALOGI("EnableState CloseCamera success , TransitionTo OffState !!!!\n");
+                    m_pStateMachine->TransitionTo(csm->m_pOffState);
+                } else {
+                    ALOGE("EnableState CloseCamera failed , keep EnableState !!!!\n");
+                    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                }
             } else {
                 ALOGE("error statemachine do not exit !!!!\n");
                 return FALSE;

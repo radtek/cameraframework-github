@@ -68,9 +68,16 @@ BOOLEAN OffState::ProcessMessage(UInt32 uiType, UInt32 uiMessageID, const string
             ClearTimmer();
             csm = dynamic_cast<CameraStateMachine*>(m_pStateMachine);
             if (csm != nullptr) {
-                m_pStateMachine->TransitionTo(csm->m_pEnableState);
+                Int32 ret = csm->m_pCameraDriverProvider->OpenCamera();
+                if(0 == ret){
+                    ALOGI("OffState OpenDriver success , TransitionTo EnableState !!!!\n");
+                    m_pStateMachine->TransitionTo(csm->m_pEnableState);
+                } else {
+                    ALOGE("OffState OpenDriver failed , keep OffState !!!!\n");
+                    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                }
             } else {
-                ALOGE("error statemachine do not exit !!!!\n");
+                ALOGE("error CameraStateMachine do not exit !!!!\n");
                 return FALSE;
             }
             break;

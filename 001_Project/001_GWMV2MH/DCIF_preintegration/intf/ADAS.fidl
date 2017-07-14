@@ -1,0 +1,36 @@
+package com.harman.ADAS
+import com.harman.ADAS.AVMBaseType.* from "ADASBaseType.fidl"
+import com.harman.ADAS.CTABaseType.* from "ADASBaseType.fidl"
+import com.harman.ADAS.PASBaseType.* from "ADASBaseType.fidl"
+
+interface AVMService
+{
+	version { major 0 minor 1}
+	/*Attribute of AVM status */
+	attribute enAVMStatus AVMStatus readonly		
+		
+	/* set method to switch AVM view by external module */
+	method SwitchAVMView
+	{
+		in
+		{
+			enAVMViewMode m_eAVMViewMode
+		}
+	}
+}
+
+interface PASService
+{
+	version { major 0 minor 1}
+	/*Attribute of AVM status */
+	attribute enPASStatus PASStatus readonly		
+		
+	/* set method to switch AVM view by external module */
+	method SwitchPASView
+	{
+		in
+		{
+			enPASViewStatus m_ePASViewStatus
+		}
+	}
+}

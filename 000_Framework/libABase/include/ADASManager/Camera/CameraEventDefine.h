@@ -81,6 +81,13 @@ typedef enum _event
     eCameraStateTriggerEvent_INVALID
 } Enum_CameraStateTriggerEvent_Internal;
 
+
+typedef enum _way
+{
+    eTalkWithCameraDriver_V4L2,
+    eTalkWithCameraDriver_OTHERS
+}Enum_TheWayToTalkWithCameraDriver;
+
 } // namespace ADASManager
 } // namespace ABase
 } // namespace AFramework
