@@ -54,15 +54,13 @@ LDFLAGS += $(foreach lib, $(LIBS), -l$(lib))
 
 ## c++11 support
 CFLAGS += -Wl,--no-as-needed  -lpthread -std=c++11
-
-CFLAGS += -D LINUX_OS
-
+CFLAGS += -D LINUX_OS -fPIC -lm -lrt
 CFLAGS += -D__FILENAME__='"$(subst $(dir $<),,$<)"'
 
 all:$(OBJS)
 	$(CPP) $(CFLAGS) $(LDFLAGS) -o $(TARGET_PATH)/$(TARGET) $(OBJS)
 	#kill -n 9 $(pidof CaseClientDeamon)
-	cp $(TARGET_PATH)/$(TARGET) /usr/bin
+	#cp $(TARGET_PATH)/$(TARGET) /usr/bin
 
 ${DIR_OBJ}/%.o : $(SRC_PATH)/%.cpp
 	@echo Compiling $< ...

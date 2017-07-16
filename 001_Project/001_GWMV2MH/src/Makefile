@@ -33,7 +33,7 @@ INCLUDE_PATH += ../../../000_Framework/CaseClient/include
 ## used include librarys file path
 LIBRARY_PATH :=  ../../../000_Framework/libAFoundation/lib/linux
 LIBRARY_PATH += ../../../000_Framework/libABase/lib/linux
-LIBRARY_PATH += ../../../000_Framework/CaseClient/lib/Linux
+LIBRARY_PATH += ../../../000_Framework/CaseClient/lib/linux
 ## debug for debug info, when use gdb to debug
 ifeq (1, ${DBG_ENABLE})
 CFLAGS += -D_DEBUG -O0 -g -DDEBUG=1
