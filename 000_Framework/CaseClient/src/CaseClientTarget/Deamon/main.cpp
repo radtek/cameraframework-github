@@ -13,12 +13,27 @@ using namespace std;
 #define SOCKET_IPC_ADDRESS "127.0.0.1"
 #define SOCKET_IPC_PORT 8881
 
+int  iChkProcPath( )
+{
+	char link[256];
+	char path[256];
+
+	sprintf( link, "/proc/%d/exe", getpid() ); 
+	int i = readlink( link, path, sizeof( path ) );
+	path[i] = '\0';
+	printf( "===============================================\n");       
+	printf( "your case client deamon is launched from \n");       
+	 printf( "%s : %d\n", path, getpid() );        
+	printf( "===============================================\n");		
+
+	return 0;
+}
 
 // 返回自系统开机以来的毫秒数（tick）
 extern unsigned long getTickCount();
 #endif
 int main(int argc, char *argv[]) {
-	printf("CaseClient service start!!  222 \n");
+	printf("CaseClient service start!!xxxxxver 0.1 \n");
 	//while(1)
 	//{
 		;//sleep(1);
@@ -31,6 +46,18 @@ int main(int argc, char *argv[]) {
 */
 	//unsigned int uiStartTime =0; //getTickCount();
 	//unsigned int uiStopTime =0;
+	int retval8 = system("netstat -tln | grep 8888");
+	int retval1 = system("netstat -tln | grep 8881");
+	if((!retval8)||(!retval1))
+		{
+		{printf("Error! Socket Port alread used!plz check local port 8881 and 8888 then restart CaseClient  Deamon \n");};
+		return EXIT_SUCCESS;
+		}
+	else
+		{printf("Success! Socket Port Clean!local port 888* is going to be used by  CaseClient Deamon \n");};
+
+	iChkProcPath();
+	
 #if 1	
 	CCaseLogCollector::getInstance()->vSetupCollector(SOCKET_DEAMON_ADDRESS, SOCKET_IPC_PORT);
 	sleep(1);
