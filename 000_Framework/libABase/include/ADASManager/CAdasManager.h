@@ -36,6 +36,7 @@ public:
 	void vAddModule();
 
 	CAdasManager(const string& strName, CMessageQueue* pMsgQueue);
+	void vCaseCallback(const string& strMockIPC);
 
 protected:	// data
 

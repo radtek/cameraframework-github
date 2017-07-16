@@ -18,7 +18,7 @@ public:
 
     VOID init();
 	//dedicated to case client mocker
-	VOID vCaseCallback(const string& strMockIPC);
+	VOID vCaseCallbackGWMv2(const string& strMockIPC);
 
 protected:
     CAdasManagerGWMv2();
