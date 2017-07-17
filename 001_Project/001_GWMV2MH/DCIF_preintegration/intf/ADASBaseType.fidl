@@ -70,3 +70,45 @@ typeCollection PASBaseType
    	 e_PASVIEW_DISABLE
    }
 }
+
+typeCollection AdasClientType {
+   
+   version { 
+      major 1
+      minor 0 
+   }  
+      
+   <** @description: Different module states
+   **> 
+   enumeration eModuleStates
+   {  
+      <** @description: module view disable, eg: Rvc/Svc/Avm view is unshown.
+      **> 
+      OFF = 0 //0x00
+         
+      <** @description: module view enable, eg: Rvc/Svc/Avm view is showing.
+      **> 
+      ON = 1//0x01
+      
+      <** @description: module view disable, eg: Rvc/Svc/Avm module is unavailable.
+      **> 
+      UNAVAILABLE = 8 //0x02
+   }  
+   
+   struct   sAdasModuleState
+   {
+      <** @description: .
+      **>   
+      
+      String         module_name
+      eModuleStates  eStates
+   
+   }
+   
+   
+   <** @description: list 
+   **> 
+   array aModuleState of sAdasModuleState
+   
+}
+

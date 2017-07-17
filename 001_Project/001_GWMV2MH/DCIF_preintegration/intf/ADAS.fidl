@@ -2,6 +2,7 @@ package com.harman.ADAS
 import com.harman.ADAS.AVMBaseType.* from "ADASBaseType.fidl"
 import com.harman.ADAS.CTABaseType.* from "ADASBaseType.fidl"
 import com.harman.ADAS.PASBaseType.* from "ADASBaseType.fidl"
+import com.harman.ADAS.AdasClientType.* from "ADASBaseType.fidl"
 
 interface AVMService
 {
@@ -33,4 +34,26 @@ interface PASService
 			enPASViewStatus m_ePASViewStatus
 		}
 	}
+}
+
+interface adasclient
+{
+        version { major 0 minor 1}
+         
+        attribute aModuleState CurrentState readonly 
+             
+        method getModuleState{
+            in{
+                String moduleName
+            }
+            out{
+                eModuleStates moduleState
+            }
+        }   
+       
+        broadcast aAdasModuleState{
+            out{
+                aModuleState modulesState
+            }
+        }
 }
