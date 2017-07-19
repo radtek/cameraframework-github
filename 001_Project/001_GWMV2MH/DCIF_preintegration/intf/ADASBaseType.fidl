@@ -11,24 +11,91 @@ typeCollection AVMBaseType
    enumeration enAVMStatus
    {
    	 e_AVM_NOT_CONFIGURED
-   	 e_AVM_ON
-   	 e_AVM_OFF
-   	 e_AVM_OFF_OVERSPEED
-   	 e_AVM_ERR
-   }
-   
-   enumeration enAVMViewMode
-   {
    	 e_AVM_TOP_VIEW
    	 e_AVM_FRONT_VIEW
    	 e_AVM_REAR_VIEW
    	 e_AVM_RIGHT_VIEW
    	 e_AVM_LEFT_VIEW
-   	 e_AVM_TOP_REAR_VIEW
+   	 e_AVM_FRONT_RIGHT_VIEW
+   	 e_AVM_FRONT_LEFT_VIEW
+   	 e_AVM_REAR_RIGHT_VIEW
+   	 e_AVM_REAR_LEFT_VIEW
    	 e_AVM_TOP_FRONT_VIEW
-   	 e_AVM_TOP_RIGHT_VIEW
+   	 e_AVM_TOP_REAR_VIEW
+   	 e_AVM_TOP_RIGHT_VIEW 
    	 e_AVM_TOP_LEFT_VIEW
+   	 e_AVM_TOP_FRONT_RIGHT_VIEW
+   	 e_AVM_TOP_FRONT_LEFT_VIEW
+   	 e_AVM_TOP_REAR_RIGHT_VIEW
+   	 e_AVM_TOP_REAR_LEFT_VIEW
+   	 e_AVM_OFF_OVERSPEED   	 
+   	 e_AVM_OFF
+   	 e_AVM_ERR
    }
+   
+   enumeration enAVMViewMode
+   {
+   	 e_SET_OFF
+   	 e_SET_TOP_VIEW
+   	 e_SET_FRONT_VIEW
+   	 e_SET_REAR_VIEW
+   	 e_SET_RIGHT_VIEW
+   	 e_SET_LEFT_VIEW
+   	 e_SET_FRONT_RIGHT_VIEW
+   	 e_SET_FRONT_LEFT_VIEW
+   	 e_SET_REAR_RIGHT_VIEW
+   	 e_SET_REAR_LEFT_VIEW   	 
+   	 e_SET_TOP_REAR_VIEW
+   	 e_SET_TOP_FRONT_VIEW
+   	 e_SET_TOP_RIGHT_VIEW
+   	 e_SET_TOP_LEFT_VIEW
+   	 e_SET_TOP_FRONT_RIGHT_VIEW
+   	 e_SET_TOP_FRONT_LEFT_VIEW
+   	 e_SET_TOP_REAR_RIGHT_VIEW
+   	 e_SET_TOP_REAR_LEFT_VIEW     	 
+   }
+   
+   enumeration enAVMGuideLineMode
+   {
+   	 e_AVM_STATIC_GUIDELINE_REAR
+   	 e_AVM_STATIC_GUIDELINE_FRONT
+   	 e_AVM_STATIC_GUIDELINE_FRONT_REAR
+   	 e_AVM_DYNAMIC_GUIDELLINE_REAR
+   	 e_AVM_DYNAMIC_GUIDELLINE_FRONT
+   	 e_AVM_DYNAMIC_GUIDELINE_FRONT_REAR
+   }
+   
+   enumeration enAVMCamState
+   {
+   	 e_AVM_CAMERA_NOT_AVAILABLE
+   	 e_AVM_CAMERA_SIGNAL_GOOD
+   	 e_AVM_CAMERA_SIGNAL_LOST
+   }
+    
+	struct tCarBodyStatus
+	{
+		Boolean bLeftMirrorFolded
+		Boolean bRightMirrorFolded 		
+		Boolean bFrontLeftDoorOpen 
+		Boolean bFrontRightDoorOpen 
+		Boolean bRearLeftDoorOpen
+		Boolean bRearRightDoorOpen 
+		Boolean bTrunkOpen 
+	}
+   enumeration enAutoCaliState
+   {
+   	 e_AVM_AUTO_CALI_OFF
+   	 e_AVM_AUTO_CALI_NOTAVALIABLE
+   	 e_AVM_AUTO_CALI_RUNNING
+   	 e_AVM_AUTO_CALI_SUCCESS
+   	 e_AVM_AUTO_CALI_FAILED
+   	 e_AVM_AUTO_CALI_IDLE
+   }	
+   enumeration enAutoCaliWorkMode
+   {
+   	 e_AUTO_CALI_ON
+   	 e_AUTO_CALI_OFF
+   }	
 }
 
 typeCollection CTABaseType
@@ -42,11 +109,20 @@ typeCollection CTABaseType
    enumeration enCTAStatus
    {
    	 e_CTA_NOT_CONFIGURED
-   	 e_CTA_ON
-   	 e_CTA_OFF
+   	 e_CTA_FRONT_ON
+   	 e_CTA_FRONT_OFF
+   	 e_CTA_REAR_ON
+   	 e_CTA_REAR_OFF
    	 e_CTA_ERR
    }
    
+   enumeration enCTAWorkMode
+   {
+   	 e_CTA_FRONT_ON
+   	 e_CTA_FRONT_OFF
+   	 e_CTA_REAR_ON
+   	 e_CTA_REAR_OFF
+   }
 }
 
 typeCollection PASBaseType
@@ -62,13 +138,28 @@ typeCollection PASBaseType
    	 e_PAS_NOT_CONFIGURED
    	 e_PAS_ON
    	 e_PAS_OFF
-   	 e_PAS_ERR
+   	 e_PAS_SNSERR_BLOCKED
+   	 e_PAS_SNSERR_NOTAVALIABLE
    }
    enumeration enPASViewStatus
    {
    	 e_PASVIEW_ENABLE
    	 e_PASVIEW_DISABLE
    }
+}
+
+typeCollection ADASDiagType
+{
+	version 
+	{
+      major 1
+      minor 0
+    }	
+   enumeration enDiagTestState
+   {
+   	 e_TestStartSuccess
+   	 e_TestStartError
+   }	
 }
 
 typeCollection AdasClientType {
