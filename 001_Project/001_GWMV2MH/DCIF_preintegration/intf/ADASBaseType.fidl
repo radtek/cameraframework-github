@@ -95,7 +95,16 @@ typeCollection AVMBaseType
    {
    	 e_AUTO_CALI_ON
    	 e_AUTO_CALI_OFF
-   }	
+   }
+
+   struct stAVMCamState
+   {
+	 enAVMCamState Right_Cam
+	 enAVMCamState Left_Cam
+	 enAVMCamState Front_Cam
+	 enAVMCamState Rear_Cam
+   }
+	
 }
 
 typeCollection CTABaseType
@@ -109,19 +118,23 @@ typeCollection CTABaseType
    enumeration enCTAStatus
    {
    	 e_CTA_NOT_CONFIGURED
-   	 e_CTA_FRONT_ON
-   	 e_CTA_FRONT_OFF
-   	 e_CTA_REAR_ON
-   	 e_CTA_REAR_OFF
+   	 e_CTA_ON
+   	 e_CTA_OFF
    	 e_CTA_ERR
    }
    
    enumeration enCTAWorkMode
    {
-   	 e_CTA_FRONT_ON
-   	 e_CTA_FRONT_OFF
-   	 e_CTA_REAR_ON
-   	 e_CTA_REAR_OFF
+   	 e_CTA_FRONT_ON = 1
+   	 e_CTA_FRONT_OFF = 2
+   	 e_CTA_REAR_ON = 4
+   	 e_CTA_REAR_OFF = 8
+   }
+   
+   struct stCTAStatus
+   {
+	 enCTAStatus  CTA_Front_Status
+	 enCTAStatus  CTA_Rear_Status
    }
 }
 

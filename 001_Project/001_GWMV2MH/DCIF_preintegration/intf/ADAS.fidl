@@ -11,13 +11,13 @@ interface AVMService
 	/*Attribute of AVM status */
 	attribute enAVMStatus AVMStatus readonly
 	/*Attribute of AVM Cam status */
-	attribute enAVMCamState AVMCamStatus readonly	
+	attribute stAVMCamState AVMCamStatus readonly	
 	/*Attribute of CTA status */
-	attribute enCTAStatus CTAStatus readonly	
+	attribute stCTAStatus CTAStatus readonly	
 	/*Attribute of AutoCali status */
 	attribute enAutoCaliState AutoStatus readonly			
 	/*Attribute of car body status */	
-	attribute tCarBodyStatus CarBodyStatus readonly
+	attribute stCarBodyStatus CarBodyStatus readonly
 	/* set method to switch AVM view by external module */
 	method SwitchAVMView
 	{
@@ -89,7 +89,7 @@ interface PASService
 {
 	version { major 0 minor 1}
 	/*Attribute of PASService status */
-	attribute enPASStatus PASStatus readonly		
+	attribute enPASStatus [] PASStatus readonly		
 		
 	/* set method to switch PASService view by external module */
 	method SwitchPASView
