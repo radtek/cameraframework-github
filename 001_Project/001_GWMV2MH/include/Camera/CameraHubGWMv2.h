@@ -32,10 +32,10 @@ public:
     *****************************************************************/
 
     /* get instance when do not support c++11 */
-    static CameraHubGWMv2* GetInstanceC98(BYTE cameraCreatFlag = 4);
+    static CameraHubGWMv2* GetInstanceC98(BYTE cameraCreatFlag = 5);
 
     /* get instance when support c++11 */
-    static CameraHubGWMv2* GetInstanceC11(BYTE cameraCreatFlag = 4);
+    static CameraHubGWMv2* GetInstanceC11(BYTE cameraCreatFlag = 5);
 
     CameraHubGWMv2(const CameraHubGWMv2&) = delete;
     CameraHubGWMv2& operator=(const CameraHubGWMv2&) = delete;

@@ -134,7 +134,7 @@ static VOID pthreadRunnable(VOID* pData)
 
 VOID CRunableBase::start()
 {
-    m_loopCnt =0;
+    m_loopCnt = 0;
     //Thread for Message queue
 #ifdef QNX_OS
     pthread_create(&m_hThread, NULL, pthreadRunnable, this);
