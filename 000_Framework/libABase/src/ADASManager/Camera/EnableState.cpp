@@ -32,8 +32,13 @@ VOID EnableState::NotifyTimer(TimeValue v)
 
 VOID EnableState::TimerCallback()
 {
-    ALOGI("%s SendMessage message id = %d !\n", GetStateName().c_str(), eCameraStateTriggerEvent_CloseCamera_REAL);
-    m_pStateMachine->SendMessage(new MessageForQueue(0, eCameraStateTriggerEvent_CloseCamera_REAL, "EnableState"));
+    if(m_eCloseCameraMessage == eCameraStateTriggerEvent_CloseCamera_DriverTrue) {
+        ALOGI("%s SendMessage message id = %d !\n", GetStateName().c_str(), eCameraStateTriggerEvent_CloseCamera_REAL_DriverTrue);
+        m_pStateMachine->SendMessage(new MessageForQueue(0, eCameraStateTriggerEvent_CloseCamera_REAL_DriverTrue, ENABLECAMERASTATE));
+    } else if (m_eCloseCameraMessage == eCameraStateTriggerEvent_CloseCamera_DriverFalse) {
+        ALOGI("%s SendMessage message id = %d !\n", GetStateName().c_str(), eCameraStateTriggerEvent_CloseCamera_REAL_DriverFalse);
+        m_pStateMachine->SendMessage(new MessageForQueue(0, eCameraStateTriggerEvent_CloseCamera_REAL_DriverFalse, ENABLECAMERASTATE));
+    }
 }
 
 VOID EnableState::SetTimmer() const
@@ -56,8 +61,14 @@ BOOLEAN EnableState::ProcessMessage(UInt32 uiType, UInt32 uiMessageID, const str
     {
         CameraStateMachine* csm;
 
-        case eCameraStateTriggerEvent_CloseCamera :
+        case eCameraStateTriggerEvent_CloseCamera_DriverTrue :
             SetTimmer();
+            m_eCloseCameraMessage = eCameraStateTriggerEvent_CloseCamera_DriverTrue;
+            break;
+
+        case eCameraStateTriggerEvent_CloseCamera_DriverFalse :
+            SetTimmer();
+            m_eCloseCameraMessage = eCameraStateTriggerEvent_CloseCamera_DriverFalse;
             break;
 
         case eCameraStateTriggerEvent_OpenCamera :
@@ -69,11 +80,29 @@ BOOLEAN EnableState::ProcessMessage(UInt32 uiType, UInt32 uiMessageID, const str
             ALOGE("error uiMessageID = %d !!!!\n", uiMessageID);
             return FALSE;
 
-        case eCameraStateTriggerEvent_CloseCamera_REAL :
+        case eCameraStateTriggerEvent_CloseCamera_REAL_DriverTrue :
             ClearTimmer();
             csm = dynamic_cast<CameraStateMachine*>(m_pStateMachine);
             if (csm != nullptr) {
-                Int32 ret = csm->m_pCameraDriverProvider->CloseCamera();
+                Int32 ret = csm->m_pCameraDriverProvider->CloseCamera(TRUE);
+                if(0 == ret){
+                    ALOGI("EnableState CloseCamera success , TransitionTo OffState !!!!\n");
+                    m_pStateMachine->TransitionTo(csm->m_pOffState);
+                } else {
+                    ALOGE("EnableState CloseCamera failed , keep EnableState !!!!\n");
+                    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                }
+            } else {
+                ALOGE("error statemachine do not exit !!!!\n");
+                return FALSE;
+            }
+            break;
+
+        case eCameraStateTriggerEvent_CloseCamera_REAL_DriverFalse :
+            ClearTimmer();
+            csm = dynamic_cast<CameraStateMachine*>(m_pStateMachine);
+            if (csm != nullptr) {
+                Int32 ret = csm->m_pCameraDriverProvider->CloseCamera(FALSE);
                 if(0 == ret){
                     ALOGI("EnableState CloseCamera success , TransitionTo OffState !!!!\n");
                     m_pStateMachine->TransitionTo(csm->m_pOffState);

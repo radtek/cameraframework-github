@@ -24,7 +24,7 @@ VOID State::Exit() const
 
 BOOLEAN State::ProcessMessage(UInt32 uiType, UInt32 uiID, const string& pData) const
 {
-    ALOGI("ProcessMessage : message id = %d !\n", uiID);
+    ALOGI("ProcessMessage : message id = %u !\n", uiID);
     return FALSE;
 }
 

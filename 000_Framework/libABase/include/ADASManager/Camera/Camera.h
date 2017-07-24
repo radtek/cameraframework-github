@@ -6,11 +6,9 @@
 #include "State.h"
 #include "StateMachine.h"
 #include "CameraEventDefine.h"
-#include "CameraDriverProvider.h"
+//#include "CameraDriverProvider.h"
 #include "CameraDriverProviderFactory.h"
 #include "CameraStateMachine.h"
-
-#include <set>
 
 using namespace std;
 
@@ -38,7 +36,9 @@ public:
 
     virtual VOID OpenCamera() = 0;
 
-    virtual VOID CloseCamera() = 0;
+    // if isReal == FALSE : CloseCamera just CALL StopCapture, do not CALL Uninit_device() && close(fd)       normal   call
+    // if isReal == TRUE  : CloseCamera will CALL StopCapture AND Uninit_device() AND close(fd)               poweroff call
+    virtual VOID CloseCamera(const BOOLEAN isReal) = 0;
 
 protected:
     Camera(const string& name, StateMachine* sm)
@@ -47,6 +47,7 @@ protected:
     {
         CameraStateMachine* csm = dynamic_cast<CameraStateMachine*>(m_pStateMachine);
         if (csm != nullptr) {
+            ALOGI("Camera : %s SetDriverProvider !!!!\n", name.c_str());
             csm->SetDriverProvider(CameraDriverProviderFactory::CreateCameraDriverProvider(name));
         } else {
             ALOGE("Camera : %s SetDriverProvider failed !!!!\n", name.c_str());

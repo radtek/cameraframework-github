@@ -1,6 +1,7 @@
 
 #include "ADASManager/Camera/CameraDriverProviderFactory.h"
 #include "ADASManager/Camera/V4L2CameraDriverProvider.h"
+#include "ADASManager/Camera/OtherCameraDriverProvider.h"
 
 namespace Harman {
 namespace Adas {
@@ -29,18 +30,17 @@ map<string, string> CameraDriverProviderFactory::m_mapCameraMapDevicePath =
 
 CameraDriverProvider* CameraDriverProviderFactory::CreateCameraDriverProvider(const string& cameraName)
 {
+    ALOGI("CameraDriverProviderFactory cameraName = %s !\n", cameraName.c_str());
     switch(m_mapCameraMapProvider[cameraName]){
         case eTalkWithCameraDriver_V4L2 :
             ALOGI("cameraName : %s, choose provider : id = %d !\n", cameraName.c_str(), eTalkWithCameraDriver_V4L2);
-            return new V4L2CameraDriverProvider(cameraName);
+            return new V4L2CameraDriverProvider(cameraName, IO_METHOD_MMAP);
         case eTalkWithCameraDriver_OTHERS :
             ALOGE("cameraName : %s, choose provider : id = %d do not implement !\n", cameraName.c_str(), eTalkWithCameraDriver_OTHERS);
-            //return new OtherCameraDriverProvider(cameraName);
-            return nullptr;
+            return new OtherCameraDriverProvider(cameraName);
         default :
             ALOGE("cameraName : %s, choose provider : id unknow !\n", cameraName.c_str());
             return nullptr;
-
     }
 }
 

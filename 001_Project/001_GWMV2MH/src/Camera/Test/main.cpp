@@ -77,10 +77,10 @@ public:
         m_pReserveCamera->OpenCamera();
         //m_pRightCamera->OpenCamera();
 
-        sleep(2);  //because sleep 500ms in state machine for test ,so just bigger than 500ms
+        sleep(4);  //because sleep 500ms in state machine for test ,so just bigger than 500ms
 
-        m_pReserveCamera->CloseCamera();
-        //m_pRightCamera->CloseCamera();
+        m_pReserveCamera->CloseCamera(FALSE);
+        //m_pRightCamera->CloseCamera(TRUE);
     }
 
     VOID Update(Subject* subject, Int32 status) {

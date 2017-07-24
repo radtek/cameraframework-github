@@ -33,7 +33,7 @@ VOID OffState::NotifyTimer(TimeValue v)
 VOID OffState::TimerCallback()
 {
     ALOGI("%s SendMessage message id = %d !\n", GetStateName().c_str(), eCameraStateTriggerEvent_OpenCamera_REAL);
-    m_pStateMachine->SendMessage(new MessageForQueue(0, eCameraStateTriggerEvent_OpenCamera_REAL, "OffState"));
+    m_pStateMachine->SendMessage(new MessageForQueue(0, eCameraStateTriggerEvent_OpenCamera_REAL, OFFCAMERASTATE));
 }
 
 VOID OffState::SetTimmer() const
@@ -60,7 +60,11 @@ BOOLEAN OffState::ProcessMessage(UInt32 uiType, UInt32 uiMessageID, const string
             SetTimmer();
             break;
 
-        case eCameraStateTriggerEvent_CloseCamera :
+        case eCameraStateTriggerEvent_CloseCamera_DriverTrue :
+            ClearTimmer();
+            break;
+
+        case eCameraStateTriggerEvent_CloseCamera_DriverFalse :
             ClearTimmer();
             break;
 
@@ -82,7 +86,12 @@ BOOLEAN OffState::ProcessMessage(UInt32 uiType, UInt32 uiMessageID, const string
             }
             break;
 
-        case eCameraStateTriggerEvent_CloseCamera_REAL :
+        case eCameraStateTriggerEvent_CloseCamera_REAL_DriverTrue :
+            ClearTimmer();
+            ALOGE("error uiMessageID = %d !!!!\n", uiMessageID);
+            return FALSE;
+
+        case eCameraStateTriggerEvent_CloseCamera_REAL_DriverFalse :
             ClearTimmer();
             ALOGE("error uiMessageID = %d !!!!\n", uiMessageID);
             return FALSE;

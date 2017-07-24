@@ -14,29 +14,33 @@ Int32 CameraDriverProvider::OpenCamera()
         return -1;
     }
 
-    SetParam();
+#ifdef DEBUG
+    ShowInfo();
+#endif
 
-    AllocMemory();
+    if(!m_bHasInit && (-1 == InitDevice()) ){
+        ALOGE("CameraDriverProvider : InitDevice failed !!! \n");
+        return -1;
+    }
 
-    GetCapture();
-
-    return 0;
-}
-
-Int32 CameraDriverProvider::CloseCamera()
-{
-    if(m_bIsOpened){
-        //StopGetCapture(); ~~~~~~~~~~~~~~~~~~~~~~~~
+    if (m_bIsOpened && m_bHasInit) {
+        GetCapture();
     }
 
     return 0;
 }
 
-Int32 CameraDriverProvider::PowOffCamera()
+Int32 CameraDriverProvider::CloseCamera(const BOOLEAN isReal)
 {
-    if(m_bIsOpened){
+    if (isReal) {
+        StopCapture();
+        UninitDevice();
         CloseDriver();
+    } else {
+        StopCapture();
     }
+
+    return 0;
 }
 
 } // namespace ADASManager
