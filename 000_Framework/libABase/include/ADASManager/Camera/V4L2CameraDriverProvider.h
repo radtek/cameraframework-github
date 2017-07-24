@@ -3,6 +3,8 @@
 #define __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_CAMERA_V4L2CAMERADRIVERPROVIDER_H__
 
 #include "CameraDriverProvider.h"
+#include "CameraDriverProviderFactory.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -108,6 +110,16 @@ private:
     FILE *m_pFp = nullptr;
     string m_strFilename = string("test.yuv");
 #endif
+};
+
+class V4L2CameraDriverProviderFactory : public CameraDriverProviderFactory
+{
+public:
+    CameraDriverProvider* CreateCameraDriverProvider(const string& cameraName) override {
+        return new V4L2CameraDriverProvider(cameraName, IO_METHOD_USERPTR);
+    }
+
+    ~V4L2CameraDriverProviderFactory() {}
 };
 
 } // namespace ADASManager

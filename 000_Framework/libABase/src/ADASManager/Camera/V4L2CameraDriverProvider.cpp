@@ -32,11 +32,11 @@ Int32 V4L2CameraDriverProvider::xioctl(Int32 fd, UInt64 request, VOID* argp)
 
     do {
         ret = ioctl(fd, request, argp);
-        ALOGI("V4L2CameraDriverProvider::xioctl ret = %d, m_bIsStreamOff=%d, request=%lu, VIDIOC_DQBUF=%lu\n", ret,m_bIsStreamOff, request, VIDIOC_DQBUF);
-        if(-1 == ret && m_bIsStreamOff /*&& request == VIDIOC_DQBUF*/) {
-            ALOGI("V4L2CameraDriverProvider::xioctl return 0\n");
-            return 0;
-        }
+        //ALOGI("V4L2CameraDriverProvider::xioctl ret = %d, m_bIsStreamOff=%d, request=%lu, VIDIOC_DQBUF=%lu\n", ret,m_bIsStreamOff, request, VIDIOC_DQBUF);
+        // if(-1 == ret && m_bIsStreamOff && request == VIDIOC_DQBUF) {
+        //     ALOGI("V4L2CameraDriverProvider::xioctl return 0\n");
+        //     return 0;
+        // }
     } while (-1 == ret && EINTR == errno);
 
     return ret;
@@ -228,14 +228,14 @@ Int32 V4L2CameraDriverProvider::Init_userp(UInt32 buffer_size)
         }
     }
 
-    m_pBuffers = (struct UserBuffer*)calloc(AllocBufferCount, sizeof(struct UserBuffer));
+    m_pBuffers = (struct UserBuffer*)calloc(req.count, sizeof(struct UserBuffer));
 
     if (!m_pBuffers) {
         ALOGE("Out of memory\n");
         return -1;
     }
 
-    for (BufferCountReal = 0; BufferCountReal < AllocBufferCount; ++BufferCountReal) {
+    for (BufferCountReal = 0; BufferCountReal < req.count; ++BufferCountReal) {
         m_pBuffers[BufferCountReal].length = buffer_size;
         m_pBuffers[BufferCountReal].start = memalign(/* boundary */page_size,
                 buffer_size);
@@ -433,25 +433,23 @@ Int32 V4L2CameraDriverProvider::Read_frame()
 
             buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
             buf.memory = V4L2_MEMORY_MMAP;
-            ALOGI("V4L2CameraDriverProvider::Read_frame VIDIOC_DQBUF = %lu\n", VIDIOC_DQBUF);
-            if(!m_bIsStreamOff) {
-                if (-1 == xioctl(m_iFd, VIDIOC_DQBUF, &buf)) {
-                    switch (errno) {
-                        case EAGAIN:
-                            return 0;
 
-                        case EIO:
-                            /* Could ignore EIO, see spec. */
-                            /* fall through */
+            if (-1 == xioctl(m_iFd, VIDIOC_DQBUF, &buf)) {
+                switch (errno) {
+                    case EAGAIN:
+                        return -1;
 
-                        default:
-                            //errno_exit("VIDIOC_DQBUF");
-                            ALOGE("VIDIOC_DQBUF\n");
-                            return 0; ///////////////////////////////////////////
-                    }
+                    case EIO:
+                        /* Could ignore EIO, see spec. */
+                        /* fall through */
+
+                    default:
+                        //errno_exit("VIDIOC_DQBUF");
+                        if(m_bIsStreamOff) return 0;
+
+                        ALOGE("VIDIOC_DQBUF");
+                        return -1;
                 }
-            } else {
-                return 1;
             }
 
             assert(buf.index < BufferCountReal);
@@ -463,7 +461,7 @@ Int32 V4L2CameraDriverProvider::Read_frame()
             if (-1 == xioctl(m_iFd, VIDIOC_QBUF, &buf)) {
                 //errno_exit("VIDIOC_QBUF");
                 ALOGE("VIDIOC_QBUF\n");
-                return 0; ///////////////////////////////////////////
+                return -1;
             }
 
             break;
@@ -477,15 +475,17 @@ Int32 V4L2CameraDriverProvider::Read_frame()
             if (-1 == xioctl(m_iFd, VIDIOC_DQBUF, &buf)) {
                 switch (errno) {
                     case EAGAIN:
-                        return 0;
+                        return -1;
 
                     case EIO:
                         /* Could ignore EIO, see spec. */
                         /* fall through */
 
                     default:
+                        if(m_bIsStreamOff) return 0;
+
                         ALOGE("VIDIOC_DQBUF");
-                        return 0;////////////////////////////////////////
+                        return -1;
                 }
             }
 
@@ -503,13 +503,13 @@ Int32 V4L2CameraDriverProvider::Read_frame()
 
             if (-1 == xioctl(m_iFd, VIDIOC_QBUF, &buf)) {
                 ALOGE("VIDIOC_QBUF");
-                return 0;////////////////////////////////////////
+                return -1;
             }
 
             break;
     }
 
-    return 1;
+    return 0;
 }
 
 VOID V4L2CameraDriverProvider::update()

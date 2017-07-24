@@ -4,10 +4,12 @@
 #include <memory>
 
 #include "ADASManager/Camera/CameraStateMachine.h"
+#include "ADASManager/Camera/CameraDriverProviderFactory.h"
 
 using namespace std;
 
 using Harman::Adas::AFramework::ABase::ADASManager::CameraStateMachine;
+using Harman::Adas::AFramework::ABase::ADASManager::CameraDriverProviderFactory;
 
 namespace Harman {
 namespace Adas {
@@ -18,7 +20,7 @@ namespace Camera {
 class CameraStateMachineGWMv2 : public CameraStateMachine
 {
 public:
-    CameraStateMachineGWMv2(const string& name);
+    CameraStateMachineGWMv2(const string& name, CameraDriverProviderFactory* factory);
 
 public:
     // //DefaultState

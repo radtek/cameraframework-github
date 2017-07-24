@@ -2,9 +2,9 @@
 #ifndef __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_CAMERA_CAMERADRIVERFACTORY_H__
 #define __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_CAMERA_CAMERADRIVERFACTORY_H__
 
-#include <map>
-#include "TraceMacros.h"
-#include "CameraEventDefine.h"
+#include <string>
+
+using namespace std;
 
 namespace Harman {
 namespace Adas {
@@ -17,11 +17,9 @@ class CameraDriverProvider;
 class CameraDriverProviderFactory
 {
 public:
-    static CameraDriverProvider* CreateCameraDriverProvider(const string& cameraName);
+    virtual CameraDriverProvider* CreateCameraDriverProvider(const string& cameraName) = 0;
 
-public:
-    static map<string, Enum_TheWayToTalkWithCameraDriver> m_mapCameraMapProvider;
-    static map<string, string> m_mapCameraMapDevicePath;
+    virtual ~CameraDriverProviderFactory() {}
 };
 
 } // namespace ADASManager

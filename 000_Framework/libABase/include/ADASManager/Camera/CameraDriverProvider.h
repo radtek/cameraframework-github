@@ -5,6 +5,9 @@
 #include "TypeDefine.h"
 #include "CameraDriverProviderFactory.h"
 #include "CRunableBase.h"
+#include "TraceMacros.h"
+#include "CameraEventDefine.h"
+#include <map>
 
 using Harman::Adas::AFramework::AFoundation::CRunableBase;
 
@@ -20,7 +23,7 @@ public:
     CameraDriverProvider(const string& cameraName)
         : CRunableBase(cameraName, FALSE)
         , m_strCameraName(cameraName)
-        , m_strDriverPath(CameraDriverProviderFactory::m_mapCameraMapDevicePath[cameraName])
+        , m_strDriverPath(m_mapCameraMapDevicePath[cameraName])
     {}
 
 protected:
@@ -48,6 +51,8 @@ protected:
     Int32 m_iFd = -1;
     BOOLEAN m_bIsOpened = FALSE;
     BOOLEAN m_bHasInit = FALSE;
+
+    static map<string, string> m_mapCameraMapDevicePath;
 
     const string& m_strCameraName;
     const string& m_strDriverPath;

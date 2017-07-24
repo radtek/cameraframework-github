@@ -45,13 +45,6 @@ protected:
         : Subject(name)
         , m_pStateMachine(sm)
     {
-        CameraStateMachine* csm = dynamic_cast<CameraStateMachine*>(m_pStateMachine);
-        if (csm != nullptr) {
-            ALOGI("Camera : %s SetDriverProvider !!!!\n", name.c_str());
-            csm->SetDriverProvider(CameraDriverProviderFactory::CreateCameraDriverProvider(name));
-        } else {
-            ALOGE("Camera : %s SetDriverProvider failed !!!!\n", name.c_str());
-        }
     }
 
 public:
