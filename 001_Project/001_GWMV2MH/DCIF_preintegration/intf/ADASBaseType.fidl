@@ -72,16 +72,6 @@ typeCollection AVMBaseType
    	 e_AVM_CAMERA_SIGNAL_LOST
    }
     
-	struct tCarBodyStatus
-	{
-		Boolean bLeftMirrorFolded
-		Boolean bRightMirrorFolded 		
-		Boolean bFrontLeftDoorOpen 
-		Boolean bFrontRightDoorOpen 
-		Boolean bRearLeftDoorOpen
-		Boolean bRearRightDoorOpen 
-		Boolean bTrunkOpen 
-	}
    enumeration enAutoCaliState
    {
    	 e_AVM_AUTO_CALI_OFF

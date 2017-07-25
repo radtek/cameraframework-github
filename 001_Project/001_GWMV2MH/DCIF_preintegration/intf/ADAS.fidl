@@ -16,8 +16,6 @@ interface AVMService
 	attribute stCTAStatus CTAStatus readonly	
 	/*Attribute of AutoCali status */
 	attribute enAutoCaliState AutoStatus readonly			
-	/*Attribute of car body status */	
-	attribute stCarBodyStatus CarBodyStatus readonly
 	/* set method to switch AVM view by external module */
 	method SwitchAVMView
 	{
