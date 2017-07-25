@@ -5,6 +5,7 @@
 #include "ADASManager/Camera/ReserveCamera.h"
 #include "ADASManager/Camera/LeftCamera.h"
 #include "ADASManager/Camera/RightCamera.h"
+#include "ADASManager/Camera/V4L2CameraDriverProvider.h"
 
 #include <iostream>
 
@@ -12,6 +13,7 @@ using Harman::Adas::AFramework::ABase::ADASManager::FrontCamera;
 using Harman::Adas::AFramework::ABase::ADASManager::ReserveCamera;
 using Harman::Adas::AFramework::ABase::ADASManager::LeftCamera;
 using Harman::Adas::AFramework::ABase::ADASManager::RightCamera;
+using Harman::Adas::AFramework::ABase::ADASManager::V4L2CameraDriverProviderFactory;
 
 namespace Harman {
 namespace Adas {
@@ -39,29 +41,33 @@ CameraHubGWMv2::CameraHubGWMv2(BYTE cameraCreatFlag)
 {
     ALOGI("cameraCreatFlag = %d\n", cameraCreatFlag);
     if(0x01 == (cameraCreatFlag & 0x01)) {
-        m_pRightCamera = new RightCamera(RIGHTCAMERANAME, new CameraStateMachineGWMv2(RIGHTCAMERANAME)); //CameraStateMachineGWMv2 delete in ~Camera()
-        //m_CamerasMap[RIGHTCAMERANAME] = m_pRightCamera;
+        // obj:V4L2CameraDriverProviderFactory delete in ~CameraStateMachineGWMv2()
+        // obj:CameraStateMachineGWMv2 delete in ~Camera()
+        m_pRightCamera = new RightCamera(RIGHTCAMERANAME, new CameraStateMachineGWMv2(RIGHTCAMERANAME, new V4L2CameraDriverProviderFactory()));
         ALOGI("create camera : RightCamera success !!!\n");
     }
     cameraCreatFlag = cameraCreatFlag >> 1;
 
     if(0x01 == (cameraCreatFlag & 0x01)) {
-        m_pLeftCamera = new LeftCamera(LEFTCAMERANAME, new CameraStateMachineGWMv2(LEFTCAMERANAME)); //CameraStateMachineGWMv2 delete in ~Camera()
-        //m_CamerasMap[LEFTCAMERANAME] = m_pLeftCamera;
+        // obj:V4L2CameraDriverProviderFactory delete in ~CameraStateMachineGWMv2()
+        // obj:CameraStateMachineGWMv2 delete in ~Camera()
+        m_pLeftCamera = new LeftCamera(LEFTCAMERANAME, new CameraStateMachineGWMv2(LEFTCAMERANAME, new V4L2CameraDriverProviderFactory()));
         ALOGI("create camera : LeftCamera success !!!\n");
     }
     cameraCreatFlag = cameraCreatFlag >> 1;
 
     if(0x01 == (cameraCreatFlag & 0x01)) {
-        m_pReserveCamera = new ReserveCamera(RESERVECAMERANAME, new CameraStateMachineGWMv2(RESERVECAMERANAME)); //CameraStateMachineGWMv2 delete in ~Camera()
-        //m_CamerasMap[RESERVECAMERANAME] = m_pReserveCamera;
+        // obj:V4L2CameraDriverProviderFactory delete in ~CameraStateMachineGWMv2()
+        // obj:CameraStateMachineGWMv2 delete in ~Camera()
+        m_pReserveCamera = new ReserveCamera(RESERVECAMERANAME, new CameraStateMachineGWMv2(RESERVECAMERANAME, new V4L2CameraDriverProviderFactory()));
         ALOGI("create camera : ReserveCamera success !!!\n");
     }
     cameraCreatFlag = cameraCreatFlag >> 1;
 
     if(0x01 == (cameraCreatFlag & 0x01)) {
-        m_pFrontCamera = new FrontCamera(FRONTCAMERANAME, new CameraStateMachineGWMv2(FRONTCAMERANAME)); //CameraStateMachineGWMv2 delete in ~Camera()
-        //m_CamerasMap[FRONTCAMERANAME] = m_pFrontCamera;
+        // obj:V4L2CameraDriverProviderFactory delete in ~CameraStateMachineGWMv2()
+        // obj:CameraStateMachineGWMv2 delete in ~Camera()
+        m_pFrontCamera = new FrontCamera(FRONTCAMERANAME, new CameraStateMachineGWMv2(FRONTCAMERANAME, new V4L2CameraDriverProviderFactory()));
         ALOGI("create camera : FrontCamera success !!!\n");
     }
 }

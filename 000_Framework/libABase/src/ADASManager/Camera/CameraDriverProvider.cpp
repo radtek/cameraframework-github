@@ -7,6 +7,18 @@ namespace AFramework {
 namespace ABase {
 namespace ADASManager {
 
+#define CAMERA_DEVICE0 "/dev/video0"
+#define CAMERA_DEVICE1 "/dev/video1"
+#define CAMERA_DEVICE2 "/dev/video2"
+#define CAMERA_DEVICE3 "/dev/video3"
+
+//maybe read from EOL
+map<string, string> CameraDriverProvider::m_mapCameraMapDevicePath =
+        {{FRONTCAMERANAME,   CAMERA_DEVICE0},
+         {RESERVECAMERANAME, CAMERA_DEVICE0},
+         {LEFTCAMERANAME,    CAMERA_DEVICE0},
+         {RIGHTCAMERANAME,   CAMERA_DEVICE0}};
+
 Int32 CameraDriverProvider::OpenCamera()
 {
     if(!m_bIsOpened && (-1 == OpenDriver()) ){

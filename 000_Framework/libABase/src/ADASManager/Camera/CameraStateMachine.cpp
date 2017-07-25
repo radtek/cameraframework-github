@@ -10,9 +10,12 @@ namespace AFramework {
 namespace ABase {
 namespace ADASManager {
 
-CameraStateMachine::CameraStateMachine(const string& name)
+CameraStateMachine::CameraStateMachine(const string& name, CameraDriverProviderFactory* factory)
     : StateMachine(name)
+    , m_pCameraDriverProviderFactory(factory)
 {
+    m_pCameraDriverProvider = m_pCameraDriverProviderFactory->CreateCameraDriverProvider(name);
+
     //init m_mapStateMapInt
     m_mapStateMapInt[OFFCAMERASTATE] = eSVS_Camera_State_OFF;
     m_mapStateMapInt[ENABLECAMERASTATE] = eSVS_Camera_State_Enable;
@@ -34,11 +37,6 @@ CameraStateMachine::CameraStateMachine(const string& name)
     /* do in child class eg:CameraStateMachineGWMv2 */
     // //start StateMachine
     // Start();
-}
-
-void CameraStateMachine::SetDriverProvider(CameraDriverProvider* provider)
-{
-    m_pCameraDriverProvider = provider;
 }
 
 } // namespace ADASManager

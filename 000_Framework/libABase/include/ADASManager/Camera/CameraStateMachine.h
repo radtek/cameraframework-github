@@ -7,6 +7,7 @@
 #include "StateMachine.h"
 #include "CameraEventDefine.h"
 #include "CameraDriverProvider.h"
+#include "CameraDriverProviderFactory.h"
 
 using namespace std;
 
@@ -23,7 +24,7 @@ namespace ADASManager {
 class CameraStateMachine : public StateMachine
 {
 public:
-    CameraStateMachine(const string& name);
+    CameraStateMachine(const string& name, CameraDriverProviderFactory* factory);
 
     ~CameraStateMachine()
     {
@@ -31,9 +32,12 @@ public:
             delete m_pCameraDriverProvider;
             m_pCameraDriverProvider = nullptr;
         }
-    }
 
-    void SetDriverProvider(CameraDriverProvider* provider);
+        if(nullptr != m_pCameraDriverProviderFactory) {
+            delete m_pCameraDriverProviderFactory;
+            m_pCameraDriverProviderFactory = nullptr;
+        }
+    }
 
 public:
     //DefaultState
@@ -49,6 +53,7 @@ private:
     friend class OffState;
     friend class EnableState;
     CameraDriverProvider* m_pCameraDriverProvider = nullptr;
+    CameraDriverProviderFactory* m_pCameraDriverProviderFactory = nullptr;
 };
 
 } // namespace ADASManager

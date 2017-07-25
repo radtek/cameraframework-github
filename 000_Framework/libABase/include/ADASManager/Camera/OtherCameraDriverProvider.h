@@ -3,6 +3,7 @@
 #define __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_CAMERA_OTHERCAMERADRIVERPROVIDER_H__
 
 #include "CameraDriverProvider.h"
+#include "CameraDriverProviderFactory.h"
 
 namespace Harman {
 namespace Adas {
@@ -33,6 +34,14 @@ public:
 
 
     VOID update() override;
+};
+
+class OtherCameraDriverProviderFactory : public CameraDriverProviderFactory
+{
+public:
+    CameraDriverProvider* CreateCameraDriverProvider(const string& cameraName) override {
+        return new OtherCameraDriverProvider(cameraName);
+    }
 };
 
 } // namespace ADASManager
