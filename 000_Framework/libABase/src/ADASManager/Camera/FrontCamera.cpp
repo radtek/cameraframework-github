@@ -15,13 +15,17 @@ namespace ADASManager {
 VOID FrontCamera::OpenCamera()
 {
     ALOGI("FrontCamera::OpenCamera!\n");
-    m_pStateMachine->SendMessage(new MessageForQueue(0 /*not used now*/, eCameraStateTriggerEvent_OpenCamera, "FrontCamera"));
+    m_pStateMachine->SendMessage(new MessageForQueue(0 /*not used now*/, eCameraStateTriggerEvent_OpenCamera, FRONTCAMERANAME));
 }
 
-VOID FrontCamera::CloseCamera()
+VOID FrontCamera::CloseCamera(const BOOLEAN isReal)
 {
-    ALOGI("FrontCamera::CloseCamera!\n");
-    m_pStateMachine->SendMessage(new MessageForQueue(0 /*not used now*/, eCameraStateTriggerEvent_CloseCamera, "FrontCamera"));
+    ALOGI("FrontCamera::CloseCamera(%s)!\n", (isReal ? "TRUE" : "FALSE"));
+    if(isReal) {
+        m_pStateMachine->SendMessage(new MessageForQueue(0 /*not used now*/, eCameraStateTriggerEvent_CloseCamera_DriverTrue, FRONTCAMERANAME));
+    } else {
+        m_pStateMachine->SendMessage(new MessageForQueue(0 /*not used now*/, eCameraStateTriggerEvent_CloseCamera_DriverFalse, FRONTCAMERANAME));
+    }
 }
 
 } // namespace ADASManager

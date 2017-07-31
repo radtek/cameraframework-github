@@ -2,13 +2,20 @@ package com.harman.ADAS
 import com.harman.ADAS.AVMBaseType.* from "ADASBaseType.fidl"
 import com.harman.ADAS.CTABaseType.* from "ADASBaseType.fidl"
 import com.harman.ADAS.PASBaseType.* from "ADASBaseType.fidl"
+import com.harman.ADAS.ADASDiagType.* from "ADASBaseType.fidl"
+import com.harman.ADAS.AdasClientType.* from "ADASBaseType.fidl"
 
 interface AVMService
 {
 	version { major 0 minor 1}
 	/*Attribute of AVM status */
-	attribute enAVMStatus AVMStatus readonly		
-		
+	attribute enAVMStatus AVMStatus readonly
+	/*Attribute of AVM Cam status */
+	attribute stAVMCamState AVMCamStatus readonly	
+	/*Attribute of CTA status */
+	attribute stCTAStatus CTAStatus readonly	
+	/*Attribute of AutoCali status */
+	attribute enAutoCaliState AutoStatus readonly			
 	/* set method to switch AVM view by external module */
 	method SwitchAVMView
 	{
@@ -17,15 +24,72 @@ interface AVMService
 			enAVMViewMode m_eAVMViewMode
 		}
 	}
+	
+	method SwitchGuideline
+	{
+		in
+		{
+			enAVMGuideLineMode m_eAVMGuideLinewMode
+		}
+	}
+	
+	method SwitchCTA
+	{
+		in
+		{
+			enCTAWorkMode m_eCATMode
+		}
+		out
+		{
+			UInt8 iErrCTA
+		}
+	}
+	
+	method SwitchAutoCali
+	{
+		in
+		{
+			enAutoCaliWorkMode m_eAutoCaliMode
+		}
+		out
+		{
+			UInt8 iErrAutoCali
+		}
+	}
 }
+
+interface ADASDiagnosis
+{
+	version { major 0 minor 1}
+	/*Attribute of ADASDiagnosis status */
+	//attribute enDiagnosis AVMStatus readonly		
+		
+	/* this dignosis method is request by diagnosis GWMv2*/
+	method triggerCameraTesting
+	{
+		out
+		{
+			enDiagTestState m_DiagTest
+		}
+	}
+	/* this dignosis method is request by diagnosis GWMv2*/
+	method getNumOfCameras
+	{
+		out
+		{
+			UInt8 m_eAVMGuideLinewMode
+		}
+	}		
+}
+
 
 interface PASService
 {
 	version { major 0 minor 1}
-	/*Attribute of AVM status */
-	attribute enPASStatus PASStatus readonly		
+	/*Attribute of PASService status */
+	attribute enPASStatus [] PASStatus readonly		
 		
-	/* set method to switch AVM view by external module */
+	/* set method to switch PASService view by external module */
 	method SwitchPASView
 	{
 		in
@@ -33,4 +97,26 @@ interface PASService
 			enPASViewStatus m_ePASViewStatus
 		}
 	}
+}
+
+interface adasclient
+{
+        version { major 0 minor 1}
+         
+        attribute aModuleState CurrentState readonly 
+             
+        method getModuleState{
+            in{
+                String moduleName
+            }
+            out{
+                eModuleStates moduleState
+            }
+        }   
+       
+        broadcast aAdasModuleState{
+            out{
+                aModuleState modulesState
+            }
+        }
 }

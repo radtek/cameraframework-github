@@ -3,6 +3,8 @@
 #define __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_CAMERA_V4L2CAMERADRIVERPROVIDER_H__
 
 #include "CameraDriverProvider.h"
+#include "CameraDriverProviderFactory.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -23,6 +25,8 @@
 #include <asm/types.h>          /* for videodev2.h */
 #include <linux/videodev2.h>
 
+#define WRITE_FILE
+
 namespace Harman {
 namespace Adas {
 namespace AFramework {
@@ -31,6 +35,8 @@ namespace ADASManager {
 
 #define DEFAULT_PIXEL_FORMAT V4L2_PIX_FMT_YUYV
 #define NB_BUFFER 10
+
+#define AllocBufferCount 10
 
 struct VideoInfo {
     struct v4l2_capability cap;
@@ -45,24 +51,75 @@ struct VideoInfo {
     Int32 framesizeIn;
 };
 
+typedef enum {
+    IO_METHOD_READ,
+    IO_METHOD_MMAP,
+    IO_METHOD_USERPTR,
+} eIo_method;
+
+struct UserBuffer {
+    VOID* start;
+    UInt32 length;
+};
+
 class V4L2CameraDriverProvider : public CameraDriverProvider
 {
 public:
-    V4L2CameraDriverProvider(const string& cameraName);
+    V4L2CameraDriverProvider(const string& cameraName, eIo_method m);
 
     ~V4L2CameraDriverProvider();
 
     Int32 OpenDriver() override;
-    VOID SetParam() override;
-    VOID AllocMemory() override;
-    VOID GetCapture() override;
-    VOID CloseDriver() override;
+    Int32 GetCapture() override;
+    Int32 StopCapture() override;
+    Int32 CloseDriver() override;
+
+    VOID update() override;
 
     //BOOLEAN IsOpen() override;
     VOID ShowInfo() override;
 
+    Int32 InitDevice() override;
+    Int32 UninitDevice() override;
+
 private:
-    struct VideoInfo *mVideoInfo = nullptr;
+    Int32 Init_read(UInt32 buffer_size);
+    Int32 Init_mmap();
+    Int32 Init_userp(UInt32 buffer_size);
+    Int32 Read_frame();
+
+    Int32 xioctl(Int32 fd, UInt64 request, VOID* argp);
+
+#ifdef WRITE_FILE
+    VOID Process_image(const VOID* p, Int32 size);
+#endif
+
+private:
+    struct VideoInfo *m_pVideoInfo = nullptr;
+    eIo_method m_eIo = IO_METHOD_MMAP;
+
+    struct UserBuffer* m_pBuffers = nullptr;
+
+    Int32 BufferCountReal = AllocBufferCount;
+
+    BOOLEAN m_bIsStarted = FALSE;
+
+    BOOLEAN m_bIsStreamOff = FALSE;
+
+#ifdef WRITE_FILE
+    FILE *m_pFp = nullptr;
+    string m_strFilename = string("test.yuv");
+#endif
+};
+
+class V4L2CameraDriverProviderFactory : public CameraDriverProviderFactory
+{
+public:
+    CameraDriverProvider* CreateCameraDriverProvider(const string& cameraName) override {
+        return new V4L2CameraDriverProvider(cameraName, IO_METHOD_USERPTR);
+    }
+
+    ~V4L2CameraDriverProviderFactory() {}
 };
 
 } // namespace ADASManager

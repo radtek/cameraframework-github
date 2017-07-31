@@ -7,6 +7,18 @@ namespace AFramework {
 namespace ABase {
 namespace ADASManager {
 
+#define CAMERA_DEVICE0 "/dev/video0"
+#define CAMERA_DEVICE1 "/dev/video1"
+#define CAMERA_DEVICE2 "/dev/video2"
+#define CAMERA_DEVICE3 "/dev/video3"
+
+//maybe read from EOL
+map<string, string> CameraDriverProvider::m_mapCameraMapDevicePath =
+        {{FRONTCAMERANAME,   CAMERA_DEVICE0},
+         {RESERVECAMERANAME, CAMERA_DEVICE0},
+         {LEFTCAMERANAME,    CAMERA_DEVICE0},
+         {RIGHTCAMERANAME,   CAMERA_DEVICE0}};
+
 Int32 CameraDriverProvider::OpenCamera()
 {
     if(!m_bIsOpened && (-1 == OpenDriver()) ){
@@ -14,29 +26,33 @@ Int32 CameraDriverProvider::OpenCamera()
         return -1;
     }
 
-    SetParam();
+#ifdef DEBUG
+    ShowInfo();
+#endif
 
-    AllocMemory();
+    if(!m_bHasInit && (-1 == InitDevice()) ){
+        ALOGE("CameraDriverProvider : InitDevice failed !!! \n");
+        return -1;
+    }
 
-    GetCapture();
-
-    return 0;
-}
-
-Int32 CameraDriverProvider::CloseCamera()
-{
-    if(m_bIsOpened){
-        //StopGetCapture(); ~~~~~~~~~~~~~~~~~~~~~~~~
+    if (m_bIsOpened && m_bHasInit) {
+        GetCapture();
     }
 
     return 0;
 }
 
-Int32 CameraDriverProvider::PowOffCamera()
+Int32 CameraDriverProvider::CloseCamera(const BOOLEAN isReal)
 {
-    if(m_bIsOpened){
+    if (isReal) {
+        StopCapture();
+        UninitDevice();
         CloseDriver();
+    } else {
+        StopCapture();
     }
+
+    return 0;
 }
 
 } // namespace ADASManager

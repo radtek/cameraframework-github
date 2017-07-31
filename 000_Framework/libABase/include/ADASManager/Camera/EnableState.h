@@ -55,6 +55,7 @@ private:
 
 private:
     CTimer* m_pDelayExitReverseGearTimer = nullptr;
+    mutable Enum_CameraStateTriggerEvent_Internal m_eCloseCameraMessage = eCameraStateTriggerEvent_CloseCamera_DriverTrue;
 };
 
 } // namespace ADASManager

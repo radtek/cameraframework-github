@@ -49,44 +49,43 @@ typedef enum _vehicle_Camera_State{
 } Enum_VehicleCameraState;
 
 /*
- * vehicle gears event
+ * State Trigger Event (message type used by CameraStateMachine)
  */
-// typedef enum _vehicle_Gears{
-//     /* original vehicle Gears */
-//     eSVS_TGSLever_MANUAL      = 0x4,
-//     eSVS_TGSLever_DRIVE       = 0x5,
-//     eSVS_TGSLever_NEUTRAL     = 0x6,
-//     eSVS_TGSLever_REVERSE     = 0x7,
-//     eSVS_TGSLever_PARKED      = 0x8,
-//     eSVS_TGSLever_INVALID     = 0xF,
-
-//     /* man-made vehicle Gears */
-//     eSVS_TGSLever_ENTER_REVERSE = 0x9,
-//     eSVS_TGSLever_EXIT_REVERSE  = 0xA
-// } Enum_VehicleGear;
 typedef enum _event
 {
-    eCameraStateTriggerEvent_Init_Complete,
 
+    eCameraStateTriggerEvent_Init_Complete,   // do not be used until now
 
-    eCameraStateTriggerEvent_OpenCamera,
-    eCameraStateTriggerEvent_CloseCamera,
+    //original Trigger
+    eCameraStateTriggerEvent_OpenCamera,                 // OpenCamera()
+    eCameraStateTriggerEvent_CloseCamera_DriverFalse,    // CloseCamera(FALSE)
+    eCameraStateTriggerEvent_CloseCamera_DriverTrue,     // CloseCamera(TRUE)
 
-
-    //suport 500ms shake
+    //manual Trigger depend on original Trigger, purpose : suport 500ms shake (depend on Timmer)
     eCameraStateTriggerEvent_OpenCamera_REAL,
-    eCameraStateTriggerEvent_CloseCamera_REAL,
-
+    eCameraStateTriggerEvent_CloseCamera_REAL_DriverFalse,
+    eCameraStateTriggerEvent_CloseCamera_REAL_DriverTrue,
 
     eCameraStateTriggerEvent_INVALID
 } Enum_CameraStateTriggerEvent_Internal;
 
-
+/*
+ * the way to talk with camera driver
+ */
 typedef enum _way
 {
     eTalkWithCameraDriver_V4L2,
     eTalkWithCameraDriver_OTHERS
-}Enum_TheWayToTalkWithCameraDriver;
+} Enum_TheWayToTalkWithCameraDriver;
+
+/*
+ * the param to talk with camera driver
+ */
+typedef struct _param
+{
+    Int32 with = 1280;
+    Int32 hight = 760;
+} CameraDriverParams;
 
 } // namespace ADASManager
 } // namespace ABase

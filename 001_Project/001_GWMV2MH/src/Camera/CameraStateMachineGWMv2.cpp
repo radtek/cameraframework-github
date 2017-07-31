@@ -7,8 +7,8 @@ namespace AProject {
 namespace GWMV2MH {
 namespace Camera {
 
-CameraStateMachineGWMv2::CameraStateMachineGWMv2(const string& name)
-    : CameraStateMachine(name)
+CameraStateMachineGWMv2::CameraStateMachineGWMv2(const string& name, CameraDriverProviderFactory* factory)
+    : CameraStateMachine(name, factory)
 {
     /* do in base class CameraStateMachine */
     // //creat specific State belongs to CameraStateMachine

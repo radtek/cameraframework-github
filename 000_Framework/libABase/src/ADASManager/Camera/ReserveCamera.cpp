@@ -15,13 +15,17 @@ namespace ADASManager {
 VOID ReserveCamera::OpenCamera()
 {
     ALOGI("ReserveCamera::OpenCamera!\n");
-    m_pStateMachine->SendMessage(new MessageForQueue(0 /*not used now*/, eCameraStateTriggerEvent_OpenCamera, "ReserveCamera"));
+    m_pStateMachine->SendMessage(new MessageForQueue(0 /*not used now*/, eCameraStateTriggerEvent_OpenCamera, RESERVECAMERANAME));
 }
 
-VOID ReserveCamera::CloseCamera()
+VOID ReserveCamera::CloseCamera(const BOOLEAN isReal)
 {
-    ALOGI("ReserveCamera::CloseCamera!\n");
-    m_pStateMachine->SendMessage(new MessageForQueue(0 /*not used now*/, eCameraStateTriggerEvent_CloseCamera, "ReserveCamera"));
+    ALOGI("ReserveCamera::CloseCamera(%s)!\n", (isReal ? "TRUE" : "FALSE"));
+    if(isReal) {
+        m_pStateMachine->SendMessage(new MessageForQueue(0 /*not used now*/, eCameraStateTriggerEvent_CloseCamera_DriverTrue, RESERVECAMERANAME));
+    } else {
+        m_pStateMachine->SendMessage(new MessageForQueue(0 /*not used now*/, eCameraStateTriggerEvent_CloseCamera_DriverFalse, RESERVECAMERANAME));
+    }
 }
 
 } // namespace ADASManager
