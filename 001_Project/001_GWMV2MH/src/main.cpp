@@ -7,9 +7,9 @@
 
 #include <CommonAPI/CommonAPI.hpp>
 
-#include "provides/v0/com/harman/adas/AVMServiceStubImpl.hpp"
-#include "provides/v0/com/harman/adas/PASServiceStubImpl.hpp"
-#include "provides/v0/com/harman/adas/AdasServiceStubImpl.hpp"
+#include "provides/AVMServiceStubImpl.hpp"
+#include "provides/PASServiceStubImpl.hpp"
+#include "provides/AdasServiceStubImpl.hpp"
 
 #include <iostream>
 #include <memory>

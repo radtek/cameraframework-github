@@ -58,11 +58,10 @@ AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src/Rvc RVC_SRC)
 
 add_executable(
 adas
-main.cpp
 ${MAIN_SRC} ${CAM_SRC} ${RVC_SRC}
-provides/v0/com/harman/adas/AVMServiceStubImpl.cpp
-provides/v0/com/harman/adas/PASServiceStubImpl.cpp
-provides/v0/com/harman/adas/AdasServiceStubImpl.cpp
+provides/AVMServiceStubImpl.cpp
+provides/PASServiceStubImpl.cpp
+provides/AdasServiceStubImpl.cpp
 )
 target_link_libraries(
 adas
