@@ -54,7 +54,7 @@ public:
      *
      * @return name of state.
      */
-    virtual const string& GetStateName() const;
+    virtual const string& GetStateName() const final;
 
     virtual ~State() {};
 

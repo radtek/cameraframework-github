@@ -20,6 +20,7 @@ namespace ADASManager {
 #define DEFAULTCAMERASTATE  "DefaultState"
 #define OFFCAMERASTATE      "OffState"
 #define ENABLECAMERASTATE   "EnableState"
+#define SUSPENDCAMERASTATE  "SuspendState"
 
 /******** cameraCreatFlag :  which model need which cameras *****
  * BIT  : 1:need  /  0:no need  /  X:reserve
@@ -42,7 +43,8 @@ static const BYTE s_UNKNOWN_Map_Cameras = 0x00;
  */
 typedef enum _vehicle_Camera_State{
     eSVS_Camera_State_OFF      = 0x0,
-    eSVS_Camera_State_Enable   = 0x1,
+    eSVS_Camera_State_Suspend  = 0x1,
+    eSVS_Camera_State_Enable   = 0x2,
 
 
     eSVS_Camera_State_Invalid  = 0xFF
@@ -56,18 +58,54 @@ typedef enum _event
 
     eCameraStateTriggerEvent_Init_Complete,   // do not be used until now
 
-    //original Trigger
-    eCameraStateTriggerEvent_OpenCamera,                 // OpenCamera()
-    eCameraStateTriggerEvent_CloseCamera_DriverFalse,    // CloseCamera(FALSE)
-    eCameraStateTriggerEvent_CloseCamera_DriverTrue,     // CloseCamera(TRUE)
+    /*original Trigger*******************************************/
+    eCameraStateTriggerEvent_OpenCamera,    // OpenCamera
+    eCameraStateTriggerEvent_CloseCamera,   // CloseCamera
 
-    //manual Trigger depend on original Trigger, purpose : suport 500ms shake (depend on Timmer)
-    eCameraStateTriggerEvent_OpenCamera_REAL,
-    eCameraStateTriggerEvent_CloseCamera_REAL_DriverFalse,
-    eCameraStateTriggerEvent_CloseCamera_REAL_DriverTrue,
+    eCameraStateTriggerEvent_StartCapture,
+    eCameraStateTriggerEvent_StopCapture,
+    /*original Trigger*******************************************/
+
+    /*manual Trigger*********************************************/
+    //depend on original Trigger, purpose : suport 500ms shake (depend on Timmer)
+    eCameraStateTriggerEvent_StartCapture_REAL,
+    eCameraStateTriggerEvent_StopCapture_REAL,
+    /*manual Trigger*********************************************/
 
     eCameraStateTriggerEvent_INVALID
 } Enum_CameraStateTriggerEvent_Internal;
+
+inline string TiggerStr(UInt32 trigger)
+{
+    switch(trigger) {
+        case eCameraStateTriggerEvent_Init_Complete :
+            return "eCameraStateTriggerEvent_Init_Complete";
+
+        case eCameraStateTriggerEvent_OpenCamera :
+            return "eCameraStateTriggerEvent_OpenCamera";
+
+        case eCameraStateTriggerEvent_CloseCamera :
+            return "eCameraStateTriggerEvent_CloseCamera";
+
+        case eCameraStateTriggerEvent_StartCapture :
+            return "eCameraStateTriggerEvent_StartCapture";
+
+        case eCameraStateTriggerEvent_StopCapture :
+            return "eCameraStateTriggerEvent_StopCapture";
+
+        case eCameraStateTriggerEvent_StartCapture_REAL :
+            return "eCameraStateTriggerEvent_StartCapture_REAL";
+
+        case eCameraStateTriggerEvent_StopCapture_REAL :
+            return "eCameraStateTriggerEvent_StopCapture_REAL";
+
+        case eCameraStateTriggerEvent_INVALID :
+            return "eCameraStateTriggerEvent_INVALID";
+
+        default:
+            return "eCameraStateTriggerEvent_INVALID";
+    }
+}
 
 /*
  * the way to talk with camera driver
@@ -86,6 +124,11 @@ typedef struct _param
     Int32 with = 1280;
     Int32 hight = 760;
 } CameraDriverParams;
+
+/*
+ * ERROR CODE
+ */
+static const ECode NO_ERROR = 0;
 
 } // namespace ADASManager
 } // namespace ABase

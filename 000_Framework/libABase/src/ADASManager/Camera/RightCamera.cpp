@@ -18,14 +18,22 @@ VOID RightCamera::OpenCamera()
     m_pStateMachine->SendMessage(new MessageForQueue(0 /*not used now*/, eCameraStateTriggerEvent_OpenCamera, RIGHTCAMERANAME));
 }
 
-VOID RightCamera::CloseCamera(const BOOLEAN isReal)
+VOID RightCamera::CloseCamera()
 {
-    ALOGI("RightCamera::CloseCamera(%s)!\n", (isReal ? "TRUE" : "FALSE"));
-    if(isReal) {
-        m_pStateMachine->SendMessage(new MessageForQueue(0 /*not used now*/, eCameraStateTriggerEvent_CloseCamera_DriverTrue, RIGHTCAMERANAME));
-    } else {
-        m_pStateMachine->SendMessage(new MessageForQueue(0 /*not used now*/, eCameraStateTriggerEvent_CloseCamera_DriverFalse, RIGHTCAMERANAME));
-    }
+    ALOGI("RightCamera::CloseCamera!\n");
+    m_pStateMachine->SendMessage(new MessageForQueue(0 /*not used now*/, eCameraStateTriggerEvent_CloseCamera, RIGHTCAMERANAME));
+}
+
+Int32 RightCamera::StartCapture()
+{
+    ALOGI("RightCamera::StartCapture!\n");
+    m_pStateMachine->SendMessage(new MessageForQueue(0 /*not used now*/, eCameraStateTriggerEvent_StartCapture, RIGHTCAMERANAME));
+}
+
+Int32 RightCamera::StopCapture()
+{
+    ALOGI("RightCamera::StopCapture!\n");
+    m_pStateMachine->SendMessage(new MessageForQueue(0 /*not used now*/, eCameraStateTriggerEvent_StopCapture, RIGHTCAMERANAME));
 }
 
 } // namespace ADASManager

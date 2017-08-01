@@ -39,7 +39,7 @@ CameraHubGWMv2* CameraHubGWMv2::GetInstanceC11(BYTE cameraCreatFlag)
 
 CameraHubGWMv2::CameraHubGWMv2(BYTE cameraCreatFlag)
 {
-    ALOGI("cameraCreatFlag = %d\n", cameraCreatFlag);
+    ALOGD("cameraCreatFlag = %d\n", cameraCreatFlag);
     if(0x01 == (cameraCreatFlag & 0x01)) {
         // obj:V4L2CameraDriverProviderFactory delete in ~CameraStateMachineGWMv2()
         // obj:CameraStateMachineGWMv2 delete in ~Camera()

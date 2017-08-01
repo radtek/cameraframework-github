@@ -22,17 +22,15 @@ public:
     ~OtherCameraDriverProvider();
 
     Int32 OpenDriver() override;
-    //VOID SetParam() override;
-    //VOID AllocMemory() override;
-    Int32 GetCapture() override;
-    Int32 StopCapture() override;
     Int32 CloseDriver() override;
+
     Int32 InitDevice() override;
     Int32 UninitDevice() override;
 
+    Int32 GetCapture() override;
+    Int32 StopCapture() override;
+
     VOID ShowInfo() override;
-
-
     VOID update() override;
 };
 

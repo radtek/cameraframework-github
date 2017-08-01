@@ -34,11 +34,20 @@ public:
 
     Enum_VehicleCameraState GetCameraState();
 
+    // Open camera driver && prepare camera data
     virtual VOID OpenCamera() = 0;
 
-    // if isReal == FALSE : CloseCamera just CALL StopCapture, do not CALL Uninit_device() && close(fd)       normal   call
-    // if isReal == TRUE  : CloseCamera will CALL StopCapture AND Uninit_device() AND close(fd)               poweroff call
-    virtual VOID CloseCamera(const BOOLEAN isReal) = 0;
+    // start get camera data
+    virtual Int32 StartCapture() = 0;
+
+    // stop get camera data
+    virtual Int32 StopCapture() = 0;
+
+    // free resource &&  close camera driver
+    virtual VOID CloseCamera() = 0;
+
+    virtual VOID SetCameraParam(CameraDriverParams param) {}
+    virtual CameraDriverParams GetCameraParam() {}
 
 protected:
     Camera(const string& name, StateMachine* sm)

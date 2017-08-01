@@ -70,25 +70,24 @@ public:
     ~V4L2CameraDriverProvider();
 
     Int32 OpenDriver() override;
-    Int32 GetCapture() override;
-    Int32 StopCapture() override;
     Int32 CloseDriver() override;
-
-    VOID update() override;
-
-    //BOOLEAN IsOpen() override;
-    VOID ShowInfo() override;
 
     Int32 InitDevice() override;
     Int32 UninitDevice() override;
+
+    Int32 GetCapture() override;
+    Int32 StopCapture() override;
+
+    VOID update() override;
+    VOID ShowInfo() override;
 
 private:
     Int32 Init_read(UInt32 buffer_size);
     Int32 Init_mmap();
     Int32 Init_userp(UInt32 buffer_size);
     Int32 Read_frame();
-
     Int32 xioctl(Int32 fd, UInt64 request, VOID* argp);
+    void CloseFd(const Int32 fd);
 
 #ifdef WRITE_FILE
     VOID Process_image(const VOID* p, Int32 size);

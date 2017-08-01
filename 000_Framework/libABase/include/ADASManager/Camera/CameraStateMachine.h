@@ -49,9 +49,13 @@ public:
     //EnableState
     shared_ptr<State> m_pEnableState;
 
+    //SuspendState
+    shared_ptr<State> m_pSuspendState;
+
 private:
     friend class OffState;
     friend class EnableState;
+    friend class SuspendState;
     CameraDriverProvider* m_pCameraDriverProvider = nullptr;
     CameraDriverProviderFactory* m_pCameraDriverProviderFactory = nullptr;
 };
