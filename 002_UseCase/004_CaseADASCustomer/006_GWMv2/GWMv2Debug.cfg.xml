@@ -1,0 +1,205 @@
+<?xml version="1.0"?>
+<CaseRoot>
+    <CaseList attrib=".\CaseListLastWorkingTree.xml"/>
+    <CaseList attrib="FordLICS_debug">
+        <CaseName attrib="login and root">
+            <CaseID>none</CaseID>
+            <CaseInput>systemctl stop hmi</CaseInput>
+            <CaseInput>root</CaseInput>
+            <CaseInput>mount -o remount,rw /dev/mmcblkp7 /</CaseInput>
+            <CaseInput>export XDG_RUNTIME_DIR=/var/run/root/1000 </CaseInput>
+            <CaseInput>cp /usr/bin/backParkassist  /usr/bin/ParkAssist</CaseInput>
+            <CaseInput>sync</CaseInput>
+            <CaseInput>/usr/bin/ParkAssist&amp;</CaseInput>
+            <CaseInput>ps | grep ParkAssist</CaseInput>
+            <CaseInput>ifconfig</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="mkdir">
+            <CaseID>none</CaseID>
+            <CaseInput>cp -r /usr/share/pdc/Night_Camera  /usr/share/pdc/NewNight_Camera</CaseInput>
+            <CaseInput>ls /usr/share/pdc/Night_Camera/</CaseInput>
+            <CaseInput>mv -r /usr/share/pdc/Night_Camera/res/*.* ..</CaseInput>
+            <CaseInput>cd /usr/share/pdc/Night_Camera/</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="debug Surface">
+            <CaseID>none</CaseID>
+            <CaseInput>LayerManagerControl get screens</CaseInput>
+            <CaseInput>LayerManagerControl get surfaces</CaseInput>
+            <CaseInput>LayerManagerControl get surface 55</CaseInput>
+            <CaseInput>LayerManagerControl get surface 60</CaseInput>
+            <CaseInput>LayerManagerControl get surface 100</CaseInput>
+            <CaseInput>LayerManagerControl get surface 90</CaseInput>
+            <CaseInput>LayerManagerControl get surface 90</CaseInput>
+            <CaseInput>LayerManagerControl analyze surface 60</CaseInput>
+            <CaseInput>LayerManagerControl analyze surface 90</CaseInput>
+            <CaseInput>LayerManagerControl analyze surface 55</CaseInput>
+            <CaseInput>LayerManagerControl set surface 55 visibility 0 </CaseInput>
+            <CaseInput>LayerManagerControl set surface 55 visibility 1 </CaseInput>
+            <CaseInput>LayerManagerControl set surface 60 visibility 0</CaseInput>
+            <CaseInput>LayerManagerControl set surface 60 visibility 1</CaseInput>
+            <CaseInput>LayerManagerControl set surface 100 visibility 1</CaseInput>
+            <CaseInput>LayerManagerControl set surface 90 visibility 0 </CaseInput>
+            <CaseInput>LayerManagerControl set surface 90 visibility 1 </CaseInput>
+            <CaseInput>LayerManagerControl set surface 55 opacity 0</CaseInput>
+            <CaseInput>LayerManagerControl set surface 60 height 480</CaseInput>
+            <CaseInput>LayerManagerControl set surface 60 width 800</CaseInput>
+            <CaseInput>LayerManagerControl set surface 60 source region 0 0 800 480</CaseInput>
+            <CaseInput>LayerManagerControl set surface 60 destination region 3 4 800 480 </CaseInput>
+            <CaseInput>LayerManagerControl test notification layer 5000</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="debug Layer">
+            <CaseID>none</CaseID>
+            <CaseInput>LayerManagerControl get layers</CaseInput>
+            <CaseInput>LayerManagerControl get layer 1000</CaseInput>
+            <CaseInput>LayerManagerControl get layer 2000</CaseInput>
+            <CaseInput>LayerManagerControl get layer 5000</CaseInput>
+            <CaseInput>LayerManagerControl set layer 1000 visibility 0</CaseInput>
+            <CaseInput>LayerManagerControl set layer 5000 visibility 0</CaseInput>
+            <CaseInput>LayerManagerControl set layer 1000 visibility 1</CaseInput>
+            <CaseInput>LayerManagerControl set layer 2000 visibility 1</CaseInput>
+            <CaseInput>LayerManagerControl set layer 1000 opacity 0</CaseInput>
+            <CaseInput>LayerManagerControl set layer 5000 opacity 0</CaseInput>
+            <CaseInput>LayerManagerControl set layer 1000 opacity 1</CaseInput>
+            <CaseInput>LayerManagerControl analyze layer 5000</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="run ADAS">
+            <CaseID>none</CaseID>
+            <CaseInput>cd /usr/bin</CaseInput>
+            <CaseInput>./test1 &amp;</CaseInput>
+            <CaseInput>ls -l | grep test</CaseInput>
+            <CaseInput>cp /usr/share/pdc/pdcusr.cfg  /home/root/usr.cfg</CaseInput>
+            <CaseInput>cp /home/root/usr.cfg /usr/share/pdcusr.cfg  </CaseInput>
+            <CaseInput>mv /home/root/ParkAssist  /usr/bin/ParkAssist1</CaseInput>
+            <CaseInput>mv /usr/bin/ParkAssist  /usr/bin/ParkAssist1</CaseInput>
+            <CaseInput>kill -9 $(pidof ParkAssist)</CaseInput>
+            <CaseInput>kill -9 $(pidof ParkAssist1)</CaseInput>
+            <CaseInput>cd /usr/bin</CaseInput>
+            <CaseInput>sync</CaseInput>
+            <CaseInput>reset</CaseInput>
+            <CaseInput>systemctl stop hmi</CaseInput>
+            <CaseInput>export XDG_RUNTIME_DIR=/var/run/root/1000 </CaseInput>
+            <CaseInput>/usr/bin/ParkAssist&amp;</CaseInput>
+            <CaseInput>/home/root/ParkAssist&amp;</CaseInput>
+            <CaseInput>/usr/bin/ParkAssist1&amp;</CaseInput>
+            <CaseInput>ls -l /usr/share/pdc</CaseInput>
+            <CaseInput>/usr/bin/simple-egl-demo-code -f &amp;</CaseInput>
+            <CaseInput>simple-egl-demo-code -f &amp;</CaseInput>
+            <CaseInput>kill -9 $(pidof simple-egl-demo-code)</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="check verison">
+            <CaseID>none</CaseID>
+            <CaseInput>dbus-monitor --system &amp;</CaseInput>
+            <CaseInput>dbus-list-names &amp;</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="kill and run">
+            <CaseID>none</CaseID>
+            <CaseInput>kill -9 $(pidof adas)</CaseInput>
+            <CaseInput>sync</CaseInput>
+            <CaseInput>/usr/bin/adas &amp;</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="kill and run case deamon">
+            <CaseID>none</CaseID>
+            <CaseInput>sync</CaseInput>
+            <CaseInput>kill -9 $(pidof CaseClientDeamon)</CaseInput>
+            <CaseInput>/usr/share/CaseClientDeamon &amp;</CaseInput>
+            <CaseInput>ps | grep CaseClientDeamon</CaseInput>
+            <CaseInput>./CaseClientDeamon &amp;</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="dbus">
+            <CaseID>none</CaseID>
+            <CaseInput>kill -9 $(pidof dbus-monitor)</CaseInput>
+            <CaseInput>dbus-monitor --system &amp;</CaseInput>
+            <CaseInput>/usr/bin/ParkAssist1&amp;</CaseInput>
+            <CaseInput>dbus-send --system --type=signal /AutomotiveMessageBrokerProvider/ford_VisualParkAssist org.harman.ford.visualparkassist.onPrkAidSnsRrCntr_D_Stat_enumAttributeChanged int32:10</CaseInput>
+            <CaseInput>export `cat /var/run/dbus/dbus_session_env.sh`</CaseInput>
+            <CaseInput>dbus-monitor --system &amp;</CaseInput>
+            <CaseInput>dbus-send --system --type=method_call --print-reply --dest=org.freedesktop.DBus / org.freedesktop.DBus.ListNames</CaseInput>
+            <CaseInput>dbus-send --system --type=method_call --print-reply --dest=org.freedesktop.DBus / org.freedesktop.DBus.ListActivatableNames</CaseInput>
+            <CaseInput>dbus-send --system --print-reply --dest=org.harman.ford.visualparkassist_AutomotiveMessageBrokerProvider.ford_VisualParkAssist /AutomotiveMessageBrokerProvider/ford_VisualParkAssist org.freedesktop.DBus.Introspectable.Introspect</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+    <CaseList attrib="GWM AVM">
+        <CaseName attrib="introspect">
+            <CaseID>none</CaseID>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseInput>dbus-send --system --type=method_call --print-reply --dest=org.freedesktop.DBus / org.freedesktop.DBus.ListNames</CaseInput>
+            <CaseInput>dbus-send --system --print-reply --type="method_call" --dest='com.harman.adas.AVMService_adas.AVMServiceInst0' /adas org.freedesktop.DBus.Introspectable.Introspect</CaseInput>
+            <CaseInput>dbus-send --system --print-reply --type="method_call" --dest='com.harman.adas.AVMService_adas.AVMServiceInst0' /adas/AVMServiceInst0 org.freedesktop.DBus.Introspectable.Introspect</CaseInput>
+            <CaseInput>dbus-send --system --print-reply --type="method_call" --dest='com.harman.adas.AVMService_adas.AVMServiceInst0' /adas/AVMServiceInst0 com.harman.adas.AVMService.getAVMCamStatusAttribute</CaseInput>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="get attribute">
+            <CaseID>none</CaseID>
+            <CaseInput>dbus-send --system --print-reply --type="method_call" --dest='com.harman.adas.AVMService_adas.AVMServiceInst0' /adas/AVMServiceInst0 com.harman.adas.AVMService.getAVMCamStatusAttribute</CaseInput>
+            <CaseInput>dbus-send --system --print-reply --type="method_call" --dest='com.harman.adas.AVMService_adas.AVMServiceInst0' /adas/AVMServiceInst0 com.harman.adas.AVMService.getCTAStatusAttribute</CaseInput>
+            <CaseInput>dbus-send --system --print-reply --type="method_call" --dest='com.harman.adas.AVMService_adas.AVMServiceInst0' /adas/AVMServiceInst0 com.harman.adas.AVMService.getAutoStatusAttribute</CaseInput>
+            <CaseInput>dbus-send --system --print-reply --type="method_call" --dest='com.harman.adas.AVMService_adas.AVMServiceInst0' /adas/AVMServiceInst0 com.harman.adas.AVMService.SwitchGuideline int32:1</CaseInput>
+            <CaseInput>dbus-send --system  --type="method_call" --dest='com.harman.adas.AVMService_adas.AVMServiceInst0' /adas/AVMServiceInst0 com.harman.adas.AVMService.SwitchCTA int32:1</CaseInput>
+            <CaseInput>dbus-send --system --print-reply --type="method_call" --dest='com.harman.adas.AVMService_adas.AVMServiceInst0' /adas/AVMServiceInst0 com.harman.adas.AVMService.SwitchAVMView int32:1</CaseInput>
+            <CaseInput>dbus-send --system --print-reply --type="method_call" --dest='com.harman.adas.AVMService_adas.AVMServiceInst0' /adas/AVMServiceInst0 com.harman.adas.AVMService.SwitchAutoCalibrationAuto int32:1</CaseInput>
+            <CaseInput>dbus-send --system --print-reply --type="method_call" --dest='com.harman.adas.AVMService_adas.AVMServiceInst0' /adas/AVMServiceInst0 com.harman.adas.AVMService.SwitchAutoCalibrationManually int32:1</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+        <CaseName attrib="signal test">
+            <CaseID>none</CaseID>
+            <CaseInput>dbus-send --system --type="signal" /adas/AVMServiceInst0 com.harman.adas.AVMService.onAVMCamStatusAttributeChanged uint32:1</CaseInput>
+            <IMG_CASE_RESU_ABNO>(0/0)</IMG_CASE_RESU_ABNO>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseType>NULLCaseType</CaseType>
+            <CaseResult>Failed</CaseResult>
+        </CaseName>
+    </CaseList>
+</CaseRoot>
