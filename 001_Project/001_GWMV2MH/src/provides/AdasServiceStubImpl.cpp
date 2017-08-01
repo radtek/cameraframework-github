@@ -3,7 +3,7 @@
  * generated on: Tue Aug 01 13:37:53 CST 2017
  */
 
-#include "v0/com/harman/adas/AdasServiceStubImpl.hpp"
+#include "AdasServiceStubImpl.hpp"
 
 namespace v0 {
 namespace com {

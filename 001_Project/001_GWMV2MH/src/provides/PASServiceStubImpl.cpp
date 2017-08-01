@@ -3,7 +3,7 @@
  * generated on: Tue Aug 01 13:37:52 CST 2017
  */
 
-#include "v0/com/harman/adas/PASServiceStubImpl.hpp"
+#include "PASServiceStubImpl.hpp"
 
 namespace v0 {
 namespace com {
