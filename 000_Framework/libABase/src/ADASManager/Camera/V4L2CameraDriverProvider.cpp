@@ -22,9 +22,9 @@ namespace ADASManager {
 #define CLEAR(x) memset (&(x), 0, sizeof (x))
 
 /**
-*function name: xioctl
-*description:
-*Do ioctl and retry if error was EINTR(“A signal was caught during the ioctl() operation”)
+ *function name: xioctl
+ *description:
+ *Do ioctl and retry if error was EINTR(“A signal was caught during the ioctl() operation”)
 */
 Int32 V4L2CameraDriverProvider::xioctl(Int32 fd, UInt64 request, VOID* argp)
 {
@@ -32,11 +32,6 @@ Int32 V4L2CameraDriverProvider::xioctl(Int32 fd, UInt64 request, VOID* argp)
 
     do {
         ret = ioctl(fd, request, argp);
-        //ALOGI("V4L2CameraDriverProvider::xioctl ret = %d, m_bIsStreamOff=%d, request=%lu, VIDIOC_DQBUF=%lu\n", ret,m_bIsStreamOff, request, VIDIOC_DQBUF);
-        // if(-1 == ret && m_bIsStreamOff && request == VIDIOC_DQBUF) {
-        //     ALOGI("V4L2CameraDriverProvider::xioctl return 0\n");
-        //     return 0;
-        // }
     } while (-1 == ret && EINTR == errno);
 
     return ret;
@@ -49,16 +44,17 @@ V4L2CameraDriverProvider::V4L2CameraDriverProvider(const string& cameraName, eIo
     // Allocate memory for video info structure
     m_pVideoInfo = (struct VideoInfo*)calloc(1, sizeof(struct VideoInfo));
     if(!m_pVideoInfo){
-        ALOGE("V4L2CameraDriverProvider : calloc failed\n");
+        ALOGE("calloc failed\n");
     }
 
-    ALOGI("V4L2CameraDriverProvider provider for camera : %s,  DriverPath : %s\n", cameraName.c_str(), m_strDriverPath.c_str());
+    ALOGD("provider for camera : %s,  DriverPath : %s\n", cameraName.c_str(), m_strDriverPath.c_str());
 }
 
 V4L2CameraDriverProvider::~V4L2CameraDriverProvider()
 {
     // Close the camera handle and free the video info structure
-    CloseDriver();
+    if(m_bHasInit) UninitDevice();
+    if(m_bIsOpened) CloseDriver();
 
     if(m_pVideoInfo)
     {
@@ -69,9 +65,15 @@ V4L2CameraDriverProvider::~V4L2CameraDriverProvider()
     m_bIsStarted = FALSE;
 }
 
+void V4L2CameraDriverProvider::CloseFd(const Int32 fd)
+{
+    close(fd);
+    m_bIsOpened = FALSE;
+}
+
 Int32 V4L2CameraDriverProvider::OpenDriver()
 {
-    ALOGI("V4L2CameraDriverProvider::OpenDriver\n");
+    ALOGD("V4L2CameraDriverProvider::OpenDriver\n");
 
     struct stat st;
 
@@ -85,44 +87,46 @@ Int32 V4L2CameraDriverProvider::OpenDriver()
         return -1;
     }
 
-    Int32 ret = -1;
-
     if((m_iFd = open(m_strDriverPath.c_str(), O_RDWR, 0)) == -1){
         ALOGE("V4L2CameraDriverProvider::OpenDriver : Error while opening handle to V4L2 Camera: %s\n", strerror(errno));
         return -1;
     }
 
-    ret = xioctl(m_iFd, VIDIOC_QUERYCAP, &m_pVideoInfo->cap);
+    Int32 ret = xioctl(m_iFd, VIDIOC_QUERYCAP, &m_pVideoInfo->cap);
     if(ret < 0){
         ALOGE("V4L2CameraDriverProvider::OpenDriver : Error when querying the capabilities of the V4L2 Camera\n");
-        close(m_iFd);
+        CloseFd(m_iFd);
         return -1;
     }
 
     if((m_pVideoInfo->cap.capabilities & V4L2_CAP_VIDEO_CAPTURE) == 0){
         ALOGE("V4L2CameraDriverProvider::OpenDriver : Error while adapter initialization: video capture not supported.\n");
-        close(m_iFd);
+        CloseFd(m_iFd);
         return -1;
     }
 
     if(!(m_pVideoInfo->cap.capabilities & V4L2_CAP_STREAMING)){
         ALOGE("V4L2CameraDriverProvider::OpenDriver : Error while adapter initialization: Capture device does not support streaming i/o.\n");
-        close(m_iFd);
+        CloseFd(m_iFd);
         return -1;
     }
 
-    m_bIsOpened = TRUE;
-
 #ifdef WRITE_FILE
-    m_pFp = fopen(m_strFilename.c_str(), "wa+");
+    if((m_pFp = fopen(m_strFilename.c_str(), "wa+")) == nullptr) {
+        ALOGE("V4L2CameraDriverProvider::OpenDriver : Error while fopen : %s.\n", m_strFilename.c_str());
+        CloseFd(m_iFd);
+        return -1;
+    }
 #endif
 
-    return 0;
+    m_bIsOpened = TRUE;
+
+    return NO_ERROR;
 }
 
 Int32 V4L2CameraDriverProvider::Init_read(UInt32 buffer_size)
 {
-    ALOGI("V4L2CameraDriverProvider::Init_read\n");
+    ALOGD("V4L2CameraDriverProvider::Init_read\n");
 
     m_pBuffers = (struct UserBuffer*)calloc(1, sizeof(struct UserBuffer));
 
@@ -138,12 +142,12 @@ Int32 V4L2CameraDriverProvider::Init_read(UInt32 buffer_size)
         ALOGE("Out of memory\n");
         return -1;
     }
-    return 0;
+    return NO_ERROR;
 }
 
 Int32 V4L2CameraDriverProvider::Init_mmap()
 {
-    ALOGI("V4L2CameraDriverProvider::Init_mmap\n");
+    ALOGD("V4L2CameraDriverProvider::Init_mmap\n");
 
     struct v4l2_requestbuffers req;
 
@@ -158,7 +162,7 @@ Int32 V4L2CameraDriverProvider::Init_mmap()
             ALOGE("%s(%s) does not support memory mapping\n", m_strCameraName.c_str(), m_strDriverPath.c_str());
             return -1;
         } else {
-            ALOGE("VIDIOC_REQBUFS");
+            ALOGE("VIDIOC_REQBUFS error");
             return -1;
         }
     }
@@ -185,7 +189,7 @@ Int32 V4L2CameraDriverProvider::Init_mmap()
         buf.index = BufferCountReal;
 
         if (-1 == xioctl(m_iFd, VIDIOC_QUERYBUF, &buf)) {
-            ALOGE("VIDIOC_QUERYBUF");
+            ALOGE("VIDIOC_QUERYBUF error");
             return -1;
         }
 
@@ -195,16 +199,16 @@ Int32 V4L2CameraDriverProvider::Init_mmap()
                 MAP_SHARED /* recommended */, m_iFd, buf.m.offset);
 
         if (MAP_FAILED == m_pBuffers[BufferCountReal].start) {
-            ALOGE("mmap");
+            ALOGE("mmap error");
             return -1;
         }
     }
-    return 0;
+    return NO_ERROR;
 }
 
 Int32 V4L2CameraDriverProvider::Init_userp(UInt32 buffer_size)
 {
-    ALOGI("V4L2CameraDriverProvider::Init_userp\n");
+    ALOGD("V4L2CameraDriverProvider::Init_userp\n");
 
     struct v4l2_requestbuffers req;
     UInt32 page_size;
@@ -223,7 +227,7 @@ Int32 V4L2CameraDriverProvider::Init_userp(UInt32 buffer_size)
             ALOGE("%s(%s) does not support user pointer i/o\n", m_strCameraName.c_str(), m_strDriverPath.c_str());
             return -1;
         } else {
-            ALOGE("VIDIOC_REQBUFS");
+            ALOGE("VIDIOC_REQBUFS error");
             return -1;
         }
     }
@@ -245,12 +249,12 @@ Int32 V4L2CameraDriverProvider::Init_userp(UInt32 buffer_size)
             return -1;
         }
     }
-    return 0;
+    return NO_ERROR;
 }
 
 Int32 V4L2CameraDriverProvider::InitDevice()
 {
-    ALOGI("V4L2CameraDriverProvider::InitDevice\n");
+    ALOGD("V4L2CameraDriverProvider::InitDevice\n");
 
     struct v4l2_capability cap;
     struct v4l2_cropcap cropcap;
@@ -263,7 +267,7 @@ Int32 V4L2CameraDriverProvider::InitDevice()
             ALOGE("%s(%s) is no V4L2 device\n", m_strCameraName.c_str(), m_strDriverPath.c_str());
             return -1;
         } else {
-            ALOGE("VIDIOC_QUERYCAP");
+            ALOGE("VIDIOC_QUERYCAP error");
             return -1;
         }
     }
@@ -323,7 +327,7 @@ Int32 V4L2CameraDriverProvider::InitDevice()
     fmt.fmt.pix.field = V4L2_FIELD_INTERLACED;
 
     if (-1 == xioctl(m_iFd, VIDIOC_S_FMT, &fmt)) {
-        ALOGE("VIDIOC_S_FMT");
+        ALOGE("VIDIOC_S_FMT error");
         return -1;
     }
 
@@ -358,7 +362,7 @@ Int32 V4L2CameraDriverProvider::InitDevice()
 
 Int32 V4L2CameraDriverProvider::UninitDevice()
 {
-    ALOGI("V4L2CameraDriverProvider::UninitDevice\n");
+    ALOGD("V4L2CameraDriverProvider::UninitDevice\n");
 
     UInt32 i;
 
@@ -370,7 +374,7 @@ Int32 V4L2CameraDriverProvider::UninitDevice()
         case IO_METHOD_MMAP:
             for (i = 0; i < BufferCountReal; ++i)
                 if (-1 == munmap(m_pBuffers[i].start, m_pBuffers[i].length)) {
-                    ALOGE("munmap");
+                    ALOGE("munmap error");
                     return -1;
                 }
             break;
@@ -384,25 +388,27 @@ Int32 V4L2CameraDriverProvider::UninitDevice()
     free(m_pBuffers);
 
     m_bHasInit = FALSE;
+
+    return NO_ERROR;
 }
 
 VOID V4L2CameraDriverProvider::ShowInfo()
 {
-    ALOGI("V4L2CameraDriverProvider::ShowInfo\n");
+    ALOGD("V4L2CameraDriverProvider::ShowInfo\n");
 
     return;
 }
 
 #ifdef WRITE_FILE
-VOID V4L2CameraDriverProvider::Process_image(const VOID * p, Int32 size) {
-    ALOGI("V4L2CameraDriverProvider::Process_image\n");
+VOID V4L2CameraDriverProvider::Process_image(const VOID* p, Int32 size) {
+    ALOGD("V4L2CameraDriverProvider::Process_image\n");
     fwrite(p, size, 1, m_pFp);
 }
 #endif
 
 Int32 V4L2CameraDriverProvider::Read_frame()
 {
-    ALOGI("V4L2CameraDriverProvider::Read_frame\n");
+    ALOGD("V4L2CameraDriverProvider::Read_frame\n");
 
     struct v4l2_buffer buf;
     UInt32 i;
@@ -412,14 +418,14 @@ Int32 V4L2CameraDriverProvider::Read_frame()
             if (-1 == read(m_iFd, m_pBuffers[0].start, m_pBuffers[0].length)) {
                 switch (errno) {
                     case EAGAIN:
-                        return 0;
+                        return -1;
 
                     case EIO:
                         /* Could ignore EIO, see spec. */
                         /* fall through */
                     default:
-                        ALOGE("Read_frame");
-                        return 0; ///////////////////////////////////
+                        ALOGE("read error");
+                        return -1;
                 }
             }
         #ifdef WRITE_FILE
@@ -447,7 +453,7 @@ Int32 V4L2CameraDriverProvider::Read_frame()
                         //errno_exit("VIDIOC_DQBUF");
                         if(m_bIsStreamOff) return 0;
 
-                        ALOGE("VIDIOC_DQBUF");
+                        ALOGE("VIDIOC_DQBUF error");
                         return -1;
                 }
             }
@@ -460,7 +466,7 @@ Int32 V4L2CameraDriverProvider::Read_frame()
 
             if (-1 == xioctl(m_iFd, VIDIOC_QBUF, &buf)) {
                 //errno_exit("VIDIOC_QBUF");
-                ALOGE("VIDIOC_QBUF\n");
+                ALOGE("VIDIOC_QBUF error\n");
                 return -1;
             }
 
@@ -484,7 +490,7 @@ Int32 V4L2CameraDriverProvider::Read_frame()
                     default:
                         if(m_bIsStreamOff) return 0;
 
-                        ALOGE("VIDIOC_DQBUF");
+                        ALOGE("VIDIOC_DQBUF error");
                         return -1;
                 }
             }
@@ -502,19 +508,19 @@ Int32 V4L2CameraDriverProvider::Read_frame()
         #endif
 
             if (-1 == xioctl(m_iFd, VIDIOC_QBUF, &buf)) {
-                ALOGE("VIDIOC_QBUF");
+                ALOGE("VIDIOC_QBUF error");
                 return -1;
             }
 
             break;
     }
 
-    return 0;
+    return NO_ERROR;
 }
 
 VOID V4L2CameraDriverProvider::update()
 {
-    ALOGI("V4L2CameraDriverProvider::update\n");
+    ALOGD("V4L2CameraDriverProvider::update\n");
 
     if(!m_bIsStreamOff) {
         Read_frame();
@@ -564,7 +570,7 @@ VOID V4L2CameraDriverProvider::update()
 
 Int32 V4L2CameraDriverProvider::GetCapture()
 {
-    ALOGI("V4L2CameraDriverProvider::GetCapture\n");
+    ALOGD("V4L2CameraDriverProvider::GetCapture\n");
 
     UInt32 i;
     enum v4l2_buf_type type;
@@ -584,7 +590,7 @@ Int32 V4L2CameraDriverProvider::GetCapture()
                 buf.index = i;
 
                 if (-1 == xioctl(m_iFd, VIDIOC_QBUF, &buf)){
-                    ALOGE("V4L2CameraDriverProvider::GetCapture error VIDIOC_QBUF\n");
+                    ALOGE("VIDIOC_QBUF error\n");
                     return -1;
                 }
             }
@@ -592,7 +598,7 @@ Int32 V4L2CameraDriverProvider::GetCapture()
             type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 
             if (-1 == xioctl(m_iFd, VIDIOC_STREAMON, &type)) {
-                ALOGE("V4L2CameraDriverProvider::GetCapture error VIDIOC_STREAMON\n");
+                ALOGE("VIDIOC_STREAMON error\n");
                 return -1;
             }
 
@@ -611,7 +617,7 @@ Int32 V4L2CameraDriverProvider::GetCapture()
                 buf.length = m_pBuffers[i].length;
 
                 if (-1 == xioctl(m_iFd, VIDIOC_QBUF, &buf)) {
-                    ALOGE("V4L2CameraDriverProvider::GetCapture error VIDIOC_QBUF\n");
+                    ALOGE("VIDIOC_QBUF error\n");
                     return -1;
                 }
             }
@@ -619,7 +625,7 @@ Int32 V4L2CameraDriverProvider::GetCapture()
             type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 
             if (-1 == xioctl(m_iFd, VIDIOC_STREAMON, &type)) {
-                ALOGE("V4L2CameraDriverProvider::GetCapture error VIDIOC_STREAMON\n");
+                ALOGE("VIDIOC_STREAMON error\n");
                 return -1;
             }
 
@@ -635,12 +641,12 @@ Int32 V4L2CameraDriverProvider::GetCapture()
         resume();
     }
 
-    return 0;
+    return NO_ERROR;
 }
 
 Int32 V4L2CameraDriverProvider::StopCapture()
 {
-    ALOGI("V4L2CameraDriverProvider::StopCapture\n");
+    ALOGD("V4L2CameraDriverProvider::StopCapture\n");
 
     enum v4l2_buf_type type;
 
@@ -654,38 +660,37 @@ Int32 V4L2CameraDriverProvider::StopCapture()
             type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
             m_bIsStreamOff = TRUE;
             pause();
-
-            //sleep(1);
             if (-1 == xioctl(m_iFd, VIDIOC_STREAMOFF, &type)) {
-                ALOGE("V4L2CameraDriverProvider::StopCapture error\n");
+                ALOGE("VIDIOC_STREAMOFF error\n");
                 return -1;
             }
 
             break;
     }
-    return 0;
+    return NO_ERROR;
 }
 
 Int32 V4L2CameraDriverProvider::CloseDriver()
 {
-    ALOGI("V4L2CameraDriverProvider::CloseDriver\n");
+    ALOGD("V4L2CameraDriverProvider::CloseDriver\n");
 
     // Close the camera handle and free the video info structure
     if(0 == close(m_iFd)){
-        ALOGI("V4L2CameraDriverProvider::CloseDriver %s success, m_iFd=%d\n", m_strDriverPath.c_str(), m_iFd);
+        ALOGI("close %s success, m_iFd=%d\n", m_strDriverPath.c_str(), m_iFd);
     } else {
-        ALOGE("V4L2CameraDriverProvider::CloseDriver %s failed, m_iFd=%d\n", m_strDriverPath.c_str(), m_iFd);
+        ALOGE("close %s failed, m_iFd=%d\n", m_strDriverPath.c_str(), m_iFd);
     }
 
     m_iFd = -1;
     m_bIsOpened = FALSE;
     quit();
+    m_bIsStarted = FALSE;
 
 #ifdef WRITE_FILE
     fclose(m_pFp);
 #endif
 
-    return 0;
+    return NO_ERROR;
 }
 
 } // namespace ADASManager

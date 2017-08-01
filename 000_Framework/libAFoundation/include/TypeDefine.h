@@ -48,6 +48,8 @@ typedef unsigned char           BYTE;
 typedef char                    CHAR;
 typedef void                    VOID;
 
+typedef Int32 ECode;
+
 typedef enum a_status
 {
     OK,  // everything is well

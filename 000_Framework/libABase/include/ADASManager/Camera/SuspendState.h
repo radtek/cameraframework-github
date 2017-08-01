@@ -1,6 +1,6 @@
 
-#ifndef __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_CAMERA_OFFSTATE_H__
-#define __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_CAMERA_OFFSTATE_H__
+#ifndef __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_CAMERA_SUSPENDSTATE_H__
+#define __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_CAMERA_SUSPENDSTATE_H__
 
 #include "State.h"
 #include "StateMachine.h"
@@ -23,13 +23,13 @@ namespace AFramework {
 namespace ABase {
 namespace ADASManager {
 
-class OffState : public State
+class SuspendState : public State
 {
 public:
-    OffState(const string& name, StateMachine* sm)
+    SuspendState(const string& name, StateMachine* sm)
         : State(name, sm)
     {
-        m_pStartCaptureTimer = new CTimer(&NotifyTimer, (VOID*)this);
+        m_pDelayEnterEnableStateTimer = new CTimer(&NotifyTimer, (VOID*)this);
     }
 
     VOID Enter() const;
@@ -37,11 +37,11 @@ public:
 
     virtual BOOLEAN ProcessMessage(UInt32 uiType, UInt32 uiID, const string& pData) const;
 
-    ~OffState()
+    ~SuspendState()
     {
-        if (nullptr != m_pStartCaptureTimer) {
-            delete m_pStartCaptureTimer;
-            m_pStartCaptureTimer = nullptr;
+        if (nullptr != m_pDelayEnterEnableStateTimer) {
+            delete m_pDelayEnterEnableStateTimer;
+            m_pDelayEnterEnableStateTimer = nullptr;
         }
     }
 
@@ -53,7 +53,7 @@ private:
     VOID ClearTimmer() const;
 
 private:
-    CTimer* m_pStartCaptureTimer = nullptr;
+    CTimer* m_pDelayEnterEnableStateTimer = nullptr;
 };
 
 } // namespace ADASManager
@@ -62,4 +62,4 @@ private:
 } // namespace Adas
 } // namespace Harman
 
-#endif //__HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_CAMERA_OFFSTATE_H__
+#endif //__HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_CAMERA_SUSPENDSTATE_H__

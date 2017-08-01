@@ -26,9 +26,11 @@ public:
 
     VOID OpenCamera() override;
 
-    // if isReal == FALSE : CloseCamera just CALL StopCapture, do not CALL Uninit_device() && close(fd)
-    // if isReal == TRUE  : CloseCamera will CALL StopCapture AND Uninit_device() AND close(fd)
-    VOID CloseCamera(const BOOLEAN isReal) override;
+    VOID CloseCamera() override;
+
+    Int32 StartCapture() override;
+
+    Int32 StopCapture() override;
 
     ~LeftCamera() {}
 };

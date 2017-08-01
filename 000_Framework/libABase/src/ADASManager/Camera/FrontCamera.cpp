@@ -18,14 +18,22 @@ VOID FrontCamera::OpenCamera()
     m_pStateMachine->SendMessage(new MessageForQueue(0 /*not used now*/, eCameraStateTriggerEvent_OpenCamera, FRONTCAMERANAME));
 }
 
-VOID FrontCamera::CloseCamera(const BOOLEAN isReal)
+VOID FrontCamera::CloseCamera()
 {
-    ALOGI("FrontCamera::CloseCamera(%s)!\n", (isReal ? "TRUE" : "FALSE"));
-    if(isReal) {
-        m_pStateMachine->SendMessage(new MessageForQueue(0 /*not used now*/, eCameraStateTriggerEvent_CloseCamera_DriverTrue, FRONTCAMERANAME));
-    } else {
-        m_pStateMachine->SendMessage(new MessageForQueue(0 /*not used now*/, eCameraStateTriggerEvent_CloseCamera_DriverFalse, FRONTCAMERANAME));
-    }
+    ALOGI("FrontCamera::CloseCamera!\n");
+    m_pStateMachine->SendMessage(new MessageForQueue(0 /*not used now*/, eCameraStateTriggerEvent_CloseCamera, FRONTCAMERANAME));
+}
+
+Int32 FrontCamera::StartCapture()
+{
+    ALOGI("FrontCamera::StartCapture!\n");
+    m_pStateMachine->SendMessage(new MessageForQueue(0 /*not used now*/, eCameraStateTriggerEvent_StartCapture, FRONTCAMERANAME));
+}
+
+Int32 FrontCamera::StopCapture()
+{
+    ALOGI("FrontCamera::StopCapture!\n");
+    m_pStateMachine->SendMessage(new MessageForQueue(0 /*not used now*/, eCameraStateTriggerEvent_StopCapture, FRONTCAMERANAME));
 }
 
 } // namespace ADASManager
