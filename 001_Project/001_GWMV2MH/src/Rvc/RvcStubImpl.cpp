@@ -32,6 +32,7 @@ VOID  RvcStubImpl::showCamera(const string& pData)
 {
     ALOGD("showCamera [%s]\n", pData.c_str());
     m_pRearCamera->OpenCamera();
+    m_pRearCamera->StartCapture();
 }
 
 }

@@ -37,11 +37,6 @@ BOOLEAN DefaultState::ProcessMessage(UInt32 uiType, UInt32 uiID, const string& p
     return TRUE;
 }
 
-const string& DefaultState::GetStateName() const
-{
-    return m_strStateName;
-}
-
 } // namespace ADASManager
 } // namespace ABase
 } // namespace AFramework

@@ -35,18 +35,6 @@ VOID OtherCameraDriverProvider::ShowInfo()
     return;
 }
 
-// VOID OtherCameraDriverProvider::SetParam()
-// {
-//     ALOGE("Not Implement, just a template for extending other way to talk with camera driver! \n");
-//     return;
-// }
-
-// VOID OtherCameraDriverProvider::AllocMemory()
-// {
-//     ALOGE("Not Implement, just a template for extending other way to talk with camera driver! \n");
-//     return;
-// }
-
 Int32 OtherCameraDriverProvider::GetCapture()
 {
     ALOGE("Not Implement, just a template for extending other way to talk with camera driver! \n");

@@ -35,22 +35,13 @@ Int32 CameraDriverProvider::OpenCamera()
         return -1;
     }
 
-    if (m_bIsOpened && m_bHasInit) {
-        GetCapture();
-    }
-
     return 0;
 }
 
-Int32 CameraDriverProvider::CloseCamera(const BOOLEAN isReal)
+Int32 CameraDriverProvider::CloseCamera()
 {
-    if (isReal) {
-        StopCapture();
-        UninitDevice();
-        CloseDriver();
-    } else {
-        StopCapture();
-    }
+    UninitDevice();
+    CloseDriver();
 
     return 0;
 }

@@ -24,114 +24,122 @@ VOID EnableState::Exit() const
     ALOGI("Exit state : %s !\n", GetStateName().c_str());
 }
 
-VOID EnableState::NotifyTimer(TimeValue v)
+//******************m_pCloseCameraTimer****************************
+VOID EnableState::NotifyTimerCloseCamera(TimeValue v)
 {
     EnableState* obj = (EnableState*)(v.sival_ptr);
-    obj->TimerCallback();
+    obj->TimerCallbackCloseCamera();
 }
 
-VOID EnableState::TimerCallback()
+VOID EnableState::TimerCallbackCloseCamera()
 {
-    if(m_eCloseCameraMessage == eCameraStateTriggerEvent_CloseCamera_DriverTrue) {
-        ALOGI("%s SendMessage message id = %d !\n", GetStateName().c_str(), eCameraStateTriggerEvent_CloseCamera_REAL_DriverTrue);
-        m_pStateMachine->SendMessage(new MessageForQueue(0, eCameraStateTriggerEvent_CloseCamera_REAL_DriverTrue, ENABLECAMERASTATE));
-    } else if (m_eCloseCameraMessage == eCameraStateTriggerEvent_CloseCamera_DriverFalse) {
-        ALOGI("%s SendMessage message id = %d !\n", GetStateName().c_str(), eCameraStateTriggerEvent_CloseCamera_REAL_DriverFalse);
-        m_pStateMachine->SendMessage(new MessageForQueue(0, eCameraStateTriggerEvent_CloseCamera_REAL_DriverFalse, ENABLECAMERASTATE));
-    }
+    ALOGI("%s TimerCallbackCloseCamera!\n", GetStateName().c_str());
+    m_pStateMachine->SendMessage(new MessageForQueue(0, eCameraStateTriggerEvent_CloseCamera, ENABLECAMERASTATE));
 }
 
-VOID EnableState::SetTimmer() const
+VOID EnableState::SetTimmerCloseCamera() const
 {
-    ALOGI("%s SetTimmer!\n", GetStateName().c_str());
-    m_pDelayExitReverseGearTimer->CTimer_setTime(0, HYSTERESISTIME_REVGEAR);
+    ALOGI("%s SetTimmerCloseCamera!\n", GetStateName().c_str());
+    m_pCloseCameraTimer->CTimer_setTime(0, 1);
 }
 
-VOID EnableState::ClearTimmer() const
+VOID EnableState::ClearTimmerCloseCamera() const
 {
-    ALOGI("%s ClearTimmer!\n", GetStateName().c_str());
-    m_pDelayExitReverseGearTimer->CTimer_clear();
+    ALOGI("%s ClearTimmerCloseCamera!\n", GetStateName().c_str());
+    m_pCloseCameraTimer->CTimer_clear();
+}
+
+//******************m_pDelayEnterSuspendStateTimer****************
+VOID EnableState::NotifyTimerDelayEnterSuspendState(TimeValue v)
+{
+    EnableState* obj = (EnableState*)(v.sival_ptr);
+    obj->TimerCallbackDelayEnterSuspendState();
+}
+
+VOID EnableState::TimerCallbackDelayEnterSuspendState()
+{
+    ALOGI("%s TimerCallbackDelayEnterSuspendState!\n", GetStateName().c_str());
+    m_bTimerOn = FALSE;
+    m_pStateMachine->SendMessage(new MessageForQueue(0, eCameraStateTriggerEvent_StopCapture_REAL, ENABLECAMERASTATE));
+}
+
+VOID EnableState::SetTimmerDelayEnterSuspendState() const
+{
+    ALOGI("%s SetTimmerDelayEnterSuspendState!\n", GetStateName().c_str());
+    m_bTimerOn = TRUE;
+    m_pDelayEnterSuspendStateTimer->CTimer_setTime(0, HYSTERESISTIME_REVGEAR);
+}
+
+VOID EnableState::ClearTimmerDelayEnterSuspendState() const
+{
+    ALOGI("%s ClearTimmerDelayEnterSuspendState!\n", GetStateName().c_str());
+    m_bTimerOn = FALSE;
+    m_pDelayEnterSuspendStateTimer->CTimer_clear();
 }
 
 BOOLEAN EnableState::ProcessMessage(UInt32 uiType, UInt32 uiMessageID, const string& pData) const
 {
-    ALOGI("ProcessMessage : message id = %d !\n", uiMessageID);
+    ALOGI("EnableState::ProcessMessage : message id = %s !\n", TiggerStr(uiMessageID).c_str());
 
     switch(uiMessageID)
     {
         CameraStateMachine* csm;
 
-        case eCameraStateTriggerEvent_CloseCamera_DriverTrue :
-            SetTimmer();
-            m_eCloseCameraMessage = eCameraStateTriggerEvent_CloseCamera_DriverTrue;
-            break;
-
-        case eCameraStateTriggerEvent_CloseCamera_DriverFalse :
-            SetTimmer();
-            m_eCloseCameraMessage = eCameraStateTriggerEvent_CloseCamera_DriverFalse;
-            break;
-
         case eCameraStateTriggerEvent_OpenCamera :
-            ClearTimmer();
+            ALOGW("EnableState::ProcessMessage worning uiMessageID = %s , already OpenCamera !!!!\n", TiggerStr(uiMessageID).c_str());
+            return TRUE;
+
+        case eCameraStateTriggerEvent_CloseCamera:
+            if(!m_bTimerOn) SetTimmerDelayEnterSuspendState();
+            m_bCloseCameraPurpose = TRUE;
             break;
 
-        case eCameraStateTriggerEvent_OpenCamera_REAL :
-            ClearTimmer();
-            ALOGE("error uiMessageID = %d !!!!\n", uiMessageID);
-            return FALSE;
+        case eCameraStateTriggerEvent_StopCapture:
+            if(!m_bTimerOn) SetTimmerDelayEnterSuspendState();
+            break;
 
-        case eCameraStateTriggerEvent_CloseCamera_REAL_DriverTrue :
-            ClearTimmer();
+        case eCameraStateTriggerEvent_StartCapture:
+            ClearTimmerDelayEnterSuspendState();
+            ALOGW("EnableState::ProcessMessage worning uiMessageID = %s , already StartCapture !!!!\n", TiggerStr(uiMessageID).c_str());
+            return TRUE;
+
+        case eCameraStateTriggerEvent_StartCapture_REAL:
+            ALOGE("EnableState error uiMessageID = %s !!!!\n", TiggerStr(uiMessageID).c_str());
+            return TRUE;
+
+        case eCameraStateTriggerEvent_StopCapture_REAL:
             csm = dynamic_cast<CameraStateMachine*>(m_pStateMachine);
             if (csm != nullptr) {
-                Int32 ret = csm->m_pCameraDriverProvider->CloseCamera(TRUE);
+                Int32 ret = csm->m_pCameraDriverProvider->StopCapture();
                 if(0 == ret){
-                    ALOGI("EnableState CloseCamera success , TransitionTo OffState !!!!\n");
-                    m_pStateMachine->TransitionTo(csm->m_pOffState);
+                    ALOGI("SuspendState StopCapture success , TransitionTo SuspendState !!!!\n");
+                    m_pStateMachine->TransitionTo(csm->m_pSuspendState);
                 } else {
-                    ALOGE("EnableState CloseCamera failed , keep EnableState !!!!\n");
-                    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    ALOGE("SuspendState StopCapture failed , keep EnableState !!!!\n");
+                    return TRUE;
                 }
             } else {
-                ALOGE("error statemachine do not exit !!!!\n");
-                return FALSE;
+                ALOGE("error CameraStateMachine do not exit !!!!\n");
+                return TRUE;
             }
+
+            ALOGI("m_bCloseCameraPurpose = %d\n", m_bCloseCameraPurpose);
+            if(m_bCloseCameraPurpose) {
+                SetTimmerCloseCamera();
+                m_bCloseCameraPurpose = FALSE;
+            }
+
             break;
 
-        case eCameraStateTriggerEvent_CloseCamera_REAL_DriverFalse :
-            ClearTimmer();
-            csm = dynamic_cast<CameraStateMachine*>(m_pStateMachine);
-            if (csm != nullptr) {
-                Int32 ret = csm->m_pCameraDriverProvider->CloseCamera(FALSE);
-                if(0 == ret){
-                    ALOGI("EnableState CloseCamera success , TransitionTo OffState !!!!\n");
-                    m_pStateMachine->TransitionTo(csm->m_pOffState);
-                } else {
-                    ALOGE("EnableState CloseCamera failed , keep EnableState !!!!\n");
-                    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                }
-            } else {
-                ALOGE("error statemachine do not exit !!!!\n");
-                return FALSE;
-            }
-            break;
-
-        case eCameraStateTriggerEvent_INVALID :
-            ClearTimmer();
-            ALOGE("error uiMessageID = %d !!!!\n", uiMessageID);
-            return FALSE;
+        case eCameraStateTriggerEvent_INVALID:
+            ALOGE("SuspendState : error uiMessageID = %s !!!\n", TiggerStr(uiMessageID).c_str());
+            return TRUE;
 
         default:
-            ClearTimmer();
-            ALOGE("error uiMessageID unknow !!!!\n");
+            ALOGE("SuspendState : error uiMessageID unknow uiMessageID = %d!!!\n", uiMessageID);
             return FALSE;
     }
     return TRUE;
-}
-
-const string& EnableState::GetStateName() const
-{
-    return m_strStateName;
 }
 
 } // namespace ADASManager

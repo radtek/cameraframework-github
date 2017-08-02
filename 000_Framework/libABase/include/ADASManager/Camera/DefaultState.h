@@ -28,7 +28,6 @@ public:
     VOID Exit() const;
 
     virtual BOOLEAN ProcessMessage(UInt32 uiType, UInt32 uiID, const string& pData) const;
-    const string& GetStateName() const;
 
     ~DefaultState();
 };

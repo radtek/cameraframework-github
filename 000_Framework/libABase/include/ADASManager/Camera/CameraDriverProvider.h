@@ -33,17 +33,16 @@ protected:
     virtual Int32 InitDevice() = 0;
     virtual Int32 UninitDevice() = 0;
 
-    virtual Int32 GetCapture() = 0;
-    virtual Int32 StopCapture() = 0;
-
     virtual VOID ShowInfo() = 0;
 
 public:
-    virtual Int32 OpenCamera() final;   // open(fd) AND Init_device() AND GetCapture()
+    virtual Int32 OpenCamera() final;   // open(fd) AND Init_device()
 
-    // if isReal == FALSE : CloseCamera just CALL StopCapture, do not CALL Uninit_device() && close(fd)
-    // if isReal == TRUE  : CloseCamera will CALL StopCapture AND Uninit_device() AND close(fd)
-    virtual Int32 CloseCamera(const BOOLEAN isReal) final;  // close(fd)
+    virtual Int32 CloseCamera() final;  // close(fd)
+
+    virtual Int32 GetCapture() = 0;
+
+    virtual Int32 StopCapture() = 0;
 
     virtual ~CameraDriverProvider() {}
 

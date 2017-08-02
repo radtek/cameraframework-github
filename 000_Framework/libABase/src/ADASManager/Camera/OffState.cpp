@@ -32,87 +32,96 @@ VOID OffState::NotifyTimer(TimeValue v)
 
 VOID OffState::TimerCallback()
 {
-    ALOGI("%s SendMessage message id = %d !\n", GetStateName().c_str(), eCameraStateTriggerEvent_OpenCamera_REAL);
-    m_pStateMachine->SendMessage(new MessageForQueue(0, eCameraStateTriggerEvent_OpenCamera_REAL, OFFCAMERASTATE));
+    ALOGI("%s SendMessage message : %s !\n", GetStateName().c_str(), TiggerStr(eCameraStateTriggerEvent_StartCapture).c_str());
+    m_pStateMachine->SendMessage(new MessageForQueue(0, eCameraStateTriggerEvent_StartCapture, OFFCAMERASTATE));
 }
 
 VOID OffState::SetTimmer() const
 {
     ALOGI("%s SetTimmer!\n", GetStateName().c_str());
-    m_pDelayEnterReverseGearTimer->CTimer_setTime(0, HYSTERESISTIME_REVGEAR);
+    m_pStartCaptureTimer->CTimer_setTime(0, 1);
 }
 
 VOID OffState::ClearTimmer() const
 {
     ALOGI("%s ClearTimmer!\n", GetStateName().c_str());
-    m_pDelayEnterReverseGearTimer->CTimer_clear();
+    m_pStartCaptureTimer->CTimer_clear();
 }
 
 BOOLEAN OffState::ProcessMessage(UInt32 uiType, UInt32 uiMessageID, const string& pData) const
 {
-    ALOGI("ProcessMessage : message id = %d !\n", uiMessageID);
+    ALOGI("OffState : ProcessMessage : message id = %s !!!\n", TiggerStr(uiMessageID).c_str());
 
     switch(uiMessageID)
     {
         CameraStateMachine* csm;
 
-        case eCameraStateTriggerEvent_OpenCamera :
-            SetTimmer();
-            break;
-
-        case eCameraStateTriggerEvent_CloseCamera_DriverTrue :
-            ClearTimmer();
-            break;
-
-        case eCameraStateTriggerEvent_CloseCamera_DriverFalse :
-            ClearTimmer();
-            break;
-
-        case eCameraStateTriggerEvent_OpenCamera_REAL :
-            ClearTimmer();
+        case eCameraStateTriggerEvent_OpenCamera :  // OpenCamera, change state from OffState to SuspendState
             csm = dynamic_cast<CameraStateMachine*>(m_pStateMachine);
             if (csm != nullptr) {
                 Int32 ret = csm->m_pCameraDriverProvider->OpenCamera();
                 if(0 == ret){
-                    ALOGI("OffState OpenDriver success , TransitionTo EnableState !!!!\n");
-                    m_pStateMachine->TransitionTo(csm->m_pEnableState);
+                    ALOGI("OffState : OpenDriver success , TransitionTo SuspendState !!!!\n");
+                    m_pStateMachine->TransitionTo(csm->m_pSuspendState);
                 } else {
-                    ALOGE("OffState OpenDriver failed , keep OffState !!!!\n");
-                    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    ALOGE("OffState : OpenDriver failed , keep OffState !!!!\n");
+                    return TRUE;
                 }
             } else {
-                ALOGE("error CameraStateMachine do not exit !!!!\n");
-                return FALSE;
+                ALOGE("OffState : error CameraStateMachine do not exit !!!!\n");
+                return TRUE;
             }
             break;
 
-        case eCameraStateTriggerEvent_CloseCamera_REAL_DriverTrue :
-            ClearTimmer();
-            ALOGE("error uiMessageID = %d !!!!\n", uiMessageID);
-            return FALSE;
+        case eCameraStateTriggerEvent_CloseCamera:
+            ALOGW("OffState : worning uiMessageID = %s !!! ,currentState is OffState, do not need this trigger !!!\n", TiggerStr(uiMessageID).c_str());
+            return TRUE;
 
-        case eCameraStateTriggerEvent_CloseCamera_REAL_DriverFalse :
-            ClearTimmer();
-            ALOGE("error uiMessageID = %d !!!!\n", uiMessageID);
-            return FALSE;
+        case eCameraStateTriggerEvent_StartCapture:  // OpenCamera + StartCapture, change state from OffState to EnableState
+            // first : OpenCamera, change state from OffState to SuspendState
+            csm = dynamic_cast<CameraStateMachine*>(m_pStateMachine);
+            if (csm != nullptr) {
+                Int32 ret = csm->m_pCameraDriverProvider->OpenCamera();
+                if(0 == ret){
+                    ALOGI("OffState : OpenDriver success , TransitionTo SuspendState !!!\n");
+                    m_pStateMachine->TransitionTo(csm->m_pSuspendState);
+                } else {
+                    ALOGE("OffState : OpenDriver failed , keep OffState !!!\n");
+                    return TRUE;
+                }
+            } else {
+                ALOGE("OffState : error CameraStateMachine do not exit !!!\n");
+                return TRUE;
+            }
 
-        case eCameraStateTriggerEvent_INVALID :
-            ClearTimmer();
-            ALOGE("error uiMessageID = %d !!!!\n", uiMessageID);
-            return FALSE;
+            // second : GetCapture , change state from SuspendState to EnableState
+            // when cameraStatemachine receive message: eCameraStateTriggerEvent_StartCapture, carrentState has been SuspendState
+            SetTimmer();
+
+            break;
+
+        case eCameraStateTriggerEvent_StopCapture:
+            ALOGW("OffState : worning uiMessageID = %s !!! ,currentState is OffState, do not need this trigger !!!\n", TiggerStr(uiMessageID).c_str());
+            return TRUE;
+
+        case eCameraStateTriggerEvent_StartCapture_REAL:
+            ALOGW("OffState : worning uiMessageID = %s !!! ,currentState is OffState, do not need this trigger !!!\n", TiggerStr(uiMessageID).c_str());
+            return TRUE;
+
+        case eCameraStateTriggerEvent_StopCapture_REAL:
+            ALOGW("OffState : worning uiMessageID = %s !!! ,currentState is OffState, do not need this trigger !!!\n", TiggerStr(uiMessageID).c_str());
+            return TRUE;
+
+        case eCameraStateTriggerEvent_INVALID:
+            ALOGE("OffState : error uiMessageID = %s !!!\n", TiggerStr(uiMessageID).c_str());
+            return TRUE;
 
         default:
-            ClearTimmer();
-            ALOGE("error uiMessageID unknow !!!!\n");
+            ALOGE("OffState : error uiMessageID unknow uiMessageID = %d!!!\n", uiMessageID);
             return FALSE;
     }
 
     return TRUE;
-}
-
-const string& OffState::GetStateName() const
-{
-    return m_strStateName;
 }
 
 } // namespace ADASManager

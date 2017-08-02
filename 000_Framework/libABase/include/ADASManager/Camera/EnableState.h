@@ -29,33 +29,45 @@ public:
     EnableState(const string& name, StateMachine* sm)
         : State(name, sm)
     {
-        m_pDelayExitReverseGearTimer = new CTimer(&NotifyTimer, (VOID*)this);
+        m_pDelayEnterSuspendStateTimer = new CTimer(&NotifyTimerDelayEnterSuspendState, (VOID*)this);
+        m_pCloseCameraTimer = new CTimer(&NotifyTimerCloseCamera, (VOID*)this);
     }
 
     VOID Enter() const;
     VOID Exit() const;
 
     virtual BOOLEAN ProcessMessage(UInt32 uiType, UInt32 uiID, const string& pData) const;
-    const string& GetStateName() const;
 
     ~EnableState()
     {
-        if (nullptr != m_pDelayExitReverseGearTimer) {
-            delete m_pDelayExitReverseGearTimer;
-            m_pDelayExitReverseGearTimer = nullptr;
+        if (nullptr != m_pDelayEnterSuspendStateTimer) {
+            delete m_pDelayEnterSuspendStateTimer;
+            m_pDelayEnterSuspendStateTimer = nullptr;
+        }
+        if (nullptr != m_pCloseCameraTimer) {
+            delete m_pCloseCameraTimer;
+            m_pCloseCameraTimer = nullptr;
         }
     }
 
-    static VOID NotifyTimer(TimeValue v);
+    static VOID NotifyTimerDelayEnterSuspendState(TimeValue v);
+    static VOID NotifyTimerCloseCamera(TimeValue v);
 
 private:
-    VOID TimerCallback();
-    VOID SetTimmer() const;
-    VOID ClearTimmer() const;
+    VOID TimerCallbackDelayEnterSuspendState();
+    VOID SetTimmerDelayEnterSuspendState() const;
+    VOID ClearTimmerDelayEnterSuspendState() const;
+
+    VOID TimerCallbackCloseCamera();
+    VOID SetTimmerCloseCamera() const;
+    VOID ClearTimmerCloseCamera() const;
 
 private:
-    CTimer* m_pDelayExitReverseGearTimer = nullptr;
-    mutable Enum_CameraStateTriggerEvent_Internal m_eCloseCameraMessage = eCameraStateTriggerEvent_CloseCamera_DriverTrue;
+    CTimer* m_pCloseCameraTimer = nullptr;
+    CTimer* m_pDelayEnterSuspendStateTimer = nullptr;
+
+    mutable BOOLEAN m_bTimerOn = FALSE;
+    mutable BOOLEAN m_bCloseCameraPurpose = FALSE;
 };
 
 } // namespace ADASManager
