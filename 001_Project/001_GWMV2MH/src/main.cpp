@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
 		// Error: could not load runtime
 		return 1;
 	}
-	
+	std::cout << "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" << std::endl;
 	std::string domain = "local";
 
 		std::string PASServiceInst0_prov_connection = "adas";
