@@ -9,40 +9,41 @@ namespace Harman {
 namespace Adas {
 namespace AFramework {
 namespace AFoundation {
+/*
+ #define BEGIN_DISPATCH(CLASSNAME)    \
+ VOID CLASSNAME::dispatchEvent(UInt32 uiEventID, VOID* pData)    \
+ {\
+     switch(uiEventID)    \
+     {
 
-// #define BEGIN_DISPATCH(CLASSNAME)    \
-// VOID CLASSNAME::dispatchEvent(UInt32 uiEventID, VOID* pData)    \
-// {\
-//     switch(uiEventID)    \
-//     {
+ #define DISPATCH_EVENT(uiEventID, Function)    \
+         case (uiEventID):    \
+         {    \
+             Function(pData);\
+         }    \
+         break;
 
-// #define DISPATCH_EVENT(uiEventID, Function)    \
-//         case (uiEventID):    \
-//         {    \
-//             Function(pData);\
-//         }    \
-//         break;
+ #define DISPATCH_EVENT_NOPARAM(uiEventID, Function)    \
+         case (uiEventID):    \
+         {    \
+             Function();\
+         }    \
+         break;
 
-// #define DISPATCH_EVENT_NOPARAM(uiEventID, Function)    \
-//         case (uiEventID):    \
-//         {    \
-//             Function();\
-//         }    \
-//         break;
-
-// #define END_DISPATCH    \
-//         default:    \
-//             break;    \
-//     }    \
-//     return;    \
-// }
-
-// #define DECLARE_DISPATCH    \
-//     virtual VOID dispatchEvent(UInt32 uiEventID, VOID* pData);
+ #define END_DISPATCH    \
+         default:    \
+             break;    \
+     }    \
+     return;    \
+ }
+*/
+ #define DECLARE_DISPATCH    \
+     virtual VOID dispatchEvent(UInt32 uiEventID, VOID* pData);
 
 class CMessageHandler
 {
 public:
+
     //CMessageHandler();
     //virtual ~CMessageHandler();
 
