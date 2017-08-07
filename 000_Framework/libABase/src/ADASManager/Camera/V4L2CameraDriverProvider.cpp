@@ -47,6 +47,9 @@ V4L2CameraDriverProvider::V4L2CameraDriverProvider(const string& cameraName, eIo
         ALOGE("calloc failed\n");
     }
 
+    m_display = new CameraDisplay(m_viewInfo);
+    m_display->connect();
+
     ALOGD("provider for camera : %s,  DriverPath : %s\n", cameraName.c_str(), m_strDriverPath.c_str());
 }
 
@@ -406,6 +409,18 @@ VOID V4L2CameraDriverProvider::Process_image(const VOID* p, Int32 size) {
 }
 #endif
 
+VOID V4L2CameraDriverProvider::Display(VOID* p, Int32 width, Int32 height)
+{
+    CameraDisplay::cameraDisplayInfo dispInfo{p, width, height};
+    if(!m_display) {
+        ALOGD("xiaole---debug m_display is NULL\n");
+        return;
+    }
+    m_display->update(&dispInfo);
+    m_display->start();
+}
+
+
 Int32 V4L2CameraDriverProvider::Read_frame()
 {
     ALOGD("V4L2CameraDriverProvider::Read_frame\n");
@@ -463,6 +478,8 @@ Int32 V4L2CameraDriverProvider::Read_frame()
         #ifdef WRITE_FILE
             Process_image(m_pBuffers[buf.index].start, buf.length);
         #endif
+            ALOGD("xiaole---debug start Display\n");
+            Display(m_pBuffers[buf.index].start, 640, 480);
 
             if (-1 == xioctl(m_iFd, VIDIOC_QBUF, &buf)) {
                 //errno_exit("VIDIOC_QBUF");
@@ -506,6 +523,8 @@ Int32 V4L2CameraDriverProvider::Read_frame()
         #ifdef WRITE_FILE
             Process_image((VOID *)buf.m.userptr, buf.length);
         #endif
+
+            Display(m_pBuffers[buf.index].start, 640, 480);
 
             if (-1 == xioctl(m_iFd, VIDIOC_QBUF, &buf)) {
                 ALOGE("VIDIOC_QBUF error");

@@ -4,6 +4,7 @@
 
 #include "CameraDriverProvider.h"
 #include "CameraDriverProviderFactory.h"
+#include "CameraDisplay.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -93,6 +94,8 @@ private:
     VOID Process_image(const VOID* p, Int32 size);
 #endif
 
+    VOID Display(VOID* p, Int32 width, Int32 height);
+
 private:
     struct VideoInfo *m_pVideoInfo = nullptr;
     eIo_method m_eIo = IO_METHOD_MMAP;
@@ -105,6 +108,10 @@ private:
 
     BOOLEAN m_bIsStreamOff = FALSE;
 
+    CameraDisplay* m_display = NULL;
+
+    viewInfo m_viewInfo{640, 480, {0, 0}, 1};
+
 #ifdef WRITE_FILE
     FILE *m_pFp = nullptr;
     string m_strFilename = string("test.yuv");
@@ -115,7 +122,7 @@ class V4L2CameraDriverProviderFactory : public CameraDriverProviderFactory
 {
 public:
     CameraDriverProvider* CreateCameraDriverProvider(const string& cameraName) override {
-        return new V4L2CameraDriverProvider(cameraName, IO_METHOD_USERPTR);
+        return new V4L2CameraDriverProvider(cameraName, IO_METHOD_MMAP);
     }
 
     ~V4L2CameraDriverProviderFactory() {}

@@ -16,24 +16,34 @@ OBJS_PATH  :=../prj/linux/
 TARGET     := adasmain
 
 ## get all source files
-SRCS       += $(wildcard $(SRC_PATH)/*.cpp $(SRC_PATH)/Rvc/*.cpp $(SRC_PATH)/Camera/*.cpp)
+SRCS       += $(wildcard $(SRC_PATH)/*.cpp  \
+                                         $(SRC_PATH)/Rvc/*.cpp \
+		             $(SRC_PATH)/Camera/*.cpp \
+		             $(SRC_PATH)/CameraDisplay/*.cpp \
+		             $(SRC_PATH)/overlayWindow/*.cpp)
 
 ## all .o based on all .c
 OBJS       := $(SRCS:.cpp=.o)
 
 ## need libs, add at here
-LIBS := AFoundation
+LIBS :=  AFoundation
 LIBS += ABase
 LIBS += ACaseSocket
+LIBS += wayland-client
+LIBS += wayland-egl
+LIBS += GLESv2 EGL
+
 ## used headers  file path
 INCLUDE_PATH :=  ../include
 INCLUDE_PATH += ../../../000_Framework/libAFoundation/include
 INCLUDE_PATH += ../../../000_Framework/libABase/include
 INCLUDE_PATH += ../../../000_Framework/CaseClient/include
+
 ## used include librarys file path
 LIBRARY_PATH :=  ../../../000_Framework/libAFoundation/lib/linux
 LIBRARY_PATH += ../../../000_Framework/libABase/lib/linux
 LIBRARY_PATH += ../../../000_Framework/CaseClient/lib/linux
+LIBRARY_PATH += ~/install/lib
 ## debug for debug info, when use gdb to debug
 ifeq (1, ${DBG_ENABLE})
 CFLAGS += -D_DEBUG -O0 -g -DDEBUG=1
