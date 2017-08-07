@@ -128,7 +128,8 @@ typedef struct _param
 /*
  * ERROR CODE
  */
-static const ECode NO_ERROR = 0;
+static const ECode NO_ERROR                          = 0;
+static const ECode E_IOCTL_VIDIOC_REQBUFS_EXCEPTION  = 1;
 
 } // namespace ADASManager
 } // namespace ABase
