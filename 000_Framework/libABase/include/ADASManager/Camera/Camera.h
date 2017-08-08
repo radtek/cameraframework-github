@@ -46,8 +46,8 @@ public:
     // free resource &&  close camera driver
     virtual VOID CloseCamera() = 0;
 
-    virtual VOID SetCameraParam(CameraDriverParams param) {}
-    virtual CameraDriverParams GetCameraParam() {}
+    virtual VOID SetCameraParam(CameraDriverParams param) {return;}
+    virtual CameraDriverParams GetCameraParam() {  CameraDriverParams m_param; return m_param;}
 
 protected:
     Camera(const string& name, StateMachine* sm)
