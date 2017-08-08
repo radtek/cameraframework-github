@@ -73,12 +73,14 @@ a_status AdasModuleCtrlImpl::CreateModules(string moduleTab[], BYTE cameraFlag)
         {}
         #endif
     }
+    return a_status(0);
 }
 
 a_status AdasModuleCtrlImpl::ModuleInit()
 {
     ALOGD("ModuleInit\n");
     initialize();
+    return a_status(0);
 }
 
 
