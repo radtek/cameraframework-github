@@ -81,7 +81,7 @@ typeCollection AVMBaseType
    	 e_AVM_AUTO_CALI_FAILED
    	 e_AVM_AUTO_CALI_IDLE
    }	
-   enumeration enAutoCaliWorkMode
+   enumeration enAutoCaliWorkMode 
    {
    	 e_AUTO_CALI_ON
    	 e_AUTO_CALI_OFF

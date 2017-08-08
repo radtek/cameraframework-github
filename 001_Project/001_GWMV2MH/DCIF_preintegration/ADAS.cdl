@@ -16,6 +16,7 @@ package ADAS{
 		provides interface com.harman.ADAS.AVMService as AVMInstance
 		provides interface com.harman.ADAS.PASService as PASInstance
 		provides interface com.harman.ADAS.ADASDiagnosis as ADASDiagInstance
+
 		/*
 		consumes interface org.harman.ford.rearviewcamclient instance dynamic as  AMB_RVCInfo
 		consumes interface org.harman.ford.camerainfo instance dynamic as AMB_CameraInfo

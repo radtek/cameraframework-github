@@ -46,4 +46,4 @@ private:
 } // namespace Adas
 } // namespace Harman
 
-#endif // #ifndef __HARMAN_ADAS_AFRAMEWORK_AFOUNDATION_CTIMER_H__
+#endif // __HARMAN_ADAS_AFRAMEWORK_AFOUNDATION_CTIMER_H__

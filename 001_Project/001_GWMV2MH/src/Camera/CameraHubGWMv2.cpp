@@ -41,7 +41,7 @@ CameraHubGWMv2::CameraHubGWMv2(BYTE cameraCreatFlag)
 {
     ALOGD("cameraCreatFlag = %d\n", cameraCreatFlag);
     if(0x01 == (cameraCreatFlag & 0x01)) {
-        // obj:V4L2CameraDriverProviderFactory delete in ~CameraStateMachineGWMv2()
+        // obj:V4L2CameraDriverProviderFactory delete in ~CameraStateMachine()
         // obj:CameraStateMachineGWMv2 delete in ~Camera()
         m_pRightCamera = new RightCamera(RIGHTCAMERANAME, new CameraStateMachineGWMv2(RIGHTCAMERANAME, new V4L2CameraDriverProviderFactory()));
         ALOGI("create camera : RightCamera success !!!\n");
@@ -49,7 +49,7 @@ CameraHubGWMv2::CameraHubGWMv2(BYTE cameraCreatFlag)
     cameraCreatFlag = cameraCreatFlag >> 1;
 
     if(0x01 == (cameraCreatFlag & 0x01)) {
-        // obj:V4L2CameraDriverProviderFactory delete in ~CameraStateMachineGWMv2()
+        // obj:V4L2CameraDriverProviderFactory delete in ~CameraStateMachine()
         // obj:CameraStateMachineGWMv2 delete in ~Camera()
         m_pLeftCamera = new LeftCamera(LEFTCAMERANAME, new CameraStateMachineGWMv2(LEFTCAMERANAME, new V4L2CameraDriverProviderFactory()));
         ALOGI("create camera : LeftCamera success !!!\n");
@@ -57,7 +57,7 @@ CameraHubGWMv2::CameraHubGWMv2(BYTE cameraCreatFlag)
     cameraCreatFlag = cameraCreatFlag >> 1;
 
     if(0x01 == (cameraCreatFlag & 0x01)) {
-        // obj:V4L2CameraDriverProviderFactory delete in ~CameraStateMachineGWMv2()
+        // obj:V4L2CameraDriverProviderFactory delete in ~CameraStateMachine()
         // obj:CameraStateMachineGWMv2 delete in ~Camera()
         m_pReserveCamera = new ReserveCamera(RESERVECAMERANAME, new CameraStateMachineGWMv2(RESERVECAMERANAME, new V4L2CameraDriverProviderFactory()));
         ALOGI("create camera : ReserveCamera success !!!\n");
@@ -65,7 +65,7 @@ CameraHubGWMv2::CameraHubGWMv2(BYTE cameraCreatFlag)
     cameraCreatFlag = cameraCreatFlag >> 1;
 
     if(0x01 == (cameraCreatFlag & 0x01)) {
-        // obj:V4L2CameraDriverProviderFactory delete in ~CameraStateMachineGWMv2()
+        // obj:V4L2CameraDriverProviderFactory delete in ~CameraStateMachine()
         // obj:CameraStateMachineGWMv2 delete in ~Camera()
         m_pFrontCamera = new FrontCamera(FRONTCAMERANAME, new CameraStateMachineGWMv2(FRONTCAMERANAME, new V4L2CameraDriverProviderFactory()));
         ALOGI("create camera : FrontCamera success !!!\n");

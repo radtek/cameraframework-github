@@ -65,6 +65,20 @@ typedef enum a_status
     UNKNOWN_ERROR       = 0x80000000
 } Enum_Astatus;
 
+typedef struct
+{
+    Int32 x;
+    Int32 y;
+}posXY;
+
+typedef struct 
+{
+    Int32       width;
+    Int32       height;
+    posXY      viewPos;
+    Int32       layer;
+}viewInfo;
+
 // } // namespace AFoundation
 // } // namespace AFramework
 // } // namespace Adas

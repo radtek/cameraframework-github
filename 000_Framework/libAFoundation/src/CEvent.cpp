@@ -63,8 +63,9 @@ VOID CEvent::wait()
     {
         ALOGI("wait start\n");
         if(m_onPauseFunc) {
-        ALOGI("wait call back!!\n");
-            m_onPauseFunc(m_CallBackPara);    }
+            ALOGI("wait call back!!\n");
+            m_onPauseFunc(m_CallBackPara);   
+        }
 #ifdef QNX_OS
         pthread_cond_wait(&m_cond, &m_mutex);
 #endif
@@ -72,6 +73,10 @@ VOID CEvent::wait()
         m_cond.wait(lockevent);
 #endif
     }
+
+
+
+
     if( m_bAuto )
         m_bState = FALSE;
 #ifdef QNX_OS

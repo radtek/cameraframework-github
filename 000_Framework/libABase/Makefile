@@ -86,8 +86,10 @@ CUR_SOURCE=${wildcard *.cpp}
 CUR_OBJS=${patsubst %.cpp, %.o, $(CUR_SOURCE)}
 
 INCLUDE_PATH := $(ROOT_DIR)/include
+INCLUDE_PATH += $(ROOT_DIR)/include/ADASManager
 INCLUDE_PATH += $(ROOT_DIR)/../libAFoundation/include 
 INCLUDE_PATH += $(ROOT_DIR)/../CaseClient/include
+
 
 CFLAGS= -Wl,--no-as-needed  -lpthread -std=c++11 -D LINUX_OS -fPIC
 CFLAGS+= $(foreach dir, $(INCLUDE_PATH), -I$(dir))

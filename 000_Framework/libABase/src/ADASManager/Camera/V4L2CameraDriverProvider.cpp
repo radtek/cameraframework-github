@@ -47,6 +47,9 @@ V4L2CameraDriverProvider::V4L2CameraDriverProvider(const string& cameraName, eIo
         ALOGE("calloc failed\n");
     }
 
+    m_display = new CameraDisplay(m_viewInfo);
+    m_display->connect();
+
     ALOGD("provider for camera : %s,  DriverPath : %s\n", cameraName.c_str(), m_strDriverPath.c_str());
 }
 
@@ -71,18 +74,18 @@ void V4L2CameraDriverProvider::CloseFd(const Int32 fd)
     m_bIsOpened = FALSE;
 }
 
-Int32 V4L2CameraDriverProvider::OpenDriver()
+ECode V4L2CameraDriverProvider::OpenDriver()
 {
     ALOGD("V4L2CameraDriverProvider::OpenDriver\n");
 
     struct stat st;
 
-    if (-1 == stat(m_strDriverPath.c_str(), &st)) {
+    if(-1 == stat(m_strDriverPath.c_str(), &st)){
         ALOGE("V4L2CameraDriverProvider::OpenDriver : Error %s Cannot identify : %s\n", m_strDriverPath.c_str(), strerror(errno));
         return -1;
     }
 
-    if (!S_ISCHR(st.st_mode)) {
+    if(!S_ISCHR(st.st_mode)){
         ALOGE("V4L2CameraDriverProvider::OpenDriver : Error %s is no device : %s\n", m_strDriverPath.c_str(), strerror(errno));
         return -1;
     }
@@ -112,7 +115,7 @@ Int32 V4L2CameraDriverProvider::OpenDriver()
     }
 
 #ifdef WRITE_FILE
-    if((m_pFp = fopen(m_strFilename.c_str(), "wa+")) == nullptr) {
+    if((m_pFp = fopen(m_strFilename.c_str(), "wa+")) == nullptr){
         ALOGE("V4L2CameraDriverProvider::OpenDriver : Error while fopen : %s.\n", m_strFilename.c_str());
         CloseFd(m_iFd);
         return -1;
@@ -124,13 +127,13 @@ Int32 V4L2CameraDriverProvider::OpenDriver()
     return NO_ERROR;
 }
 
-Int32 V4L2CameraDriverProvider::Init_read(UInt32 buffer_size)
+ECode V4L2CameraDriverProvider::Init_read(UInt32 buffer_size)
 {
     ALOGD("V4L2CameraDriverProvider::Init_read\n");
 
     m_pBuffers = (struct UserBuffer*)calloc(1, sizeof(struct UserBuffer));
 
-    if (!m_pBuffers) {
+    if(!m_pBuffers){
         ALOGE("Out of memory\n");
         return -1;
     }
@@ -138,14 +141,14 @@ Int32 V4L2CameraDriverProvider::Init_read(UInt32 buffer_size)
     m_pBuffers[0].length = buffer_size;
     m_pBuffers[0].start = malloc(buffer_size);
 
-    if (!m_pBuffers[0].start) {
+    if(!m_pBuffers[0].start){
         ALOGE("Out of memory\n");
         return -1;
     }
     return NO_ERROR;
 }
 
-Int32 V4L2CameraDriverProvider::Init_mmap()
+ECode V4L2CameraDriverProvider::Init_mmap()
 {
     ALOGD("V4L2CameraDriverProvider::Init_mmap\n");
 
@@ -157,29 +160,29 @@ Int32 V4L2CameraDriverProvider::Init_mmap()
     req.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     req.memory = V4L2_MEMORY_MMAP;
 
-    if (-1 == xioctl(m_iFd, VIDIOC_REQBUFS, &req)) {
-        if (EINVAL == errno) {
+    if(-1 == xioctl(m_iFd, VIDIOC_REQBUFS, &req)){
+        if(EINVAL == errno){
             ALOGE("%s(%s) does not support memory mapping\n", m_strCameraName.c_str(), m_strDriverPath.c_str());
             return -1;
-        } else {
+        }else{
             ALOGE("VIDIOC_REQBUFS error");
             return -1;
         }
     }
 
-    if (req.count < 2) {
+    if(req.count < 2){
         ALOGE("Insufficient buffer memory on %s(%s)\n", m_strCameraName.c_str(), m_strDriverPath.c_str());
         return -1;
     }
 
     m_pBuffers = (struct UserBuffer*)calloc(req.count, sizeof(struct UserBuffer));
 
-    if (!m_pBuffers) {
+    if(!m_pBuffers){
         ALOGE("Out of memory\n");
         return -1;
     }
 
-    for (BufferCountReal = 0; BufferCountReal < req.count; ++BufferCountReal) {
+    for(BufferCountReal = 0; BufferCountReal < req.count; ++BufferCountReal){
         struct v4l2_buffer buf;
 
         CLEAR(buf);
@@ -188,7 +191,7 @@ Int32 V4L2CameraDriverProvider::Init_mmap()
         buf.memory = V4L2_MEMORY_MMAP;
         buf.index = BufferCountReal;
 
-        if (-1 == xioctl(m_iFd, VIDIOC_QUERYBUF, &buf)) {
+        if(-1 == xioctl(m_iFd, VIDIOC_QUERYBUF, &buf)){
             ALOGE("VIDIOC_QUERYBUF error");
             return -1;
         }
@@ -198,7 +201,7 @@ Int32 V4L2CameraDriverProvider::Init_mmap()
                 PROT_READ | PROT_WRITE /* required */,
                 MAP_SHARED /* recommended */, m_iFd, buf.m.offset);
 
-        if (MAP_FAILED == m_pBuffers[BufferCountReal].start) {
+        if(MAP_FAILED == m_pBuffers[BufferCountReal].start){
             ALOGE("mmap error");
             return -1;
         }
@@ -206,7 +209,7 @@ Int32 V4L2CameraDriverProvider::Init_mmap()
     return NO_ERROR;
 }
 
-Int32 V4L2CameraDriverProvider::Init_userp(UInt32 buffer_size)
+ECode V4L2CameraDriverProvider::Init_userp(UInt32 buffer_size)
 {
     ALOGD("V4L2CameraDriverProvider::Init_userp\n");
 
@@ -222,11 +225,11 @@ Int32 V4L2CameraDriverProvider::Init_userp(UInt32 buffer_size)
     req.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     req.memory = V4L2_MEMORY_USERPTR;
 
-    if (-1 == xioctl(m_iFd, VIDIOC_REQBUFS, &req)) {
-        if (EINVAL == errno) {
+    if(-1 == xioctl(m_iFd, VIDIOC_REQBUFS, &req)){
+        if(EINVAL == errno){
             ALOGE("%s(%s) does not support user pointer i/o\n", m_strCameraName.c_str(), m_strDriverPath.c_str());
             return -1;
-        } else {
+        }else{
             ALOGE("VIDIOC_REQBUFS error");
             return -1;
         }
@@ -234,17 +237,17 @@ Int32 V4L2CameraDriverProvider::Init_userp(UInt32 buffer_size)
 
     m_pBuffers = (struct UserBuffer*)calloc(req.count, sizeof(struct UserBuffer));
 
-    if (!m_pBuffers) {
+    if(!m_pBuffers){
         ALOGE("Out of memory\n");
         return -1;
     }
 
-    for (BufferCountReal = 0; BufferCountReal < req.count; ++BufferCountReal) {
+    for(BufferCountReal = 0; BufferCountReal < req.count; ++BufferCountReal){
         m_pBuffers[BufferCountReal].length = buffer_size;
         m_pBuffers[BufferCountReal].start = memalign(/* boundary */page_size,
                 buffer_size);
 
-        if (!m_pBuffers[BufferCountReal].start) {
+        if(!m_pBuffers[BufferCountReal].start){
             ALOGE("Out of memory\n");
             return -1;
         }
@@ -252,7 +255,7 @@ Int32 V4L2CameraDriverProvider::Init_userp(UInt32 buffer_size)
     return NO_ERROR;
 }
 
-Int32 V4L2CameraDriverProvider::InitDevice()
+ECode V4L2CameraDriverProvider::InitDevice()
 {
     ALOGD("V4L2CameraDriverProvider::InitDevice\n");
 
@@ -262,24 +265,24 @@ Int32 V4L2CameraDriverProvider::InitDevice()
     struct v4l2_format fmt;
     UInt32 min;
 
-    if (-1 == xioctl(m_iFd, VIDIOC_QUERYCAP, &cap)) {
-        if (EINVAL == errno) {
+    if(-1 == xioctl(m_iFd, VIDIOC_QUERYCAP, &cap)){
+        if(EINVAL == errno){
             ALOGE("%s(%s) is no V4L2 device\n", m_strCameraName.c_str(), m_strDriverPath.c_str());
             return -1;
-        } else {
+        }else{
             ALOGE("VIDIOC_QUERYCAP error");
             return -1;
         }
     }
 
-    if (!(cap.capabilities & V4L2_CAP_VIDEO_CAPTURE)) {
+    if(!(cap.capabilities & V4L2_CAP_VIDEO_CAPTURE)){
         ALOGE("%s(%s) is no video capture device\n", m_strCameraName.c_str(), m_strDriverPath.c_str());
         return -1;
     }
 
-    switch (m_eIo) {
+    switch (m_eIo){
         case IO_METHOD_READ:
-            if (!(cap.capabilities & V4L2_CAP_READWRITE)) {
+            if(!(cap.capabilities & V4L2_CAP_READWRITE)){
                 ALOGE("%s(%s) does not support read i/o\n", m_strCameraName.c_str(), m_strDriverPath.c_str());
                 return -1;
             }
@@ -287,7 +290,7 @@ Int32 V4L2CameraDriverProvider::InitDevice()
 
         case IO_METHOD_MMAP:
         case IO_METHOD_USERPTR:
-            if (!(cap.capabilities & V4L2_CAP_STREAMING)) {
+            if(!(cap.capabilities & V4L2_CAP_STREAMING)){
                 ALOGE("%s(%s) does not support streaming i/o\n", m_strCameraName.c_str(), m_strDriverPath.c_str());
                 return -1;
             }
@@ -300,12 +303,12 @@ Int32 V4L2CameraDriverProvider::InitDevice()
 
     cropcap.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 
-    if (0 == xioctl(m_iFd, VIDIOC_CROPCAP, &cropcap)) {
+    if(0 == xioctl(m_iFd, VIDIOC_CROPCAP, &cropcap)){
         crop.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
         crop.c = cropcap.defrect; /* reset to default */
 
-        if (-1 == xioctl(m_iFd, VIDIOC_S_CROP, &crop)) {
-            switch (errno) {
+        if(-1 == xioctl(m_iFd, VIDIOC_S_CROP, &crop)){
+            switch (errno){
                 case EINVAL:
                     /* Cropping not supported. */
                     break;
@@ -314,7 +317,7 @@ Int32 V4L2CameraDriverProvider::InitDevice()
                     break;
             }
         }
-    } else {
+    }else{
         /* Errors ignored. */
     }
 
@@ -326,7 +329,7 @@ Int32 V4L2CameraDriverProvider::InitDevice()
     fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_YUYV;
     fmt.fmt.pix.field = V4L2_FIELD_INTERLACED;
 
-    if (-1 == xioctl(m_iFd, VIDIOC_S_FMT, &fmt)) {
+    if(-1 == xioctl(m_iFd, VIDIOC_S_FMT, &fmt)){
         ALOGE("VIDIOC_S_FMT error");
         return -1;
     }
@@ -335,14 +338,14 @@ Int32 V4L2CameraDriverProvider::InitDevice()
 
     /* Buggy driver paranoia. */
     min = fmt.fmt.pix.width * 2;
-    if (fmt.fmt.pix.bytesperline < min)
+    if(fmt.fmt.pix.bytesperline < min)
         fmt.fmt.pix.bytesperline = min;
     min = fmt.fmt.pix.bytesperline * fmt.fmt.pix.height;
-    if (fmt.fmt.pix.sizeimage < min)
+    if(fmt.fmt.pix.sizeimage < min)
         fmt.fmt.pix.sizeimage = min;
 
     Int32 ret;
-    switch (m_eIo) {
+    switch(m_eIo){
         case IO_METHOD_READ:
             ret = Init_read(fmt.fmt.pix.sizeimage);
             break;
@@ -360,27 +363,27 @@ Int32 V4L2CameraDriverProvider::InitDevice()
     return ret;
 }
 
-Int32 V4L2CameraDriverProvider::UninitDevice()
+ECode V4L2CameraDriverProvider::UninitDevice()
 {
     ALOGD("V4L2CameraDriverProvider::UninitDevice\n");
 
     UInt32 i;
 
-    switch (m_eIo) {
+    switch (m_eIo){
         case IO_METHOD_READ:
             free(m_pBuffers[0].start);
             break;
 
         case IO_METHOD_MMAP:
-            for (i = 0; i < BufferCountReal; ++i)
-                if (-1 == munmap(m_pBuffers[i].start, m_pBuffers[i].length)) {
+            for(i = 0; i < BufferCountReal; ++i)
+                if(-1 == munmap(m_pBuffers[i].start, m_pBuffers[i].length)){
                     ALOGE("munmap error");
                     return -1;
                 }
             break;
 
         case IO_METHOD_USERPTR:
-            for (i = 0; i < BufferCountReal; ++i)
+            for(i = 0; i < BufferCountReal; ++i)
                 free(m_pBuffers[i].start);
             break;
     }
@@ -400,23 +403,34 @@ VOID V4L2CameraDriverProvider::ShowInfo()
 }
 
 #ifdef WRITE_FILE
-VOID V4L2CameraDriverProvider::Process_image(const VOID* p, Int32 size) {
+VOID V4L2CameraDriverProvider::Process_image(const VOID* p, Int32 size){
     ALOGD("V4L2CameraDriverProvider::Process_image\n");
     fwrite(p, size, 1, m_pFp);
 }
 #endif
 
-Int32 V4L2CameraDriverProvider::Read_frame()
+VOID V4L2CameraDriverProvider::Display(VOID* p, Int32 width, Int32 height)
+{
+    CameraDisplay::cameraDisplayInfo dispInfo{p, width, height};
+    if(!m_display) {
+        ALOGD("xiaole---debug m_display is NULL\n");
+        return;
+    }
+    m_display->update(&dispInfo);
+    m_display->start();
+}
+
+ECode V4L2CameraDriverProvider::Read_frame()
 {
     ALOGD("V4L2CameraDriverProvider::Read_frame\n");
 
     struct v4l2_buffer buf;
     UInt32 i;
 
-    switch (m_eIo) {
+    switch (m_eIo){
         case IO_METHOD_READ:
-            if (-1 == read(m_iFd, m_pBuffers[0].start, m_pBuffers[0].length)) {
-                switch (errno) {
+            if(-1 == read(m_iFd, m_pBuffers[0].start, m_pBuffers[0].length)){
+                switch (errno){
                     case EAGAIN:
                         return -1;
 
@@ -440,8 +454,8 @@ Int32 V4L2CameraDriverProvider::Read_frame()
             buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
             buf.memory = V4L2_MEMORY_MMAP;
 
-            if (-1 == xioctl(m_iFd, VIDIOC_DQBUF, &buf)) {
-                switch (errno) {
+            if(-1 == xioctl(m_iFd, VIDIOC_DQBUF, &buf)){
+                switch (errno){
                     case EAGAIN:
                         return -1;
 
@@ -463,8 +477,10 @@ Int32 V4L2CameraDriverProvider::Read_frame()
         #ifdef WRITE_FILE
             Process_image(m_pBuffers[buf.index].start, buf.length);
         #endif
+            ALOGD("xiaole---debug start Display\n");
+            Display(m_pBuffers[buf.index].start, 640, 480);
 
-            if (-1 == xioctl(m_iFd, VIDIOC_QBUF, &buf)) {
+            if(-1 == xioctl(m_iFd, VIDIOC_QBUF, &buf)){
                 //errno_exit("VIDIOC_QBUF");
                 ALOGE("VIDIOC_QBUF error\n");
                 return -1;
@@ -478,8 +494,8 @@ Int32 V4L2CameraDriverProvider::Read_frame()
             buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
             buf.memory = V4L2_MEMORY_USERPTR;
 
-            if (-1 == xioctl(m_iFd, VIDIOC_DQBUF, &buf)) {
-                switch (errno) {
+            if(-1 == xioctl(m_iFd, VIDIOC_DQBUF, &buf)){
+                switch (errno){
                     case EAGAIN:
                         return -1;
 
@@ -495,8 +511,8 @@ Int32 V4L2CameraDriverProvider::Read_frame()
                 }
             }
 
-            for (i = 0; i < BufferCountReal; ++i) {
-                if (buf.m.userptr == (unsigned long) m_pBuffers[i].start
+            for(i = 0; i < BufferCountReal; ++i){
+                if(buf.m.userptr == (unsigned long) m_pBuffers[i].start
                         && buf.length == m_pBuffers[i].length)
                     break;
             }
@@ -507,7 +523,9 @@ Int32 V4L2CameraDriverProvider::Read_frame()
             Process_image((VOID *)buf.m.userptr, buf.length);
         #endif
 
-            if (-1 == xioctl(m_iFd, VIDIOC_QBUF, &buf)) {
+            Display(m_pBuffers[buf.index].start, 640, 480);
+
+            if(-1 == xioctl(m_iFd, VIDIOC_QBUF, &buf)){
                 ALOGE("VIDIOC_QBUF error");
                 return -1;
             }
@@ -522,16 +540,16 @@ VOID V4L2CameraDriverProvider::update()
 {
     ALOGD("V4L2CameraDriverProvider::update\n");
 
-    if(!m_bIsStreamOff) {
+    if(!m_bIsStreamOff){
         Read_frame();
     }
 
-    // while (m_bIsContinueGet) {
+    // while (m_bIsContinueGet){
 
     //     Read_frame();
 
 
-    //     for (;;) {
+    //     for(;;){
     //         fd_set fds;
     //         struct timeval tv;
     //         Int32 r;
@@ -545,8 +563,8 @@ VOID V4L2CameraDriverProvider::update()
 
     //         r = select(m_iFd + 1, &fds, NULL, NULL, &tv);
 
-    //         if (-1 == r) {
-    //             if (EINTR == errno)
+    //         if(-1 == r){
+    //             if(EINTR == errno)
     //                 continue;
 
     //             ALOGE("select");
@@ -554,13 +572,13 @@ VOID V4L2CameraDriverProvider::update()
     //             return;
     //         }
 
-    //         if (0 == r) {
+    //         if(0 == r){
     //             ALOGE("select timeout\n");
     //             //return -1;
     //             return;
     //         }
 
-    //         if (Read_frame())
+    //         if(Read_frame())
     //             break;
 
     //         /* EAGAIN - continue select loop. */
@@ -568,20 +586,20 @@ VOID V4L2CameraDriverProvider::update()
     // }
 }
 
-Int32 V4L2CameraDriverProvider::GetCapture()
+ECode V4L2CameraDriverProvider::GetCapture()
 {
     ALOGD("V4L2CameraDriverProvider::GetCapture\n");
 
     UInt32 i;
     enum v4l2_buf_type type;
 
-    switch (m_eIo) {
+    switch (m_eIo){
         case IO_METHOD_READ:
             /* Nothing to do. */
             break;
 
         case IO_METHOD_MMAP:
-            for (i = 0; i < BufferCountReal; ++i) {
+            for(i = 0; i < BufferCountReal; ++i){
                 struct v4l2_buffer buf;
                 CLEAR(buf);
 
@@ -589,7 +607,7 @@ Int32 V4L2CameraDriverProvider::GetCapture()
                 buf.memory = V4L2_MEMORY_MMAP;
                 buf.index = i;
 
-                if (-1 == xioctl(m_iFd, VIDIOC_QBUF, &buf)){
+                if(-1 == xioctl(m_iFd, VIDIOC_QBUF, &buf)){
                     ALOGE("VIDIOC_QBUF error\n");
                     return -1;
                 }
@@ -597,7 +615,7 @@ Int32 V4L2CameraDriverProvider::GetCapture()
 
             type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 
-            if (-1 == xioctl(m_iFd, VIDIOC_STREAMON, &type)) {
+            if(-1 == xioctl(m_iFd, VIDIOC_STREAMON, &type)){
                 ALOGE("VIDIOC_STREAMON error\n");
                 return -1;
             }
@@ -605,7 +623,7 @@ Int32 V4L2CameraDriverProvider::GetCapture()
             break;
 
         case IO_METHOD_USERPTR:
-            for (i = 0; i < BufferCountReal; ++i) {
+            for(i = 0; i < BufferCountReal; ++i){
                 struct v4l2_buffer buf;
 
                 CLEAR(buf);
@@ -616,7 +634,7 @@ Int32 V4L2CameraDriverProvider::GetCapture()
                 buf.m.userptr = (unsigned long) m_pBuffers[i].start;
                 buf.length = m_pBuffers[i].length;
 
-                if (-1 == xioctl(m_iFd, VIDIOC_QBUF, &buf)) {
+                if(-1 == xioctl(m_iFd, VIDIOC_QBUF, &buf)){
                     ALOGE("VIDIOC_QBUF error\n");
                     return -1;
                 }
@@ -624,7 +642,7 @@ Int32 V4L2CameraDriverProvider::GetCapture()
 
             type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 
-            if (-1 == xioctl(m_iFd, VIDIOC_STREAMON, &type)) {
+            if(-1 == xioctl(m_iFd, VIDIOC_STREAMON, &type)){
                 ALOGE("VIDIOC_STREAMON error\n");
                 return -1;
             }
@@ -632,11 +650,11 @@ Int32 V4L2CameraDriverProvider::GetCapture()
             break;
     }
 
-    if (!m_bIsStarted) {
+    if(!m_bIsStarted){
         m_bIsStreamOff = FALSE;
         start();
         m_bIsStarted = TRUE;
-    } else {
+    }else{
         m_bIsStreamOff = FALSE;
         resume();
     }
@@ -644,13 +662,13 @@ Int32 V4L2CameraDriverProvider::GetCapture()
     return NO_ERROR;
 }
 
-Int32 V4L2CameraDriverProvider::StopCapture()
+ECode V4L2CameraDriverProvider::StopCapture()
 {
     ALOGD("V4L2CameraDriverProvider::StopCapture\n");
 
     enum v4l2_buf_type type;
 
-    switch (m_eIo) {
+    switch (m_eIo){
         case IO_METHOD_READ:
             /* Nothing to do. */
             break;
@@ -660,7 +678,7 @@ Int32 V4L2CameraDriverProvider::StopCapture()
             type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
             m_bIsStreamOff = TRUE;
             pause();
-            if (-1 == xioctl(m_iFd, VIDIOC_STREAMOFF, &type)) {
+            if(-1 == xioctl(m_iFd, VIDIOC_STREAMOFF, &type)){
                 ALOGE("VIDIOC_STREAMOFF error\n");
                 return -1;
             }
@@ -670,14 +688,14 @@ Int32 V4L2CameraDriverProvider::StopCapture()
     return NO_ERROR;
 }
 
-Int32 V4L2CameraDriverProvider::CloseDriver()
+ECode V4L2CameraDriverProvider::CloseDriver()
 {
     ALOGD("V4L2CameraDriverProvider::CloseDriver\n");
 
     // Close the camera handle and free the video info structure
     if(0 == close(m_iFd)){
         ALOGI("close %s success, m_iFd=%d\n", m_strDriverPath.c_str(), m_iFd);
-    } else {
+    }else{
         ALOGE("close %s failed, m_iFd=%d\n", m_strDriverPath.c_str(), m_iFd);
     }
 
