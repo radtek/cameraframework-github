@@ -44,7 +44,7 @@ VOID CameraDisplay::stop()
 
 VOID CameraDisplay::connect()
 {
-    printf("xiaole---debug CameraDisplay| connect");
+    printf("xiaole---debug CameraDisplay| connect\n");
     if(m_pPaint == NULL) {
         m_pPaint = new PaintImpl();
     }
@@ -60,7 +60,6 @@ VOID CameraDisplay::connect()
 
 BOOLEAN CameraDisplay::createEGLContext ()
 {
-   
    EGLint numConfigs;
    EGLint majorVersion;
    EGLint minorVersion;
@@ -84,6 +83,21 @@ BOOLEAN CameraDisplay::createEGLContext ()
       EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
       EGL_NONE
    };
+
+
+
+   static const struct {
+    char *extension, *entrypoint;
+  } swap_damage_ext_to_entrypoint[] = {
+    {
+      .extension = "EGL_EXT_swap_buffers_with_damage",
+      .entrypoint = "eglSwapBuffersWithDamageEXT",
+    },
+    {
+      .extension = "EGL_KHR_swap_buffers_with_damage",
+      .entrypoint = "eglSwapBuffersWithDamageKHR",
+    },
+  };
 
 
 
@@ -126,13 +140,34 @@ BOOLEAN CameraDisplay::createEGLContext ()
    {
       printf("xiaole---debug eglCreateContext failed\n");
       return FALSE;
-   }   
+   }
+
+
+  // display->swap_buffers_with_damage = NULL;
+  // extensions = eglQueryString(display->egl.dpy, EGL_EXTENSIONS);
+  // if (extensions &&
+  //     weston_check_egl_extension(extensions, "EGL_EXT_buffer_age")) {
+  //   for (i = 0; i < (int) ARRAY_LENGTH(swap_damage_ext_to_entrypoint); i++) {
+  //     if (weston_check_egl_extension(extensions,
+  //                  swap_damage_ext_to_entrypoint[i].extension)) {
+  //       /* The EXTPROC is identical to the KHR one */
+  //       display->swap_buffers_with_damage =
+  //         (PFNEGLSWAPBUFFERSWITHDAMAGEEXTPROC)
+  //         eglGetProcAddress(swap_damage_ext_to_entrypoint[i].entrypoint);
+  //       break;
+  //     }
+  //   }
+  // }
+
+  // if (display->swap_buffers_with_damage)
+  //   printf("has EGL_EXT_buffer_age and %s\n", swap_damage_ext_to_entrypoint[i].extension);
 
    overlayWindow::getInstance()->createSurface(m_window);
    printf("xiaole---debug WLSurface OK\n");
    eglSurface = weston_platform_create_egl_surface(eglDisplay, eglConfig,
-                                                                        (VOID*)m_window.window, 
+                                                                        (VOID*)m_window.window,
                                                                         NULL);
+   overlayWindow::getInstance()->create_xdg_surface();
    printf("xiaole---debug eglCreateWindowSurface OK\n");
    // Make the context current
    if ( !eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext) )
@@ -140,7 +175,7 @@ BOOLEAN CameraDisplay::createEGLContext ()
       printf("xiaole---debug eglCreateContext failed\n");
       return FALSE;
    }
-   
+
    return TRUE;
 }
 

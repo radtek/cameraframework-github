@@ -26,6 +26,8 @@
 #include <asm/types.h>          /* for videodev2.h */
 #include <linux/videodev2.h>
 
+#include "ADASManager/Camera/DisplaySample.h"
+
 #define WRITE_FILE
 
 namespace Harman {
@@ -109,6 +111,8 @@ private:
     BOOLEAN m_bIsStreamOff = FALSE;
 
     CameraDisplay* m_display = NULL;
+
+    DisplaySample* m_displaySample = nullptr;
 
     viewInfo m_viewInfo{640, 480, {0, 0}, 1};
 

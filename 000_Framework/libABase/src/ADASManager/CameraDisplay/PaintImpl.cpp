@@ -13,7 +13,7 @@ PaintImpl::~PaintImpl()
 
 VOID PaintImpl::init()
 {
-    printf("xiaole---debug PaintImpl| init");
+    printf("xiaole---debug PaintImpl| init\n");
     initShader();
     // initEGL();
 }
@@ -59,18 +59,18 @@ VOID PaintImpl::draw()
         // Use the program object
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textureYId);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_width, m_height, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, plane[0]); 
-    glUniform1i(textureUniformY, 0);    
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_width, m_height, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, plane[0]);
+    glUniform1i(textureUniformY, 0);
 
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, textureUId);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_width, m_height/2, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, plane[1]); 
-    glUniform1i(textureUniformU, 1); 
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_width, m_height/2, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, plane[1]);
+    glUniform1i(textureUniformU, 1);
 
     glActiveTexture(GL_TEXTURE2);
     glBindTexture(GL_TEXTURE_2D, textureVId);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_width, m_height/2, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, plane[2]); 
-    glUniform1i(textureUniformV, 2); 
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_width, m_height/2, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, plane[2]);
+    glUniform1i(textureUniformV, 2);
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     //glDrawElements (GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
@@ -92,7 +92,7 @@ VOID PaintImpl::shutDown()
 
 Int32 PaintImpl::initShader()
 {
-    printf("xiaole---debug PaintImpl| initShader");
+    printf("xiaole---debug PaintImpl| initShader\n");
     GLbyte vShaderStr[] =
             "attribute vec4 vertexIn; \n"
             "attribute vec2 textureIn; \n"
@@ -157,27 +157,27 @@ Int32 PaintImpl::initShader()
 #endif
 
     glVertexAttribPointer(positionLoc, 2, GL_FLOAT, 0, 0, vertexVertices);
-    glEnableVertexAttribArray(positionLoc);    
+    glEnableVertexAttribArray(positionLoc);
 
     glVertexAttribPointer(texCoordLoc, 2, GL_FLOAT, 0, 0, textureVertices);
     glEnableVertexAttribArray(texCoordLoc);
 
-    glGenTextures(1, &textureYId); 
-    glBindTexture(GL_TEXTURE_2D, textureYId);    
+    glGenTextures(1, &textureYId);
+    glBindTexture(GL_TEXTURE_2D, textureYId);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    
+
     glGenTextures(1, &textureUId);
-    glBindTexture(GL_TEXTURE_2D, textureUId);   
+    glBindTexture(GL_TEXTURE_2D, textureUId);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    
-    glGenTextures(1, &textureVId); 
-    glBindTexture(GL_TEXTURE_2D, textureVId); 
+
+    glGenTextures(1, &textureVId);
+    glBindTexture(GL_TEXTURE_2D, textureVId);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -216,7 +216,7 @@ GLuint  PaintImpl::esLoadProgram ( const char *vertShaderSrc, const char *fragSh
 
    // Create the program object
    programObjectTmp = glCreateProgram ( );
-   
+
    if ( programObjectTmp == 0 )
       return 0;
 
@@ -229,18 +229,18 @@ GLuint  PaintImpl::esLoadProgram ( const char *vertShaderSrc, const char *fragSh
    // Check the link status
    glGetProgramiv ( programObjectTmp, GL_LINK_STATUS, &linked );
 
-   if ( !linked ) 
+   if ( !linked )
    {
       GLint infoLen = 0;
 
       glGetProgramiv ( programObjectTmp, GL_INFO_LOG_LENGTH, &infoLen );
-      
+
       if ( infoLen > 1 )
       {
          char* infoLog = (char*)malloc (sizeof(char) * infoLen );
 
          glGetProgramInfoLog ( programObjectTmp, infoLen, NULL, infoLog );
-      
+
          free ( infoLog );
       }
 
@@ -287,5 +287,3 @@ GLuint  PaintImpl::loadShader(GLenum type, const char *shaderSrc)
 }
 
 /* EOF */
-
-

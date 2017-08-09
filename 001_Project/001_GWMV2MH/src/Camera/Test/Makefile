@@ -15,10 +15,11 @@ OBJS_PATH  :=../../../prj/linux/Camera/
 TARGET     := cameraStateTest
 
 ## get all source files
-SRCS       += $(wildcard $(SRC_PATH)/*.cpp $(SRC_PATH)/../*.cpp)
+SRCS       += $(wildcard $(SRC_PATH)/* $(SRC_PATH)/../*.cpp)
 
 ## all .o based on all .c
 OBJS       := $(SRCS:.cpp=.o)
+OBJS       += $(SRCS:.c=.o)
 
 ## need libs, add at here
 LIBS := AFoundation
@@ -57,7 +58,7 @@ LDFLAGS += $(foreach lib, $(LIBS), -l$(lib))
 ## c++11 support
 CFLAGS += -Wl,--no-as-needed  -lpthread -std=c++11
 
-CFLAGS += -D LINUX_OS -fPIC -lm -lrt
+CFLAGS += -D LINUX_OS -fPIC -lm -lrt 
 
 #CFLAGS += -D__FILENAME__='"$(subst $(dir $<),,$<)"'
 

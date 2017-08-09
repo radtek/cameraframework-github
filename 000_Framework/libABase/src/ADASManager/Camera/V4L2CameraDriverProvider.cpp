@@ -47,8 +47,9 @@ V4L2CameraDriverProvider::V4L2CameraDriverProvider(const string& cameraName, eIo
         ALOGE("calloc failed\n");
     }
 
-    m_display = new CameraDisplay(m_viewInfo);
-    m_display->connect();
+    // m_display = new CameraDisplay(m_viewInfo);
+    // m_display->connect();
+    m_displaySample = new DisplaySample();
 
     ALOGD("provider for camera : %s,  DriverPath : %s\n", cameraName.c_str(), m_strDriverPath.c_str());
 }
@@ -411,13 +412,15 @@ VOID V4L2CameraDriverProvider::Process_image(const VOID* p, Int32 size){
 
 VOID V4L2CameraDriverProvider::Display(VOID* p, Int32 width, Int32 height)
 {
-    CameraDisplay::cameraDisplayInfo dispInfo{p, width, height};
-    if(!m_display) {
-        ALOGD("xiaole---debug m_display is NULL\n");
-        return;
-    }
-    m_display->update(&dispInfo);
-    m_display->start();
+    // CameraDisplay::cameraDisplayInfo dispInfo{p, width, height};
+    // if(!m_display) {
+    //     ALOGD("xiaole---debug m_display is NULL\n");
+    //     return;
+    // }
+    // m_display->update(&dispInfo);
+    // m_display->start();
+
+    m_displaySample->Start();
 }
 
 ECode V4L2CameraDriverProvider::Read_frame()

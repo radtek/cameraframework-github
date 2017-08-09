@@ -35,7 +35,7 @@ CSocketIPC::~CSocketIPC()
 
 
 CSocketIPC::CSocketIPC()
-:CRunableBase("CSocketIPC",false)
+:CRunableBase(std::string("CSocketIPC"),false)
 ,m_LocalIPCSocket(NULL)
 ,m_sIP (SOKCET_IPC_ADD)
 ,m_iPort (SOKCET_IPC_PORT)
