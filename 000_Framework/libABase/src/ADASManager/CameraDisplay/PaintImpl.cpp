@@ -37,10 +37,11 @@ VOID PaintImpl::initEGL()
 
 VOID PaintImpl::update(Int32 width, Int32 height, VOID* buffer)
 {
-    printf("xiaole---debug update\n");
+    printf("xiaole---debug update, buffer=%p\n", buffer);
     if(buffer == NULL) {
         return;
     }
+
     m_width = width;
     m_height = height;
     plane[0] = (BYTE*)buffer;
@@ -53,10 +54,11 @@ VOID PaintImpl::draw()
 {
     printf("xiaole---debug draw\n");
     glViewport (0, 0, m_width, m_height);
-    glClearColor(0, 255, 0, 1);
-    glClear (GL_COLOR_BUFFER_BIT);
-//     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-        // Use the program object
+    glClearColor(0.0,0.0,0.0,1.0);
+    glClear(GL_COLOR_BUFFER_BIT);
+    //glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    
+    // Use the program object
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textureYId);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_width, m_height, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, plane[0]);
@@ -103,6 +105,7 @@ Int32 PaintImpl::initShader()
             " textureOut = textureIn; \n"
             "} \n";
     GLbyte fShaderStr[] =
+             "precision mediump float;                          \n"
              "varying vec2 textureOut;                          \n"
              "uniform sampler2D tex_y;                            \n"
              "uniform sampler2D tex_u;                        \n"
@@ -115,8 +118,8 @@ Int32 PaintImpl::initShader()
              "  yuv.x = texture2D(tex_y, textureOut).r;   \n"
              "  yuv.y = texture2D(tex_u, textureOut).r - 0.5;   \n"
              "  yuv.z = texture2D(tex_v, textureOut).r - 0.5;   \n"
-             "  rgb = mat3(1, 1, 1,   0, -0.39465, 2.03211,  1.13983, -0.58060, 0) * yuv;  \n"
-             "  gl_FragColor =  vec4(rgb, 1);  \n "
+             "  rgb = mat3(1.0, 1.0, 1.0, 0.0, -0.337633, 1.732446, 1.370705, -0.698001, 0.0) * yuv;  \n"
+             "  gl_FragColor = vec4(rgb, 1.0);  \n "
              "}                                                   \n";
 
     programObject = esLoadProgram((const char *)vShaderStr, (const char *)fShaderStr);
@@ -197,17 +200,18 @@ Int32 PaintImpl::initShader()
 
 GLuint  PaintImpl::esLoadProgram ( const char *vertShaderSrc, const char *fragShaderSrc )
 {
+   printf("xiaole---debug PaintImpl| esLoadProgram\n");
    GLuint vertexShader;
    GLuint fragmentShader;
    GLuint programObjectTmp;
    GLint linked;
 
    // Load the vertex/fragment shaders
-   vertexShader = loadShader ( GL_VERTEX_SHADER, vertShaderSrc );
+   vertexShader = loadShader(GL_VERTEX_SHADER, vertShaderSrc );
    if ( vertexShader == 0 )
       return 0;
 
-   fragmentShader = loadShader ( GL_FRAGMENT_SHADER, fragShaderSrc );
+   fragmentShader = loadShader(GL_FRAGMENT_SHADER, fragShaderSrc );
    if ( fragmentShader == 0 )
    {
       glDeleteShader( vertexShader );
@@ -215,7 +219,7 @@ GLuint  PaintImpl::esLoadProgram ( const char *vertShaderSrc, const char *fragSh
    }
 
    // Create the program object
-   programObjectTmp = glCreateProgram ( );
+   programObjectTmp = glCreateProgram();
 
    if ( programObjectTmp == 0 )
       return 0;
@@ -241,6 +245,7 @@ GLuint  PaintImpl::esLoadProgram ( const char *vertShaderSrc, const char *fragSh
 
          glGetProgramInfoLog ( programObjectTmp, infoLen, NULL, infoLog );
 
+         printf("PROGRAM: %s\n", infoLog);
          free ( infoLog );
       }
 
@@ -258,6 +263,7 @@ GLuint  PaintImpl::esLoadProgram ( const char *vertShaderSrc, const char *fragSh
 
 GLuint  PaintImpl::loadShader(GLenum type, const char *shaderSrc)
 {
+    printf("xiaole---debug PaintImpl| loadShader\n");
     GLuint shader;
     GLint compiled;
     shader = glCreateShader(type);
@@ -277,6 +283,7 @@ GLuint  PaintImpl::loadShader(GLenum type, const char *shaderSrc)
             char* infoLog = static_cast<char*>(malloc(sizeof(char) * infoLen));
             if (infoLog  != NULL) {
                 glGetShaderInfoLog(shader, infoLen, NULL, infoLog);
+                printf("SHADER %d: %s\n", type, infoLog);
                 free(infoLog);
              }
         }

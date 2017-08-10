@@ -26,14 +26,14 @@ Int32 CameraDriverProvider::OpenCamera()
         return -1;
     }
 
-#ifdef DEBUG
-    ShowInfo();
-#endif
-
     if(!m_bHasInit && (-1 == InitDevice()) ){
         ALOGE("CameraDriverProvider : InitDevice failed !!! \n");
         return -1;
     }
+
+#ifdef DEBUG
+    ShowInfo();
+#endif
 
     return 0;
 }

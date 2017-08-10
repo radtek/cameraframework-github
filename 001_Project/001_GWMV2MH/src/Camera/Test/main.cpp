@@ -80,20 +80,18 @@ public:
         m_pReserveCamera->StartCapture();
         //m_pRightCamera->StartCapture();
 
-        sleep(4);  //because sleep 500ms in state machine for test ,so just bigger than 500ms
+        sleep(60);  //because sleep 500ms in state machine for test ,so just bigger than 500ms
 
-        m_pReserveCamera->StopCapture();
+        //m_pReserveCamera->StopCapture();
         //m_pRightCamera->StopCapture();
 
         //ALOGI("FakeRVC : CloseCamera\n");
         //m_pReserveCamera->CloseCamera();
         //m_pRightCamera->CloseCamera();
 
-        sleep(4);
+        //sleep(4);
 
-        m_pReserveCamera->StartCapture();
-
-        sleep(4);
+        //m_pReserveCamera->StartCapture();
 
         m_pReserveCamera->CloseCamera();
     }

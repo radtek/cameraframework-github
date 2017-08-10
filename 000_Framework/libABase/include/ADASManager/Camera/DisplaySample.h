@@ -101,6 +101,8 @@ public:
 
     static int Start();
 
+    static void Init();
+
     ~DisplaySample();
 
     static void init_egl(struct display *display, struct window *window);
@@ -196,6 +198,9 @@ private:
 	static struct zxdg_toplevel_v6_listener xdg_toplevel_listener;
 
 	static struct zxdg_surface_v6_listener xdg_surface_listener;
+
+	static struct display m_Display;
+	static struct window  m_Window;
 
 };
 

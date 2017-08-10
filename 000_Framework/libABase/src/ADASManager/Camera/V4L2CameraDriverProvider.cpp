@@ -37,6 +37,19 @@ Int32 V4L2CameraDriverProvider::xioctl(Int32 fd, UInt64 request, VOID* argp)
     return ret;
 }
 
+// static BYTE *textFileRead(char * filename)
+// {
+//     BYTE *s = (BYTE *)malloc(640*480*2);
+//     memset(s, 0, 640*480*2);
+//     FILE *infile = fopen(filename, "rb");
+//     int len = fread(s, 1, 640*480*2, infile);
+//     ALOGD("V4L2CameraDriverProvider::textFileRead = %d, s = %p\n", len, s);
+//     fclose(infile);
+
+//     s[len] = 0;
+//     return s;
+// }
+
 V4L2CameraDriverProvider::V4L2CameraDriverProvider(const string& cameraName, eIo_method m)
     : CameraDriverProvider(cameraName)
     , m_eIo(m)
@@ -49,7 +62,15 @@ V4L2CameraDriverProvider::V4L2CameraDriverProvider(const string& cameraName, eIo
 
     // m_display = new CameraDisplay(m_viewInfo);
     // m_display->connect();
-    m_displaySample = new DisplaySample();
+    if(m_displaySample == nullptr) {
+        m_displaySample = new DisplaySample();
+    }
+
+    if(m_pPaint == nullptr) {
+        m_pPaint = new PaintImpl();
+        //m_pBuffer = textFileRead("frame.yuv");
+        //m_pPaint->init();
+    }
 
     ALOGD("provider for camera : %s,  DriverPath : %s\n", cameraName.c_str(), m_strDriverPath.c_str());
 }
@@ -64,6 +85,19 @@ V4L2CameraDriverProvider::~V4L2CameraDriverProvider()
     {
         free(m_pVideoInfo);
         m_pVideoInfo = nullptr;
+    }
+
+    if(m_displaySample != nullptr)
+    {
+        delete m_displaySample;
+        m_displaySample = nullptr;
+    }
+
+    if(m_pPaint != nullptr)
+    {
+        m_pPaint->shutDown();
+        delete m_pPaint;
+        m_pPaint = nullptr;
     }
 
     m_bIsStarted = FALSE;
@@ -328,7 +362,9 @@ ECode V4L2CameraDriverProvider::InitDevice()
     fmt.fmt.pix.width = 640;
     fmt.fmt.pix.height = 480;
     fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_YUYV;
-    fmt.fmt.pix.field = V4L2_FIELD_INTERLACED;
+    //fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_YUV420;
+    //fmt.fmt.pix.field = V4L2_FIELD_INTERLACED;
+    fmt.fmt.pix.field = V4L2_FIELD_ALTERNATE;
 
     if(-1 == xioctl(m_iFd, VIDIOC_S_FMT, &fmt)){
         ALOGE("VIDIOC_S_FMT error");
@@ -400,6 +436,64 @@ VOID V4L2CameraDriverProvider::ShowInfo()
 {
     ALOGD("V4L2CameraDriverProvider::ShowInfo\n");
 
+    // 获取驱动信息
+    struct v4l2_capability cap;
+    int ret = xioctl(m_iFd, VIDIOC_QUERYCAP, &cap);
+    if (ret < 0) {
+        ALOGE("VIDIOC_QUERYCAP failed (%d)\n", ret);
+    }
+    // Print capability infomations
+    printf("Capability Informations:----------------------------\n");
+    printf(" driver: %s\n", cap.driver);
+    printf(" card: %s\n", cap.card);
+    printf(" bus_info: %s\n", cap.bus_info);
+    printf(" version: %08X\n", cap.version);
+    printf(" capabilities: %08X\n", cap.capabilities);
+    printf("\n");
+
+
+    // 获取视频格式
+    struct v4l2_format fmt;
+    memset(&fmt, 0, sizeof(fmt));
+    fmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+
+
+    ret = xioctl(m_iFd, VIDIOC_G_FMT, &fmt);
+    if (ret < 0) {
+        ALOGE("VIDIOC_G_FMT failed (%d)\n", ret);
+    }
+    // Print Stream Format
+    printf("\n\nStream Format Informations:---------------------\n");
+    printf(" type: %d\n", fmt.type);
+    printf(" width: %d\n", fmt.fmt.pix.width);
+    printf(" height: %d\n", fmt.fmt.pix.height);
+    char fmtstr[8];
+    memset(fmtstr, 0, 8);
+    memcpy(fmtstr, &fmt.fmt.pix.pixelformat, 4);
+    printf(" pixelformat: %s\n", fmtstr);
+    printf(" field: %d\n", fmt.fmt.pix.field);
+    printf(" bytesperline: %d\n", fmt.fmt.pix.bytesperline);
+    printf(" sizeimage: %d\n", fmt.fmt.pix.sizeimage);
+    printf(" colorspace: %d\n", fmt.fmt.pix.colorspace);
+    printf(" priv: %d\n", fmt.fmt.pix.priv);
+    printf(" raw_date: %s\n", fmt.fmt.raw_data);
+    printf("\n");
+
+
+    // 查询当前视频设备支持的视频格式：request = VIDIOC_ENUM_FMT
+    // int ioctl(int fd, int request, struct v4l2_fmtdesc *argp);
+    printf("\n");
+    struct v4l2_fmtdesc fmtdesc;
+    fmtdesc.index=0;
+    fmtdesc.type=V4L2_BUF_TYPE_VIDEO_CAPTURE;   //V4L2_BUF_TYPE_VIDEO_CAPTURE V4L2_BUF_TYPE_VIDEO_OUTPUT  V4L2_BUF_TYPE_VIDEO_OVERLAY
+    printf("Support format:------------------------------------\n");
+    while(ioctl(m_iFd, VIDIOC_ENUM_FMT, &fmtdesc) != -1)
+    {
+        printf("\t%d.%s\n",fmtdesc.index+1,fmtdesc.description);
+        fmtdesc.index++;
+    }
+    printf("\n");
+
     return;
 }
 
@@ -420,7 +514,22 @@ VOID V4L2CameraDriverProvider::Display(VOID* p, Int32 width, Int32 height)
     // m_display->update(&dispInfo);
     // m_display->start();
 
-    m_displaySample->Start();
+    //m_pPaint->init();
+
+    //m_pPaint->update(width, height, m_pBuffer);
+
+
+    m_pPaint->update(width, height, p);
+
+    int i = 1;
+    do{
+        m_pPaint->draw();
+        m_displaySample->Start();
+    }while(i--);
+    
+
+
+   
 }
 
 ECode V4L2CameraDriverProvider::Read_frame()
@@ -542,6 +651,13 @@ ECode V4L2CameraDriverProvider::Read_frame()
 VOID V4L2CameraDriverProvider::update()
 {
     ALOGD("V4L2CameraDriverProvider::update\n");
+
+    if(!m_bEglInitFlag) {
+        m_displaySample->Init();
+        m_pPaint->init();
+        m_bEglInitFlag = TRUE;
+
+    }
 
     if(!m_bIsStreamOff){
         Read_frame();

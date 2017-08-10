@@ -116,6 +116,12 @@ private:
 
     viewInfo m_viewInfo{640, 480, {0, 0}, 1};
 
+    BOOLEAN m_bEglInitFlag = FALSE;
+
+    PaintImpl* m_pPaint = nullptr;
+
+    //VOID* m_pBuffer = nullptr;
+
 #ifdef WRITE_FILE
     FILE *m_pFp = nullptr;
     string m_strFilename = string("test.yuv");

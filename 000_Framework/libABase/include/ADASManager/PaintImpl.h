@@ -39,7 +39,7 @@ private:
 private:
     Int32   m_width;
     Int32   m_height;
-    BYTE*  plane[3];
+    BYTE*   plane[3];
 };
 
 #endif  //  OPENINGPAINTERIMP_H

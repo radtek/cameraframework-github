@@ -76,26 +76,23 @@ struct zxdg_surface_v6_listener DisplaySample::xdg_surface_listener = {
     handle_surface_configure
 };
 
+struct display DisplaySample::m_Display = { 0 };
+struct window  DisplaySample::m_Window  = { 0 };
+
 DisplaySample::DisplaySample()
 {
-
-}
-
-int DisplaySample::Start()
-{
     struct sigaction sigint;
-    struct display display = { 0 };
-    struct window  window  = { 0 };
-    int i, ret = 0;
 
-    window.display = &display;
-    display.window = &window;
-    window.geometry.width  = 250;
-    window.geometry.height = 250;
-    window.window_size = window.geometry;
-    window.buffer_size = 32;
-    window.frame_sync = 1;
-    window.delay = 0;
+    m_Window.display = &m_Display;
+    m_Display.window = &m_Window;
+    m_Window.geometry.width  = 640;
+    m_Window.geometry.height = 480;
+    //  m_Window.geometry.width  = 250;
+    // m_Window.geometry.height = 250;
+    m_Window.window_size = m_Window.geometry;
+    m_Window.buffer_size = 32;
+    m_Window.frame_sync = 1;
+    m_Window.delay = 0;
 
     // for (i = 1; i < argc; i++) {
     //     if (strcmp("-d", argv[i]) == 0 && i+1 < argc)
@@ -114,61 +111,84 @@ int DisplaySample::Start()
     //         usage(EXIT_FAILURE);
     // }
 
-    display.display = wl_display_connect(NULL);
-    assert(display.display);
+    m_Display.display = wl_display_connect(NULL);
+    assert(m_Display.display);
 
-    display.registry = wl_display_get_registry(display.display);
-    wl_registry_add_listener(display.registry,
-                 &registry_listener, &display);
+    m_Display.registry = wl_display_get_registry(m_Display.display);
+    wl_registry_add_listener(m_Display.registry,
+                 &registry_listener, &m_Display);
 
-    wl_display_roundtrip(display.display);
+    wl_display_roundtrip(m_Display.display);
 
-    init_egl(&display, &window);
-    create_surface(&window);
-    init_gl(&window);
+    // init_egl(&m_Display, &m_Window);
+    // create_surface(&m_Window);
+    //init_gl(&m_Window);
 
-    display.cursor_surface =
-        wl_compositor_create_surface(display.compositor);
+    // m_Display.cursor_surface =
+    //     wl_compositor_create_surface(m_Display.compositor);
 
     sigint.sa_handler = signal_int;
     sigemptyset(&sigint.sa_mask);
     sigint.sa_flags = SA_RESETHAND;
     sigaction(SIGINT, &sigint, NULL);
+}
 
+DisplaySample::~DisplaySample()
+{
+    fprintf(stderr, "simple-egl exiting\n");
+
+    destroy_surface(&m_Window);
+    fini_egl(&m_Display);
+
+    wl_surface_destroy(m_Display.cursor_surface);
+    if (m_Display.cursor_theme)
+        wl_cursor_theme_destroy(m_Display.cursor_theme);
+
+    if (m_Display.shell)
+        zxdg_shell_v6_destroy(m_Display.shell);
+
+    if (m_Display.ivi_application)
+        ivi_application_destroy(m_Display.ivi_application);
+
+    if (m_Display.compositor)
+        wl_compositor_destroy(m_Display.compositor);
+
+    wl_registry_destroy(m_Display.registry);
+    wl_display_flush(m_Display.display);
+    wl_display_disconnect(m_Display.display);
+}
+
+void DisplaySample::Init()
+{
+    init_egl(&m_Display, &m_Window);
+    create_surface(&m_Window);
+    init_gl(&m_Window);
+}
+
+int DisplaySample::Start()
+{
     /* The mainloop here is a little subtle.  Redrawing will cause
      * EGL to read events so we can just call
      * wl_display_dispatch_pending() to handle any events that got
      * queued up as a side effect. */
-    while (running && ret != -1) {
-        if (window.wait_for_configure) {
-            wl_display_dispatch(display.display);
+    //while (running /*&& ret != -1*/) {
+        if (m_Window.wait_for_configure) {
+            printf("1111111111111111111111111111111\n");
+            wl_display_dispatch(m_Display.display);
         } else {
-            wl_display_dispatch_pending(display.display);
-            redraw(&window, NULL, 0);
+            printf("2222222222222222222222222222222\n");
+            wl_display_dispatch_pending(m_Display.display);
+            redraw(&m_Window, NULL, 0);
         }
-    }
+    //}
 
-    fprintf(stderr, "simple-egl exiting\n");
+    
 
-    destroy_surface(&window);
-    fini_egl(&display);
-
-    wl_surface_destroy(display.cursor_surface);
-    if (display.cursor_theme)
-        wl_cursor_theme_destroy(display.cursor_theme);
-
-    if (display.shell)
-        zxdg_shell_v6_destroy(display.shell);
-
-    if (display.ivi_application)
-        ivi_application_destroy(display.ivi_application);
-
-    if (display.compositor)
-        wl_compositor_destroy(display.compositor);
-
-    wl_registry_destroy(display.registry);
-    wl_display_flush(display.display);
-    wl_display_disconnect(display.display);
+    // int i = 1;
+    // do {
+         //redraw(&m_Window, NULL, 0);
+    // }while(i--);
+    
 }
 
 void DisplaySample::init_egl(struct display *display, struct window *window)
@@ -303,38 +323,39 @@ GLuint DisplaySample::create_shader(struct window *window, const char *source, G
 
 void DisplaySample::init_gl(struct window *window)
 {
-    GLuint frag, vert;
-    GLuint program;
-    GLint status;
+    printf("=======================================\n");
+    // GLuint frag, vert;
+    // GLuint program;
+    // GLint status;
 
-    frag = create_shader(window, frag_shader_text, GL_FRAGMENT_SHADER);
-    vert = create_shader(window, vert_shader_text, GL_VERTEX_SHADER);
+    // frag = create_shader(window, frag_shader_text, GL_FRAGMENT_SHADER);
+    // vert = create_shader(window, vert_shader_text, GL_VERTEX_SHADER);
 
-    program = glCreateProgram();
-    glAttachShader(program, frag);
-    glAttachShader(program, vert);
-    glLinkProgram(program);
+    // program = glCreateProgram();
+    // glAttachShader(program, frag);
+    // glAttachShader(program, vert);
+    // glLinkProgram(program);
 
-    glGetProgramiv(program, GL_LINK_STATUS, &status);
-    if (!status) {
-        char log[1000];
-        GLsizei len;
-        glGetProgramInfoLog(program, 1000, &len, log);
-        fprintf(stderr, "Error: linking:\n%*s\n", len, log);
-        exit(1);
-    }
+    // glGetProgramiv(program, GL_LINK_STATUS, &status);
+    // if (!status) {
+    //     char log[1000];
+    //     GLsizei len;
+    //     glGetProgramInfoLog(program, 1000, &len, log);
+    //     fprintf(stderr, "Error: linking:\n%*s\n", len, log);
+    //     exit(1);
+    // }
 
-    glUseProgram(program);
+    // glUseProgram(program);
 
-    window->gl.pos = 0;
-    window->gl.col = 1;
+    // window->gl.pos = 0;
+    // window->gl.col = 1;
 
-    glBindAttribLocation(program, window->gl.pos, "pos");
-    glBindAttribLocation(program, window->gl.col, "color");
-    glLinkProgram(program);
+    // glBindAttribLocation(program, window->gl.pos, "pos");
+    // glBindAttribLocation(program, window->gl.col, "color");
+    // glLinkProgram(program);
 
-    window->gl.rotation_uniform =
-        glGetUniformLocation(program, "rotation");
+    // window->gl.rotation_uniform =
+    //     glGetUniformLocation(program, "rotation");
 }
 
 void DisplaySample::handle_surface_configure(void *data, struct zxdg_surface_v6 *surface,
@@ -505,101 +526,104 @@ void DisplaySample::redraw(void *data, struct wl_callback *callback, uint32_t ti
 {
     struct window *window = (struct window*)data;
     struct display *display = window->display;
-    static const GLfloat verts[3][2] = {
-        { -0.5, -0.5 },
-        {  0.5, -0.5 },
-        {  0,    0.5 }
-    };
-    static const GLfloat colors[3][3] = {
-        { 1, 0, 0 },
-        { 0, 1, 0 },
-        { 0, 0, 1 }
-    };
-    GLfloat angle;
-    GLfloat rotation[4][4] = {
-        { 1, 0, 0, 0 },
-        { 0, 1, 0, 0 },
-        { 0, 0, 1, 0 },
-        { 0, 0, 0, 1 }
-    };
-    static const uint32_t speed_div = 5, benchmark_interval = 5;
-    struct wl_region *region;
-    EGLint rect[4];
-    EGLint buffer_age = 0;
-    struct timeval tv;
+    // static const GLfloat verts[3][2] = {
+    //     { -0.5, -0.5 },
+    //     {  0.5, -0.5 },
+    //     {  0,    0.5 }
+    // };
+    // static const GLfloat colors[3][3] = {
+    //     { 1, 0, 0 },
+    //     { 0, 1, 0 },
+    //     { 0, 0, 1 }
+    // };
+    // GLfloat angle;
+    // GLfloat rotation[4][4] = {
+    //     { 1, 0, 0, 0 },
+    //     { 0, 1, 0, 0 },
+    //     { 0, 0, 1, 0 },
+    //     { 0, 0, 0, 1 }
+    // };
+    // static const uint32_t speed_div = 5, benchmark_interval = 5;
+    // struct wl_region *region;
+    // EGLint rect[4];
+    // EGLint buffer_age = 0;
+    // struct timeval tv;
 
-    assert(window->callback == callback);
-    window->callback = NULL;
+    // assert(window->callback == callback);
+    // window->callback = NULL;
 
-    if (callback)
-        wl_callback_destroy(callback);
+    // if (callback)
+    //     wl_callback_destroy(callback);
 
-    gettimeofday(&tv, NULL);
-    time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-    if (window->frames == 0)
-        window->benchmark_time = time;
-    if (time - window->benchmark_time > (benchmark_interval * 1000)) {
-        printf("%d frames in %d seconds: %f fps\n",
-               window->frames,
-               benchmark_interval,
-               (float) window->frames / benchmark_interval);
-        window->benchmark_time = time;
-        window->frames = 0;
-    }
+    // gettimeofday(&tv, NULL);
+    // time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+    // if (window->frames == 0)
+    //     window->benchmark_time = time;
+    // if (time - window->benchmark_time > (benchmark_interval * 1000)) {
+    //     printf("%d frames in %d seconds: %f fps\n",
+    //            window->frames,
+    //            benchmark_interval,
+    //            (float) window->frames / benchmark_interval);
+    //     window->benchmark_time = time;
+    //     window->frames = 0;
+    // }
 
-    angle = (time / speed_div) % 360 * M_PI / 180.0;
-    rotation[0][0] =  cos(angle);
-    rotation[0][2] =  sin(angle);
-    rotation[2][0] = -sin(angle);
-    rotation[2][2] =  cos(angle);
+    // angle = (time / speed_div) % 360 * M_PI / 180.0;
+    // rotation[0][0] =  cos(angle);
+    // rotation[0][2] =  sin(angle);
+    // rotation[2][0] = -sin(angle);
+    // rotation[2][2] =  cos(angle);
 
-    if (display->swap_buffers_with_damage)
-        eglQuerySurface(display->egl.dpy, window->egl_surface,
-                EGL_BUFFER_AGE_EXT, &buffer_age);
+    // if (display->swap_buffers_with_damage)
+    //     eglQuerySurface(display->egl.dpy, window->egl_surface,
+    //             EGL_BUFFER_AGE_EXT, &buffer_age);
 
-    glViewport(0, 0, window->geometry.width, window->geometry.height);
+    // glViewport(0, 0, window->geometry.width, window->geometry.height);
 
-    glUniformMatrix4fv(window->gl.rotation_uniform, 1, GL_FALSE,
-               (GLfloat *) rotation);
+    // glUniformMatrix4fv(window->gl.rotation_uniform, 1, GL_FALSE,
+    //            (GLfloat *) rotation);
 
-    glClearColor(0.0, 0.0, 0.0, 0.5);
-    glClear(GL_COLOR_BUFFER_BIT);
+    // glClearColor(0.0, 0.0, 0.0, 0.5);
+    // glClear(GL_COLOR_BUFFER_BIT);
 
-    glVertexAttribPointer(window->gl.pos, 2, GL_FLOAT, GL_FALSE, 0, verts);
-    glVertexAttribPointer(window->gl.col, 3, GL_FLOAT, GL_FALSE, 0, colors);
-    glEnableVertexAttribArray(window->gl.pos);
-    glEnableVertexAttribArray(window->gl.col);
+    // glVertexAttribPointer(window->gl.pos, 2, GL_FLOAT, GL_FALSE, 0, verts);
+    // glVertexAttribPointer(window->gl.col, 3, GL_FLOAT, GL_FALSE, 0, colors);
+    // glEnableVertexAttribArray(window->gl.pos);
+    // glEnableVertexAttribArray(window->gl.col);
 
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    // glDrawArrays(GL_TRIANGLES, 0, 3);
 
-    glDisableVertexAttribArray(window->gl.pos);
-    glDisableVertexAttribArray(window->gl.col);
+    // glDisableVertexAttribArray(window->gl.pos);
+    // glDisableVertexAttribArray(window->gl.col);
 
-    usleep(window->delay);
+    // usleep(window->delay);
 
-    if (window->opaque || window->fullscreen) {
-        region = wl_compositor_create_region(window->display->compositor);
-        wl_region_add(region, 0, 0,
-                  window->geometry.width,
-                  window->geometry.height);
-        wl_surface_set_opaque_region(window->surface, region);
-        wl_region_destroy(region);
-    } else {
-        wl_surface_set_opaque_region(window->surface, NULL);
-    }
+    // if (window->opaque || window->fullscreen) {
+    //     region = wl_compositor_create_region(window->display->compositor);
+    //     wl_region_add(region, 0, 0,
+    //               window->geometry.width,
+    //               window->geometry.height);
+    //     wl_surface_set_opaque_region(window->surface, region);
+    //     wl_region_destroy(region);
+    // } else {
+    //     wl_surface_set_opaque_region(window->surface, NULL);
+    // }
 
-    if (display->swap_buffers_with_damage && buffer_age > 0) {
-        rect[0] = window->geometry.width / 4 - 1;
-        rect[1] = window->geometry.height / 4 - 1;
-        rect[2] = window->geometry.width / 2 + 2;
-        rect[3] = window->geometry.height / 2 + 2;
-        display->swap_buffers_with_damage(display->egl.dpy,
-                          window->egl_surface,
-                          rect, 1);
-    } else {
-        eglSwapBuffers(display->egl.dpy, window->egl_surface);
-    }
-    window->frames++;
+    // if (display->swap_buffers_with_damage && buffer_age > 0) {
+    //     rect[0] = window->geometry.width / 4 - 1;
+    //     rect[1] = window->geometry.height / 4 - 1;
+    //     rect[2] = window->geometry.width / 2 + 2;
+    //     rect[3] = window->geometry.height / 2 + 2;
+    //     display->swap_buffers_with_damage(display->egl.dpy,
+    //                       window->egl_surface,
+    //                       rect, 1);
+    // } else {
+    //     eglSwapBuffers(display->egl.dpy, window->egl_surface);
+    // }
+    // window->frames++;
+
+    eglSwapBuffers(display->egl.dpy, window->egl_surface);
+    //glutSwapBuffers();
 }
 
 void DisplaySample::pointer_handle_enter(void *data, struct wl_pointer *pointer,
