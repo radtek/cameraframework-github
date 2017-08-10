@@ -63,7 +63,7 @@
 
 # clean:
 # 	$(RM) $(OBJS) $(TARGET_PATH)/$(TARGET)
-
+CP = cp
 #设置编译器
 CC=g++
 #debug文件夹里的makefile文件需要最后执行，所以这里需要执行的子目录要排除debug文件夹，这里使用awk排除了debug文件夹，读取剩下的文件夹
@@ -86,10 +86,12 @@ CUR_SOURCE=${wildcard *.cpp}
 CUR_OBJS=${patsubst %.cpp, %.o, $(CUR_SOURCE)}
 
 INCLUDE_PATH := $(ROOT_DIR)/include
-INCLUDE_PATH += $(ROOT_DIR)/../libAFoundation/include 
+INCLUDE_PATH += $(ROOT_DIR)/include/ADASManager
+INCLUDE_PATH += $(ROOT_DIR)/../libAFoundation/include
 INCLUDE_PATH += $(ROOT_DIR)/../CaseClient/include
 
-CFLAGS= -Wl,--no-as-needed  -lpthread -std=c++11 -D LINUX_OS -fPIC
+
+CFLAGS= -Wl,--no-as-needed  -lpthread -std=c++11 -D LINUX_OS -D ENABLE_EGL -fPIC
 CFLAGS+= $(foreach dir, $(INCLUDE_PATH), -I$(dir))
 #CFLAGS += -D__FILENAME__='"$(subst $(dir $<),,$<)"'
 #将以下变量导出到子shell中，本次相当于导出到子目录下的makefile中
@@ -111,3 +113,6 @@ $(CUR_OBJS):%.o:%.cpp
 clean:
 	@rm $(OBJS_DIR)/*.o
 	@rm -rf $(BIN_DIR)/*.so
+
+cp:
+	$(CP) $(ROOT_DIR)/$(BIN_DIR)/$(BIN) /usr/lib

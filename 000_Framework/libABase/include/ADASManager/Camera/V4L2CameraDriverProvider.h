@@ -4,6 +4,7 @@
 
 #include "CameraDriverProvider.h"
 #include "CameraDriverProviderFactory.h"
+#include "CameraDisplay.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,6 +25,8 @@
 
 #include <asm/types.h>          /* for videodev2.h */
 #include <linux/videodev2.h>
+
+#include "ADASManager/Camera/DisplaySample.h"
 
 #define WRITE_FILE
 
@@ -69,29 +72,31 @@ public:
 
     ~V4L2CameraDriverProvider();
 
-    Int32 OpenDriver() override;
-    Int32 CloseDriver() override;
+    ECode OpenDriver() override;
+    ECode CloseDriver() override;
 
-    Int32 InitDevice() override;
-    Int32 UninitDevice() override;
+    ECode InitDevice() override;
+    ECode UninitDevice() override;
 
-    Int32 GetCapture() override;
-    Int32 StopCapture() override;
+    ECode GetCapture() override;
+    ECode StopCapture() override;
 
     VOID update() override;
     VOID ShowInfo() override;
 
 private:
-    Int32 Init_read(UInt32 buffer_size);
-    Int32 Init_mmap();
-    Int32 Init_userp(UInt32 buffer_size);
-    Int32 Read_frame();
+    ECode Init_read(UInt32 buffer_size);
+    ECode Init_mmap();
+    ECode Init_userp(UInt32 buffer_size);
+    ECode Read_frame();
     Int32 xioctl(Int32 fd, UInt64 request, VOID* argp);
     void CloseFd(const Int32 fd);
 
 #ifdef WRITE_FILE
     VOID Process_image(const VOID* p, Int32 size);
 #endif
+
+    VOID Display(VOID* p, Int32 width, Int32 height);
 
 private:
     struct VideoInfo *m_pVideoInfo = nullptr;
@@ -105,6 +110,12 @@ private:
 
     BOOLEAN m_bIsStreamOff = FALSE;
 
+    CameraDisplay* m_display = NULL;
+
+    DisplaySample* m_displaySample = nullptr;
+
+    viewInfo m_viewInfo{640, 480, {0, 0}, 1};
+
 #ifdef WRITE_FILE
     FILE *m_pFp = nullptr;
     string m_strFilename = string("test.yuv");
@@ -115,7 +126,7 @@ class V4L2CameraDriverProviderFactory : public CameraDriverProviderFactory
 {
 public:
     CameraDriverProvider* CreateCameraDriverProvider(const string& cameraName) override {
-        return new V4L2CameraDriverProvider(cameraName, IO_METHOD_USERPTR);
+        return new V4L2CameraDriverProvider(cameraName, IO_METHOD_MMAP);
     }
 
     ~V4L2CameraDriverProviderFactory() {}

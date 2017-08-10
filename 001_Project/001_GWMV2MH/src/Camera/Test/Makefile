@@ -15,15 +15,20 @@ OBJS_PATH  :=../../../prj/linux/Camera/
 TARGET     := cameraStateTest
 
 ## get all source files
-SRCS       += $(wildcard $(SRC_PATH)/*.cpp $(SRC_PATH)/../*.cpp)
+SRCS       += $(wildcard $(SRC_PATH)/* $(SRC_PATH)/../*.cpp)
 
 ## all .o based on all .c
 OBJS       := $(SRCS:.cpp=.o)
+OBJS       += $(SRCS:.c=.o)
 
 ## need libs, add at here
 LIBS := AFoundation
 LIBS += ABase
 LIBS += ACaseSocket
+LIBS += wayland-client
+LIBS += wayland-egl
+LIBS += wayland-cursor
+LIBS += GLESv2 EGL
 
 ## used headers  file path
 INCLUDE_PATH := ../../../include
@@ -34,6 +39,7 @@ INCLUDE_PATH += ../../../../../000_Framework/libABase/include
 LIBRARY_PATH := ../../../../../000_Framework/libAFoundation/lib/linux
 LIBRARY_PATH += ../../../../../000_Framework/libABase/lib/linux
 LIBRARY_PATH += ../../../../../000_Framework/CaseClient/lib/linux
+#LIBRARY_PATH += ~/install/lib
 
 ## debug for debug info, when use gdb to debug
 ifeq (1, ${DBG_ENABLE})
@@ -52,7 +58,7 @@ LDFLAGS += $(foreach lib, $(LIBS), -l$(lib))
 ## c++11 support
 CFLAGS += -Wl,--no-as-needed  -lpthread -std=c++11
 
-CFLAGS += -D LINUX_OS -fPIC -lm -lrt
+CFLAGS += -D LINUX_OS -fPIC -lm -lrt 
 
 #CFLAGS += -D__FILENAME__='"$(subst $(dir $<),,$<)"'
 

@@ -2,6 +2,7 @@
 CC      = gcc
 CPP     = g++
 RM      = rm -rf
+CP      = cp
 
 DIR_OBJ := ../../proj/linux/SocketIPC
 
@@ -59,10 +60,13 @@ CFLAGS += -D LINUX_OS -fPIC
 
 all:$(OBJS)
 	$(CPP) -shared -fPIC $(CFLAGS) $(LDFLAGS) -o $(TARGET_PATH)/$(TARGET) $(OBJS)
-	
+
 ${DIR_OBJ}/%.o : $(SRC_PATH)/%.cpp
 	@echo Compiling $< ...
 	$(CPP) -c $(CFLAGS) $< -o ${DIR_OBJ}/$*.o
 
 clean:
 	$(RM) $(OBJS) $(TARGET_PATH)/$(TARGET)
+
+cp:
+	$(CP) $(TARGET_PATH)/$(TARGET) /usr/lib

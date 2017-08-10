@@ -21,6 +21,7 @@ a_status  RvcStubImpl::initialize()
 {
     ALOGD("initialize\n");
     registerFunc((UInt32)eCameraActivate_ON, makeFunctor(this, &RvcStubImpl::showCamera));
+    return a_status(0); 
 }
 
 VOID  RvcStubImpl::afterHandleMessageQueue()

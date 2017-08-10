@@ -2,6 +2,7 @@
 CC      = gcc
 CPP     = g++
 RM      = rm -rf
+CP      = cp
 
 DIR_OBJ := ../proj/linux
 
@@ -63,3 +64,6 @@ ${DIR_OBJ}/%.o : $(SRC_PATH)/%.cpp
 
 clean:
 	$(RM) $(OBJS) $(TARGET_PATH)/$(TARGET)
+
+cp:
+	$(CP) $(TARGET_PATH)/$(TARGET) /usr/lib

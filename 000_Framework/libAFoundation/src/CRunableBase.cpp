@@ -109,8 +109,7 @@ VOID CRunableBase::run()
         {
             ALOGI("run  name = %s\n ", m_strThreadName.c_str());
         }
-
-        //PDCC_LOG_INFO("CRunableBase::run  name = %s\n ", m_strThreadName.c_str());
+       //PDCC_LOG_INFO("CRunableBase::run  name = %s\n ", m_strThreadName.c_str());
     }
 
     ALOGD("run thread id = %ld  name = %s...exit2 \n ", (long int)syscall(__NR_gettid), m_strThreadName.c_str());

@@ -87,8 +87,8 @@ interface PASService
 {
 	version { major 0 minor 1}
 	/*Attribute of PASService status */
-	attribute enPASStatus [] PASStatus readonly		
-		
+	attribute enPASStatus [] PASStatus readonly
+
 	/* set method to switch PASService view by external module */
 	method SwitchPASView
 	{
@@ -98,6 +98,8 @@ interface PASService
 		}
 	}
 }
+
+/*  adasclient  supported to get/subscribe adas service module states   */
 
 interface adasclient
 {
