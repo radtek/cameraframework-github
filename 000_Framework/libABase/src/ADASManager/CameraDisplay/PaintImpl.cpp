@@ -35,6 +35,25 @@ VOID PaintImpl::initEGL()
 }
 #endif
 
+BYTE* PaintImpl::YUV422_PackedFormat2PlanarFormat(VOID* buffer, Int32 width, Int32 height)
+{
+    BYTE* _buffer = (BYTE*)buffer;
+
+    int lenth = width * height * 2;
+    BYTE* m_TmpBuffer = (BYTE*)malloc(lenth);
+
+    int i = 0;
+    int j = i + width * height;
+    int k = j + ((width * height) >> 1) ;
+    for(int l = 0; l < lenth; l++) {
+      if(l % 4 == 0 || l % 4 == 2) { m_TmpBuffer[i] = _buffer[l]; i++;}
+      if(l % 4 == 1) { m_TmpBuffer[j] = _buffer[l]; j++;}
+      if(l % 4 == 3) { m_TmpBuffer[k] = _buffer[l]; k++;}
+    }
+
+    return m_TmpBuffer;
+}
+
 VOID PaintImpl::update(Int32 width, Int32 height, VOID* buffer)
 {
     printf("xiaole---debug update, buffer=%p\n", buffer);
@@ -44,9 +63,10 @@ VOID PaintImpl::update(Int32 width, Int32 height, VOID* buffer)
 
     m_width = width;
     m_height = height;
-    plane[0] = (BYTE*)buffer;
+    //plane[0] = (BYTE*)buffer;
+    plane[0] = YUV422_PackedFormat2PlanarFormat(buffer, width, height);
     plane[1] = plane[0] + width*height;
-    plane[2] = plane[1] + width*height/2;
+    plane[2] = plane[1] + (width*height >> 1);
     printf("xiaole---debug update ok\n");
 }
 
@@ -66,16 +86,16 @@ VOID PaintImpl::draw()
 
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, textureUId);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_width, m_height/2, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, plane[1]);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_width/2, m_height, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, plane[1]);
     glUniform1i(textureUniformU, 1);
 
     glActiveTexture(GL_TEXTURE2);
     glBindTexture(GL_TEXTURE_2D, textureVId);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_width, m_height/2, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, plane[2]);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_width/2, m_height, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, plane[2]);
     glUniform1i(textureUniformV, 2);
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    //glDrawElements (GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
+    if(m_TmpBuffer) free(m_TmpBuffer);
     printf("xiaole---debug draw  ok\n");
 }
 
@@ -83,12 +103,12 @@ VOID PaintImpl::draw()
 VOID PaintImpl::shutDown()
 {
    // Delete texture object
-   glDeleteTextures ( 1, &textureYId );
-   glDeleteTextures ( 1, &textureUId );
-   glDeleteTextures ( 1, &textureVId );
+   glDeleteTextures(1, &textureYId);
+   glDeleteTextures(1, &textureUId);
+   glDeleteTextures(1, &textureVId);
 
    // Delete program object
-   glDeleteProgram (programObject );
+   glDeleteProgram(programObject);
 }
 
 
@@ -135,9 +155,9 @@ Int32 PaintImpl::initShader()
 
     static const GLfloat vertexVertices[] = {
         -1.0f, -1.0f,
-        1.0f, -1.0f,
+         1.0f, -1.0f,
         -1.0f,  1.0f,
-        1.0f,  1.0f,
+         1.0f,  1.0f,
     };
     static const GLfloat textureVertices[] = {
         0.0f,  1.0f,

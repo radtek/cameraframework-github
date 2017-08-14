@@ -23,6 +23,8 @@ private:
     Int32 initEGL();
     GLuint  esLoadProgram ( const char *vertShaderSrc, const char *fragShaderSrc );
 
+    BYTE* YUV422_PackedFormat2PlanarFormat(VOID* buffer, Int32 width, Int32 height);
+
 private:
     GLuint programObject;
     GLint  positionLoc;
@@ -40,6 +42,7 @@ private:
     Int32   m_width;
     Int32   m_height;
     BYTE*   plane[3];
+    BYTE*   m_TmpBuffer = nullptr;
 };
 
 #endif  //  OPENINGPAINTERIMP_H

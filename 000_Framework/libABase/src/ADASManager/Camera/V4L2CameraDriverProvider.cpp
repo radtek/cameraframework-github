@@ -362,9 +362,7 @@ ECode V4L2CameraDriverProvider::InitDevice()
     fmt.fmt.pix.width = 640;
     fmt.fmt.pix.height = 480;
     fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_YUYV;
-    //fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_YUV420;
-    //fmt.fmt.pix.field = V4L2_FIELD_INTERLACED;
-    fmt.fmt.pix.field = V4L2_FIELD_ALTERNATE;
+    fmt.fmt.pix.field = V4L2_FIELD_INTERLACED;
 
     if(-1 == xioctl(m_iFd, VIDIOC_S_FMT, &fmt)){
         ALOGE("VIDIOC_S_FMT error");
@@ -521,15 +519,11 @@ VOID V4L2CameraDriverProvider::Display(VOID* p, Int32 width, Int32 height)
 
     m_pPaint->update(width, height, p);
 
-    int i = 1;
-    do{
+    //int i = 1;
+    //do{
         m_pPaint->draw();
         m_displaySample->Start();
-    }while(i--);
-    
-
-
-   
+    //}while(i--);
 }
 
 ECode V4L2CameraDriverProvider::Read_frame()
