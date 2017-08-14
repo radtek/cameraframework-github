@@ -68,8 +68,6 @@ V4L2CameraDriverProvider::V4L2CameraDriverProvider(const string& cameraName, eIo
 
     if(m_pPaint == nullptr) {
         m_pPaint = new PaintImpl();
-        //m_pBuffer = textFileRead("frame.yuv");
-        //m_pPaint->init();
     }
 
     ALOGD("provider for camera : %s,  DriverPath : %s\n", cameraName.c_str(), m_strDriverPath.c_str());

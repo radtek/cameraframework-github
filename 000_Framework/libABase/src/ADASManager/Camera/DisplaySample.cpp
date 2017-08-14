@@ -140,22 +140,27 @@ DisplaySample::~DisplaySample()
     destroy_surface(&m_Window);
     fini_egl(&m_Display);
 
-    wl_surface_destroy(m_Display.cursor_surface);
-    if (m_Display.cursor_theme)
+    //wl_surface_destroy(m_Display.cursor_surface);
+    if (m_Display.cursor_theme) {
         wl_cursor_theme_destroy(m_Display.cursor_theme);
+    }
 
-    if (m_Display.shell)
+    if (m_Display.shell) {
         zxdg_shell_v6_destroy(m_Display.shell);
+    }
 
-    if (m_Display.ivi_application)
+    if (m_Display.ivi_application) {
         ivi_application_destroy(m_Display.ivi_application);
+    }
 
-    if (m_Display.compositor)
+    if (m_Display.compositor) {
         wl_compositor_destroy(m_Display.compositor);
+    }
 
     wl_registry_destroy(m_Display.registry);
     wl_display_flush(m_Display.display);
     wl_display_disconnect(m_Display.display);
+    fprintf(stderr, "simple-egl exiting OK\n");
 }
 
 void DisplaySample::Init()
@@ -172,23 +177,13 @@ int DisplaySample::Start()
      * wl_display_dispatch_pending() to handle any events that got
      * queued up as a side effect. */
     //while (running /*&& ret != -1*/) {
-        if (m_Window.wait_for_configure) {
-            printf("1111111111111111111111111111111\n");
-            wl_display_dispatch(m_Display.display);
-        } else {
-            printf("2222222222222222222222222222222\n");
-            wl_display_dispatch_pending(m_Display.display);
-            redraw(&m_Window, NULL, 0);
-        }
+    if (m_Window.wait_for_configure) {
+        wl_display_dispatch(m_Display.display);
+    } else {
+        wl_display_dispatch_pending(m_Display.display);
+        redraw(&m_Window, NULL, 0);
+    }
     //}
-
-    
-
-    // int i = 1;
-    // do {
-         //redraw(&m_Window, NULL, 0);
-    // }while(i--);
-    
 }
 
 void DisplaySample::init_egl(struct display *display, struct window *window)

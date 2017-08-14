@@ -28,7 +28,7 @@
 
 #include "ADASManager/Camera/DisplaySample.h"
 
-#define WRITE_FILE
+//#define WRITE_FILE
 
 namespace Harman {
 namespace Adas {
