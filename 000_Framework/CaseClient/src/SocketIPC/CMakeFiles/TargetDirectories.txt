@@ -1,0 +1,3 @@
+/home/xiaole/workspace/cameraframework/000_Framework/CaseClient/src/SocketIPC/CMakeFiles/edit_cache.dir
+/home/xiaole/workspace/cameraframework/000_Framework/CaseClient/src/SocketIPC/CMakeFiles/rebuild_cache.dir
+/home/xiaole/workspace/cameraframework/000_Framework/CaseClient/src/SocketIPC/CMakeFiles/ACaseSocket.dir

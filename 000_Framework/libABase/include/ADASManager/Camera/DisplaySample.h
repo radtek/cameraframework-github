@@ -32,7 +32,7 @@
 
 #include "shared/helpers.h"
 #include "shared/platform.h"
-#include "weston-egl-ext.h"
+#include "shared/weston-egl-ext.h"
 
 using namespace std;
 
