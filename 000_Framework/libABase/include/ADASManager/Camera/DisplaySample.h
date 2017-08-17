@@ -111,7 +111,6 @@ public:
 
 	static GLuint create_shader(struct window *window, const char *source, GLenum shader_type);
 
-	static void init_gl(struct window *window);
 
 	static void handle_surface_configure(void *data, struct zxdg_surface_v6 *surface, uint32_t serial);
 
@@ -131,37 +130,7 @@ public:
 
 	static void redraw(void *data, struct wl_callback *callback, uint32_t time);
 
-	static void pointer_handle_enter(void *data, struct wl_pointer *pointer, uint32_t serial, struct wl_surface *surface, wl_fixed_t sx, wl_fixed_t sy);
-
-	static void pointer_handle_leave(void *data, struct wl_pointer *pointer, uint32_t serial, struct wl_surface *surface);
-
-	static void pointer_handle_motion(void *data, struct wl_pointer *pointer, uint32_t time, wl_fixed_t sx, wl_fixed_t sy);
-
-	static void pointer_handle_button(void *data, struct wl_pointer *wl_pointer, uint32_t serial, uint32_t time, uint32_t button, uint32_t state);
-
-	static void pointer_handle_axis(void *data, struct wl_pointer *wl_pointer, uint32_t time, uint32_t axis, wl_fixed_t value);
-
-	static void touch_handle_down(void *data, struct wl_touch *wl_touch, uint32_t serial, uint32_t time, struct wl_surface *surface, int32_t id, wl_fixed_t x_w, wl_fixed_t y_w);
-
-	static void touch_handle_up(void *data, struct wl_touch *wl_touch, uint32_t serial, uint32_t time, int32_t id);
-
-	static void touch_handle_motion(void *data, struct wl_touch *wl_touch, uint32_t time, int32_t id, wl_fixed_t x_w, wl_fixed_t y_w);
-
-	static void touch_handle_frame(void *data, struct wl_touch *wl_touch);
-
-	static void touch_handle_cancel(void *data, struct wl_touch *wl_touch);
-
-	static void keyboard_handle_keymap(void *data, struct wl_keyboard *keyboard, uint32_t format, int fd, uint32_t size);
-
-	static void keyboard_handle_enter(void *data, struct wl_keyboard *keyboard, uint32_t serial, struct wl_surface *surface, struct wl_array *keys);
-
-	static void keyboard_handle_leave(void *data, struct wl_keyboard *keyboard, uint32_t serial, struct wl_surface *surface);
-
-	static void keyboard_handle_key(void *data, struct wl_keyboard *keyboard, uint32_t serial, uint32_t time, uint32_t key, uint32_t state);
-
-	static void keyboard_handle_modifiers(void *data, struct wl_keyboard *keyboard, uint32_t serial, uint32_t mods_depressed, uint32_t mods_latched, uint32_t mods_locked, uint32_t group);
-
-	static void seat_handle_capabilities(void *data, struct wl_seat *seat, /*enum wl_seat_capability*/ uint32_t caps);
+	
 
 	static void xdg_shell_ping(void *data, struct zxdg_shell_v6 *shell, uint32_t serial);
 
@@ -170,8 +139,6 @@ public:
 	static void registry_handle_global_remove(void *data, struct wl_registry *registry, uint32_t name);
 
 	static void signal_int(int signum);
-
-	static void usage(int error_code);
 
 
 private:
@@ -185,13 +152,6 @@ private:
 
 	static struct zxdg_shell_v6_listener xdg_shell_listener;
 
-	static struct wl_seat_listener seat_listener;
-
-	static struct wl_keyboard_listener keyboard_listener;
-
-	static struct wl_touch_listener touch_listener;
-
-	static struct wl_pointer_listener pointer_listener;
 
 	static struct ivi_surface_listener ivi_surface_listener;
 
