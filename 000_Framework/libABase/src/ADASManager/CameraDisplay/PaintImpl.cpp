@@ -40,7 +40,7 @@ BYTE* PaintImpl::YUV422_PackedFormat2PlanarFormat(VOID* buffer, Int32 width, Int
     BYTE* _buffer = (BYTE*)buffer;
 
     int lenth = width * height * 2;
-    BYTE* m_TmpBuffer = (BYTE*)malloc(lenth);
+    if(m_TmpBuffer == nullptr) m_TmpBuffer = (BYTE*)malloc(lenth);
 
     int i = 0;
     int j = i + width * height;
@@ -49,6 +49,25 @@ BYTE* PaintImpl::YUV422_PackedFormat2PlanarFormat(VOID* buffer, Int32 width, Int
       if(l % 4 == 0 || l % 4 == 2) { m_TmpBuffer[i] = _buffer[l]; i++;}
       if(l % 4 == 1) { m_TmpBuffer[j] = _buffer[l]; j++;}
       if(l % 4 == 3) { m_TmpBuffer[k] = _buffer[l]; k++;}
+    }
+
+    return m_TmpBuffer;
+}
+
+BYTE* PaintImpl::YUV422_PackedFormat2PlanarFormat2(VOID* buffer, Int32 width, Int32 height)
+{
+    BYTE* _buffer = (BYTE*)buffer;
+
+    int lenth = width * height * 2;
+    if(m_TmpBuffer == nullptr) m_TmpBuffer = (BYTE*)malloc(lenth);
+
+    int i = 0;
+    int j = i + width * height;
+    int k = j + ((width * height) >> 1) ;
+    for(int l = 0; l < lenth; l++) {
+      if(l % 4 == 1 || l % 4 == 3) { m_TmpBuffer[i] = _buffer[l]; i++;}
+      if(l % 4 == 0) { m_TmpBuffer[j] = _buffer[l]; j++;}
+      if(l % 4 == 2) { m_TmpBuffer[k] = _buffer[l]; k++;}
     }
 
     return m_TmpBuffer;
@@ -64,7 +83,7 @@ VOID PaintImpl::update(Int32 width, Int32 height, VOID* buffer)
     m_width = width;
     m_height = height;
     //plane[0] = (BYTE*)buffer;
-    plane[0] = YUV422_PackedFormat2PlanarFormat(buffer, width, height);
+    plane[0] = YUV422_PackedFormat2PlanarFormat2(buffer, width, height);
     plane[1] = plane[0] + width*height;
     plane[2] = plane[1] + (width*height >> 1);
     printf("xiaole---debug update ok\n");
@@ -77,7 +96,7 @@ VOID PaintImpl::draw()
     glClearColor(0.0,0.0,0.0,1.0);
     glClear(GL_COLOR_BUFFER_BIT);
     //glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-    
+
     // Use the program object
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textureYId);
@@ -95,20 +114,21 @@ VOID PaintImpl::draw()
     glUniform1i(textureUniformV, 2);
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    if(m_TmpBuffer) free(m_TmpBuffer);
     printf("xiaole---debug draw  ok\n");
 }
 
 
 VOID PaintImpl::shutDown()
 {
-   // Delete texture object
-   glDeleteTextures(1, &textureYId);
-   glDeleteTextures(1, &textureUId);
-   glDeleteTextures(1, &textureVId);
+    if(m_TmpBuffer) free(m_TmpBuffer);
 
-   // Delete program object
-   glDeleteProgram(programObject);
+    // Delete texture object
+    glDeleteTextures(1, &textureYId);
+    glDeleteTextures(1, &textureUId);
+    glDeleteTextures(1, &textureVId);
+
+    // Delete program object
+    glDeleteProgram(programObject);
 }
 
 
@@ -218,7 +238,7 @@ Int32 PaintImpl::initShader()
     return 1;
 }
 
-GLuint  PaintImpl::esLoadProgram ( const char *vertShaderSrc, const char *fragShaderSrc )
+GLuint PaintImpl::esLoadProgram ( const char *vertShaderSrc, const char *fragShaderSrc )
 {
    printf("xiaole---debug PaintImpl| esLoadProgram\n");
    GLuint vertexShader;
@@ -281,7 +301,7 @@ GLuint  PaintImpl::esLoadProgram ( const char *vertShaderSrc, const char *fragSh
 }
 
 
-GLuint  PaintImpl::loadShader(GLenum type, const char *shaderSrc)
+GLuint PaintImpl::loadShader(GLenum type, const char *shaderSrc)
 {
     printf("xiaole---debug PaintImpl| loadShader\n");
     GLuint shader;

@@ -81,13 +81,13 @@ V4L2CameraDriverProvider::V4L2CameraDriverProvider(const string& cameraName, eIo
 
     ALOGE("***********************************************************************\n");
 
-    // if(m_displaySample == nullptr) {
-    //     m_displaySample = new DisplaySample();
-    // }
+    if(m_displaySample == nullptr) {
+        m_displaySample = new DisplaySample();
+    }
 
-    // if(m_pPaint == nullptr) {
-    //     m_pPaint = new PaintImpl();
-    // }
+    if(m_pPaint == nullptr) {
+        m_pPaint = new PaintImpl();
+    }
 
     ALOGD("provider for camera : %s,  DriverPath : %s\n", cameraName.c_str(), m_strDriverPath.c_str());
 }
@@ -104,18 +104,18 @@ V4L2CameraDriverProvider::~V4L2CameraDriverProvider()
         m_pVideoInfo = nullptr;
     }
 
-    // if(m_displaySample != nullptr)
-    // {
-    //     delete m_displaySample;
-    //     m_displaySample = nullptr;
-    // }
+    if(m_displaySample != nullptr)
+    {
+        delete m_displaySample;
+        m_displaySample = nullptr;
+    }
 
-    // if(m_pPaint != nullptr)
-    // {
-    //     m_pPaint->shutDown();
-    //     delete m_pPaint;
-    //     m_pPaint = nullptr;
-    // }
+    if(m_pPaint != nullptr)
+    {
+        m_pPaint->shutDown();
+        delete m_pPaint;
+        m_pPaint = nullptr;
+    }
 
     m_bIsStarted = FALSE;
 }
@@ -759,7 +759,7 @@ ECode V4L2CameraDriverProvider::Read_frame()
             Process_image(m_pBuffers[buf.index].start, buf.length);
         #endif
             ALOGD("xiaole---debug start Display\n");
-            //Display(m_pBuffers[buf.index].start, 640, 480);
+            Display(m_pBuffers[buf.index].start, 1280, 720);
 
             if(-1 == xioctl(m_iFd, VIDIOC_QBUF, &buf)){
                 //errno_exit("VIDIOC_QBUF");
@@ -804,7 +804,7 @@ ECode V4L2CameraDriverProvider::Read_frame()
             Process_image((VOID *)buf.m.userptr, buf.length);
         #endif
 
-            //Display(m_pBuffers[buf.index].start, 640, 480);
+            Display(m_pBuffers[buf.index].start, 1280, 720);
 
             if(-1 == xioctl(m_iFd, VIDIOC_QBUF, &buf)){
                 ALOGE("VIDIOC_QBUF error");
@@ -821,12 +821,12 @@ VOID V4L2CameraDriverProvider::update()
 {
     ALOGD("V4L2CameraDriverProvider::update\n");
 
-    // if(!m_bEglInitFlag) {
-    //     m_displaySample->Init();
-    //     m_pPaint->init();
-    //     m_bEglInitFlag = TRUE;
+    if(!m_bEglInitFlag) {
+        m_displaySample->Init();
+        m_pPaint->init();
+        m_bEglInitFlag = TRUE;
 
-    // }
+    }
 
     if(!m_bIsStreamOff){
         Read_frame();

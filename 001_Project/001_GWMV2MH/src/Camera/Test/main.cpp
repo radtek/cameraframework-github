@@ -84,7 +84,9 @@ public:
         m_pReserveCamera->StartCapture();
         //m_pRightCamera->StartCapture();
 
-        sleep(5);  //because sleep 500ms in state machine for test ,so just bigger than 500ms
+        //sleep(15);  //because sleep 500ms in state machine for test ,so just bigger than 500ms
+
+        while(1) { sleep(5); };
 
         // m_pReserveCamera->StopCapture();
         // //m_pRightCamera->StopCapture();
