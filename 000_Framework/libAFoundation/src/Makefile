@@ -1,6 +1,6 @@
 
-CC      = gcc
-CPP     = g++
+#CC      = gcc
+CPP     = $(CXX)
 RM      = rm -rf
 CP      = cp
 

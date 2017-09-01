@@ -74,26 +74,30 @@ public:
         // m_CamerasState[RIGHTCAMERANAME] = m_pRightCamera->GetCameraState();
         // ALOGI("FakeRVC : init : %s with state : %d !!!\n", RIGHTCAMERANAME, m_CamerasState[RIGHTCAMERANAME]);
 
+        ALOGI("FakeRVC : OpenCamera\n");
+
         m_pReserveCamera->OpenCamera();
         //m_pRightCamera->OpenCamera();
+
+        ALOGI("FakeRVC : StartCapture\n");
 
         m_pReserveCamera->StartCapture();
         //m_pRightCamera->StartCapture();
 
-        sleep(10);  //because sleep 500ms in state machine for test ,so just bigger than 500ms
+        sleep(5);  //because sleep 500ms in state machine for test ,so just bigger than 500ms
 
-        m_pReserveCamera->StopCapture();
-        //m_pRightCamera->StopCapture();
+        // m_pReserveCamera->StopCapture();
+        // //m_pRightCamera->StopCapture();
 
-        //ALOGI("FakeRVC : CloseCamera\n");
-        //m_pReserveCamera->CloseCamera();
-        //m_pRightCamera->CloseCamera();
+        // //ALOGI("FakeRVC : CloseCamera\n");
+        // //m_pReserveCamera->CloseCamera();
+        // //m_pRightCamera->CloseCamera();
 
-        sleep(4);
+        // sleep(4);
 
-        m_pReserveCamera->StartCapture();
+        // m_pReserveCamera->StartCapture();
 
-        sleep(10);
+        // sleep(10);
 
         m_pReserveCamera->CloseCamera();
     }

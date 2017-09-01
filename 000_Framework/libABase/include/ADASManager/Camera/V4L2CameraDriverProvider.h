@@ -28,7 +28,7 @@
 
 #include "ADASManager/Camera/DisplaySample.h"
 
-//#define WRITE_FILE
+#define WRITE_FILE
 
 namespace Harman {
 namespace Adas {
@@ -124,7 +124,7 @@ private:
 
 #ifdef WRITE_FILE
     FILE *m_pFp = nullptr;
-    string m_strFilename = string("test.yuv");
+    string m_strFilename = string("/usr/bin/test.yuv");
 #endif
 };
 
@@ -132,7 +132,7 @@ class V4L2CameraDriverProviderFactory : public CameraDriverProviderFactory
 {
 public:
     CameraDriverProvider* CreateCameraDriverProvider(const string& cameraName) override {
-        return new V4L2CameraDriverProvider(cameraName, IO_METHOD_MMAP);
+        return new V4L2CameraDriverProvider(cameraName, IO_METHOD_USERPTR);
     }
 
     ~V4L2CameraDriverProviderFactory() {}

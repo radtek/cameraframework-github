@@ -13,6 +13,24 @@
 #include <linux/videodev2.h>
 #include <stdlib.h>
 
+#include <stdio.h>
+#include <string.h>
+#include <fcntl.h>
+#include <inttypes.h>
+#include <unistd.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <getopt.h>
+#include <sched.h>
+#include <time.h>
+#include <sys/ioctl.h>
+#include <sys/mman.h>
+#include <sys/select.h>
+#include <sys/stat.h>
+#include <sys/time.h>
+
 namespace Harman {
 namespace Adas {
 namespace AFramework {
@@ -20,6 +38,7 @@ namespace ABase {
 namespace ADASManager {
 
 #define CLEAR(x) memset (&(x), 0, sizeof (x))
+#define ARRAY_SIZE(a)   (sizeof(a)/sizeof((a)[0]))
 
 /**
  *function name: xioctl
@@ -60,15 +79,15 @@ V4L2CameraDriverProvider::V4L2CameraDriverProvider(const string& cameraName, eIo
         ALOGE("calloc failed\n");
     }
 
-    // m_display = new CameraDisplay(m_viewInfo);
-    // m_display->connect();
-    if(m_displaySample == nullptr) {
-        m_displaySample = new DisplaySample();
-    }
+    ALOGE("***********************************************************************\n");
 
-    if(m_pPaint == nullptr) {
-        m_pPaint = new PaintImpl();
-    }
+    // if(m_displaySample == nullptr) {
+    //     m_displaySample = new DisplaySample();
+    // }
+
+    // if(m_pPaint == nullptr) {
+    //     m_pPaint = new PaintImpl();
+    // }
 
     ALOGD("provider for camera : %s,  DriverPath : %s\n", cameraName.c_str(), m_strDriverPath.c_str());
 }
@@ -85,18 +104,18 @@ V4L2CameraDriverProvider::~V4L2CameraDriverProvider()
         m_pVideoInfo = nullptr;
     }
 
-    if(m_displaySample != nullptr)
-    {
-        delete m_displaySample;
-        m_displaySample = nullptr;
-    }
+    // if(m_displaySample != nullptr)
+    // {
+    //     delete m_displaySample;
+    //     m_displaySample = nullptr;
+    // }
 
-    if(m_pPaint != nullptr)
-    {
-        m_pPaint->shutDown();
-        delete m_pPaint;
-        m_pPaint = nullptr;
-    }
+    // if(m_pPaint != nullptr)
+    // {
+    //     m_pPaint->shutDown();
+    //     delete m_pPaint;
+    //     m_pPaint = nullptr;
+    // }
 
     m_bIsStarted = FALSE;
 }
@@ -229,7 +248,9 @@ ECode V4L2CameraDriverProvider::Init_mmap()
             return -1;
         }
 
-        m_pBuffers[BufferCountReal].length = buf.length;
+        ALOGD("Init_mmap buf.length = %d\n", buf.length);
+
+        m_pBuffers[BufferCountReal].length = buf.length; //1845760; buf.length
         m_pBuffers[BufferCountReal].start = mmap(NULL /* start anywhere */, buf.length,
                 PROT_READ | PROT_WRITE /* required */,
                 MAP_SHARED /* recommended */, m_iFd, buf.m.offset);
@@ -286,6 +307,141 @@ ECode V4L2CameraDriverProvider::Init_userp(UInt32 buffer_size)
         }
     }
     return NO_ERROR;
+}
+
+
+static struct v4l2_format_info {
+    const char *name;
+    unsigned int fourcc;
+    unsigned char n_planes;
+} pixel_formats[] = {
+    { "RGB332", V4L2_PIX_FMT_RGB332, 1 },
+    { "RGB444", V4L2_PIX_FMT_RGB444, 1 },
+    { "ARGB444", V4L2_PIX_FMT_ARGB444, 1 },
+    { "XRGB444", V4L2_PIX_FMT_XRGB444, 1 },
+    { "RGB555", V4L2_PIX_FMT_RGB555, 1 },
+    { "ARGB555", V4L2_PIX_FMT_ARGB555, 1 },
+    { "XRGB555", V4L2_PIX_FMT_XRGB555, 1 },
+    { "RGB565", V4L2_PIX_FMT_RGB565, 1 },
+    { "RGB555X", V4L2_PIX_FMT_RGB555X, 1 },
+    { "RGB565X", V4L2_PIX_FMT_RGB565X, 1 },
+    { "BGR666", V4L2_PIX_FMT_BGR666, 1 },
+    { "BGR24", V4L2_PIX_FMT_BGR24, 1 },
+    { "RGB24", V4L2_PIX_FMT_RGB24, 1 },
+    { "BGR32", V4L2_PIX_FMT_BGR32, 1 },
+    { "ABGR32", V4L2_PIX_FMT_ABGR32, 1 },
+    { "XBGR32", V4L2_PIX_FMT_XBGR32, 1 },
+    { "RGB32", V4L2_PIX_FMT_RGB32, 1 },
+    { "ARGB32", V4L2_PIX_FMT_ARGB32, 1 },
+    { "XRGB32", V4L2_PIX_FMT_XRGB32, 1 },
+   // { "HSV24", V4L2_PIX_FMT_HSV24, 1 },
+    //{ "HSV32", V4L2_PIX_FMT_HSV32, 1 },
+    { "Y8", V4L2_PIX_FMT_GREY, 1 },
+    { "Y10", V4L2_PIX_FMT_Y10, 1 },
+    { "Y12", V4L2_PIX_FMT_Y12, 1 },
+    { "Y16", V4L2_PIX_FMT_Y16, 1 },
+    { "UYVY", V4L2_PIX_FMT_UYVY, 1 },
+    { "VYUY", V4L2_PIX_FMT_VYUY, 1 },
+    { "YUYV", V4L2_PIX_FMT_YUYV, 1 },
+    { "YVYU", V4L2_PIX_FMT_YVYU, 1 },
+    { "NV12", V4L2_PIX_FMT_NV12, 1 },
+    { "NV12M", V4L2_PIX_FMT_NV12M, 2 },
+    { "NV21", V4L2_PIX_FMT_NV21, 1 },
+    { "NV21M", V4L2_PIX_FMT_NV21M, 2 },
+    { "NV16", V4L2_PIX_FMT_NV16, 1 },
+    { "NV16M", V4L2_PIX_FMT_NV16M, 2 },
+    { "NV61", V4L2_PIX_FMT_NV61, 1 },
+    { "NV61M", V4L2_PIX_FMT_NV61M, 2 },
+    { "NV24", V4L2_PIX_FMT_NV24, 1 },
+    { "NV42", V4L2_PIX_FMT_NV42, 1 },
+    { "YUV420M", V4L2_PIX_FMT_YUV420M, 3 },
+    //{ "YUV422M", V4L2_PIX_FMT_YUV422M, 3 },
+    //{ "YUV444M", V4L2_PIX_FMT_YUV444M, 3 },
+    { "YVU420M", V4L2_PIX_FMT_YVU420M, 3 },
+    //{ "YVU422M", V4L2_PIX_FMT_YVU422M, 3 },
+    //{ "YVU444M", V4L2_PIX_FMT_YVU444M, 3 },
+    { "SBGGR8", V4L2_PIX_FMT_SBGGR8, 1 },
+    { "SGBRG8", V4L2_PIX_FMT_SGBRG8, 1 },
+    { "SGRBG8", V4L2_PIX_FMT_SGRBG8, 1 },
+    { "SRGGB8", V4L2_PIX_FMT_SRGGB8, 1 },
+    { "SBGGR10_DPCM8", V4L2_PIX_FMT_SBGGR10DPCM8, 1 },
+    { "SGBRG10_DPCM8", V4L2_PIX_FMT_SGBRG10DPCM8, 1 },
+    { "SGRBG10_DPCM8", V4L2_PIX_FMT_SGRBG10DPCM8, 1 },
+    { "SRGGB10_DPCM8", V4L2_PIX_FMT_SRGGB10DPCM8, 1 },
+    { "SBGGR10", V4L2_PIX_FMT_SBGGR10, 1 },
+    { "SGBRG10", V4L2_PIX_FMT_SGBRG10, 1 },
+    { "SGRBG10", V4L2_PIX_FMT_SGRBG10, 1 },
+    { "SRGGB10", V4L2_PIX_FMT_SRGGB10, 1 },
+    { "SBGGR10P", V4L2_PIX_FMT_SBGGR10P, 1 },
+    { "SGBRG10P", V4L2_PIX_FMT_SGBRG10P, 1 },
+    { "SGRBG10P", V4L2_PIX_FMT_SGRBG10P, 1 },
+    { "SRGGB10P", V4L2_PIX_FMT_SRGGB10P, 1 },
+    { "SBGGR12", V4L2_PIX_FMT_SBGGR12, 1 },
+    { "SGBRG12", V4L2_PIX_FMT_SGBRG12, 1 },
+    { "SGRBG12", V4L2_PIX_FMT_SGRBG12, 1 },
+    { "SRGGB12", V4L2_PIX_FMT_SRGGB12, 1 },
+    { "DV", V4L2_PIX_FMT_DV, 1 },
+    { "MJPEG", V4L2_PIX_FMT_MJPEG, 1 },
+    { "MPEG", V4L2_PIX_FMT_MPEG, 1 },
+};
+
+static const struct v4l2_format_info *v4l2_format_by_fourcc(unsigned int fourcc)
+{
+    unsigned int i;
+
+    for (i = 0; i < ARRAY_SIZE(pixel_formats); ++i) {
+        if (pixel_formats[i].fourcc == fourcc)
+            return &pixel_formats[i];
+    }
+
+    return NULL;
+}
+
+static const char *v4l2_format_name(unsigned int fourcc)
+{
+    const struct v4l2_format_info *info;
+    static char name[5];
+    unsigned int i;
+
+    info = v4l2_format_by_fourcc(fourcc);
+    if (info)
+        return info->name;
+
+    for (i = 0; i < 4; ++i) {
+        name[i] = fourcc & 0xff;
+        fourcc >>= 8;
+    }
+
+    name[4] = '\0';
+    return name;
+}
+
+static const struct {
+    const char *name;
+    enum v4l2_field field;
+} fields[] = {
+    { "any", V4L2_FIELD_ANY },
+    { "none", V4L2_FIELD_NONE },
+    { "top", V4L2_FIELD_TOP },
+    { "bottom", V4L2_FIELD_BOTTOM },
+    { "interlaced", V4L2_FIELD_INTERLACED },
+    { "seq-tb", V4L2_FIELD_SEQ_TB },
+    { "seq-bt", V4L2_FIELD_SEQ_BT },
+    { "alternate", V4L2_FIELD_ALTERNATE },
+    { "interlaced-tb", V4L2_FIELD_INTERLACED_TB },
+    { "interlaced-bt", V4L2_FIELD_INTERLACED_BT },
+};
+
+static const char *v4l2_field_name(enum v4l2_field field)
+{
+    unsigned int i;
+
+    for (i = 0; i < ARRAY_SIZE(fields); ++i) {
+        if (fields[i].field == field)
+            return fields[i].name;
+    }
+
+    return "unknown";
 }
 
 ECode V4L2CameraDriverProvider::InitDevice()
@@ -357,15 +513,35 @@ ECode V4L2CameraDriverProvider::InitDevice()
     CLEAR(fmt);
 
     fmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-    fmt.fmt.pix.width = 640;
-    fmt.fmt.pix.height = 480;
-    fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_YUYV;
-    fmt.fmt.pix.field = V4L2_FIELD_INTERLACED;
+    fmt.fmt.pix.width = 1280;
+    fmt.fmt.pix.height = 720;
+    fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_UYVY;  //V4L2_PIX_FMT_YUYV
+    fmt.fmt.pix.field = V4L2_FIELD_ANY;   //V4L2_FIELD_ANY  V4L2_FIELD_INTERLACED
+
+    fmt.fmt.pix.field = 0;
+    fmt.fmt.pix.bytesperline = 0;
+    fmt.fmt.pix.sizeimage = 0;
+    fmt.fmt.pix.priv = V4L2_PIX_FMT_PRIV_MAGIC;
+    fmt.fmt.pix.flags = 0;
+
+    printf("=====video_set_format======fmt.fmt.pix.width=%d\n",fmt.fmt.pix.width);
+    printf("=====video_set_format======fmt.fmt.pix.height=%d\n",fmt.fmt.pix.height);
+    printf("=====video_set_format======fmt.fmt.pix.pixelformat=%d\n",fmt.fmt.pix.pixelformat);
+    printf("=====video_set_format======fmt.fmt.pix.field=%d\n",fmt.fmt.pix.field);
+    printf("=====video_set_format======fmt.fmt.pix.bytesperline=%d\n",fmt.fmt.pix.bytesperline);
+    printf("=====video_set_format======fmt.fmt.pix.sizeimage=%d\n",fmt.fmt.pix.sizeimage);
+    printf("=====video_set_format======fmt.fmt.pix.flags=%d\n",fmt.fmt.pix.flags);
 
     if(-1 == xioctl(m_iFd, VIDIOC_S_FMT, &fmt)){
         ALOGE("VIDIOC_S_FMT error");
         return -1;
     }
+
+    printf("+++++++++++++++++Video format set: %s (%08x) %ux%u (stride %u) field %s buffer size %u\n",
+            v4l2_format_name(fmt.fmt.pix.pixelformat), fmt.fmt.pix.pixelformat,
+            fmt.fmt.pix.width, fmt.fmt.pix.height, fmt.fmt.pix.bytesperline,
+            v4l2_field_name((enum v4l2_field)fmt.fmt.pix.field),
+            fmt.fmt.pix.sizeimage);
 
     /* Note VIDIOC_S_FMT may change width and height. */
 
@@ -495,8 +671,9 @@ VOID V4L2CameraDriverProvider::ShowInfo()
 
 #ifdef WRITE_FILE
 VOID V4L2CameraDriverProvider::Process_image(const VOID* p, Int32 size){
-    ALOGD("V4L2CameraDriverProvider::Process_image\n");
+    ALOGD("V4L2CameraDriverProvider::Process_image, size=%d\n", size);
     fwrite(p, size, 1, m_pFp);
+    //fflush(m_pFp);
 }
 #endif
 
@@ -582,7 +759,7 @@ ECode V4L2CameraDriverProvider::Read_frame()
             Process_image(m_pBuffers[buf.index].start, buf.length);
         #endif
             ALOGD("xiaole---debug start Display\n");
-            Display(m_pBuffers[buf.index].start, 640, 480);
+            //Display(m_pBuffers[buf.index].start, 640, 480);
 
             if(-1 == xioctl(m_iFd, VIDIOC_QBUF, &buf)){
                 //errno_exit("VIDIOC_QBUF");
@@ -627,7 +804,7 @@ ECode V4L2CameraDriverProvider::Read_frame()
             Process_image((VOID *)buf.m.userptr, buf.length);
         #endif
 
-            Display(m_pBuffers[buf.index].start, 640, 480);
+            //Display(m_pBuffers[buf.index].start, 640, 480);
 
             if(-1 == xioctl(m_iFd, VIDIOC_QBUF, &buf)){
                 ALOGE("VIDIOC_QBUF error");
@@ -644,12 +821,12 @@ VOID V4L2CameraDriverProvider::update()
 {
     ALOGD("V4L2CameraDriverProvider::update\n");
 
-    if(!m_bEglInitFlag) {
-        m_displaySample->Init();
-        m_pPaint->init();
-        m_bEglInitFlag = TRUE;
+    // if(!m_bEglInitFlag) {
+    //     m_displaySample->Init();
+    //     m_pPaint->init();
+    //     m_bEglInitFlag = TRUE;
 
-    }
+    // }
 
     if(!m_bIsStreamOff){
         Read_frame();
@@ -699,7 +876,7 @@ VOID V4L2CameraDriverProvider::update()
 
 ECode V4L2CameraDriverProvider::GetCapture()
 {
-    ALOGD("V4L2CameraDriverProvider::GetCapture\n");
+    ALOGD("V4L2CameraDriverProvider::GetCapture, BufferCountReal=%d\n", BufferCountReal);
 
     UInt32 i;
     enum v4l2_buf_type type;
