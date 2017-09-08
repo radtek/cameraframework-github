@@ -35,7 +35,7 @@ VOID PaintImpl::initEGL()
 }
 #endif
 
-BYTE* PaintImpl::YUV422_PackedFormat2PlanarFormat(VOID* buffer, Int32 width, Int32 height)
+BYTE* PaintImpl::YUYV_PackedFormat2PlanarFormat(VOID* buffer, Int32 width, Int32 height)
 {
     BYTE* _buffer = (BYTE*)buffer;
 
@@ -54,7 +54,7 @@ BYTE* PaintImpl::YUV422_PackedFormat2PlanarFormat(VOID* buffer, Int32 width, Int
     return m_TmpBuffer;
 }
 
-BYTE* PaintImpl::YUV422_PackedFormat2PlanarFormat2(VOID* buffer, Int32 width, Int32 height)
+BYTE* PaintImpl::UYVY_PackedFormat2PlanarFormat(VOID* buffer, Int32 width, Int32 height)
 {
     BYTE* _buffer = (BYTE*)buffer;
 
@@ -83,7 +83,7 @@ VOID PaintImpl::update(Int32 width, Int32 height, VOID* buffer)
     m_width = width;
     m_height = height;
     //plane[0] = (BYTE*)buffer;
-    plane[0] = YUV422_PackedFormat2PlanarFormat2(buffer, width, height);
+    plane[0] = UYVY_PackedFormat2PlanarFormat(buffer, width, height);
     plane[1] = plane[0] + width*height;
     plane[2] = plane[1] + (width*height >> 1);
     printf("xiaole---debug update ok\n");

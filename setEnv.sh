@@ -1,8 +1,21 @@
+#!/bin/sh
 
 export ADAS_ROOT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 alias sdk='cd /opt/elina/2.0.2015143A/'
 alias SDK='cd /opt/elina/2.0.2015143A/'
+
+if [ -f "/opt/elina/2.0.2015143A/environment-setup-corei7-64-elina-linux" ]; then  
+	echo "SDK EXIT" 
+	echo "source environment-setup-corei7-64-elina-linux" 
+	source "/opt/elina/2.0.2015143A/environment-setup-corei7-64-elina-linux"
+else  
+	echo "SDK do not EXIT"
+	echo "set CXX = g++"
+	echo "set CC = gcc"
+#export CXX="g++"
+#export CC="gcc"
+fi  
 
 alias adas='cd $ADAS_ROOT_PATH'
 alias ADAS='cd $ADAS_ROOT_PATH'

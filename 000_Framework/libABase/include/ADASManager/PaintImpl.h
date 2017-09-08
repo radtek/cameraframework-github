@@ -23,8 +23,8 @@ private:
     Int32 initEGL();
     GLuint  esLoadProgram ( const char *vertShaderSrc, const char *fragShaderSrc );
 
-    BYTE* YUV422_PackedFormat2PlanarFormat(VOID* buffer, Int32 width, Int32 height);
-    BYTE* YUV422_PackedFormat2PlanarFormat2(VOID* buffer, Int32 width, Int32 height);
+    BYTE* YUYV_PackedFormat2PlanarFormat(VOID* buffer, Int32 width, Int32 height);
+    BYTE* UYVY_PackedFormat2PlanarFormat(VOID* buffer, Int32 width, Int32 height);
 
 private:
     GLuint programObject;
