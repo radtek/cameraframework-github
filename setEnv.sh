@@ -2,13 +2,15 @@
 
 export ADAS_ROOT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-alias sdk='cd /opt/elina/2.0.2015143A/'
-alias SDK='cd /opt/elina/2.0.2015143A/'
+sdkPATH="/opt/elina/2.0.2015143A"
 
-if [ -f "/opt/elina/2.0.2015143A/environment-setup-corei7-64-elina-linux" ]; then  
+alias sdk='cd $sdkPATH'
+alias SDK='cd $sdkPATH'
+
+if [ -f "$sdkPATH/environment-setup-corei7-64-elina-linux" ]; then  
 	echo "SDK EXIT" 
 	echo "source environment-setup-corei7-64-elina-linux" 
-	source "/opt/elina/2.0.2015143A/environment-setup-corei7-64-elina-linux"
+	source "$sdkPATH/environment-setup-corei7-64-elina-linux"
 else  
 	echo "SDK do not EXIT"
 	echo "set CXX = g++"
