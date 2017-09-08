@@ -1,6 +1,4 @@
 
-#CC      = gcc
-CPP     = $(CXX)
 RM      = rm -rf
 
 ## debug flag
@@ -9,17 +7,23 @@ DBG_ENABLE   = 0
 ## source file path
 SRC_PATH   := .
 
-OBJS_PATH  :=../../../prj/linux/Camera/
+OBJS_PATH  :=../../../prj/linux/Camera/Test/
 
 ## target exec file name
 TARGET     := cameraStateTest
 
 ## get all source files
-SRCS       += $(wildcard $(SRC_PATH)/* $(SRC_PATH)/../*.cpp)
+SRCS1       = $(wildcard $(SRC_PATH)/*.cpp)
+OBJS1       = $(patsubst %.cpp,%.o,$(SRCS1))
 
-## all .o based on all .c
-OBJS       := $(SRCS:.cpp=.o)
-OBJS       += $(SRCS:.c=.o)
+SRCS2       = $(wildcard $(SRC_PATH)/*.c)
+OBJS2       = $(patsubst %.c,%.o,$(SRCS2))
+
+SRCS3       = $(wildcard $(SRC_PATH)/../*.cpp)
+OBJS3       = $(patsubst %.cpp,%.o,$(SRCS3))
+
+OBJS = $(OBJS1) $(OBJS2) $(OBJS3)
+
 
 ## need libs, add at here
 LIBS := AFoundation
@@ -57,31 +61,20 @@ LDFLAGS += $(foreach lib, $(LIBRARY_PATH), -L$(lib))
 LDFLAGS += $(foreach lib, $(LIBS), -l$(lib))
 
 ## c++11 support
-CFLAGS += -Wl,--no-as-needed  -lpthread -std=c++11
+CFLAGS += -Wl,--no-as-needed  -lpthread
 
-CFLAGS += -D LINUX_OS -fPIC -lm -lrt 
-
-#CFLAGS += -D__FILENAME__='"$(subst $(dir $<),,$<)"'
-
-# all: build
-
-# build:
-# 	$(CPP) -c $(CFLAGS) $(SRCS)
-# 	$(CPP) $(CFLAGS) -lpthread -o $(TARGET) $(OBJS) $(LDFLAGS)
-# 	$(RM) $(OBJS)
-
-# clean:
-# 	$(RM) $(OBJS) $(TARGET)
+CFLAGS += -D LINUX_OS -fPIC -lm -lrt
 
 all: build
 
 build:	$(OBJS)
-#	$(CPP) -c $(CFLAGS) $(SRCS)
-	$(CPP) $(CFLAGS) -lpthread -o $(TARGET) $(addprefix $(OBJS_PATH), $^) $(LDFLAGS)
-#	$(RM) $(OBJS)
+	$(CXX) $(CFLAGS) -lpthread -std=c++11 -o $(TARGET) $(addprefix $(OBJS_PATH), $^) $(LDFLAGS)
 
 clean:
-	$(RM) $(OBJS_PATH)/$@ $(TARGET)
+	$(RM) $(addprefix $(OBJS_PATH), $(OBJS)) $(TARGET)
 
 %.o: %.cpp
-	$(CPP) -c -O3 $(CFLAGS) $< -o $(OBJS_PATH)/$@
+	$(CXX) -c -O3 $(CFLAGS) -std=c++11 $< -o $(OBJS_PATH)/$@
+
+%.o: %.c
+	$(CC) -c -O3 $(CFLAGS) $< -o $(OBJS_PATH)/$@

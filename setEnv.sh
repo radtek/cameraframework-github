@@ -1,6 +1,9 @@
 
 export ADAS_ROOT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+alias sdk='cd /opt/elina/2.0.2015143A/'
+alias SDK='cd /opt/elina/2.0.2015143A/'
+
 alias adas='cd $ADAS_ROOT_PATH'
 alias ADAS='cd $ADAS_ROOT_PATH'
 

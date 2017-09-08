@@ -1,6 +1,4 @@
 
-#CC      = gcc
-CPP     = $(CXX)
 RM      = rm -rf
 CP      = cp
 
@@ -56,11 +54,11 @@ CFLAGS += -D LINUX_OS -fPIC
 #CFLAGS += -D__FILENAME__='"$(subst $(dir $<),,$<)"'
 
 all:$(OBJS)
-	$(CPP) -shared -fPIC $(CFLAGS) $(LDFLAGS) -o $(TARGET_PATH)/$(TARGET) $(OBJS)
+	$(CXX) -shared -fPIC $(CFLAGS) $(LDFLAGS) -o $(TARGET_PATH)/$(TARGET) $(OBJS)
 
 ${DIR_OBJ}/%.o : $(SRC_PATH)/%.cpp
 	@echo Compiling $< ...
-	$(CPP) -c $(CFLAGS) $< -o ${DIR_OBJ}/$*.o
+	$(CXX) -c $(CFLAGS) $< -o ${DIR_OBJ}/$*.o
 
 clean:
 	$(RM) $(OBJS) $(TARGET_PATH)/$(TARGET)
