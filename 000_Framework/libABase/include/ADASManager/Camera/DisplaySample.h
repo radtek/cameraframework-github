@@ -24,7 +24,6 @@
 #include <EGL/egl.h>
 #include <EGL/eglext.h>
 
-#include "xdg-shell-unstable-v6-client-protocol.h"
 #include <sys/types.h>
 #include <unistd.h>
 #include "ivi-application-client-protocol.h"
@@ -120,8 +119,6 @@ public:
 
 	static void handle_ivi_surface_configure(void *data, struct ivi_surface *ivi_surface, int32_t width, int32_t height);
 
-	static void create_xdg_surface(struct window *window, struct display *display);
-
 	static void create_ivi_surface(struct window *window, struct display *display);
 
 	static void create_surface(struct window *window);
@@ -130,9 +127,6 @@ public:
 
 	static void redraw(void *data, struct wl_callback *callback, uint32_t time);
 
-	
-
-	static void xdg_shell_ping(void *data, struct zxdg_shell_v6 *shell, uint32_t serial);
 
 	static void registry_handle_global(void *data, struct wl_registry *registry, uint32_t name, const char *interface, uint32_t version);
 
@@ -150,14 +144,8 @@ private:
 
 	static struct wl_registry_listener registry_listener;
 
-	static struct zxdg_shell_v6_listener xdg_shell_listener;
-
 
 	static struct ivi_surface_listener ivi_surface_listener;
-
-	static struct zxdg_toplevel_v6_listener xdg_toplevel_listener;
-
-	static struct zxdg_surface_v6_listener xdg_surface_listener;
 
 	static struct display m_Display;
 	static struct window  m_Window;

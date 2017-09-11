@@ -4,7 +4,7 @@
 
 #include "CameraDriverProvider.h"
 #include "CameraDriverProviderFactory.h"
-#include "CameraDisplay.h"
+#include "PaintImpl.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -109,8 +109,6 @@ private:
     BOOLEAN m_bIsStarted = FALSE;
 
     BOOLEAN m_bIsStreamOff = FALSE;
-
-    CameraDisplay* m_display = NULL;
 
     DisplaySample* m_displaySample = nullptr;
 

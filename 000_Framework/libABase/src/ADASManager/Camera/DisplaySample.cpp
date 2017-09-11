@@ -16,21 +16,9 @@ struct wl_registry_listener DisplaySample::registry_listener = {
     registry_handle_global_remove
 };
 
-struct zxdg_shell_v6_listener DisplaySample::xdg_shell_listener = {
-    xdg_shell_ping,
-};
 
 struct ivi_surface_listener DisplaySample::ivi_surface_listener = {
     handle_ivi_surface_configure,
-};
-
-struct zxdg_toplevel_v6_listener DisplaySample::xdg_toplevel_listener = {
-    handle_toplevel_configure,
-    handle_toplevel_close,
-};
-
-struct zxdg_surface_v6_listener DisplaySample::xdg_surface_listener = {
-    handle_surface_configure
 };
 
 struct display DisplaySample::m_Display = { 0 };
@@ -38,12 +26,11 @@ struct window  DisplaySample::m_Window  = { 0 };
 
 DisplaySample::DisplaySample()
 {
-    struct sigaction sigint;
 
     m_Window.display = &m_Display;
     m_Display.window = &m_Window;
-    m_Window.geometry.width  = 640;
-    m_Window.geometry.height = 480;
+    m_Window.geometry.width  = 1280;
+    m_Window.geometry.height = 720;
     //  m_Window.geometry.width  = 250;
     // m_Window.geometry.height = 250;
     m_Window.window_size = m_Window.geometry;
@@ -61,34 +48,16 @@ DisplaySample::DisplaySample()
 
     wl_display_roundtrip(m_Display.display);
 
-    // init_egl(&m_Display, &m_Window);
-    // create_surface(&m_Window);
-    //init_gl(&m_Window);
-
-    // m_Display.cursor_surface =
-    //     wl_compositor_create_surface(m_Display.compositor);
-
-    sigint.sa_handler = signal_int;
-    sigemptyset(&sigint.sa_mask);
-    sigint.sa_flags = SA_RESETHAND;
-    sigaction(SIGINT, &sigint, NULL);
 }
 
 DisplaySample::~DisplaySample()
 {
-    fprintf(stderr, "simple-egl exiting\n");
+    fprintf(stderr, "rvc exiting\n");
 
     destroy_surface(&m_Window);
     fini_egl(&m_Display);
 
     //wl_surface_destroy(m_Display.cursor_surface);
-    if (m_Display.cursor_theme) {
-        wl_cursor_theme_destroy(m_Display.cursor_theme);
-    }
-
-    if (m_Display.shell) {
-        zxdg_shell_v6_destroy(m_Display.shell);
-    }
 
     if (m_Display.ivi_application) {
         ivi_application_destroy(m_Display.ivi_application);
@@ -231,85 +200,6 @@ void DisplaySample::fini_egl(struct display *display)
     eglReleaseThread();
 }
 
-GLuint DisplaySample::create_shader(struct window *window, const char *source, GLenum shader_type)
-{
-    GLuint shader;
-    GLint status;
-
-    shader = glCreateShader(shader_type);
-    assert(shader != 0);
-
-    glShaderSource(shader, 1, (const char **) &source, NULL);
-    glCompileShader(shader);
-
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
-    if (!status) {
-        char log[1000];
-        GLsizei len;
-        glGetShaderInfoLog(shader, 1000, &len, log);
-        fprintf(stderr, "Error: compiling %s: %*s\n",
-            shader_type == GL_VERTEX_SHADER ? "vertex" : "fragment",
-            len, log);
-        exit(1);
-    }
-
-    return shader;
-}
-
-
-void DisplaySample::handle_surface_configure(void *data, struct zxdg_surface_v6 *surface,
-             uint32_t serial)
-{
-    struct window *window = (struct window *)data;
-
-    zxdg_surface_v6_ack_configure(surface, serial);
-
-    window->wait_for_configure = false;
-}
-
-void DisplaySample::handle_toplevel_configure(void *data, struct zxdg_toplevel_v6 *toplevel,
-              int32_t width, int32_t height,
-              struct wl_array *states)
-{
-    struct window *window = (struct window *)data;
-    uint32_t *p;
-
-    window->fullscreen = 0;
-
-    // #define wl_array_for_each(pos, array)              
-    // for (pos = (array)->data; (const char *) pos < ((const char *) (array)->data + (array)->size); (pos)++)
-   
-
-    // wl_array_for_each(p, states) {
-    //     uint32_t state = *p;
-    //     switch (state) {
-    //     case ZXDG_TOPLEVEL_V6_STATE_FULLSCREEN:
-    //         window->fullscreen = 1;
-    //         break;
-    //     }
-    // }
-
-    if (width > 0 && height > 0) {
-        if (!window->fullscreen) {
-            window->window_size.width = width;
-            window->window_size.height = height;
-        }
-        window->geometry.width = width;
-        window->geometry.height = height;
-    } else if (!window->fullscreen) {
-        window->geometry = window->window_size;
-    }
-
-    if (window->native)
-        wl_egl_window_resize(window->native,
-                     window->geometry.width,
-                     window->geometry.height, 0, 0);
-}
-
-void DisplaySample::handle_toplevel_close(void *data, struct zxdg_toplevel_v6 *xdg_toplevel)
-{
-    running = 0;
-}
 
 void DisplaySample::handle_ivi_surface_configure(void *data, struct ivi_surface *ivi_surface,
                              int32_t width, int32_t height)
@@ -325,23 +215,6 @@ void DisplaySample::handle_ivi_surface_configure(void *data, struct ivi_surface 
         window->window_size = window->geometry;
 }
 
-void DisplaySample::create_xdg_surface(struct window *window, struct display *display)
-{
-    window->xdg_surface = zxdg_shell_v6_get_xdg_surface(display->shell,
-                                window->surface);
-    zxdg_surface_v6_add_listener(window->xdg_surface,
-                     &xdg_surface_listener, window);
-
-    window->xdg_toplevel =
-        zxdg_surface_v6_get_toplevel(window->xdg_surface);
-    zxdg_toplevel_v6_add_listener(window->xdg_toplevel,
-                      &xdg_toplevel_listener, window);
-
-    zxdg_toplevel_v6_set_title(window->xdg_toplevel, "simple-egl");
-
-    window->wait_for_configure = true;
-    wl_surface_commit(window->surface);
-}
 
 void DisplaySample::create_ivi_surface(struct window *window, struct display *display)
 {
@@ -355,8 +228,8 @@ void DisplaySample::create_ivi_surface(struct window *window, struct display *di
         abort();
     }
 
-    ivi_surface_add_listener(window->ivi_surface,
-                 &ivi_surface_listener, window);
+    // ivi_surface_add_listener(window->ivi_surface,
+    //              &ivi_surface_listener, window);
 }
 
 void DisplaySample::create_surface(struct window *window)
@@ -370,19 +243,18 @@ void DisplaySample::create_surface(struct window *window)
         wl_egl_window_create(window->surface,
                      window->geometry.width,
                      window->geometry.height);
+
+
     window->egl_surface =
         weston_platform_create_egl_surface(display->egl.dpy,
                            display->egl.conf,
                            window->native, NULL);
 
 
-    if (display->shell) {
-        create_xdg_surface(window, display);
-    } else if (display->ivi_application ) {
-        create_ivi_surface(window, display);
-    } else {
-        assert(0);
-    }
+
+    create_ivi_surface(window, display);
+
+
 
     ret = eglMakeCurrent(window->display->egl.dpy, window->egl_surface,
                  window->egl_surface, window->display->egl.ctx);
@@ -391,11 +263,10 @@ void DisplaySample::create_surface(struct window *window)
     if (!window->frame_sync)
         eglSwapInterval(display->egl.dpy, 0);
 
-    if (!display->shell)
-        return;
 
-    if (window->fullscreen)
-        zxdg_toplevel_v6_set_fullscreen(window->xdg_toplevel, NULL);
+    wl_egl_window_resize(window->native,
+                     window->geometry.width,
+                     window->geometry.height, 0, 0);
 }
 
 void DisplaySample::destroy_surface(struct window *window)
@@ -409,10 +280,7 @@ void DisplaySample::destroy_surface(struct window *window)
                         window->egl_surface);
     wl_egl_window_destroy(window->native);
 
-    if (window->xdg_toplevel)
-        zxdg_toplevel_v6_destroy(window->xdg_toplevel);
-    if (window->xdg_surface)
-        zxdg_surface_v6_destroy(window->xdg_surface);
+   
     if (window->display->ivi_application)
         ivi_surface_destroy(window->ivi_surface);
     wl_surface_destroy(window->surface);
@@ -431,10 +299,6 @@ void DisplaySample::redraw(void *data, struct wl_callback *callback, uint32_t ti
 }
 
 
-void DisplaySample::xdg_shell_ping(void *data, struct zxdg_shell_v6 *shell, uint32_t serial)
-{
-    zxdg_shell_v6_pong(shell, serial);
-}
 
 void DisplaySample::registry_handle_global(void *data, struct wl_registry *registry,
                uint32_t name, const char *interface, uint32_t version)
@@ -446,15 +310,8 @@ void DisplaySample::registry_handle_global(void *data, struct wl_registry *regis
             (wl_compositor*)wl_registry_bind(registry, name,
                      &wl_compositor_interface,
                      MIN(version, 4));
-    } else if (strcmp(interface, "zxdg_shell_v6") == 0) {
-        d->shell = (zxdg_shell_v6*)wl_registry_bind(registry, name,
-                        &zxdg_shell_v6_interface, 1);
-        zxdg_shell_v6_add_listener(d->shell, &xdg_shell_listener, d);
-    } else if (strcmp(interface, "wl_seat") == 0) {
-
-    } else if (strcmp(interface, "wl_shm") == 0) {
-
-    } else if (strcmp(interface, "ivi_application") == 0) {
+    } 
+    else if (strcmp(interface, "ivi_application") == 0) {
         d->ivi_application =
             (ivi_application*)wl_registry_bind(registry, name,
                      &ivi_application_interface, 1);
@@ -464,11 +321,6 @@ void DisplaySample::registry_handle_global(void *data, struct wl_registry *regis
 void DisplaySample::registry_handle_global_remove(void *data, struct wl_registry *registry,
                   uint32_t name)
 {
-}
-
-void DisplaySample::signal_int(int signum)
-{
-    running = 0;
 }
 
 

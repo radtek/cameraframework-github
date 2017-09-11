@@ -679,26 +679,11 @@ VOID V4L2CameraDriverProvider::Process_image(const VOID* p, Int32 size){
 
 VOID V4L2CameraDriverProvider::Display(VOID* p, Int32 width, Int32 height)
 {
-    // CameraDisplay::cameraDisplayInfo dispInfo{p, width, height};
-    // if(!m_display) {
-    //     ALOGD("xiaole---debug m_display is NULL\n");
-    //     return;
-    // }
-    // m_display->update(&dispInfo);
-    // m_display->start();
-
-    //m_pPaint->init();
-
-    //m_pPaint->update(width, height, m_pBuffer);
-
 
     m_pPaint->update(width, height, p);
+    m_pPaint->draw();
+    m_displaySample->Start();
 
-    //int i = 1;
-    //do{
-        m_pPaint->draw();
-        m_displaySample->Start();
-    //}while(i--);
 }
 
 ECode V4L2CameraDriverProvider::Read_frame()

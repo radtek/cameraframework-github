@@ -33,6 +33,7 @@ LIBS += wayland-client
 LIBS += wayland-egl
 LIBS += wayland-cursor
 LIBS += GLESv2 EGL
+LIBS += ivi-application
 
 ## used headers  file path
 INCLUDE_PATH := ../../../include
