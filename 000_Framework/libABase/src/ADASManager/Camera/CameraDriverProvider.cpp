@@ -7,7 +7,7 @@ namespace AFramework {
 namespace ABase {
 namespace ADASManager {
 
-#define CAMERA_DEVICE0 "/dev/video32"
+#define CAMERA_DEVICE0 "/dev/video7"
 #define CAMERA_DEVICE1 "/dev/video1"
 #define CAMERA_DEVICE2 "/dev/video2"
 #define CAMERA_DEVICE3 "/dev/video3"
