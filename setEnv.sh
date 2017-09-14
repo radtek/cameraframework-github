@@ -7,17 +7,17 @@ sdkPATH="/opt/elina/2.0.2015143A"
 alias sdk='cd $sdkPATH'
 alias SDK='cd $sdkPATH'
 
-if [ -f "$sdkPATH/environment-setup-corei7-64-elina-linux" ]; then  
-	echo "SDK EXIT" 
-	echo "source environment-setup-corei7-64-elina-linux" 
+if [ -f "$sdkPATH/environment-setup-corei7-64-elina-linux" ]; then
+	echo "SDK EXIT"
+	echo "source environment-setup-corei7-64-elina-linux"
 	source "$sdkPATH/environment-setup-corei7-64-elina-linux"
-else  
+else
 	echo "SDK do not EXIT"
 	echo "set CXX = g++"
 	echo "set CC = gcc"
 #export CXX="g++"
 #export CC="gcc"
-fi  
+fi
 
 alias adas='cd $ADAS_ROOT_PATH'
 alias ADAS='cd $ADAS_ROOT_PATH'

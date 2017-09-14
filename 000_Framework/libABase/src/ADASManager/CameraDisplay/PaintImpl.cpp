@@ -1,6 +1,7 @@
 /**
  */
 #include "PaintImpl.h"
+#include "CameraDisplayTypeDefine.h"
 
 PaintImpl::PaintImpl()
 {
@@ -75,7 +76,7 @@ BYTE* PaintImpl::UYVY_PackedFormat2PlanarFormat(VOID* buffer, Int32 width, Int32
 
 VOID PaintImpl::update(Int32 width, Int32 height, VOID* buffer)
 {
-    printf("xiaole---debug update, buffer=%p\n", buffer);
+    printf("xiaole---debug update, buffer=%p,  width=%d, height=%d\n", buffer, width, height);
     if(buffer == NULL) {
         return;
     }
@@ -91,8 +92,8 @@ VOID PaintImpl::update(Int32 width, Int32 height, VOID* buffer)
 
 VOID PaintImpl::draw()
 {
-    printf("xiaole---debug draw\n");
-    glViewport (0, 0, m_width, m_height);
+    glViewport(0, 0, m_width, m_height);
+    printf("xiaole---debug draw1, width =%d, height=%d\n",m_width, m_height);
     glClearColor(0.0,0.0,0.0,1.0);
     glClear(GL_COLOR_BUFFER_BIT);
     //glClearColor(1.0f, 1.0f, 1.0f, 1.0f);

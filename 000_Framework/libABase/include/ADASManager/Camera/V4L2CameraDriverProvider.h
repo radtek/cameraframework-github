@@ -112,7 +112,7 @@ private:
 
     DisplaySample* m_displaySample = nullptr;
 
-    viewInfo m_viewInfo{640, 480, {0, 0}, 1};
+    //viewInfo m_viewInfo{640, 480, {0, 0}, 1};
 
     BOOLEAN m_bEglInitFlag = FALSE;
 

@@ -1,5 +1,6 @@
 
 #include "ADASManager/Camera/V4L2CameraDriverProvider.h"
+#include "CameraDisplayTypeDefine.h"
 
 #include <unistd.h>
 #include <sys/stat.h>
@@ -58,10 +59,10 @@ Int32 V4L2CameraDriverProvider::xioctl(Int32 fd, UInt64 request, VOID* argp)
 
 // static BYTE *textFileRead(char * filename)
 // {
-//     BYTE *s = (BYTE *)malloc(640*480*2);
-//     memset(s, 0, 640*480*2);
+//     BYTE *s = (BYTE *)malloc(screenWidth*screenHight*2);
+//     memset(s, 0, screenWidth*screenHight*2);
 //     FILE *infile = fopen(filename, "rb");
-//     int len = fread(s, 1, 640*480*2, infile);
+//     int len = fread(s, 1, screenWidth*screenHight*2, infile);
 //     ALOGD("V4L2CameraDriverProvider::textFileRead = %d, s = %p\n", len, s);
 //     fclose(infile);
 
@@ -513,8 +514,8 @@ ECode V4L2CameraDriverProvider::InitDevice()
     CLEAR(fmt);
 
     fmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-    fmt.fmt.pix.width = 1280;
-    fmt.fmt.pix.height = 720;
+    fmt.fmt.pix.width = screenWidth;
+    fmt.fmt.pix.height = screenHight;
     fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_UYVY;  //V4L2_PIX_FMT_YUYV
     fmt.fmt.pix.field = V4L2_FIELD_ANY;   //V4L2_FIELD_ANY  V4L2_FIELD_INTERLACED
 
@@ -744,7 +745,7 @@ ECode V4L2CameraDriverProvider::Read_frame()
             Process_image(m_pBuffers[buf.index].start, buf.length);
         #endif
             ALOGD("xiaole---debug start Display\n");
-            Display(m_pBuffers[buf.index].start, 1280, 720);
+            Display(m_pBuffers[buf.index].start, screenWidth, screenHight);
 
             if(-1 == xioctl(m_iFd, VIDIOC_QBUF, &buf)){
                 //errno_exit("VIDIOC_QBUF");
@@ -772,7 +773,7 @@ ECode V4L2CameraDriverProvider::Read_frame()
                     default:
                         if(m_bIsStreamOff) return 0;
 
-                        ALOGE("VIDIOC_DQBUF error");
+                        ALOGE("VIDIOC_DQBUF error\n");
                         return -1;
                 }
             }
@@ -789,7 +790,7 @@ ECode V4L2CameraDriverProvider::Read_frame()
             Process_image((VOID *)buf.m.userptr, buf.length);
         #endif
 
-            Display(m_pBuffers[buf.index].start, 1280, 720);
+            Display(m_pBuffers[buf.index].start, screenWidth, screenHight);
 
             if(-1 == xioctl(m_iFd, VIDIOC_QBUF, &buf)){
                 ALOGE("VIDIOC_QBUF error");

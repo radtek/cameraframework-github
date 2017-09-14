@@ -1,5 +1,6 @@
 
 #include "ADASManager/Camera/DisplaySample.h"
+#include "CameraDisplayTypeDefine.h"
 
 namespace Harman {
 namespace Adas {
@@ -29,8 +30,8 @@ DisplaySample::DisplaySample()
 
     m_Window.display = &m_Display;
     m_Display.window = &m_Window;
-    m_Window.geometry.width  = 1280;
-    m_Window.geometry.height = 720;
+    m_Window.geometry.width  = screenWidth;
+    m_Window.geometry.height = screenHight;
     //  m_Window.geometry.width  = 250;
     // m_Window.geometry.height = 250;
     m_Window.window_size = m_Window.geometry;
@@ -200,6 +201,49 @@ void DisplaySample::fini_egl(struct display *display)
     eglReleaseThread();
 }
 
+void DisplaySample::handle_toplevel_configure(void *data, struct zxdg_toplevel_v6 *toplevel,
+              int32_t width, int32_t height,
+              struct wl_array *states)
+{
+    struct window *window = (struct window *)data;
+    uint32_t *p;
+
+    window->fullscreen = 0;
+
+    // #define wl_array_for_each(pos, array)
+    // for (pos = (array)->data; (const char *) pos < ((const char *) (array)->data + (array)->size); (pos)++)
+
+
+    // wl_array_for_each(p, states) {
+    //     uint32_t state = *p;
+    //     switch (state) {
+    //     case ZXDG_TOPLEVEL_V6_STATE_FULLSCREEN:
+    //         window->fullscreen = 1;
+    //         break;
+    //     }
+    // }
+
+    if (width > 0 && height > 0) {
+        if (!window->fullscreen) {
+            window->window_size.width = width;
+            window->window_size.height = height;
+        }
+        window->geometry.width = width;
+        window->geometry.height = height;
+    } else if (!window->fullscreen) {
+        window->geometry = window->window_size;
+    }
+
+    if (window->native)
+        wl_egl_window_resize(window->native,
+                     window->geometry.width,
+                     window->geometry.height, 0, 0);
+}
+
+void DisplaySample::handle_toplevel_close(void *data, struct zxdg_toplevel_v6 *xdg_toplevel)
+{
+    running = 0;
+}
 
 void DisplaySample::handle_ivi_surface_configure(void *data, struct ivi_surface *ivi_surface,
                              int32_t width, int32_t height)
@@ -280,7 +324,7 @@ void DisplaySample::destroy_surface(struct window *window)
                         window->egl_surface);
     wl_egl_window_destroy(window->native);
 
-   
+
     if (window->display->ivi_application)
         ivi_surface_destroy(window->ivi_surface);
     wl_surface_destroy(window->surface);
@@ -310,7 +354,7 @@ void DisplaySample::registry_handle_global(void *data, struct wl_registry *regis
             (wl_compositor*)wl_registry_bind(registry, name,
                      &wl_compositor_interface,
                      MIN(version, 4));
-    } 
+    }
     else if (strcmp(interface, "ivi_application") == 0) {
         d->ivi_application =
             (ivi_application*)wl_registry_bind(registry, name,

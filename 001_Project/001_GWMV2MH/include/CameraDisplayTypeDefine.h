@@ -4,3 +4,6 @@
 #include <stdlib.h>
 #include "TypeDefine.h"
 
+#define screenWidth 1280//640
+#define screenHight 720//480
+
