@@ -86,7 +86,10 @@ public:
 
         //sleep(15);  //because sleep 500ms in state machine for test ,so just bigger than 500ms
 
-        while(1) { sleep(5); };
+        while(1) {
+            sleep(3);
+            m_pReserveCamera->StartCapture();
+        };
 
         // m_pReserveCamera->StopCapture();
         // //m_pRightCamera->StopCapture();
