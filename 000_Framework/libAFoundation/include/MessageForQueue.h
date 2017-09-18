@@ -15,16 +15,19 @@ public:
     MessageForQueue(UInt32 uiType, UInt32 uiID, const string& pData)
         : m_uiModuleType(uiType)
         , m_uiMeaasgeID(uiID)
+        , m_uiSerialNumber(0)
         , m_strArgs(pData)
     {}
 
     MessageForQueue()
         : m_uiModuleType(0)
         , m_uiMeaasgeID(0)
+        , m_uiSerialNumber(0)
         , m_strArgs(nullptr)
     {}
 
 public:
+    UInt32 m_uiSerialNumber;
     UInt32 m_uiModuleType;   // moduleID
     UInt32 m_uiMeaasgeID;    // messageID
     const string m_strArgs;  // messageArgs

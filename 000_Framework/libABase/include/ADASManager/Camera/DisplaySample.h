@@ -27,7 +27,10 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include "ivi-application-client-protocol.h"
-#define IVI_SURFACE_ID 9000
+
+#define RVC_SURFACE_ID 50
+#define GUAIDlINE_SURFACE_ID 51
+#define PAS_SURFACE_ID 52
 
 #include "shared/helpers.h"
 #include "shared/platform.h"

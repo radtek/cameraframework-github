@@ -60,7 +60,11 @@ VOID CMQRunnableService::pushMessage(MessageForQueue* rMsg, Int32 ilen)
         //insert message into messageQueue
         m_pMsgQueue->pushMessage(rMsg, ilen);
         //wake up, get message from messageQueue,and handle message
+        ALOGD("CMQRunnableService::pushMessage call resume ***********************\n");
         resume();
+    }else{
+        ALOGE("CMQRunnableService::pushMessage m_pMsgQueue is null, SerialNumber = %u do not push into messageQueue\n",
+                rMsg->m_uiSerialNumber);
     }
 }
 

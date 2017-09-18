@@ -73,6 +73,7 @@ VOID CMessageQueue::pushMessage(MessageForQueue* rMsg, Int32 uiMsgLen)
     //todo a commom internal msg used for ADAS pres
     lock_msg.lock();
     m_iMsgQueue.push(rMsg);
+    ALOGD("CMessageQueue::pushMessage : SerialNumber = %u, MeaasgeID = %u ^^^^^^^^^^^^^^\n",rMsg->m_uiSerialNumber, rMsg->m_uiMeaasgeID);
     lock_msg.unlock();
 #endif
 #ifdef WIN_OS
@@ -124,6 +125,8 @@ VOID CMessageQueue::handleMessageQueue()
                 break;
             } else {
                 m_pEventData = m_iMsgQueue.front();
+                ALOGD("CMessageQueue::handleMessageQueue : SerialNumber = %u, MeaasgeID = %u vvvvvvvvvvvvvvv\n",
+                        m_pEventData->m_uiSerialNumber, m_pEventData->m_uiMeaasgeID);
              //   mEventQueue.pop();
                 if( m_pHandler )
                 {

@@ -337,13 +337,15 @@ VOID StateMachine::TransitionTo(shared_ptr<State> destState) const
 
 VOID StateMachine::SendMessage(MessageForQueue* msg) const
 {
+    static UInt32 s_messageSerialNumber = 0;
     if (nullptr == m_pStateMachineHandler)  {
-        ALOGE("m_pStateMachineHandler is null, can not SendMessage !!!!!! \n");
+        ALOGE("m_pStateMachineHandler is null, can not SendMessage , SerialNumber = %u do not push into messageQueue !!!!!! \n", s_messageSerialNumber);
         return;
     }
 
     //the only way to send message to statemachine.  for debugging easily.
-    ALOGI("msg->m_uiMeaasgeID = %d, msg->m_strArgs = %s \n", msg->m_uiMeaasgeID, (msg->m_strArgs).c_str());
+    msg->m_uiSerialNumber = s_messageSerialNumber++;
+    ALOGI("StateMachine::SendMessage : SerialNumber = %u,  msg->m_uiMeaasgeID = %u, msg->m_strArgs = %s \n", msg->m_uiSerialNumber, msg->m_uiMeaasgeID, (msg->m_strArgs).c_str());
     m_pStateMachineHandler->m_pStateMachineLooper->pushMessage(msg);
 }
 

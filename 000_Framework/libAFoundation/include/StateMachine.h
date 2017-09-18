@@ -154,7 +154,7 @@ private:
 
     private:
         enum {
-            eMessageType_SM_INIT_COMPLETE = 0x6,
+            eMessageType_SM_INIT_COMPLETE = 0x0,
         };
 
         /** Top of mStateStack */

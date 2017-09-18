@@ -39,7 +39,7 @@ namespace ADASManager {
 #define DEFAULT_PIXEL_FORMAT V4L2_PIX_FMT_YUYV
 #define NB_BUFFER 10
 
-#define AllocBufferCount 10
+#define AllocBufferCount 5
 
 struct VideoInfo {
     struct v4l2_capability cap;

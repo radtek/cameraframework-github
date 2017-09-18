@@ -80,8 +80,6 @@ V4L2CameraDriverProvider::V4L2CameraDriverProvider(const string& cameraName, eIo
         ALOGE("calloc failed\n");
     }
 
-    ALOGE("***********************************************************************\n");
-
     if(m_displaySample == nullptr) {
         m_displaySample = new DisplaySample();
     }
