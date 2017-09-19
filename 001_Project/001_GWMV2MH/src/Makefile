@@ -26,12 +26,14 @@ SRCS       += $(wildcard $(SRC_PATH)/*.cpp  \
 OBJS       := $(SRCS:.cpp=.o)
 
 ## need libs, add at here
-LIBS :=  AFoundation
+LIBS := AFoundation
 LIBS += ABase
 LIBS += ACaseSocket
 LIBS += wayland-client
 LIBS += wayland-egl
+LIBS += wayland-cursor
 LIBS += GLESv2 EGL
+LIBS += ivi-application
 
 ## used headers  file path
 INCLUDE_PATH :=  ../include
