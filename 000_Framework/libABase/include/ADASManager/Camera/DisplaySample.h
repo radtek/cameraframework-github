@@ -3,7 +3,7 @@
 #ifndef __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_CAMERA_DISPLAYSAMPLE_H__
 #define __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_CAMERA_DISPLAYSAMPLE_H__
 
-#include "config.h"
+#include "external/config.h"
 
 #include <stdint.h>
 #include <stdio.h>
@@ -26,15 +26,15 @@
 
 #include <sys/types.h>
 #include <unistd.h>
-#include "ivi-application-client-protocol.h"
+#include "external/ivi-application-client-protocol.h"
 
 #define RVC_SURFACE_ID 50
 #define GUAIDlINE_SURFACE_ID 51
 #define PAS_SURFACE_ID 52
 
-#include "shared/helpers.h"
-#include "shared/platform.h"
-#include "shared/weston-egl-ext.h"
+#include "external/shared/helpers.h"
+#include "external/shared/platform.h"
+#include "external/shared/weston-egl-ext.h"
 
 using namespace std;
 
