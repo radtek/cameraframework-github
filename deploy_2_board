@@ -3,6 +3,7 @@
 sudo scp ./004_ToBoard/camera_setup.sh   root@10.80.105.48://
 sudo scp ./004_ToBoard/ar1043_vc_test.sh   root@10.80.105.48://usr/bin
 sudo scp ./004_ToBoard/yavta ./004_ToBoard/yavtaAdas ./004_ToBoard/media-ctl  root@10.80.105.48://usr/bin/
+sudo scp ./004_ToBoard/adas  root@10.80.105.48://usr/bin/
 sudo scp ./004_ToBoard/libmediactl.so.0.0.0     root@10.80.105.48://usr/lib/
 sudo scp ./004_ToBoard/libv4l2subdev.so.0.0.0    root@10.80.105.48://usr/lib/
 
