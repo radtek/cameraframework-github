@@ -148,7 +148,7 @@ main() {
 
 	rm -rf stream*
 
-	yavta -w "0x00981982 1" $(media-ctl -e "Intel IPU4 CSI-2 $CSI_PORT")
+	#yavta -w "0x00981982 1" $(media-ctl -e "Intel IPU4 CSI-2 $CSI_PORT")
 
 	media-ctl -r
 
@@ -219,9 +219,10 @@ main() {
 		fi
 
 		#yavta --data-prefix -B capture -u $DISP_OPT -c$FRAME_COUNT -n$BUFFER_NR -I -s${RES[j]} $FILE_OPT -f ${FMTS_YAVTA[j]} $dev_node_stream &
-		yavta -u -c$FRAME_COUNT -n$BUFFER_NR -I -s${RES[j]} $FILE_OPT -f ${FMTS_YAVTA[j]} $dev_node_stream &
+		#yavta -u -c$FRAME_COUNT -n$BUFFER_NR -I -s${RES[j]} $FILE_OPT -f ${FMTS_YAVTA[j]} $dev_node_stream &
 		#yavta --data-prefix -B capture -u -c$FRAME_COUNT -n$BUFFER_NR -I -s${RES[j]} $FILE_OPT -f ${FMTS_YAVTA[j]} $dev_node_stream &
 		#yavta --skip 195 -u -c200 -n4 -I -s${RES[j]} -F -f ${FMTS_YAVTA[j]}  $dev_node_stream &
+		#adas
 
 	done
 
