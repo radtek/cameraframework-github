@@ -1,6 +1,7 @@
 
 #include "ADASManager/Camera/DisplaySample.h"
 #include "CameraDisplayTypeDefine.h"
+#include "TraceMacros.h"
 
 namespace Harman {
 namespace Adas {
@@ -53,7 +54,7 @@ DisplaySample::DisplaySample()
 
 DisplaySample::~DisplaySample()
 {
-    fprintf(stderr, "rvc exiting\n");
+    ALOGD("rvc exiting\n");
 
     destroy_surface(&m_Window);
     fini_egl(&m_Display);
@@ -71,7 +72,7 @@ DisplaySample::~DisplaySample()
     wl_registry_destroy(m_Display.registry);
     wl_display_flush(m_Display.display);
     wl_display_disconnect(m_Display.display);
-    fprintf(stderr, "simple-egl exiting OK\n");
+    ALOGD("simple-egl exiting OK\n");
 }
 
 void DisplaySample::Init()
@@ -164,7 +165,7 @@ void DisplaySample::init_egl(struct display *display, struct window *window)
     }
     free(configs);
     if (display->egl.conf == NULL) {
-        fprintf(stderr, "did not find config with buffer size %d\n",
+        ALOGE("did not find config with buffer size %d\n",
             window->buffer_size);
         exit(EXIT_FAILURE);
     }
@@ -191,7 +192,7 @@ void DisplaySample::init_egl(struct display *display, struct window *window)
     }
 
     if (display->swap_buffers_with_damage)
-        printf("has EGL_EXT_buffer_age and %s\n", swap_damage_ext_to_entrypoint[i].extension);
+        ALOGD("has EGL_EXT_buffer_age and %s\n", swap_damage_ext_to_entrypoint[i].extension);
 
 }
 
@@ -267,7 +268,7 @@ void DisplaySample::create_ivi_surface(struct window *window, struct display *di
                            RVC_SURFACE_ID, window->surface);
 
     if (window->ivi_surface == NULL) {
-        fprintf(stderr, "Failed to create ivi_client_surface\n");
+        ALOGE("Failed to create ivi_client_surface\n");
         abort();
     }
 

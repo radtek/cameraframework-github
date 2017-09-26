@@ -523,20 +523,20 @@ ECode V4L2CameraDriverProvider::InitDevice()
     fmt.fmt.pix.priv = V4L2_PIX_FMT_PRIV_MAGIC;
     fmt.fmt.pix.flags = 0;
 
-    printf("=====video_set_format======fmt.fmt.pix.width=%d\n",fmt.fmt.pix.width);
-    printf("=====video_set_format======fmt.fmt.pix.height=%d\n",fmt.fmt.pix.height);
-    printf("=====video_set_format======fmt.fmt.pix.pixelformat=%d\n",fmt.fmt.pix.pixelformat);
-    printf("=====video_set_format======fmt.fmt.pix.field=%d\n",fmt.fmt.pix.field);
-    printf("=====video_set_format======fmt.fmt.pix.bytesperline=%d\n",fmt.fmt.pix.bytesperline);
-    printf("=====video_set_format======fmt.fmt.pix.sizeimage=%d\n",fmt.fmt.pix.sizeimage);
-    printf("=====video_set_format======fmt.fmt.pix.flags=%d\n",fmt.fmt.pix.flags);
+    ALOGD("=====video_set_format======fmt.fmt.pix.width=%d\n",fmt.fmt.pix.width);
+    ALOGD("=====video_set_format======fmt.fmt.pix.height=%d\n",fmt.fmt.pix.height);
+    ALOGD("=====video_set_format======fmt.fmt.pix.pixelformat=%d\n",fmt.fmt.pix.pixelformat);
+    ALOGD("=====video_set_format======fmt.fmt.pix.field=%d\n",fmt.fmt.pix.field);
+    ALOGD("=====video_set_format======fmt.fmt.pix.bytesperline=%d\n",fmt.fmt.pix.bytesperline);
+    ALOGD("=====video_set_format======fmt.fmt.pix.sizeimage=%d\n",fmt.fmt.pix.sizeimage);
+    ALOGD("=====video_set_format======fmt.fmt.pix.flags=%d\n",fmt.fmt.pix.flags);
 
     if(-1 == xioctl(m_iFd, VIDIOC_S_FMT, &fmt)){
         ALOGE("VIDIOC_S_FMT error");
         return -1;
     }
 
-    printf("+++++++++++++++++Video format set: %s (%08x) %ux%u (stride %u) field %s buffer size %u\n",
+    ALOGD("+++++++++++++++++Video format set: %s (%08x) %ux%u (stride %u) field %s buffer size %u\n",
             v4l2_format_name(fmt.fmt.pix.pixelformat), fmt.fmt.pix.pixelformat,
             fmt.fmt.pix.width, fmt.fmt.pix.height, fmt.fmt.pix.bytesperline,
             v4l2_field_name((enum v4l2_field)fmt.fmt.pix.field),
@@ -614,13 +614,13 @@ VOID V4L2CameraDriverProvider::ShowInfo()
         ALOGE("VIDIOC_QUERYCAP failed (%d)\n", ret);
     }
     // Print capability infomations
-    printf("Capability Informations:----------------------------\n");
-    printf(" driver: %s\n", cap.driver);
-    printf(" card: %s\n", cap.card);
-    printf(" bus_info: %s\n", cap.bus_info);
-    printf(" version: %08X\n", cap.version);
-    printf(" capabilities: %08X\n", cap.capabilities);
-    printf("\n");
+    ALOGD("Capability Informations:----------------------------\n");
+    ALOGD(" driver: %s\n", cap.driver);
+    ALOGD(" card: %s\n", cap.card);
+    ALOGD(" bus_info: %s\n", cap.bus_info);
+    ALOGD(" version: %08X\n", cap.version);
+    ALOGD(" capabilities: %08X\n", cap.capabilities);
+    ALOGD("\n");
 
 
     // 获取视频格式
@@ -634,36 +634,36 @@ VOID V4L2CameraDriverProvider::ShowInfo()
         ALOGE("VIDIOC_G_FMT failed (%d)\n", ret);
     }
     // Print Stream Format
-    printf("\n\nStream Format Informations:---------------------\n");
-    printf(" type: %d\n", fmt.type);
-    printf(" width: %d\n", fmt.fmt.pix.width);
-    printf(" height: %d\n", fmt.fmt.pix.height);
+    ALOGD("\n\nStream Format Informations:---------------------\n");
+    ALOGD(" type: %d\n", fmt.type);
+    ALOGD(" width: %d\n", fmt.fmt.pix.width);
+    ALOGD(" height: %d\n", fmt.fmt.pix.height);
     char fmtstr[8];
     memset(fmtstr, 0, 8);
     memcpy(fmtstr, &fmt.fmt.pix.pixelformat, 4);
-    printf(" pixelformat: %s\n", fmtstr);
-    printf(" field: %d\n", fmt.fmt.pix.field);
-    printf(" bytesperline: %d\n", fmt.fmt.pix.bytesperline);
-    printf(" sizeimage: %d\n", fmt.fmt.pix.sizeimage);
-    printf(" colorspace: %d\n", fmt.fmt.pix.colorspace);
-    printf(" priv: %d\n", fmt.fmt.pix.priv);
-    printf(" raw_date: %s\n", fmt.fmt.raw_data);
-    printf("\n");
+    ALOGD(" pixelformat: %s\n", fmtstr);
+    ALOGD(" field: %d\n", fmt.fmt.pix.field);
+    ALOGD(" bytesperline: %d\n", fmt.fmt.pix.bytesperline);
+    ALOGD(" sizeimage: %d\n", fmt.fmt.pix.sizeimage);
+    ALOGD(" colorspace: %d\n", fmt.fmt.pix.colorspace);
+    ALOGD(" priv: %d\n", fmt.fmt.pix.priv);
+    ALOGD(" raw_date: %s\n", fmt.fmt.raw_data);
+    ALOGD("\n");
 
 
     // 查询当前视频设备支持的视频格式：request = VIDIOC_ENUM_FMT
     // int ioctl(int fd, int request, struct v4l2_fmtdesc *argp);
-    printf("\n");
+    ALOGD("\n");
     struct v4l2_fmtdesc fmtdesc;
     fmtdesc.index=0;
     fmtdesc.type=V4L2_BUF_TYPE_VIDEO_CAPTURE;   //V4L2_BUF_TYPE_VIDEO_CAPTURE V4L2_BUF_TYPE_VIDEO_OUTPUT  V4L2_BUF_TYPE_VIDEO_OVERLAY
-    printf("Support format:------------------------------------\n");
+    ALOGD("Support format:------------------------------------\n");
     while(ioctl(m_iFd, VIDIOC_ENUM_FMT, &fmtdesc) != -1)
     {
-        printf("\t%d.%s\n",fmtdesc.index+1,fmtdesc.description);
+        ALOGD("\t%d.%s\n",fmtdesc.index+1,fmtdesc.description);
         fmtdesc.index++;
     }
-    printf("\n");
+    ALOGD("\n");
 
     return;
 }

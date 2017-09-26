@@ -2,6 +2,7 @@
  */
 #include "PaintImpl.h"
 #include "CameraDisplayTypeDefine.h"
+#include "TraceMacros.h"
 
 PaintImpl::PaintImpl()
 {
@@ -14,7 +15,7 @@ PaintImpl::~PaintImpl()
 
 VOID PaintImpl::init()
 {
-    printf("xiaole---debug PaintImpl| init\n");
+    ALOGD("xiaole---debug PaintImpl| init\n");
     initShader();
     // initEGL();
 }
@@ -76,7 +77,7 @@ BYTE* PaintImpl::UYVY_PackedFormat2PlanarFormat(VOID* buffer, Int32 width, Int32
 
 VOID PaintImpl::update(Int32 width, Int32 height, VOID* buffer)
 {
-    printf("xiaole---debug update, buffer=%p,  width=%d, height=%d\n", buffer, width, height);
+    ALOGD("xiaole---debug update, buffer=%p,  width=%d, height=%d\n", buffer, width, height);
     if(buffer == NULL) {
         return;
     }
@@ -87,13 +88,13 @@ VOID PaintImpl::update(Int32 width, Int32 height, VOID* buffer)
     plane[0] = UYVY_PackedFormat2PlanarFormat(buffer, width, height);
     plane[1] = plane[0] + width*height;
     plane[2] = plane[1] + (width*height >> 1);
-    printf("xiaole---debug update ok\n");
+    ALOGD("xiaole---debug update ok\n");
 }
 
 VOID PaintImpl::draw()
 {
     glViewport(0, 0, m_width, m_height);
-    printf("xiaole---debug draw1, width =%d, height=%d\n",m_width, m_height);
+    ALOGD("xiaole---debug draw1, width =%d, height=%d\n",m_width, m_height);
     glClearColor(0.0,0.0,0.0,1.0);
     glClear(GL_COLOR_BUFFER_BIT);
     //glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -115,7 +116,7 @@ VOID PaintImpl::draw()
     glUniform1i(textureUniformV, 2);
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    printf("xiaole---debug draw  ok\n");
+    ALOGD("xiaole---debug draw  ok\n");
 }
 
 
@@ -135,7 +136,7 @@ VOID PaintImpl::shutDown()
 
 Int32 PaintImpl::initShader()
 {
-    printf("xiaole---debug PaintImpl| initShader\n");
+    ALOGD("xiaole---debug PaintImpl| initShader\n");
     GLbyte vShaderStr[] =
             "attribute vec4 vertexIn; \n"
             "attribute vec2 textureIn; \n"
@@ -241,7 +242,7 @@ Int32 PaintImpl::initShader()
 
 GLuint PaintImpl::esLoadProgram ( const char *vertShaderSrc, const char *fragShaderSrc )
 {
-   printf("xiaole---debug PaintImpl| esLoadProgram\n");
+   ALOGD("xiaole---debug PaintImpl| esLoadProgram\n");
    GLuint vertexShader;
    GLuint fragmentShader;
    GLuint programObjectTmp;
@@ -286,7 +287,7 @@ GLuint PaintImpl::esLoadProgram ( const char *vertShaderSrc, const char *fragSha
 
          glGetProgramInfoLog ( programObjectTmp, infoLen, NULL, infoLog );
 
-         printf("PROGRAM: %s\n", infoLog);
+         ALOGD("PROGRAM: %s\n", infoLog);
          free ( infoLog );
       }
 
@@ -304,7 +305,7 @@ GLuint PaintImpl::esLoadProgram ( const char *vertShaderSrc, const char *fragSha
 
 GLuint PaintImpl::loadShader(GLenum type, const char *shaderSrc)
 {
-    printf("xiaole---debug PaintImpl| loadShader\n");
+    ALOGD("xiaole---debug PaintImpl| loadShader\n");
     GLuint shader;
     GLint compiled;
     shader = glCreateShader(type);
@@ -324,7 +325,7 @@ GLuint PaintImpl::loadShader(GLenum type, const char *shaderSrc)
             char* infoLog = static_cast<char*>(malloc(sizeof(char) * infoLen));
             if (infoLog  != NULL) {
                 glGetShaderInfoLog(shader, infoLen, NULL, infoLog);
-                printf("SHADER %d: %s\n", type, infoLog);
+                ALOGD("SHADER %d: %s\n", type, infoLog);
                 free(infoLog);
              }
         }
