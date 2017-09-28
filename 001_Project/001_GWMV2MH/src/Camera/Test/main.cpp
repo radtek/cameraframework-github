@@ -12,52 +12,9 @@ using namespace std;
 
 using Harman::Adas::AFramework::AFoundation::StateMachine;
 using Harman::Adas::AFramework::AFoundation::Observer;
-//using Harman::Adas::AFramework::AFoundation::tagBaseMessage;
+using Harman::Adas::AFramework::AFoundation::EpollGPIO;
 using Harman::Adas::AProject::GWMV2MH::Camera::CameraHubGWMv2;
 using Harman::Adas::AProject::GWMV2MH::Camera::CameraStateMachineGWMv2;
-
-/*************************** test  stateMachine ************************************/
-// int main(int argc, char** argv) {
-
-//     //print platfrom category here
-//     PRINT_APP_OS_TYPE;
-
-//     cout << endl;
-//     cout << endl;
-//     cout << endl;
-
-//     //new a real staemachine . eg:CameraStateMachine which extends from StateMachine(abstract class)
-//     string stateMachineName{"CameraStateMachineGWMv2"};
-//     shared_ptr<StateMachine> stateMachine = make_shared<CameraStateMachineGWMv2>(stateMachineName);
-
-//     //creat a message(reverseGear) which will be sended to statemachine.  processed by statemachine or sub-clsss of State(abstract class).
-//     string reverseGear{"TcuTgsLever7"};
-//     shared_ptr<tagBaseMessage> reverseGearMessage = make_shared<tagBaseMessage>(7 /*reverseGear*/, 2 /*not used now*/, const_cast<char*>(reverseGear.c_str() /*not used now*/));
-//     stateMachine->SendMessage(reverseGearMessage);
-
-//     //slee 3 seconds
-//     sleep(3);
-
-//     //creat a message(parkGear) which will be sended to statemachine.  processed by statemachine or sub-clsss of State(abstract class).
-//     string parkGear{"TcuTgsLever8"};
-//     shared_ptr<tagBaseMessage> parkGearMessage = make_shared<tagBaseMessage>(8 /*parkGear*/, 2 /*not used now*/, const_cast<char*>(parkGear.c_str() /*not used now*/));
-//     stateMachine->SendMessage(parkGearMessage);
-
-//     sleep(1);
-
-//     string reverseGear2{"TcuTgsLever7"};
-//     shared_ptr<tagBaseMessage> reverseGearMessage2 = make_shared<tagBaseMessage>(7 /*reverseGear*/, 2 /*not used now*/, const_cast<char*>(reverseGear2.c_str() /*not used now*/));
-//     stateMachine->SendMessage(reverseGearMessage2);
-
-//     //main thread wait here
-//     getchar();
-
-//     return 0;
-// }
-
-
-
-/*************************** test  CameraHub ************************************/
 
 class FakeRVC : public Observer
 {
@@ -74,52 +31,11 @@ public:
         // m_CamerasState[RIGHTCAMERANAME] = m_pRightCamera->GetCameraState();
         // ALOGI("FakeRVC : init : %s with state : %d !!!\n", RIGHTCAMERANAME, m_CamerasState[RIGHTCAMERANAME]);
 
-        ALOGI("FakeRVC : OpenCamera\n");
-
-        m_pReserveCamera->OpenCamera();
-        //m_pRightCamera->OpenCamera();
-
-        ALOGI("FakeRVC : StartCapture\n");
-
-        m_pReserveCamera->StartCapture();
-        //m_pRightCamera->StartCapture();
-
-        //sleep(15);  //because sleep 500ms in state machine for test ,so just bigger than 500ms
-
-        while(1) {
-            sleep(3);
-            m_pReserveCamera->StartCapture();
-        };
-
-        // m_pReserveCamera->StopCapture();
-        // //m_pRightCamera->StopCapture();
-
-        // //ALOGI("FakeRVC : CloseCamera\n");
-        // //m_pReserveCamera->CloseCamera();
-        // //m_pRightCamera->CloseCamera();
-
-        // sleep(4);
-
-        // m_pReserveCamera->StartCapture();
-
-        // sleep(10);
-
-        m_pReserveCamera->CloseCamera();
+        m_pEp = new EpollGPIO(string("epoll gpio"), 465, makeFunctor(this, &FakeRVC::GPIOcallback));
+        m_pEp->start();
     }
 
     VOID Update(Subject* subject, Int32 status) {
-        // if(subject->GetSubjectName().compare(FRONTCAMERANAME) == 0){
-        //     ALOGI("m_CamerasState Update by : %s with state : %d !!!\n", FRONTCAMERANAME, status);
-        // } else if (subject->GetSubjectName().compare(RESERVECAMERANAME) == 0){
-        //     ALOGI("m_CamerasState Update by : %s with state : %d !!!\n", RESERVECAMERANAME, status);
-        // } else if (subject->GetSubjectName().compare(LEFTCAMERANAME) == 0){
-        //     ALOGI("m_CamerasState Update by : %s with state : %d !!!\n", LEFTCAMERANAME, status);
-        // } else if (subject->GetSubjectName().compare(RIGHTCAMERANAME) == 0){
-        //     ALOGI("m_CamerasState Update by : %s with state : %d !!!\n", RIGHTCAMERANAME, status);
-        // } else {
-        //     ALOGE("m_CamerasState Update by unknow camera with state : %d !!!\n", status);
-        // }
-
         ALOGI("m_CamerasState Update by : %s with state : %d !!!\n", subject->GetSubjectName().c_str(), status);
 
         m_CamerasState[subject->GetSubjectName()] = status;
@@ -128,14 +44,43 @@ public:
     ~FakeRVC() {
         m_pHub->CancelSubscribeToReserveCamera(this);
         //m_pHub->CancelSubscribeToRightCamera(this);
+
+        if(m_pEp != nullptr) {
+            delete m_pEp;
+            m_pEp = nullptr;
+        }
+
+
+    }
+
+    VOID GPIOcallback(unsigned int v) {
+        printf("======================================v = %u\n", v);
+
+        // if(v == 1) {
+        //     // printf("FakeRVC : OpenCamera\n");
+        //     // m_pReserveCamera->OpenCamera();
+
+        //     printf("FakeRVC : StartCapture\n");
+        //     m_pReserveCamera->StartCapture();
+        // } else if (v == 0) {
+        //     printf("FakeRVC : StopCapture\n");
+        //     m_pReserveCamera->StopCapture();
+
+        //     // printf("FakeRVC : CloseCamera\n");
+        //     // m_pReserveCamera->CloseCamera();
+        // } else {
+        //     printf("FakeRVC : ERROR\n");
+        // }
     }
 
 private:
     map<string, Int32> m_CamerasState;
     CameraHub* m_pHub;
 
-    Camera* m_pReserveCamera;
+    Camera* m_pReserveCamera = nullptr;
     //Camera* m_pRightCamera;
+
+    EpollGPIO* m_pEp = nullptr;
 };
 
 int main(int argc, char** argv) {
@@ -152,7 +97,10 @@ int main(int argc, char** argv) {
     //main thread wait here
     getchar();
 
-    delete o;
+    if(o != nullptr) {
+        delete o;
+        o = nullptr;
+    }
 
     return 0;
 }

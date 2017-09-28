@@ -26,12 +26,12 @@ VOID Epoller::Create(Int32 max_connections)
     // 所以在使用完epoll后，必须调用close() 关闭，否则可能导致fd被耗尽。
     m_iEpollFd = epoll_create(m_iMaxConnections + 1);
 
-    if(m_pPevs != NULL)
+    if(m_pEvents != NULL)
     {
-        delete[] m_pPevs;
+        delete[] m_pEvents;
     }
 
-    m_pPevs = new epoll_event[m_iMaxConnections + 1];
+    m_pEvents = new epoll_event[m_iMaxConnections + 1];
 }
 
 VOID Epoller::Add(Int32 fd, long long data, __uint32_t event)
@@ -58,24 +58,25 @@ Int32 Epoller::Wait(Int32 millsecond)
      *  参数 timeout 是超时时间（毫秒，0会立即返回，-1将不确定，也有说法说是永久阻塞）,
      *  该函数返回需要处理的事件数目，如返回0表示已超时。
      */
-    return epoll_wait(m_iEpollFd , m_pPevs , m_iMaxConnections + 1, millsecond);
+    return epoll_wait(m_iEpollFd , m_pEvents , m_iMaxConnections + 1, millsecond);
 }
 
 struct epoll_event& Epoller::Get(Int32 i)
 {
-    assert(m_pPevs != 0);
-    return m_pPevs[i];
+    assert(m_pEvents != 0);
+    return m_pEvents[i];
 }
 
 VOID Epoller::Ctrl(Int32 fd, long long data, __uint32_t events, Int32 op)
 {
     struct epoll_event ev;
-    ev.data.u64 = data;
+    //ev.data.u64 = data;
     if(m_bEt) {
         ev.events = events | EPOLLET ;
     } else {
         ev.events = events;
     }
+    ev.data.fd = fd;
 
     /*
      *  int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event);

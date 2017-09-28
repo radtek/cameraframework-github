@@ -31,7 +31,7 @@ public:
     */
     Epoller(BOOLEAN bEt = TRUE)
         : m_iEpollFd(-1)
-        , m_pPevs(nullptr)
+        , m_pEvents(nullptr)
         , m_bEt(bEt)
         , m_iMaxConnections(1024)
     {
@@ -42,10 +42,10 @@ public:
     */
     ~Epoller()
     {
-        if(m_pPevs != NULL)
+        if(m_pEvents != NULL)
         {
-            delete[] m_pPevs;
-            m_pPevs = NULL;
+            delete[] m_pEvents;
+            m_pEvents = NULL;
         }
 
         if(m_iEpollFd > 0)
@@ -119,7 +119,7 @@ protected:
     VOID Ctrl(Int32 fd, long long data, __uint32_t events, Int32 op);
 
 protected:
-
+    friend class EpollGPIO;
     /**
     * epoll
     */
@@ -144,7 +144,7 @@ protected:
      * epoll_data_t data; //User data variable
      * };
      */
-    struct epoll_event *m_pPevs;
+    struct epoll_event *m_pEvents;
 
     /**
     * 是否是ET模式
