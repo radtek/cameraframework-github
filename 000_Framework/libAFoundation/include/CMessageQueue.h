@@ -17,16 +17,14 @@ namespace AFoundation {
 
 class CMessageQueue
 {
-public:    // class enum struct
+public:
     enum EType
     {
         ET_BLOCK        = 0X00000001,
         ET_NONBLOCK     = 0X00000002,
     };
 
-private: // class enum struct
-
-public: // method
+public:
     CMessageQueue(const string& strMsgQueueName, UInt32 uiQueueMaxSize, CMessageHandler* pHandler);
     virtual ~CMessageQueue();
 
@@ -36,15 +34,15 @@ public: // method
     BOOLEAN            isEmpty();
     //virtual VOID  blockHandleMessageQueue();
 
-protected:    // method
+protected:
     VOID    _handleMessageQueue();
 
-private:    // method
+private:
 
-protected:    // data
+protected:
     //BOOLEAN     m_bQuit;
 
-private:    // data
+private:
     string                    m_strMsgQueueName;
     queue<MessageForQueue*>     m_iMsgQueue;
 #ifdef QNX_OS

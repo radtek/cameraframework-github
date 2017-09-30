@@ -72,8 +72,8 @@ namespace AFoundation {
  * #define INFO:    key point log info, include *INFO*    *ERROR*                   log
  * #define ERROR:   error log info,     include *ERROR*                             log
  **************************************************************************************/
-#ifndef    ERROR
-#define ERROR
+#ifndef    DEBUG
+#define DEBUG
 #endif
 //#define __FILENAME__ (strrchr(__FILE__, '/') ? (strrchr(__FILE__, '/') + 1):__FILE__)  std::this_thread::get_id()
 
