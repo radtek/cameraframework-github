@@ -71,13 +71,26 @@ typedef struct
     Int32 y;
 }posXY;
 
-typedef struct 
+typedef struct
 {
     Int32       width;
     Int32       height;
     posXY      viewPos;
     Int32       layer;
 }viewInfo;
+
+typedef enum gpio_value
+{
+    REVERSE_GEAR_HAS_GONE = 0,
+    REVERSE_GEAR_COME_ON = 1,
+
+    REVERSE_GEAR_UNKNOWN_ACTION = 2
+} Enum_Reserve_GPIO_Value;
+
+typedef enum gpio_num
+{
+    REVERSE_GEAR_GPIO_NUM = 465
+} Enum_GPIO_Num;
 
 // } // namespace AFoundation
 // } // namespace AFramework

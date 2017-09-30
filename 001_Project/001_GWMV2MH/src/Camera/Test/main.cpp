@@ -22,70 +22,71 @@ public:
     FakeRVC(const string& name, CameraHub* hub)
         : Observer(name)
         , m_pHub(hub)
+        , m_pEp(nullptr)
     {
         m_pReserveCamera = m_pHub->SubscribeToReserveCamera(this);
-        //m_pRightCamera = m_pHub->SubscribeToRightCamera(this);
 
         m_CamerasState[RESERVECAMERANAME] = m_pReserveCamera->GetCameraState();
         ALOGI("FakeRVC : init : %s with state : %d !!!\n", RESERVECAMERANAME, m_CamerasState[RESERVECAMERANAME]);
-        // m_CamerasState[RIGHTCAMERANAME] = m_pRightCamera->GetCameraState();
-        // ALOGI("FakeRVC : init : %s with state : %d !!!\n", RIGHTCAMERANAME, m_CamerasState[RIGHTCAMERANAME]);
 
-        m_pEp = new EpollGPIO(string("epoll gpio"), 465, makeFunctor(this, &FakeRVC::GPIOcallback));
+        printf("FakeRVC : OpenCamera\n");
+        m_pReserveCamera->OpenCamera();
+
+        m_pEp = new EpollGPIO(string("epoll gpio"), REVERSE_GEAR_GPIO_NUM, makeFunctor(this, &FakeRVC::GPIOcallback));
         m_pEp->start();
     }
 
-    VOID Update(Subject* subject, Int32 status) {
+    VOID Update(Subject* subject, Int32 status) {  // called by statemachine/messageQueue Looper Thread
         ALOGI("m_CamerasState Update by : %s with state : %d !!!\n", subject->GetSubjectName().c_str(), status);
 
         m_CamerasState[subject->GetSubjectName()] = status;
+
+        //tell HMI cameras state
+        //.....
+        //.....
+        //.....
+        //.....
+        //.....
     }
 
     ~FakeRVC() {
+        printf("FakeRVC : CloseCamera\n");
+        m_pReserveCamera->CloseCamera();
+
         m_pHub->CancelSubscribeToReserveCamera(this);
-        //m_pHub->CancelSubscribeToRightCamera(this);
 
         if(m_pEp != nullptr) {
             delete m_pEp;
             m_pEp = nullptr;
         }
-
-
     }
 
-    VOID GPIOcallback(unsigned int v) {
+    VOID GPIOcallback(unsigned int v) { // called by GPIO epoll Thread
         printf("======================================v = %u\n", v);
 
-        // if(v == 1) {
-        //     // printf("FakeRVC : OpenCamera\n");
-        //     // m_pReserveCamera->OpenCamera();
-
-        //     printf("FakeRVC : StartCapture\n");
-        //     m_pReserveCamera->StartCapture();
-        // } else if (v == 0) {
-        //     printf("FakeRVC : StopCapture\n");
-        //     m_pReserveCamera->StopCapture();
-
-        //     // printf("FakeRVC : CloseCamera\n");
-        //     // m_pReserveCamera->CloseCamera();
-        // } else {
-        //     printf("FakeRVC : ERROR\n");
-        // }
+        // do job : OpenCamera/StartCapture/StopCapture/CloseCamera
+        if(v == REVERSE_GEAR_COME_ON) {
+            printf("FakeRVC : GPIO = %u, StartCapture\n", v);
+            m_pReserveCamera->StartCapture();
+        } else if (v == REVERSE_GEAR_HAS_GONE) {
+            printf("FakeRVC : GPIO = %u, StopCapture\n", v);
+            m_pReserveCamera->StopCapture();
+        } else {
+            printf("FakeRVC : GPIO = %u, ERROR\n", v);
+        }
     }
 
 private:
     map<string, Int32> m_CamerasState;
-    CameraHub* m_pHub;
+    CameraHub* m_pHub = nullptr;
 
     Camera* m_pReserveCamera = nullptr;
-    //Camera* m_pRightCamera;
 
     EpollGPIO* m_pEp = nullptr;
 };
 
-int main(int argc, char** argv) {
-
-    //print platfrom category here
+int main(int argc, char** argv)
+{
     PRINT_APP_OS_TYPE;
 
     cout << endl;

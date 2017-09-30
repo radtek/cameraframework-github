@@ -55,11 +55,10 @@ VOID EpollGPIO::update()
             read(m_pEpoll->m_pEvents[i].data.fd, m_cGpiobuf, sizeof(m_cGpiobuf));
             lseek(m_pEpoll->m_pEvents[i].data.fd, 0, SEEK_SET);
 
-            unsigned int valueback = 2;
+            unsigned int valueback = REVERSE_GEAR_UNKNOWN_ACTION;
             GPIO_Get_Value(m_iReserveGearGPIO, &valueback);
             (*m_pFun)(valueback);
 
-            //(*m_pFun)(pData);
             ALOGD("reserveGearGPIO value = %u\n", valueback);
         }
     }
