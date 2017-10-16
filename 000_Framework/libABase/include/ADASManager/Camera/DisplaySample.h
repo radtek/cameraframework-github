@@ -51,15 +51,7 @@ struct display {
 	struct wl_display *display;
 	struct wl_registry *registry;
 	struct wl_compositor *compositor;
-	struct zxdg_shell_v6 *shell;
-	struct wl_seat *seat;
-	struct wl_pointer *pointer;
-	struct wl_touch *touch;
-	struct wl_keyboard *keyboard;
-	struct wl_shm *shm;
-	struct wl_cursor_theme *cursor_theme;
-	struct wl_cursor *default_cursor;
-	struct wl_surface *cursor_surface;
+
 	struct {
 		EGLDisplay dpy;
 		EGLContext ctx;
@@ -87,8 +79,6 @@ struct window {
 	uint32_t benchmark_time, frames;
 	struct wl_egl_window *native;
 	struct wl_surface *surface;
-	struct zxdg_surface_v6 *xdg_surface;
-	struct zxdg_toplevel_v6 *xdg_toplevel;
 	struct ivi_surface *ivi_surface;
 	EGLSurface egl_surface;
 	struct wl_callback *callback;
@@ -113,12 +103,6 @@ public:
 
 	static GLuint create_shader(struct window *window, const char *source, GLenum shader_type);
 
-
-	static void handle_surface_configure(void *data, struct zxdg_surface_v6 *surface, uint32_t serial);
-
-	static void handle_toplevel_configure(void *data, struct zxdg_toplevel_v6 *toplevel, int32_t width, int32_t height, struct wl_array *states);
-
-	static void handle_toplevel_close(void *data, struct zxdg_toplevel_v6 *xdg_toplevel);
 
 	static void handle_ivi_surface_configure(void *data, struct ivi_surface *ivi_surface, int32_t width, int32_t height);
 

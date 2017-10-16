@@ -18,11 +18,6 @@ struct wl_registry_listener DisplaySample::registry_listener = {
     registry_handle_global_remove
 };
 
-
-struct ivi_surface_listener DisplaySample::ivi_surface_listener = {
-    handle_ivi_surface_configure,
-};
-
 struct display DisplaySample::m_Display = { 0 };
 struct window  DisplaySample::m_Window  = { 0 };
 
@@ -59,8 +54,6 @@ DisplaySample::~DisplaySample()
     destroy_surface(&m_Window);
     fini_egl(&m_Display);
 
-    //wl_surface_destroy(m_Display.cursor_surface);
-
     if (m_Display.ivi_application) {
         ivi_application_destroy(m_Display.ivi_application);
     }
@@ -72,7 +65,7 @@ DisplaySample::~DisplaySample()
     wl_registry_destroy(m_Display.registry);
     wl_display_flush(m_Display.display);
     wl_display_disconnect(m_Display.display);
-    ALOGD("simple-egl exiting OK\n");
+    ALOGD("DisplaySample exiting OK\n");
 }
 
 void DisplaySample::Init()
@@ -202,64 +195,6 @@ void DisplaySample::fini_egl(struct display *display)
     eglReleaseThread();
 }
 
-void DisplaySample::handle_toplevel_configure(void *data, struct zxdg_toplevel_v6 *toplevel,
-              int32_t width, int32_t height,
-              struct wl_array *states)
-{
-    struct window *window = (struct window *)data;
-    uint32_t *p;
-
-    window->fullscreen = 0;
-
-    // #define wl_array_for_each(pos, array)
-    // for (pos = (array)->data; (const char *) pos < ((const char *) (array)->data + (array)->size); (pos)++)
-
-
-    // wl_array_for_each(p, states) {
-    //     uint32_t state = *p;
-    //     switch (state) {
-    //     case ZXDG_TOPLEVEL_V6_STATE_FULLSCREEN:
-    //         window->fullscreen = 1;
-    //         break;
-    //     }
-    // }
-
-    if (width > 0 && height > 0) {
-        if (!window->fullscreen) {
-            window->window_size.width = width;
-            window->window_size.height = height;
-        }
-        window->geometry.width = width;
-        window->geometry.height = height;
-    } else if (!window->fullscreen) {
-        window->geometry = window->window_size;
-    }
-
-    if (window->native)
-        wl_egl_window_resize(window->native,
-                     window->geometry.width,
-                     window->geometry.height, 0, 0);
-}
-
-void DisplaySample::handle_toplevel_close(void *data, struct zxdg_toplevel_v6 *xdg_toplevel)
-{
-    running = 0;
-}
-
-void DisplaySample::handle_ivi_surface_configure(void *data, struct ivi_surface *ivi_surface,
-                             int32_t width, int32_t height)
-{
-    struct window *window = (struct window *)data;
-
-    wl_egl_window_resize(window->native, width, height, 0, 0);
-
-    window->geometry.width = width;
-    window->geometry.height = height;
-
-    if (!window->fullscreen)
-        window->window_size = window->geometry;
-}
-
 
 void DisplaySample::create_ivi_surface(struct window *window, struct display *display)
 {
@@ -271,9 +206,6 @@ void DisplaySample::create_ivi_surface(struct window *window, struct display *di
         ALOGE("Failed to create ivi_client_surface\n");
         abort();
     }
-
-    // ivi_surface_add_listener(window->ivi_surface,
-    //              &ivi_surface_listener, window);
 }
 
 void DisplaySample::create_surface(struct window *window)
