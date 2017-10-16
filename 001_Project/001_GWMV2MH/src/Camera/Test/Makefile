@@ -40,6 +40,7 @@ INCLUDE_PATH := ../../../include
 INCLUDE_PATH += ../../../../../000_Framework/libAFoundation/include
 INCLUDE_PATH += ../../../../../000_Framework/libABase/include
 INCLUDE_PATH += ../../../../../000_Framework/libABase/include/external
+INCLUDE_PATH += ../../../../../000_Framework/libABase/include/ADASManager
 
 ## used include librarys file path
 LIBRARY_PATH := ../../../../../000_Framework/libAFoundation/lib/linux
