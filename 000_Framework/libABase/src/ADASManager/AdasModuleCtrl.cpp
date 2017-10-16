@@ -1,3 +1,4 @@
+
 #include "ADASManager/AdasModuleCtrl.h"
 #include "ADASManager/RVC/ARvcBase.h"
 
@@ -9,7 +10,18 @@ namespace ADASManager {
 
 AdasModuleCtrl::~AdasModuleCtrl()
 {
-   ;
+   if(m_mModuleMap.size() > 0)
+    {
+        for(auto iter = m_mModuleMap.begin();
+            iter != m_mModuleMap.end(); ++iter)
+        {
+            ModuleBase* mode = (ModuleBase*)((*iter).second);
+            if(mode != nullptr) {
+                delete mode;
+                mode = nullptr;
+            }
+        }
+    }
 }
 
 AdasModuleCtrl::AdasModuleCtrl()
@@ -58,10 +70,8 @@ a_status AdasModuleCtrl::initialize()
     return OK;
 }
 
-
-
-}
-}
-}
-}
-}
+} // namespace ADASManager
+} // namespace ABase
+} // namespace AFramework
+} // namespace Adas
+} // namespace Harman

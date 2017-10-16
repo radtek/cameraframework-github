@@ -1,10 +1,18 @@
-#ifndef ADAS_MODULE_CTRL_H_
-#define ADAS_MODULE_CTRL_H_
+
+#ifndef __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_ADASMODULECTRL_H__
+#define __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_ADASMODULECTRL_H__
 
 #include "CMessageHandler.h"
 #include "ADASManager/ModuleBase.h"
 
 using namespace Harman::Adas::AFramework::AFoundation;
+
+#define ADAS_MODULE_RVC     string("RVC")
+#define ADAS_MODULE_AVM     string("AVM")
+#define ADAS_MODULE_PAS     string("PAS")
+#define ADAS_MODULE_APA     string("APA")
+#define ADAS_MODULE_SVC     string("SVC")
+#define ADAS_MODULE_COMMON  string("COMMON")
 
 namespace Harman {
 namespace Adas {
@@ -30,7 +38,7 @@ public:
 public:
     AdasModuleCtrl();
     virtual ~AdasModuleCtrl();
-    
+
     a_status initialize();
 
 protected:
@@ -38,21 +46,12 @@ protected:
 
 protected:
     map<UInt32, ModuleBase*> m_mModuleMap;
-
 };
 
+} // namespace ADASManager
+} // namespace ABase
+} // namespace AFramework
+} // namespace Adas
+} // namespace Harman
 
-
-}
-}
-}
-}
-}
-
-
-
-
-
-
-
-#endif
+#endif  // __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_ADASMODULECTRL_H__

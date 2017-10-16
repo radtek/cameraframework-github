@@ -133,8 +133,8 @@ int EpollGPIO::GPIO_Set_Value(unsigned int gpio, unsigned int value)
 
     if (value!=0)
     {
-    int i = write(fd, "1", 2);
-    ALOGD("GPIO-%d value set high\n", gpio);
+        int i = write(fd, "1", 2);
+        ALOGD("GPIO-%d value set high\n", gpio);
     } else {
         write(fd, "0", 2);
         ALOGD("GPIO-%d value set low\n", gpio);

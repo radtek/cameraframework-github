@@ -34,12 +34,14 @@ ${COMMONAPI_LIBDIR}
 
 LINK_DIRECTORIES(${src-gen})
 add_definitions(-DLINUX_OS)
+add_definitions(-D_LOW_LEVEL_VEHICLE_)
 
 include_directories(${PROJECT_SOURCE_DIR}/../../000_Framework/libAFoundation/include)
 include_directories(${PROJECT_SOURCE_DIR}/../../000_Framework/libABase/include)
 include_directories(${PROJECT_SOURCE_DIR}/../../000_Framework/CaseClient/include)
 include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/include/Rvc)
+include_directories(${PROJECT_SOURCE_DIR}/include/Pas)
 include_directories(${PROJECT_SOURCE_DIR}/include/Camera)
 
 
@@ -54,11 +56,12 @@ MESSAGE(STATUS "This is binary ADAS dir " ${PROJECT_SOURCE_DIR})
 AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src MAIN_SRC)
 AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src/Camera CAM_SRC)
 AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src/Rvc RVC_SRC)
+AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src/Pas PAS_SRC)
 
 
 add_executable(
 adas
-${MAIN_SRC} ${CAM_SRC} ${RVC_SRC}
+${MAIN_SRC} ${CAM_SRC} ${RVC_SRC} ${PAS_SRC}
 provides/AVMServiceStubImpl.cpp
 provides/PASServiceStubImpl.cpp
 provides/AdasServiceStubImpl.cpp

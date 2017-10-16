@@ -1,5 +1,4 @@
-/**
- */
+
 #include "PaintImpl.h"
 #include "CameraDisplayTypeDefine.h"
 #include "TraceMacros.h"
@@ -10,7 +9,6 @@ PaintImpl::PaintImpl()
 
 PaintImpl::~PaintImpl()
 {
-
 }
 
 VOID PaintImpl::init()
@@ -122,7 +120,10 @@ VOID PaintImpl::draw()
 
 VOID PaintImpl::shutDown()
 {
-    if(m_TmpBuffer) free(m_TmpBuffer);
+    if(m_TmpBuffer) {
+        free(m_TmpBuffer);
+        m_TmpBuffer = nullptr;
+    }
 
     // Delete texture object
     glDeleteTextures(1, &textureYId);

@@ -1,7 +1,5 @@
-#ifndef RVC_MSGQ_DEFINE_H_
-#define RVC_MSGQ_DEFINE_H_
-
-#define  ADAS_MODULE_RVC    string("RVC")
+#ifndef __RVC_MSGQ_DEFINE_H__
+#define __RVC_MSGQ_DEFINE_H__
 
 enum eRVCEvent
 {
@@ -29,6 +27,4 @@ enum eDiagnosticRVCEvent
     eDiag_ResetCamera,
 };
 
-
-
-#endif
+#endif // __RVC_MSGQ_DEFINE_H__

@@ -1,8 +1,8 @@
 
-#ifndef __HARMAN_ADAS_APROJECT_GWMV2MH_RVCSTUBIMPL_H__
-#define __HARMAN_ADAS_APROJECT_GWMV2MH_RVCSTUBIMPL_H__
+#ifndef __HARMAN_ADAS_APROJECT_GWMV2MH_PASSTUBIMPL_H_
+#define __HARMAN_ADAS_APROJECT_GWMV2MH_PASSTUBIMPL_H_
 
-#include "ADASManager/RVC/ARvcBase.h"
+#include "ADASManager/PAS/APasBase.h"
 
 using namespace std;
 using namespace Harman::Adas::AFramework::ABase::ADASManager;
@@ -12,11 +12,11 @@ namespace Adas {
 namespace AProject {
 namespace GWMV2MH {
 
-class RvcStubImpl : public ARvcBase
+class PasStubImpl : public APasBase
 {
 public:
-    RvcStubImpl(CameraHub* hub);
-    virtual ~RvcStubImpl();
+    PasStubImpl(CameraHub* hub);
+    virtual ~PasStubImpl();
 
 public:
     a_status initialize();
@@ -33,4 +33,4 @@ private:
 } // namespace Adas
 } // namespace Harman
 
-#endif // __HARMAN_ADAS_APROJECT_GWMV2MH_RVCSTUBIMPL_H__
+#endif // __HARMAN_ADAS_APROJECT_GWMV2MH_PASSTUBIMPL_H_

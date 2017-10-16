@@ -1,5 +1,6 @@
-#ifndef ADAS_MODULE_CTRL_IMPL_H_
-#define ADAS_MODULE_CTRL_IMPL_H_
+
+#ifndef __HARMAN_ADAS_APROJECT_GWMV2MH_ADASMODULECTRLIMPL_H__
+#define __HARMAN_ADAS_APROJECT_GWMV2MH_ADASMODULECTRLIMPL_H__
 
 #include "ADASManager/AdasModuleCtrl.h"
 
@@ -13,8 +14,8 @@ namespace GWMV2MH {
 class AdasModuleCtrlImpl : public AdasModuleCtrl
 {
 public:
-    static AdasModuleCtrlImpl*   getInstance();
-    static VOID             deInstance();
+    static AdasModuleCtrlImpl* getInstance();
+    static VOID deInstance();
     virtual ~AdasModuleCtrlImpl();
 
     a_status CreateModules(string moduleTab[], BYTE cameraFlag);
@@ -28,10 +29,9 @@ private:
     static AdasModuleCtrlImpl* m_pInstance;
 };
 
-}//GWMV2MH
-}//AProject
-}//Adas
-}//Harman
+} // namespace GWMV2MH
+} // namespace AProject
+} // namespace Adas
+} // namespace Harman
 
-
-#endif
+#endif // __HARMAN_ADAS_APROJECT_GWMV2MH_ADASMODULECTRLIMPL_H__

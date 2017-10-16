@@ -17,10 +17,9 @@ TARGET     := adasmain
 
 ## get all source files
 SRCS       += $(wildcard $(SRC_PATH)/*.cpp  \
-                                         $(SRC_PATH)/Rvc/*.cpp \
-		             $(SRC_PATH)/Camera/*.cpp \
-		             $(SRC_PATH)/CameraDisplay/*.cpp \
-		             $(SRC_PATH)/overlayWindow/*.cpp)
+					$(SRC_PATH)/Rvc/*.cpp \
+					$(SRC_PATH)/Pas/*.cpp \
+					$(SRC_PATH)/Camera/*.cpp)
 
 ## all .o based on all .c
 OBJS       := $(SRCS:.cpp=.o)
@@ -63,7 +62,7 @@ LDFLAGS += $(foreach lib, $(LIBS), -l$(lib))
 ## c++11 support
 CFLAGS += -Wl,--no-as-needed  -lpthread -std=c++11
 
-CFLAGS += -D LINUX_OS -fPIC -lm -lrt
+CFLAGS += -D LINUX_OS -D _LOW_LEVEL_VEHICLE_ -fPIC -lm -lrt
 
 #CFLAGS += -D__FILENAME__='"$(subst $(dir $<),,$<)"'
 

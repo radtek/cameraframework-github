@@ -33,7 +33,7 @@ namespace ADASManager {
 static const BYTE s_SVC_Map_Cameras = 0x01;  //  0000 0001
 static const BYTE s_RVC_Map_Cameras = 0x04;  //  0000 0100
 static const BYTE s_AVM_Map_Cameras = 0x0F;  //  0000 1111
-static const BYTE s_PAS_Map_Cameras = 0x04;  //  0000 0100
+static const BYTE s_PAS_Map_Cameras = 0x00;  //  0000 0000
 static const BYTE s_APA_Map_Cameras = 0x04;  //  0000 0100
 static const BYTE s_COMMON_Map_Cameras = 0x00;
 static const BYTE s_UNKNOWN_Map_Cameras = 0x00;

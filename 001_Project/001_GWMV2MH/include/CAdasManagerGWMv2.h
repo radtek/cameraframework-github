@@ -1,5 +1,7 @@
-#ifndef _C_ADAS_MANAGER_GWMV2_H_
-#define _C_ADAS_MANAGER_GWMV2_H_
+
+#ifndef __HARMAN_ADAS_APROJECT_GWMV2MH_CADASMANAGERGWMV2_H__
+#define __HARMAN_ADAS_APROJECT_GWMV2MH_CADASMANAGERGWMV2_H__
+
 #include "ADASManager/CAdasManager.h"
 
 using namespace Harman::Adas::AFramework::ABase::ADASManager;
@@ -12,8 +14,8 @@ namespace GWMV2MH {
 class CAdasManagerGWMv2 : public CAdasManager
 {
 public:
-    static CAdasManagerGWMv2* 	getInstance();
-    static VOID				deleteInstance();
+    static CAdasManagerGWMv2* getInstance();
+    static VOID deleteInstance();
     virtual ~CAdasManagerGWMv2();
 
     VOID init();
@@ -23,18 +25,13 @@ public:
 protected:
     CAdasManagerGWMv2();
 
-protected:	// data
-
-private:	// data
-    static CAdasManagerGWMv2*	s_pInstance;
-    //IAdasCtrl*		m_pCtrl;
+private:
+    static CAdasManagerGWMv2* s_pInstance;
 };
 
-}
-}
-}
-}
+} // namespace GWMV2MH
+} // namespace AProject
+} // namespace Adas
+} // namespace Harman
 
-
-#endif /* _CADAS_MANAGER_H_ */
-
+#endif // __HARMAN_ADAS_APROJECT_GWMV2MH_CADASMANAGERGWMV2_H__

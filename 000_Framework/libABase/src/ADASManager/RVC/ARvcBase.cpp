@@ -8,9 +8,9 @@ namespace ABase {
 namespace ADASManager {
 
 ARvcBase::ARvcBase(CameraHub* hub)
-    :m_bRvcAvailable(FALSE)
-    ,m_pModuleHub(hub)
-    ,Observer("RVC")
+    : m_bRvcAvailable(FALSE)
+    , m_pModuleHub(hub)
+    , Observer("RVC")
 {
     m_mMapRvcFunc.clear();
     m_pRearCamera = (Camera*)m_pModuleHub->SubscribeToReserveCamera(this);
@@ -23,6 +23,8 @@ ARvcBase::~ARvcBase()
     {
         (*it).second->release();
     }
+
+    m_pModuleHub->CancelSubscribeToReserveCamera(this);
 }
 
 
@@ -43,8 +45,8 @@ VOID ARvcBase::onHandle(UInt32 uiEventID, const string& pData)
 
 a_status ARvcBase::registerFunc(UInt32 eventID, CFunctor* pFunctor)
 {
-   ALOGD("ARvcBase::registerFunc\n");
-   m_mMapRvcFunc.insert(makePair(eventID, pFunctor));
+    ALOGD("ARvcBase::registerFunc\n");
+    m_mMapRvcFunc.insert(makePair(eventID, pFunctor));
 }
 
 a_status ARvcBase::initialize()
@@ -54,7 +56,6 @@ a_status ARvcBase::initialize()
 
 VOID  ARvcBase::afterHandleMessageQueue()
 {
-
 }
 
 a_status ARvcBase::isModuleAvailabel()
@@ -64,18 +65,17 @@ a_status ARvcBase::isModuleAvailabel()
 
 VOID ARvcBase::updateModuleState()
 {
-
 }
 
 VOID ARvcBase::Update(Subject* subject, Int32 state)
 {
-    ALOGI("Update  | subject name[%s] state[%d]\n",  
-                subject->GetSubjectName().c_str(), 
+    ALOGI("Update  | subject name[%s] state[%d]\n",
+                subject->GetSubjectName().c_str(),
                 state);
 }
 
-}//ADASManager
-}//ABase
-}//AFramework
-}//Adas
-}//Harman
+} // namespace ADASManager
+} // namespace ABase
+} // namespace AFramework
+} // namespace Adas
+} // namespace Harman
