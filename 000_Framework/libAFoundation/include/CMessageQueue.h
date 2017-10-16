@@ -38,25 +38,12 @@ protected:
     VOID    _handleMessageQueue();
 
 private:
-
-protected:
-    //BOOLEAN     m_bQuit;
-
-private:
     string                    m_strMsgQueueName;
     queue<MessageForQueue*>     m_iMsgQueue;
-#ifdef QNX_OS
-    pthread_mutex_t mEventlockMutex;
-    pthread_cond_t  mWaitEventCondVar;
-#endif
-#ifdef LINUX_OS
+
     mutex mEventlockMutex;
     condition_variable  mWaitEventCondVar;
-#endif
-#ifdef WIN_OS
-    Poco::Mutex mEventlockMutex;
-    //std::condition_variable  mWaitEventCondVar;
-#endif
+
     MessageForQueue* m_pEventData;
 
     CMessageHandler* m_pHandler;

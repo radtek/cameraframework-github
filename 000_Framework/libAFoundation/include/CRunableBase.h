@@ -37,15 +37,7 @@ public:
     virtual VOID CBPause();
 
 private:
-#ifdef QNX_OS
-    pthread_t m_hThread;
-#endif
-#ifdef LINUX_OS
     thread m_hThread;
-#endif
-#ifdef WIN_OS
-    Poco::Thread* m_hThread;
-#endif
     BOOLEAN m_bQuit ;
     CEvent* m_pevent;
     string m_strThreadName ;
