@@ -24,7 +24,6 @@ OBJS3       = $(patsubst %.cpp,%.o,$(SRCS3))
 
 OBJS = $(OBJS1) $(OBJS2) $(OBJS3)
 
-
 ## need libs, add at here
 LIBS := AFoundation
 LIBS += ABase
@@ -34,6 +33,10 @@ LIBS += wayland-egl
 LIBS += wayland-cursor
 LIBS += GLESv2 EGL
 LIBS += ivi-application
+LIBS += lodepng
+LIBS += ilmCommon
+LIBS += ilmClient
+LIBS += ilmControl
 
 ## used headers  file path
 INCLUDE_PATH := ../../../include
@@ -46,6 +49,7 @@ INCLUDE_PATH += ../../../../../000_Framework/libABase/include/ADASManager
 LIBRARY_PATH := ../../../../../000_Framework/libAFoundation/lib/linux
 LIBRARY_PATH += ../../../../../000_Framework/libABase/lib/linux
 LIBRARY_PATH += ../../../../../000_Framework/CaseClient/lib/linux
+LIBRARY_PATH += .
 #LIBRARY_PATH += ~/install/lib
 
 ## debug for debug info, when use gdb to debug

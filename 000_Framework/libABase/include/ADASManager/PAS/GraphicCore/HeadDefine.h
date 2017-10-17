@@ -1,12 +1,15 @@
-#ifndef _HEAD_DEFINE_H__
-#define _HEAD_DEFINE_H__
 
-#include "../core/TraceMacros.h"
+#ifndef __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_HEADDEFINE_H__
+#define __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_HEADDEFINE_H__
+
+#include "TraceMacros.h"
 #include <string>
 #include <sstream>
 #include <fstream>
 #include <iostream>
+
 using namespace std;
+
 //2 circle
 //4 debug line
 #define LINE_PTN_NUM 300
@@ -15,7 +18,7 @@ using namespace std;
 #define CFG_PATH  "/usr/share/pdcusr.cfg"
 
 typedef struct _planesData{
-	char* tex; 
+	char* tex;
 	float* pBorderData;//two for vertex and two for TEXCOORD,so stride is 4
 	float* pArrayData;//two for vertex and two for TEXCOORD,so stride is 4
 	unsigned short* pBorderIndex;
@@ -33,7 +36,6 @@ typedef struct _linesData{
     unsigned short pLinePtElemNum;
 }linesData;
 
-
 typedef struct _groupMap{
 	int planeNum;//total plane number
 	int beginHead;//begin line
@@ -41,7 +43,4 @@ typedef struct _groupMap{
 	int planeSeq[10];// which one or multiple
 } groupMap;
 
-
-
-
-#endif
+#endif // __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_HEADDEFINE_H__

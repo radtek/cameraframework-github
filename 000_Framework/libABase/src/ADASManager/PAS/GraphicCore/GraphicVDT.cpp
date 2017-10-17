@@ -1,4 +1,6 @@
-#include "GraphicVDT.h"
+
+#include "ADASManager/PAS/GraphicCore/GraphicVDT.h"
+
 #include <math.h>
 
 #define VDT_TEX_RED_DAY  0
@@ -29,10 +31,16 @@
 //#define LINE_NUM 2
 //#define LINE_PTN_NUM 60
 
+namespace Harman {
+namespace Adas {
+namespace AFramework {
+namespace ABase {
+namespace ADASManager {
+
 GraphicVDT::GraphicVDT(void)
 {
     m_linetex = (char *)malloc(4*4*4*sizeof(char));
-    
+
     for (int i=0;i<4;i++)
     {
         for (int j=0;j<4;j++)
@@ -44,18 +52,18 @@ GraphicVDT::GraphicVDT(void)
         }
     }
 	//default
-	
+
     vUpdateCarVertex(CAR_POT_LEFTBOTTOM_X,CAR_POT_LEFTBOTTOM_Y,CAR_POT_WIDTH,CAR_POT_HEIGHT);
 
     m_fLineWidth = LINE_WIDTH;
     m_fLineSegmentHeight = LINE_SEGMENT_HEIGHT;
 	m_fScale=1;
-	
+
     m_CarPOT.fVisibleLongLineLength = CAR_POT_LONG_VLENGTH;
     m_CarPOT.fVisibleShortLineLength = CAR_POT_SHORT_VLENGTH;
     m_CarPOT.shortsemi_circle_radius = CAR_POT_SHORT_RADIUS;
     m_CarPOT.long_semi_circle_radius = CAR_POT_LONG_RADIUS;
-	
+
 	m_CarPOT.ftheta_short =R_PI/2; //R_PI/2;
 	m_CarPOT.ftheta_long =R_PI/3; //R_PI/2;
 	m_CarPOT.fTheta_startShortR = 0; //fixed to 0
@@ -81,10 +89,10 @@ GraphicVDT::~GraphicVDT(void)
 }
 void GraphicVDT::vSetStyle(eLineStyle DayNight)
 {
-    if (NULL==m_linetex) 
+    if (NULL==m_linetex)
     {
        printf("set line color failed,GraphicVDT::vSetStyle m_linetex NULL!\n");
-       return; 
+       return;
     }
     int eTexRed,eTexGreen,eTexBlue,eTexAlpha;
     if(eDayStyle == DayNight)
@@ -116,13 +124,13 @@ void GraphicVDT::vUpdateCarVertex(float fLeftBottomX,float fLeftBottomY,float fC
 {
     if(fCarWidth) m_CarPOT.fCarWidth = fCarWidth;
     if(fCarHeight) m_CarPOT.fCarHeight = fCarHeight;
-	m_CarPOT.LeftBottom.x  = fLeftBottomX; 
-	m_CarPOT.LeftBottom.y  = fLeftBottomY;	
-	m_CarPOT.LeftTop.x     = fLeftBottomX; 
-	m_CarPOT.LeftTop.y     = fLeftBottomY + m_CarPOT.fCarHeight;	
-	m_CarPOT.RightBottom.x = fLeftBottomX + m_CarPOT.fCarWidth; 
-	m_CarPOT.RightBottom.y = fLeftBottomY;		
-	m_CarPOT.RightTop.x    = fLeftBottomX + m_CarPOT.fCarWidth;  
+	m_CarPOT.LeftBottom.x  = fLeftBottomX;
+	m_CarPOT.LeftBottom.y  = fLeftBottomY;
+	m_CarPOT.LeftTop.x     = fLeftBottomX;
+	m_CarPOT.LeftTop.y     = fLeftBottomY + m_CarPOT.fCarHeight;
+	m_CarPOT.RightBottom.x = fLeftBottomX + m_CarPOT.fCarWidth;
+	m_CarPOT.RightBottom.y = fLeftBottomY;
+	m_CarPOT.RightTop.x    = fLeftBottomX + m_CarPOT.fCarWidth;
 	m_CarPOT.RightTop.y    = fLeftBottomY + m_CarPOT.fCarHeight;
 }
 
@@ -171,11 +179,11 @@ bool GraphicVDT:: ReadVDTConfigFile(const char* cfgfilepath)
         //cout<< lineNum<<endl;
         lineNum++;
         //cout << "string is lineNum is >>" << line << "::" <<lineNum << "\n";
-        
+
         // fine note line and blank line
         notePos = line.find('#');
 
-        if(notePos == string::npos ) 
+        if(notePos == string::npos )
         {
             //cout << "find size and npos size matches..\n";
             assignmentPos = line.find('=');//find '='
@@ -184,7 +192,7 @@ bool GraphicVDT:: ReadVDTConfigFile(const char* cfgfilepath)
             if ( assignmentPos == string::npos)
             {
                 //cout<< "black line"<<endl;
-            } 
+            }
             else
             {
                 //bug on this text parser....
@@ -193,7 +201,7 @@ bool GraphicVDT:: ReadVDTConfigFile(const char* cfgfilepath)
                 //cout<< "assignment line"<<endl;
                 string tmpKey = line.substr(0,assignmentPos-1);
                 string value ;
-               
+
                 if(tmpKey == "curX1")
                 {
                     value = line.substr(assignmentPos+2);//
@@ -310,10 +318,10 @@ void GraphicVDT::MallocLineData()
 3	BackwardNegative will show driving lines extending toward the rear and left side of the vehicle
 4	BackwardPositive will show driving lines extending toward the rear and right side of the vehicle
 
-My understanding is that the point of tangency will not vary dynamically, 
-for the example case below it would always be the right rear POT and the left front POT and they are fixed. 
+My understanding is that the point of tangency will not vary dynamically,
+for the example case below it would always be the right rear POT and the left front POT and they are fixed.
 The thing that varies based on steering wheel angle is the point you have circled in red (you called it the ??quad circle??)
-CAN sig    <---> Line tended     <----> POT 
+CAN sig    <---> Line tended     <----> POT
 FrtNeg           Frt-Left		        bottom left(long left)   +top right(short right)
 FrtPos           Frt-Right		        top left   (short left)  +bottom right(long right)
 BakNeg           Rear-Left		        top left   (long left)   +bottom right(short right)
@@ -321,12 +329,12 @@ BakPos           Rear-Right		        bottom left(short left)  +top right(long ri
 */
 
 /*
-center of the circle of the long radius and the short radius shall be same 
+center of the circle of the long radius and the short radius shall be same
 but the POT on of long radius and the short radius connected to car is fixed
 
 so current implementation is:
 1 fix the POT of long radius and the short radius
-2 calculate the center of the circle, if they are not at same position/range then report a warning 
+2 calculate the center of the circle, if they are not at same position/range then report a warning
 
 */
 void GraphicVDT:: CalLineData()
@@ -352,7 +360,7 @@ void GraphicVDT:: CalLineData()
         PDCA_LOG_INFO("GraphicVDT e_Forward update shortR[%f] longR[%f]\n",m_CarPOT.shortsemi_circle_radius,m_CarPOT.long_semi_circle_radius);
         //line is composited by small segment - 4 points(2 triangles)
         for (int j=0;j<LINE_PTN_NUM/2;j++)
-        {	
+        {
             //segment(j) bottom left x
             m_temp[eShortCircle][j*4] =   m_CarPOT.LeftBottom.x;//two lines x offset is m_CarPOT.fCarWidth
             //line y - vertex vertical offset = m_fLineSegmentHeight
@@ -422,7 +430,7 @@ void GraphicVDT:: CalLineData()
         float flongTriangleLine =m_CarPOT.long_semi_circle_radius*cos(m_CarPOT.fTheta_startLongR);
         m_CarPOT.semi_circle_certer_long.SetData(m_CarPOT.LeftBottom.x+flongTriangleLine,m_CarPOT.LeftBottom.y);
         PDCA_LOG_INFO("GraphicVDT e_Forward_Rt update shortR[%f] longR[%f]\n",m_CarPOT.shortsemi_circle_radius,m_CarPOT.long_semi_circle_radius);
-     
+
         for (int j=0;j<LINE_PTN_NUM/2;j++)
         {
             m_temp[eLongCircle][j*4] = m_CarPOT.semi_circle_certer_long.x+m_CarPOT.long_semi_circle_radius*(cos(R_PI-m_CarPOT.fTheta_startLongR-j*m_CarPOT.ftheta_long*2/LINE_PTN_NUM));
@@ -444,14 +452,14 @@ void GraphicVDT:: CalLineData()
         float flongTriangleLine =m_CarPOT.long_semi_circle_radius*cos(m_CarPOT.fTheta_startLongR);
         m_CarPOT.semi_circle_certer_long.SetData(m_CarPOT.LeftBottom.x+flongTriangleLine,m_CarPOT.LeftBottom.y);
         PDCA_LOG_INFO("GraphicVDT e_Rearward_Rt update shortR[%f] longR[%f]\n",m_CarPOT.shortsemi_circle_radius,m_CarPOT.long_semi_circle_radius);
-     
+
         for (int j=0;j<LINE_PTN_NUM/2;j++)
         {
             m_temp[eShortCircle][j*4] = m_CarPOT.semi_circle_certer_short.x+m_CarPOT.shortsemi_circle_radius*(cos(R_PI+j*m_CarPOT.ftheta_short*2/LINE_PTN_NUM));
             m_temp[eShortCircle][j*4+1] = m_CarPOT.semi_circle_certer_short.y+m_CarPOT.shortsemi_circle_radius*(sin(R_PI+j*m_CarPOT.ftheta_short*2/LINE_PTN_NUM));
             m_temp[eShortCircle][j*4+2] = m_CarPOT.semi_circle_certer_short.x+(m_CarPOT.shortsemi_circle_radius-m_fLineWidth)*(cos(R_PI+j*m_CarPOT.ftheta_short*2/LINE_PTN_NUM));
             m_temp[eShortCircle][j*4+3] = m_CarPOT.semi_circle_certer_short.y+(m_CarPOT.shortsemi_circle_radius-m_fLineWidth)*(sin(R_PI+j*m_CarPOT.ftheta_short*2/LINE_PTN_NUM));
-     
+
             m_temp[eLongCircle][j*4] = m_CarPOT.semi_circle_certer_long.x+m_CarPOT.long_semi_circle_radius*(cos(R_PI-m_CarPOT.fTheta_startLongR+j*m_CarPOT.ftheta_long*2/LINE_PTN_NUM));
             m_temp[eLongCircle][j*4+1] = m_CarPOT.semi_circle_certer_long.y+m_CarPOT.long_semi_circle_radius*(sin(R_PI-m_CarPOT.fTheta_startLongR+j*m_CarPOT.ftheta_long*2/LINE_PTN_NUM));
             m_temp[eLongCircle][j*4+2] = m_CarPOT.semi_circle_certer_long.x+(m_CarPOT.long_semi_circle_radius-m_fLineWidth)*(cos(R_PI-m_CarPOT.fTheta_startLongR+j*m_CarPOT.ftheta_long*2/LINE_PTN_NUM));
@@ -467,7 +475,7 @@ void GraphicVDT:: CalLineData()
         float flongTriangleLine =m_CarPOT.long_semi_circle_radius*cos(m_CarPOT.fTheta_startLongR);
         m_CarPOT.semi_circle_certer_long.SetData(m_CarPOT.RightBottom.x-flongTriangleLine,m_CarPOT.RightBottom.y);
         PDCA_LOG_INFO("GraphicVDT e_Rearward_Lt update shortR[%f] longR[%f]\n",m_CarPOT.shortsemi_circle_radius,m_CarPOT.long_semi_circle_radius);
-     
+
         for (int j=0;j<LINE_PTN_NUM/2;j++)
 		{
 			m_temp[eShortCircle][j*4] =   m_CarPOT.semi_circle_certer_short.x+m_CarPOT.shortsemi_circle_radius*(cos(-j*m_CarPOT.ftheta_short*2/LINE_PTN_NUM));
@@ -489,8 +497,8 @@ void GraphicVDT:: CalLineData()
 	{
 		//vertical line
 		for (int j=0;j<LINE_PTN_NUM/2;j++)
-		{	
-			//vertical line cross short radius circle 
+		{
+			//vertical line cross short radius circle
 			m_temp[eSCircleCtrVert][j*4] =   m_CarPOT.semi_circle_certer_short.x-0.5;//two lines x offset is m_CarPOT.fCarWidth
 			//line y - vertex vertical offset = m_fLineSegmentHeight
 			m_temp[eSCircleCtrVert][j*4+1] = m_CarPOT.semi_circle_certer_short.y+j*m_fLineSegmentHeight;//height of one segment of the line is m_fLineSegmentHeight
@@ -498,7 +506,7 @@ void GraphicVDT:: CalLineData()
 			m_temp[eSCircleCtrVert][j*4+2] = m_temp[eSCircleCtrVert][j*4]+1;//line witdh is m_fLineWidth
 			m_temp[eSCircleCtrVert][j*4+3] = m_temp[eSCircleCtrVert][j*4+1];
 
-			//horizontal line cross short radius circle 
+			//horizontal line cross short radius circle
 			m_temp[eSCircleCtrHorz][j*4] =   m_CarPOT.semi_circle_certer_short.x+j*m_fLineSegmentHeight;//two lines x offset is m_CarPOT.fCarWidth
 			//line y - vertex vertical offset = m_fLineSegmentHeight
 			m_temp[eSCircleCtrHorz][j*4+1] = m_CarPOT.semi_circle_certer_short.y-0.5;//height of one segment of the line is m_fLineSegmentHeight
@@ -506,7 +514,7 @@ void GraphicVDT:: CalLineData()
 			m_temp[eSCircleCtrHorz][j*4+2] = m_temp[eSCircleCtrHorz][j*4];//line witdh is m_fLineWidth
 			m_temp[eSCircleCtrHorz][j*4+3] = m_temp[eSCircleCtrHorz][j*4+1]+1;
 
-		   //vertical line cross long radius circle 
+		   //vertical line cross long radius circle
 			m_temp[eLCircleCtrVert][j*4] =   m_CarPOT.semi_circle_certer_long.x-0.5;//two lines x offset is m_CarPOT.fCarWidth
 			//line y - vertex vertical offset = m_fLineSegmentHeight
 			m_temp[eLCircleCtrVert][j*4+1] = m_CarPOT.semi_circle_certer_long.y+j*m_fLineSegmentHeight;//height of one segment of the line is m_fLineSegmentHeight
@@ -515,7 +523,7 @@ void GraphicVDT:: CalLineData()
 			m_temp[eLCircleCtrVert][j*4+3] = m_temp[eLCircleCtrVert][j*4+1];
 
 
-			//horizontal line cross long radius circle 
+			//horizontal line cross long radius circle
 			m_temp[eLCircleCtrHorz][j*4] =   m_CarPOT.semi_circle_certer_long.x+j*m_fLineSegmentHeight;//two lines x offset is m_CarPOT.fCarWidth
 			//line y - vertex vertical offset = m_fLineSegmentHeight
 			m_temp[eLCircleCtrHorz][j*4+1] = m_CarPOT.semi_circle_certer_long.y-0.5;//height of one segment of the line is m_fLineSegmentHeight
@@ -549,7 +557,7 @@ bool GraphicVDT::bSetVDTState(int vdtDir,int vdtStatus,int shortRadius,int longR
     &&(lastshortRadius == shortRadius)
     &&(lastlongRadius == longRadius))
     {
-       return false;     
+       return false;
     }
     lastvdtDir = vdtDir;
     lastvdtStatus = vdtStatus;
@@ -599,7 +607,7 @@ bool GraphicVDT::bSetVDTState(int vdtDir,int vdtStatus,int shortRadius,int longR
     m_CarPOT.shortsemi_circle_radius = (shortRadius+56);//*m_fScale?
     m_CarPOT.long_semi_circle_radius = (longRadius+100);
     //PDCA_LOG_INFO("GraphicVDT bSetVDTState : shortR[%d] longR[%d]\n",m_CarPOT.shortsemi_circle_radius,m_CarPOT.long_semi_circle_radius);
-     
+
     //m_CarPOT.long_semi_circle_radius = sqrt((m_CarPOT.shortsemi_circle_radius+m_CarPOT.fCarWidth)*(m_CarPOT.shortsemi_circle_radius+m_CarPOT.fCarWidth)+m_CarPOT.fCarHeight*m_CarPOT.fCarHeight);
     CalLineData();
     return false;
@@ -652,4 +660,8 @@ bool GraphicVDT::bSetVDTDisable()
 
 }
 
-
+} // namespace ADASManager
+} // namespace ABase
+} // namespace AFramework
+} // namespace Adas
+} // namespace Harman

@@ -1,7 +1,9 @@
-#include "GlShell.h"
+#include "ADASManager/PAS/GraphicCore/GlShell.h"
 
 //#define  FRAME_CALLBACK_SUPPROT 1 //enable  throttling to callback
 #define  LM_SUPPORT 1 //enable this line for layer manager
+
+//#undef LM_SUPPORT
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,7 +36,7 @@ int           height = 480;
 #ifdef LM_SUPPORT
 t_ilm_layer   ilmLayerId = 1000;
 t_ilm_surface ilmSurfaceId = 10;
-#endif  
+#endif
 
 #ifdef SHELL_SUPPORT
 #include "xdg-shell-client-protocol.h"
@@ -54,9 +56,11 @@ typedef EGLBoolean (EGLAPIENTRYP PFNEGLSWAPBUFFERSWITHDAMAGEEXTPROC)(EGLDisplay 
 #endif
 #endif //SHELL_SUPPORT
 
+#ifdef LM_SUPPORT
+
 static void surfaceCallbackFunction(t_ilm_uint surface_id, struct ilmSurfaceProperties* sp, t_ilm_notification_mask m)
 {
-    ilmErrorTypes rtnv = (ilmErrorTypes)0; 
+    ilmErrorTypes rtnv = (ilmErrorTypes)0;
 
     if ((unsigned)m & ILM_NOTIFICATION_CONFIGURED)
     {
@@ -68,7 +72,7 @@ static void surfaceCallbackFunction(t_ilm_uint surface_id, struct ilmSurfaceProp
         }
         printf("surfaceCallbackFunction DestinationRectangle\n");
 
-        
+
         rtnv = ilm_surfaceSetSourceRectangle(surface_id, 0, 0, sp->origSourceWidth, sp->origSourceHeight);
         if(rtnv != ILM_SUCCESS)
         {
@@ -91,14 +95,14 @@ static void surfaceCallbackFunction(t_ilm_uint surface_id, struct ilmSurfaceProp
             printf("surfaceSetOpacity Failed (%d)\n", rtnv);
             //return 1;
         }
-    
+
         rtnv =  ilm_layerAddSurface(ilmLayerId, surface_id);
         if(rtnv != ILM_SUCCESS)
         {
             printf("layerAddSurface Failed (%d)\n", rtnv);
             //return 1;
         }
-    
+
         rtnv = ilm_commitChanges();
         if(rtnv != ILM_SUCCESS)
         {
@@ -108,18 +112,20 @@ static void surfaceCallbackFunction(t_ilm_uint surface_id, struct ilmSurfaceProp
     }
     printf("surfaceCallbackFunction---------------surfaceCallbackFunction Done\n");
 }
+#endif
 
+#ifdef LM_SUPPORT
 static int create_ilm_surface(struct display *display)
-{   
+{
     ilmErrorTypes rtnv =  (ilmErrorTypes)0;
-    
+
     ilmClient_init((t_ilm_nativedisplay)display->display);
     if(rtnv != ILM_SUCCESS)
     {
         printf("ilmClient_init Failed (%d)\n", rtnv);
         return 1;
     }
-    
+
     // Creates surfce
     rtnv = ilm_surfaceCreate((t_ilm_nativehandle)display->window->surface,
                              width, height,
@@ -129,9 +135,9 @@ static int create_ilm_surface(struct display *display)
         printf("surfaceCreate Failed (%d)\n", rtnv);
         return 1;
     }
-    
+
     //wl_display_flush(display->display); //only requiredwhen ilm_init used
-    
+
     ilm_initWithNativedisplay((t_ilm_nativedisplay)display->display);
     //ilm_init();
     if(rtnv != ILM_SUCCESS)
@@ -139,7 +145,7 @@ static int create_ilm_surface(struct display *display)
         printf("ilm_init Failed (%d)\n", rtnv);
         return 1;
     }
-    
+
     rtnv = ilm_surfaceAddNotification(ilmSurfaceId,&surfaceCallbackFunction);
     if(rtnv != ILM_SUCCESS)
     {
@@ -155,6 +161,7 @@ static int create_ilm_surface(struct display *display)
     printf("create_ilm_surface finished test2\n");
     return rtnv;
 }
+#endif
 
 static void init_egl(struct display *display, struct window *window)
 {
@@ -188,7 +195,7 @@ static void init_egl(struct display *display, struct window *window)
     assert(display->egl.dpy);
 #else
     display->egl.dpy = eglGetDisplay((EGLNativeDisplayType)display->display);
-#endif 
+#endif
 
     ret = eglInitialize(display->egl.dpy, &major, &minor);
     assert(ret == EGL_TRUE);
@@ -255,7 +262,7 @@ static void create_surface(struct window *window)
                      window->geometry.height);
     //printf("------> native = %x\n",window->native);
     window->egl_surface = eglCreateWindowSurface(display->egl.dpy, display->egl.conf,
-                    window->native, NULL);
+                    (EGLNativeWindowType)window->native, NULL);
 
     //printf("------> dpy = %x\n",window->display->egl.dpy);
     //printf("------> egl_surface = %x\n",window->egl_surface);
@@ -266,7 +273,7 @@ static void create_surface(struct window *window)
 
     if (!window->frame_sync)
         eglSwapInterval(display->egl.dpy, 0);
-        
+
 }
 
 static void destroy_surface(struct window *window)
@@ -292,7 +299,7 @@ static void pointer_handle_enter(void *data, struct wl_pointer *pointer,
     struct wl_buffer *buffer;
     struct wl_cursor *cursor = display->default_cursor;
     struct wl_cursor_image *image;
-    
+
     printf("Pointer entered surface %p at %d %d\n", surface, sx, sy);
 
     if (display->window->fullscreen)
@@ -339,7 +346,7 @@ pointer_handle_button(void *data, struct wl_pointer *wl_pointer,
 static void
 pointer_handle_axis(void *data, struct wl_pointer *wl_pointer,
             uint32_t time, uint32_t axis, wl_fixed_t value)
-{   
+{
     printf("Pointer handle axis axis = %d value = %d\n", axis, value);
 }
 
@@ -417,14 +424,14 @@ keyboard_handle_key(void *data, struct wl_keyboard *keyboard,
             uint32_t state)
 {
     //struct display *d = (struct display *)data;
-    
+
     printf("key: Keyboard key\n");
     printf("Key is %d state is %d\n", key, state);
-    
+
     if (key == KEY_HOME && state)
     {
         printf("----> KEY_HMOE detected \n");
-    } 
+    }
     else if (key == KEY_CHAT && state)
     {
         printf("----> KEY_CHAT detected \n");
@@ -517,7 +524,7 @@ static void registry_handle_global(void *data, struct wl_registry *registry,
             (wl_compositor *)(wl_registry_bind(registry, name,
                      &wl_compositor_interface, 1));
 
-    } 
+    }
     else if (strcmp(interface, "wl_seat") == 0) {
         d->seat = (wl_seat*)(wl_registry_bind(registry, name,
                        &wl_seat_interface, 1));
@@ -569,6 +576,43 @@ usage(int error_code)
 struct display display = { 0 };
 struct window  window  = { 0 };
 
+const char* pAntiAliasedLineVertShader2 = "\
+                                         attribute mediump vec4 myVert;\
+                                         attribute mediump vec4 myUV;\
+                                         uniform mediump vec2 imgSize;\
+                                         varying mediump vec2 texCoord;\
+                                         void main()\
+                                         {\
+                                         float x = 2.0*myVert.x/imgSize.x-1.0;\
+                                         float y = 2.0 * myVert.y/imgSize.y - 1.0;\
+                                         gl_Position = vec4(x,y,0.0,1.0);\
+                                         texCoord = myUV.st;\
+                                         }";
+
+const char* pAntiAliasedLineFragShader2 = "\
+                                         uniform lowp sampler2D tex;\
+                                         uniform lowp sampler2D car;\
+                                         uniform lowp sampler2D warning;\
+                                         varying mediump vec2 texCoord;\
+                                         void main()\
+                                         {\
+                                         vec4 baseColor;\
+                                         vec4 lightColor;\
+                                         vec4 warningColor;\
+                                         baseColor = texture2D(car, texCoord);\
+                                         lightColor = texture2D(tex, texCoord);\
+                                         warningColor = texture2D(warning, texCoord);\
+                                         gl_FragColor = lightColor * (1.0 - baseColor.a) + baseColor;\
+                                         gl_FragColor = gl_FragColor * (1.0 - warningColor.a) + warningColor;\
+                                         }";
+                                         //gl_FragColor = texture2D(tex, texCoord) + texture2D(car, texCoord);\
+
+namespace Harman {
+namespace Adas {
+namespace AFramework {
+namespace ABase {
+namespace ADASManager {
+
 GlShell::GlShell()
 {
 window_shell=&window;
@@ -579,20 +623,20 @@ GlShell::~GlShell()
 {
 
   fprintf(stderr, "simple-egl exiting\n");
-    
+
 #ifdef LM_SUPPORT
     ilm_surfaceRemoveNotification(ilmSurfaceId);
     ilm_commitChanges();
-    
+
     if (ilmSurfaceId > 0)
         ilm_surfaceRemove(ilmSurfaceId);
-    
+
     //if(ilmLayerId > 0)
         //ilm_layerRemove(ilmLayerId);
-    
+
     ilmClient_destroy(); //disable for ILM 1.4.0
     ilm_destroy();
-#endif 
+#endif
 
     destroy_surface(&window);
     fini_egl(&display);
@@ -627,9 +671,9 @@ bool GlShell::InitView(int screenWidth, int screenHeight, const char *carBuffer2
 	    glDisable(GL_DEPTH_TEST);
 	    //printf("------> eglSwapBuffers Finish %x %x\n",display.egl.dpy, window.egl_surface);
 	    return false;
-    } 
+    }
 	else
-    {   
+    {
         printf("InitView is Failed\n");
         return true;
     }
@@ -666,43 +710,12 @@ void GlShell::InitEnV(int screenWidth, int screenHeight)
         wl_compositor_create_surface(display.compositor);
     //printf("display.cursor_surface[%x]\n",display.cursor_surface);
 
-    
+
 #ifdef LM_SUPPORT
     create_ilm_surface(&display);
 #endif
 
 }
-
-const char* pAntiAliasedLineVertShader2 = "\
-                                         attribute mediump vec4 myVert;\
-                                         attribute mediump vec4 myUV;\
-                                         uniform mediump vec2 imgSize;\
-                                         varying mediump vec2 texCoord;\
-                                         void main()\
-                                         {\
-                                         float x = 2.0*myVert.x/imgSize.x-1.0;\
-                                         float y = 2.0 * myVert.y/imgSize.y - 1.0;\
-                                         gl_Position = vec4(x,y,0.0,1.0);\
-                                         texCoord = myUV.st;\
-                                         }";
-
-const char* pAntiAliasedLineFragShader2 = "\
-                                         uniform lowp sampler2D tex;\
-                                         uniform lowp sampler2D car;\
-                                         uniform lowp sampler2D warning;\
-                                         varying mediump vec2 texCoord;\
-                                         void main()\
-                                         {\
-										 vec4 baseColor;\
-										 vec4 lightColor;\
-										 vec4 warningColor;\
-										 baseColor = texture2D(car, texCoord);\
-										 lightColor = texture2D(tex, texCoord);\
-										 warningColor = texture2D(warning, texCoord);\
-										 gl_FragColor = lightColor * (1.0 - baseColor.a) + baseColor;\
-										 gl_FragColor = gl_FragColor * (1.0 - warningColor.a) + warningColor;\
-                                         }";
-										 //gl_FragColor = texture2D(tex, texCoord) + texture2D(car, texCoord);\
 
 void GlShell::LoadShaders()
 {
@@ -736,9 +749,9 @@ void GlShell::GenCarTexture(const char *buffer, int textWidth, int texHeight)
 {
 	glGenTextures(1, &m_uiCarTexture);
 	glBindTexture(GL_TEXTURE_2D, m_uiCarTexture);
-	
+
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textWidth, texHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
-	
+
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -785,7 +798,7 @@ bool GlShell:: ReadShellConfig(const char* cfgfilepath)
             {
                 string tmpKey = line.substr(0,assignmentPos-1);
                 string value;
-               
+
                 if(tmpKey == "ilmLayerId")
                 {
                     value = line.substr(assignmentPos+2);//
@@ -815,3 +828,8 @@ bool GlShell:: ReadShellConfig(const char* cfgfilepath)
 
 }
 
+} // namespace ADASManager
+} // namespace ABase
+} // namespace AFramework
+} // namespace Adas
+} // namespace Harmane

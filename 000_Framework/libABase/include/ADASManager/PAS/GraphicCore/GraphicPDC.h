@@ -1,10 +1,15 @@
-#if !defined(_GraphicPDC_H)
-#define _GraphicPDC_H
 
-#include "IGraphicPDC.h"
-#include "HeadDefine.h"
+#ifndef __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_GRAPHICPDC_H__
+#define __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_GRAPHICPDC_H__
 
+#include "ADASManager/PAS/GraphicCore/IGraphicPDC.h"
+#include "ADASManager/PAS/GraphicCore/HeadDefine.h"
 
+namespace Harman {
+namespace Adas {
+namespace AFramework {
+namespace ABase {
+namespace ADASManager {
 
 class GraphicPDC : public IGraphicPDC
 {
@@ -17,13 +22,12 @@ public:
     virtual bool bSetPDCSize(int w, int h);
     virtual bool bSetGraphicPDCState(int *pdcStatus);
     virtual bool bSetGraphicPDCPause();
-    virtual bool bSetGraphicPDCResume();    
+    virtual bool bSetGraphicPDCResume();
     virtual bool bSetPDCDisable();
 
    // bool bSetPDCSlowState(bool bEnable,bool bForward );
     void vSetPDCBackgroundState(bool bState);
     //bool bSetPDCBackgroundForward(bool bForward);
-
 
     bool ReadConfigFile(const char* cfgPath);
     void SetMode();
@@ -41,8 +45,6 @@ public:
     void MallocBackgroundPlaneData();
     void LoadBackgroundTexFiles();
     void CalBackgroundPlaneData();
-  
-
 
 protected:
     planesData* m_Planes;//save info from side line and distance mark line according groups
@@ -81,5 +83,10 @@ protected:
 	unsigned char lastCarStatus;
 };
 
+} // namespace ADASManager
+} // namespace ABase
+} // namespace AFramework
+} // namespace Adas
+} // namespace Harmane
 
-#endif
+#endif // __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_GRAPHICPDC_H__

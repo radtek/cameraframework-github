@@ -1,7 +1,14 @@
-#include "GraphicPDC.h"
-#include "lineBorderOp.h"
-#include "lodepng.h"
-#include "PDCSensor.h"
+
+#include "ADASManager/PAS/GraphicCore/GraphicPDC.h"
+#include "ADASManager/PAS/GraphicCore/lineBorderOp.h"
+#include "ADASManager/PAS/GraphicCore/lodepng.h"
+//#include "ADASManager/PAS/GraphicCore/PDCSensor.h"
+
+namespace Harman {
+namespace Adas {
+namespace AFramework {
+namespace ABase {
+namespace ADASManager {
 
 GraphicPDC::GraphicPDC(void)
 {
@@ -23,14 +30,14 @@ GraphicPDC::~GraphicPDC(void)
     if(NULL!=defaultShow) delete[] defaultShow;
 	if(NULL!=m_iGroupMaps)  delete[] m_iGroupMaps;
     if(NULL!=familyNum) delete[] familyNum;
-    if(NULL!=m_Planes)  
+    if(NULL!=m_Planes)
     {
         for(int index=0;index<sumNum;index++)
         {
             planesData* pPlanes = &m_Planes[index] ;
-            if(NULL!=pPlanes)      
+            if(NULL!=pPlanes)
             {
-                 if(NULL!=pPlanes->tex) delete pPlanes->tex;           
+                 if(NULL!=pPlanes->tex) delete pPlanes->tex;
                  if(NULL!=pPlanes->pBorderData) delete pPlanes->pBorderData;
                  if(NULL!=pPlanes->pArrayData) delete pPlanes->pArrayData;
                  if(NULL!=pPlanes->pBorderIndex) delete pPlanes->pBorderIndex;
@@ -38,9 +45,9 @@ GraphicPDC::~GraphicPDC(void)
         }
         delete[] m_Planes;
     }
-    if(NULL!=m_pdc_background)  
+    if(NULL!=m_pdc_background)
     {
-        if(NULL!=m_pdc_background->tex) delete m_pdc_background->tex;           
+        if(NULL!=m_pdc_background->tex) delete m_pdc_background->tex;
         if(NULL!=m_pdc_background->pBorderData) delete m_pdc_background->pBorderData;
         if(NULL!=m_pdc_background->pArrayData) delete m_pdc_background->pArrayData;
         if(NULL!=m_pdc_background->pBorderIndex) delete m_pdc_background->pBorderIndex;
@@ -68,7 +75,7 @@ GraphicPDC::~GraphicPDC(void)
 	}
 }
 #define GBUFF_NUM 8
-static char bigbuffPingPong[GBUFF_NUM][800*480*4*2];// add buffer gap 
+static char bigbuffPingPong[GBUFF_NUM][800*480*4*2];// add buffer gap
 bool GraphicPDC::InitPDC(int screenWidth, int screenHeight)
 {
     m_iScreenWidth = screenWidth;
@@ -82,10 +89,10 @@ bool GraphicPDC::InitPDC(int screenWidth, int screenHeight)
 		InitGroupMap();
 		if(LoadTextures()) return true;
 		iPingPong=0;
-		tex = bigbuffPingPong[iPingPong];//(char*)malloc(texWidth*texHeight*4*sizeof(char));   
+		tex = bigbuffPingPong[iPingPong];//(char*)malloc(texWidth*texHeight*4*sizeof(char));
 		CompoundTex();
 
-        //background down 
+        //background down
         bBackgroundEnable = false;
         //bBackgroundForward = false;
 		MallocBackgroundPlaneData();
@@ -94,7 +101,7 @@ bool GraphicPDC::InitPDC(int screenWidth, int screenHeight)
 		posYBackground = (int)((m_iScreenHeight-texBackgroundHeight)/2);
 		CalBackgroundPlaneData();
 		return false;
-    } 
+    }
 	else
     {
         cout<<"InitPDC is failed!"<<endl;
@@ -629,7 +636,7 @@ bool GraphicPDC::CompoundTex()
             printf( "currentMap value is   %d \n",currentMap->planeSeq[0]);
             continue;
         }
-       
+
         planesData plansGroup = m_Planes[currentMap->beginHead+currentMap->planeSeq[0]];
         //planesData plansGroup = m_Planes[3];
         k=0;
@@ -651,7 +658,7 @@ bool GraphicPDC::CompoundTex()
 	{
 		memset(infoBuffer, 0, texWidth*texHeight*4*8);
 	}
-		
+
 	//for(int i=sumNum-2; i<sumNum; i++)
 	{
 		planesData plansGroup1 = m_Planes[sumNum-2];
@@ -692,7 +699,7 @@ bool GraphicPDC::CompoundTex()
 	        }
 		}
 	}
-	
+
     PDCL_LOG_INFO( " GraphicPDC flash default graphic---------- \n");
     return true;
 }
@@ -721,6 +728,37 @@ bool GraphicPDC::bSetPDCSize(int w,int h)
     return true;
 }
 
+enum ePDCSensorPNG{
+        e_FRONTLEFTCNTR,
+        e_FRONTRIGHTCNTR,
+        e_FRONTLEFTCRNR,
+        e_FRONTRIGHTCRNR,
+
+        e_SIDELEFT1,
+        e_SIDERIGHT1,
+        e_SIDELEFT2,
+        e_SIDERIGHT2,
+
+        e_SIDELEFT3,
+        e_SIDERIGHT3,
+        e_SIDELEFT4,
+        e_SIDERIGHT4,
+
+        e_REARLEFTCRNR,
+        e_REARRIGHTCRNR,
+        e_REARLEFTCNTR,
+        e_REARRIGHTCNTR,
+
+        e_EXTSTATEFRONT,
+        e_EXTSTATEREAR,
+        e_EXTSTATELEFT,
+        e_EXTSTATERIGHT,
+
+        e_CARSTATE,
+
+        e_PDCPNGNUM,
+    };
+
 bool GraphicPDC::bSetGraphicPDCState(int *pdcStatus)
 {
     PDCL_LOG_INFO("bSetGraphicPDCState run !! [%d-%d-%d-%d][%d-%d-%d-%d][%d-%d-%d-%d][%d-%d-%d-%d][%d-%d-%d-%d][%d]", \
@@ -737,13 +775,13 @@ bool GraphicPDC::bSetGraphicPDCState(int *pdcStatus)
     pdcStatus[12],pdcStatus[13],pdcStatus[14],pdcStatus[15], \
     pdcStatus[16],pdcStatus[17],pdcStatus[18],pdcStatus[19], \
     pdcStatus[20]);
-	carStatus = pdcStatus[PDCSensorHub::e_CARSTATE];
+	carStatus = pdcStatus[/*PDCSensorHub::*/e_CARSTATE];
 #if 1
     // status check
     for (int i=0;i<m_iGroupNum;i++)
     {
         groupMap* currentMap = &m_iGroupMaps[i];
-		//take -1 and -2 as to keep default/last res index value 
+		//take -1 and -2 as to keep default/last res index value
         if ((pdcStatus[i]< 0)||(pdcStatus[i]>=currentMap->planeNum))
         {
             PDCL_LOG_INFO( "res[%d] index not valid %d %d, \n",i,pdcStatus[i],currentMap->planeSeq[0]);
@@ -753,7 +791,7 @@ bool GraphicPDC::bSetGraphicPDCState(int *pdcStatus)
         else
         {
             PDCL_LOG_INFO( "res[%d] index  good %d %d, \n",i,pdcStatus[i],currentMap->planeSeq[0]);
-            currentMap->planeSeq[0]=pdcStatus[i];     
+            currentMap->planeSeq[0]=pdcStatus[i];
         }
     }
 #endif
@@ -764,7 +802,7 @@ bool GraphicPDC::bSetGraphicPDCState(int *pdcStatus)
             m_iGroupMaps[4].beginHead,m_iGroupMaps[5].beginHead,m_iGroupMaps[6].beginHead,m_iGroupMaps[7].beginHead, \
             m_iGroupMaps[8].beginHead,m_iGroupMaps[9].beginHead,m_iGroupMaps[10].beginHead,m_iGroupMaps[11].beginHead, \
             m_iGroupMaps[12].beginHead,m_iGroupMaps[13].beginHead,m_iGroupMaps[14].beginHead,m_iGroupMaps[15].beginHead, \
-            m_iGroupMaps[16].beginHead);     
+            m_iGroupMaps[16].beginHead);
  #endif
     //flash last valid state first
     //int indexTex = 0;
@@ -790,7 +828,7 @@ bool GraphicPDC::bSetGraphicPDCState(int *pdcStatus)
             //printf( "pdcStatus[%d] value is -1 , last group tex index is  %d \n",i,currentMap->planeSeq[0]);
             continue;
         }
-        
+
         planesData plansGroup = m_Planes[currentMap->beginHead+currentMap->planeSeq[0]];
         //planesData plansGroup = m_Planes[3];
         k=0;
@@ -818,7 +856,7 @@ bool GraphicPDC::bSetGraphicPDCState(int *pdcStatus)
             //printf( "pdcStatus[%d] value is -1 , last group tex index is  %d \n",i,currentMap->planeSeq[0]);
             continue;
         }
-        
+
         planesData plansGroup = m_Planes[currentMap->beginHead+currentMap->planeSeq[0]];
         //planesData plansGroup = m_Planes[3];
         k=0;
@@ -834,7 +872,7 @@ bool GraphicPDC::bSetGraphicPDCState(int *pdcStatus)
             k = k+4;
         }
     }
-	
+
     return true;
 }
 
@@ -890,7 +928,7 @@ void GraphicPDC::LoadBackgroundTexFiles()
     unsigned int error = lodepng::decode(image, width, height, filepath, LCT_RGBA, 8);
     if(error)
     {
-       cout<<"lodepng::decode error"<<endl;     
+       cout<<"lodepng::decode error"<<endl;
     }
     texBackgroundWidth = width;
     texBackgroundHeight = height;
@@ -961,3 +999,10 @@ bool GraphicPDC::bSetPDCBackgroundForward(bool bForward)
 
 }
 #endif
+
+
+} // namespace ADASManager
+} // namespace ABase
+} // namespace AFramework
+} // namespace Adas
+} // namespace Harman

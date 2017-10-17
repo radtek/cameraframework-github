@@ -1,7 +1,16 @@
-#include "lineBorderOp.h"
+
+
+#include "ADASManager/PAS/GraphicCore/lineBorderOp.h"
+
 #include <iostream>
 
 using namespace std;
+
+namespace Harman {
+namespace Adas {
+namespace AFramework {
+namespace ABase {
+namespace ADASManager {
 
 void lineBorderOp::CalLine2D(int index,float* outpt,unsigned short* outIndex,int posx,int posy, int width, int height)
 {
@@ -13,26 +22,20 @@ void lineBorderOp::CalLine2D(int index,float* outpt,unsigned short* outIndex,int
     int ptElementNum = 2*PTELEMNUM;
     int indexElementNum = 0;
     CalEndPt2DBorderPts(pt3,pt4,0,&outpt[ptElementNum],0,&outIndex[indexElementNum]);
-
 }
-
 
 void lineBorderOp::CalLine2DBorderPtNum(int ptNum,unsigned short& outPtElemNum,unsigned short& outIndexNum)
 {
     outPtElemNum = ptNum*2*PTELEMNUM;
     outIndexNum = (ptNum-1)*6;
-
 }
-
 
 void lineBorderOp::CalStartPt2DBorderPts(const point2D& pt,const point2D& nextPt,float* out)
 {
     point2D tmpPt[2]={pt,nextPt};
     SetGen2DPoint(tmpPt[0],0.0,1.0,out);
     SetGen2DPoint(tmpPt[1],1.0,1.0,&out[PTELEMNUM]);
-
 }
-
 
 void lineBorderOp::CalEndPt2DBorderPts(const point2D& pt,const point2D& prevPt,float width,float* out,unsigned short startIndex,unsigned short* outIndex)
 {
@@ -40,9 +43,7 @@ void lineBorderOp::CalEndPt2DBorderPts(const point2D& pt,const point2D& prevPt,f
     SetGen2DPoint(tmpPt[0],0.0,0.0,out);
     SetGen2DPoint(tmpPt[1],1.0,0.0,&out[PTELEMNUM]);
     SetGenTriangleIndex(startIndex,outIndex);
-
 }
-
 
 void lineBorderOp::SetGen2DPoint(const point2D& pt,float texCoordX,float texCoordY,float* pOut)
 {
@@ -51,9 +52,7 @@ void lineBorderOp::SetGen2DPoint(const point2D& pt,float texCoordX,float texCoor
     pOut[index++] = pt.y;
     pOut[index++] = texCoordX;
     pOut[index++] = texCoordY;
-
 }
-
 
 void lineBorderOp::SetGenTriangleIndex(unsigned short startIndex,unsigned short* pIndex)
 {
@@ -63,9 +62,7 @@ void lineBorderOp::SetGenTriangleIndex(unsigned short startIndex,unsigned short*
     pIndex[3] = startIndex+1;
     pIndex[4] = startIndex+3;
     pIndex[5] = startIndex+2;
-
 }
-
 
 point2D::point2D()
 {
@@ -91,7 +88,8 @@ void point2D::SetData(float x1,float y1)
     y = y1;
 }
 
-void lineBorderOp::CalLine2DBorder(float* input,int ptNum,/*float width,*/unsigned short startIndex,float* outpt,unsigned short* outIndex/*unsigned int* outIndex*/)
+void lineBorderOp::CalLine2DBorder(float* input,int ptNum,/*float width,*/unsigned short startIndex,
+                                    float* outpt,unsigned short* outIndex/*unsigned int* outIndex*/)
 {
     point2D pt1(input[0],input[1]);//0,1,2,3
     point2D pt2(input[2],input[3]);//4,5,6,7
@@ -114,12 +112,11 @@ void lineBorderOp::CalLine2DBorder(float* input,int ptNum,/*float width,*/unsign
         indexElementNum += 6;
         startIndex += 2;
     }
-
 }
 
-
-void lineBorderOp::CalEndPt2DBorderPts(const point2D& pt,const point2D& prevPt,/*float width,*/float* out,unsigned short startIndex,
-                                       /*unsigned int* outIndex*/unsigned short* outIndex)
+void lineBorderOp::CalEndPt2DBorderPts(const point2D& pt,const point2D& prevPt,
+                                        /*float width,*/float* out,unsigned short startIndex,
+                                        /*unsigned int* outIndex*/unsigned short* outIndex)
 {
     int ptElemNum = 0;
     point2D tmpPt[2] = {pt,prevPt};
@@ -135,5 +132,8 @@ void lineBorderOp::SetGen2DPoints(point2D* pt, float coord1,float coord2,float* 
     SetGen2DPoint(pt[1],coord2,0.5,&pOut[ptElemNum]);
 }
 
-
-
+} // namespace ADASManager
+} // namespace ABase
+} // namespace AFramework
+} // namespace Adas
+} // namespace Harman

@@ -1,6 +1,8 @@
-#if !defined(_GlShell_H_)
-#define _GlShell_H_
-#include "HeadDefine.h"
+
+#ifndef __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_GLSHELL_H__
+#define __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_GLSHELL_H__
+
+#include "ADASManager/PAS/GraphicCore/HeadDefine.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,7 +10,9 @@
 #include <GLES2/gl2.h>
 #include <assert.h>
 
-#define  LM_SUPPORT 1 
+#define  LM_SUPPORT 1
+
+//#undef LM_SUPPORT
 
 #include <wayland-client.h>
 #include <wayland-egl.h>
@@ -19,7 +23,6 @@
 #include "ilm/ilm_client.h"
 #endif
 
-
 struct window;
 struct seat;
 
@@ -29,7 +32,7 @@ struct display {
     struct wl_compositor *compositor;
 #ifdef SHELL_SUPPORT
     struct xdg_shell *shell;
-#endif 
+#endif
     struct wl_seat *seat;
     struct wl_pointer *pointer;
     struct wl_touch *touch;
@@ -49,7 +52,7 @@ struct display {
     PFNEGLSWAPBUFFERSWITHDAMAGEEXTPROC swap_buffers_with_damage;
 #endif
 
-    
+
 };
 
 struct geometry {
@@ -77,12 +80,18 @@ struct window {
     int fullscreen, opaque, buffer_size, frame_sync;
 };
 
+namespace Harman {
+namespace Adas {
+namespace AFramework {
+namespace ABase {
+namespace ADASManager {
+
 class GlShell
 {
 public:
     GlShell();
     ~GlShell();
-    
+
     bool InitView(int screenWidth, int screenHeight, const char *carBuffer2, int textWidth, int texHeight);
     bool ReadShellConfig(const char* cfgfilepath);
     void InitEnV(int screenWidth, int screenHeight);
@@ -99,19 +108,25 @@ protected:
         GLuint uiColor;
         GLuint uiImgSize;
         GLuint uiCarSize;
-		
+
 		// Sampler locations
 		GLint uiTxtLoc;
 		GLint uiCarLoc;
 		GLint uiWarningLoc;
-		
+
         GLuint uiSourcePosition;
     }m_RenderObj;
 
     EGLDisplay* dpy_shell;
     EGLSurface* egl_surface_shell;
     struct window* window_shell;
-    
+
 };
 
-#endif
+} // namespace ADASManager
+} // namespace ABase
+} // namespace AFramework
+} // namespace Adas
+} // namespace Harmane
+
+#endif // __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_GLSHELL_H__

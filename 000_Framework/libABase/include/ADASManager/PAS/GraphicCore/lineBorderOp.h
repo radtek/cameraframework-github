@@ -1,10 +1,16 @@
-#ifndef __LINEBORDEROP_H__
-#define __LINEBORDEROP_H__
+
+#ifndef __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_LINEBORDEROP_H__
+#define __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_LINEBORDEROP_H__
 
 #define PTELEMNUM 4
 #define INPUTELEMENTNUM 2
 
-//#include "line2D.h"
+namespace Harman {
+namespace Adas {
+namespace AFramework {
+namespace ABase {
+namespace ADASManager {
+
 class point2D
 {
 public:
@@ -15,7 +21,6 @@ public:
     float x;
     float y;
 };
-
 
 class lineBorderOp
 {
@@ -29,7 +34,6 @@ private:
     void SetGen2DPoint(const point2D& pt,float texCoordX,float texCoordY,float* pOut);
     void SetGenTriangleIndex(unsigned short startIndex,unsigned short* pIndex);
 
-
     void CalEndPt2DBorderPts(const point2D& pt,const point2D& prevPt,/*float width,*/float* out,unsigned short startIndex,
         /*unsigned int* outIndex*/unsigned short* outIndex);
 
@@ -38,6 +42,10 @@ public:
     //void SetGenTriangleIndex(unsigned short startIndex,unsigned short* pIndex/*unsigned int* pIndex*/);
 };
 
+} // namespace ADASManager
+} // namespace ABase
+} // namespace AFramework
+} // namespace Adas
+} // namespace Harmane
 
-
-#endif
+#endif // __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_LINEBORDEROP_H__

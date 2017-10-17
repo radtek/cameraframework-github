@@ -1,24 +1,34 @@
-#if !defined(_GraphicVPAFord_H)
-#define _GraphicVPAFord_H
 
-#include "../core/CRunableService.h"
-#include "IGraphicPDC.h"
-#include "GraphicPDC.h"
-#include "GraphicVDT.h"
-#include "GlShell.h"
+#ifndef __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_GRAPHICVPAFORD_H__
+#define __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_GRAPHICVPAFORD_H__
+
+#include "CRunableBase.h"
+#include "ADASManager/PAS/GraphicCore/IGraphicPDC.h"
+#include "ADASManager/PAS/GraphicCore/GraphicPDC.h"
+#include "ADASManager/PAS/GraphicCore/GraphicVDT.h"
+#include "ADASManager/PAS/GraphicCore/GlShell.h"
+
 #include <thread>
 #include <unistd.h>
+
 using namespace std;
+
+using Harman::Adas::AFramework::AFoundation::CRunableBase;
+
 #define PNG_BYTES_TO_CHECK 4
 #define VERTEX_ARRAY 0
 #define TEXCOORD_ARRAY 1
 
+namespace Harman {
+namespace Adas {
+namespace AFramework {
+namespace ABase {
+namespace ADASManager {
 
-
-class GraphicVPAFord : public CRunableService , public GraphicPDC , public GraphicVDT , public GlShell
+class GraphicVPAFord : public CRunableBase , public GraphicPDC , public GraphicVDT , public GlShell
 {
 
-public:    
+public:
     GraphicVPAFord();
     ~GraphicVPAFord();
     virtual bool vInit(int screenWidth, int screenHeight);
@@ -26,13 +36,13 @@ public:
     int getScSizeWidth();
     int getScSizeHeight();
 
-   
+
 
     bool bSetVPALeftBottom(int x, int y);
     bool bSetVPASize(int w, int h);
-    
+
     // bool bSetGraphicVPAPause();
-    // bool bSetGraphicVPAResume();    
+    // bool bSetGraphicVPAResume();
     void update();
 	void init();
 
@@ -47,9 +57,15 @@ private:
     int temp_x;
     int temp_y;
     float rescale ;
-    
+
     int m_iWidth;
     int m_iHeight;
 };
 
-#endif
+} // namespace ADASManager
+} // namespace ABase
+} // namespace AFramework
+} // namespace Adas
+} // namespace Harmane
+
+#endif // __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_GRAPHICVPAFORD_H__

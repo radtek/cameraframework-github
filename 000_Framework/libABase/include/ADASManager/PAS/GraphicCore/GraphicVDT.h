@@ -1,10 +1,18 @@
-#if !defined(_GraphicVDT_H)
-#define _GraphicVDT_H
 
-#include "IGraphicVDT.h"
-#include "HeadDefine.h"
-#include "lineBorderOp.h"
+#ifndef __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_GRAPHICVDT_H__
+#define __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_GRAPHICVDT_H__
+
+#include "ADASManager/PAS/GraphicCore/IGraphicVDT.h"
+#include "ADASManager/PAS/GraphicCore/HeadDefine.h"
+#include "ADASManager/PAS/GraphicCore/lineBorderOp.h"
+
 #include <math.h>
+
+namespace Harman {
+namespace Adas {
+namespace AFramework {
+namespace ABase {
+namespace ADASManager {
 
 class GraphicVDT : public IGraphicVDT
 {
@@ -36,12 +44,12 @@ public:
 
 	typedef struct tagCarPointofTangency
 	{
-		//(0,0) is left bottom of the view 
+		//(0,0) is left bottom of the view
 	    point2D LeftBottom;//start point
 	    point2D RightBottom;
 	    point2D LeftTop;
 	    point2D RightTop;
-    
+
 	    float fCarWidth;//base point x transmit
 	    float fCarHeight;//base point y transmit
 	    //two line length
@@ -50,14 +58,14 @@ public:
 
 	    //two semicircle radius
 	    float shortsemi_circle_radius;
-	    float long_semi_circle_radius;	
+	    float long_semi_circle_radius;
 	    //angle
 	    float ftheta_short; //fix to a quater
 		float ftheta_long;
 		float fTheta_startShortR;
 		float fTheta_startLongR;
-	    point2D semi_circle_certer_short; //fix POT of the short radius 
-		point2D semi_circle_certer_long; //fix POT of the long radius 		
+	    point2D semi_circle_certer_short; //fix POT of the short radius
+		point2D semi_circle_certer_long; //fix POT of the long radius
 	}tCarPOT;
 
     GraphicVDT();
@@ -97,9 +105,12 @@ protected:
     float m_fLineSegmentHeight;//line segment offset
 	tCarPOT m_CarPOT;
 	float m_fScale;
-	
-
 };
 
+} // namespace ADASManager
+} // namespace ABase
+} // namespace AFramework
+} // namespace Adas
+} // namespace Harmane
 
-#endif
+#endif // __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_GRAPHICVDT_H__

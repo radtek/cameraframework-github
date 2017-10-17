@@ -1,32 +1,36 @@
-#include "GraphicVPAFord.h"
-#include "GraphicPDC.h"
+
+#include "ADASManager/PAS/GraphicCore/GraphicVPAFord.h"
+#include "ADASManager/PAS/GraphicCore/GraphicPDC.h"
+
+namespace Harman {
+namespace Adas {
+namespace AFramework {
+namespace ABase {
+namespace ADASManager {
 
 GraphicVPAFord::GraphicVPAFord()
-:CRunableService("GraphicVPAFord",false)
+    : CRunableBase("GraphicVPAFord", false)
 {
-	m_bPause =false;
+	m_bPause = false;
 }
-
 
 GraphicVPAFord::~GraphicVPAFord()
 {
-//debug
-
 }
 
 bool GraphicVPAFord::vInit(int screenWidth, int screenHeight)
 {
     setscSize(screenWidth,screenHeight);
 
-    if(!InitVDT(screenWidth,screenHeight))
-    {   
+    if(!InitVDT(screenWidth,screenHeight)) {
         PDCL_LOG_INFO(" InitVDT init is failed!\n");
     }
-    if(InitPDC(screenWidth,screenHeight))
-    {
+
+    if(InitPDC(screenWidth,screenHeight)) {
         PDCL_LOG_INFO(" GraphicPDC init is failed!\n");
         return true;
     }
+
 	return false;
 }
 
@@ -40,32 +44,28 @@ bool GraphicVPAFord::bSetVPALeftBottom(int x, int y)
     return true;
 }
 
-
 bool GraphicVPAFord::bSetVPASize(int w, int h)
 {
     rescale = (float)w/planeWidth;
-    bSetPDCSize(w,h);    
+    bSetPDCSize(w,h);
     bSetVDTSize(posX,posY,rescale);
     return true;
 }
 
 void GraphicVPAFord::init()
 {
-	if(InitView(800, 480, carBuffer2, texWidth, texHeight))
-	{
+	if(InitView(800, 480, carBuffer2, texWidth, texHeight)) {
 		PDCL_LOG_INFO("GraphicPDC::init failed!\n");
-		quit();	
-	}
-	else
-	{
+		quit();
+	}else{
 		PDCL_LOG_INFO("GraphicPDC::init success! swap a first blank frame\n");
 	}
 }
 
- void GraphicVPAFord::update()
- {
- 	PDCL_LOG_INFO("GraphicPDC::update PDC test\n");
-	//printf("   [%s, %d] OPENGL ES Render always step1   !!!!!!!!!!!!!!!!!!!!\n", __FUNCTION__, __LINE__);
+void GraphicVPAFord::update()
+{
+    PDCL_LOG_INFO("GraphicPDC::update PDC test\n");
+    //printf("   [%s, %d] OPENGL ES Render always step1   !!!!!!!!!!!!!!!!!!!!\n", __FUNCTION__, __LINE__);
     //make sure init is done...
     //glClearColor(0.6f, 0.8f, 1.0f, 1.0f);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -77,11 +77,10 @@ void GraphicVPAFord::init()
     eglSwapBuffers(window_shell->display->egl.dpy, window_shell->egl_surface);
     //PDCL_LOG_INFO("GraphicPDC::swap a  frame\n");
     usleep(30000);//30ms sleep  //100ms
- }
+}
 
- void GraphicVPAFord::CBPause()
- {
-
+void GraphicVPAFord::CBPause()
+{
     //glClearColor(0.6f, 0.8f, 1.0f, 1.0f);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
@@ -89,7 +88,7 @@ void GraphicVPAFord::init()
     Render();
     eglSwapBuffers(window_shell->display->egl.dpy,window_shell->egl_surface);
     PDCL_LOG_INFO(" run GraphicPDC::CBPause!!\n");
- };//update last state before pause
+} //update last state before pause
 
 void GraphicVPAFord::vEleToArray(float *eleData,float *arrData)
 {
@@ -219,20 +218,20 @@ void GraphicVPAFord::Render()
     glVertexAttribPointer(VERTEX_ARRAY, 2, GL_FLOAT, GL_FALSE,4*sizeof(float), (void*)(&lineGroup.pArrayData[0]));
     glVertexAttribPointer(TEXCOORD_ARRAY,2,GL_FLOAT,GL_FALSE,4*sizeof(float),(void*)(&lineGroup.pArrayData[2]));
 
-    glDrawArrays(GL_TRIANGLES, 0, 6);  
+    glDrawArrays(GL_TRIANGLES, 0, 6);
 
 	//b_vdtState = false;
     if(b_vdtState)
     {
         for (int i=0;i<NUM_OF_LINE_TO_DRAW;i++)
         {
-            RenderGroupLines(i);         
+            RenderGroupLines(i);
         }
 
     }
 	glDisableVertexAttribArray(VERTEX_ARRAY);
 	glDisableVertexAttribArray(TEXCOORD_ARRAY);
-    glDisable(GL_BLEND);  
+    glDisable(GL_BLEND);
 }
 
 //guilde line
@@ -241,7 +240,7 @@ void GraphicVPAFord::RenderGroupLines(int index)
     linesData curLines = m_Lines[index];
     for(int jx = 0 ;jx<(LINE_PTN_NUM/2)-1;jx++ )
     {
-        vEleToArray(&(curLines.pLineData[jx*8]),&(curLines.pArrayData[jx*24]));     
+        vEleToArray(&(curLines.pLineData[jx*8]),&(curLines.pArrayData[jx*24]));
     }
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 4, 4, 0, GL_RGBA, GL_UNSIGNED_BYTE,m_linetex);
@@ -254,32 +253,35 @@ void GraphicVPAFord::RenderGroupLines(int index)
 }
 
 void GraphicVPAFord::setscSize(int screenWidth,int screenHeight)
- {
+{
     m_iHeight = screenHeight;
     m_iWidth = screenWidth;
- }
+}
 
-
- int GraphicVPAFord::getScSizeWidth()
- {
+int GraphicVPAFord::getScSizeWidth()
+{
     return m_iWidth;
- }
+}
 
-
- int GraphicVPAFord::getScSizeHeight()
- {
+int GraphicVPAFord::getScSizeHeight()
+{
     return m_iHeight;
- }
+}
 
 void GraphicVPAFord::vSetDayMode()
 {
     //SetMode();//pdc todo
     vSetStyle(GraphicVDT::eDayStyle);
 }
+
 void GraphicVPAFord::vSetNightMode()
 {
     //SetMode();//pdc todo
     vSetStyle(GraphicVDT::eNightStyle);
 }
 
-
+} // namespace ADASManager
+} // namespace ABase
+} // namespace AFramework
+} // namespace Adas
+} // namespace Harman
