@@ -1,6 +1,6 @@
 
-#ifndef __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_APASBASE_H_
-#define __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_APASBASE_H_
+#ifndef __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_APASBASE_H__
+#define __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_APASBASE_H__
 
 #include "TraceMacros.h"
 #include "TypeDefine.h"
@@ -28,28 +28,28 @@ class APasBase
     , public Observer
 {
 public:
-	APasBase(CameraHub* hub);
-	virtual ~APasBase();
+    APasBase(CameraHub* hub);
+    virtual ~APasBase();
 
 public:
-	virtual a_status initialize();
-	virtual VOID unInitialize(){};
-	virtual VOID beforeHandleMessageQueue(){};
-	virtual VOID afterHandleMessageQueue();
-	virtual a_status  isModuleAvailabel();
+    virtual a_status initialize();
+    virtual VOID unInitialize(){};
+    virtual VOID beforeHandleMessageQueue(){};
+    virtual VOID afterHandleMessageQueue();
+    virtual a_status  isModuleAvailabel();
     virtual VOID Update(Subject* subject, Int32 state);
     virtual VOID onHandle(UInt32 uiEventID, const string& pData);
 
 protected:
-	a_status registerFunc(UInt32 eventID, CFunctor* pFunctor);
+    a_status registerFunc(UInt32 eventID, CFunctor* pFunctor);
 
 protected:
     Camera* m_pRearCamera = nullptr;
 
 private:
-	map<UInt32, CFunctor*> m_mMapPasFunc;
+    map<UInt32, CFunctor*> m_mMapPasFunc;
 
-	BOOLEAN m_bPasAvailable = FALSE;
+    BOOLEAN m_bPasAvailable = FALSE;
     CameraHub* m_pModuleHub = nullptr;
 };
 
@@ -59,4 +59,4 @@ private:
 } // namespace Adas
 } // namespace Harmane
 
-#endif // __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_APASBASE_H_
+#endif // __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_APASBASE_H__

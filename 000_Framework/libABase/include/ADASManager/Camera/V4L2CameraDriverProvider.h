@@ -4,7 +4,6 @@
 
 #include "CameraDriverProvider.h"
 #include "CameraDriverProviderFactory.h"
-#include "PaintImpl.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,7 +25,8 @@
 #include <asm/types.h>          /* for videodev2.h */
 #include <linux/videodev2.h>
 
-#include "ADASManager/Camera/DisplaySample.h"
+#include "ADASManager/Camera/Display/DisplaySample.h"
+#include "ADASManager/Camera/Display/PaintImpl.h"
 
 //#define WRITE_FILE
 

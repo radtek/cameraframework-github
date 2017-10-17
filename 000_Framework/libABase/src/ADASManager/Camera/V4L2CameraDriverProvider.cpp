@@ -1,6 +1,6 @@
 
 #include "ADASManager/Camera/V4L2CameraDriverProvider.h"
-#include "CameraDisplayTypeDefine.h"
+#include "ADASManager/Camera/Display/CameraDisplayTypeDefine.h"
 
 #include <unistd.h>
 #include <sys/stat.h>

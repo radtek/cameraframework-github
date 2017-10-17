@@ -1,66 +1,4 @@
 
-# RM      = rm -rf
-
-# DIR_OBJ := ../proj/linux/ADASManager/Camera
-
-# ## debug flag
-# DBG_ENABLE   = 0
-
-# ## source file path
-# SRC_PATH   := ./ADASManager/Camera
-
-# TARGET_PATH  := ../lib/linux
-
-# ## target exec file name
-# TARGET     := libABase.so
-
-# ## get all source files
-# SRCS       := $(wildcard $(SRC_PATH)/*.cpp)
-
-# ## all .o based on all .c
-# #OBJS       := $(notdir $(SRCS:.cpp=.o))
-# OBJS    := $(patsubst %.cpp, ${DIR_OBJ}/%.o, $(notdir ${SRCS}))
-
-
-# ## used headers  file path
-# INCLUDE_PATH := ../include
-# INCLUDE_PATH += ../../libAFoundation/include
-# INCLUDE_PATH += ../../CaseClient/include
-# ## used include librarys file path
-# LIBRARY_PATH := ../../libAFoundation/lib/linux
-# LIBRARY_PATH +:= ../../CaseClient/lib/linux
-# ## need libs, add at here
-# LIBS := AFoundation  ACaseSocket
-
-# ## debug for debug info, when use gdb to debug
-# ifeq (1, ${DBG_ENABLE})
-# CFLAGS += -D_DEBUG -O0 -g -DDEBUG=1
-# endif
-
-# ## get all include path
-# CFLAGS  += $(foreach dir, $(INCLUDE_PATH), -I$(dir))
-
-# ## get all library path
-# LDFLAGS += $(foreach lib, $(LIBRARY_PATH), -L$(lib))
-
-# ## get all librarys
-# LDFLAGS += $(foreach lib, $(LIBS), -l$(lib))
-
-
-# ## c++11 support
-# CFLAGS += -Wl,--no-as-needed  -lpthread -std=c++11
-
-# CFLAGS += -D LINUX_OS -fPIC
-
-# all:$(OBJS)
-# 	$(CPP) -shared -fPIC $(CFLAGS) $(LDFLAGS) -o $(TARGET_PATH)/$(TARGET) $(OBJS)
-
-# ${DIR_OBJ}/%.o : $(SRC_PATH)/%.cpp
-# 	@echo Compiling $< ...
-# 	$(CPP) -c $(CFLAGS) $< -o ${DIR_OBJ}/$*.o
-
-# clean:
-# 	$(RM) $(OBJS) $(TARGET_PATH)/$(TARGET)
 CP = cp
 #debug文件夹里的makefile文件需要最后执行，所以这里需要执行的子目录要排除debug文件夹，这里使用awk排除了debug文件夹，读取剩下的文件夹
 SUBDIRS=$(shell ls -l | grep ^d | awk '{if($$9 == "src") print $$9}')
@@ -86,7 +24,6 @@ INCLUDE_PATH += $(ROOT_DIR)/include/ADASManager
 INCLUDE_PATH += $(ROOT_DIR)/include/external
 INCLUDE_PATH += $(ROOT_DIR)/../libAFoundation/include
 INCLUDE_PATH += $(ROOT_DIR)/../CaseClient/include
-
 
 
 CFLAGS= -Wl,--no-as-needed  -lpthread -std=c++11 -D LINUX_OS -D ENABLE_EGL -fPIC
