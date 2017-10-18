@@ -1,6 +1,6 @@
 
-#ifndef __HARMAN_ADAS_APROJECT_GWMV2MH_PASSTUBIMPL_H_
-#define __HARMAN_ADAS_APROJECT_GWMV2MH_PASSTUBIMPL_H_
+#ifndef __HARMAN_ADAS_APROJECT_GWMV2MH_PAS_PASSTUBIMPL_H_
+#define __HARMAN_ADAS_APROJECT_GWMV2MH_PAS_PASSTUBIMPL_H_
 
 #include "ADASManager/PAS/APasBase.h"
 
@@ -11,6 +11,7 @@ namespace Harman {
 namespace Adas {
 namespace AProject {
 namespace GWMV2MH {
+namespace Pas {
 
 class PasStubImpl : public APasBase
 {
@@ -28,9 +29,10 @@ private:
 
 };
 
+} // namespace Pas
 } // namespace GWMV2MH
 } // namespace AProject
 } // namespace Adas
 } // namespace Harman
 
-#endif // __HARMAN_ADAS_APROJECT_GWMV2MH_PASSTUBIMPL_H_
+#endif // __HARMAN_ADAS_APROJECT_GWMV2MH_PAS_PASSTUBIMPL_H_

@@ -22,6 +22,9 @@ OBJS2       = $(patsubst %.c,%.o,$(SRCS2))
 SRCS3       = $(wildcard $(SRC_PATH)/../*.cpp)
 OBJS3       = $(patsubst %.cpp,%.o,$(SRCS3))
 
+SRCS3       += $(wildcard $(SRC_PATH)/../../Pas/*.cpp)
+OBJS3       += $(patsubst %.cpp,%.o,$(SRCS3))
+
 OBJS = $(OBJS1) $(OBJS2) $(OBJS3)
 
 ## need libs, add at here

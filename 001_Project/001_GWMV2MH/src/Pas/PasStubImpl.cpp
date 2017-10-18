@@ -5,6 +5,7 @@ namespace Harman {
 namespace Adas {
 namespace AProject {
 namespace GWMV2MH {
+namespace Pas {
 
 PasStubImpl::PasStubImpl(CameraHub* hub)
     : APasBase(hub)
@@ -33,6 +34,7 @@ VOID PasStubImpl::showCamera(const string& pData)
     // m_pRearCamera->StartCapture();
 }
 
+} // namespace Pas
 } // namespace GWMV2MH
 } // namespace AProject
 } // namespace Adas

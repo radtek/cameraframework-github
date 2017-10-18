@@ -1,16 +1,23 @@
 
 
-#include "FordPDCTest.h"
+#include "Pas/FordPDCTest.h"
 
-
-int familyNum[] = {0,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,2,2,2,2,2};
-#define DELAYPDC (100000)
+//#define DELAYPDC (100000)
 #define DELAYPDC (4000)
 
 #define VPA_w	152*2
 #define VPA_h	228*2
 #define VPA_x	(800/2-VPA_w/2)
 #define VPA_y	(480/2-VPA_h/2)
+
+namespace Harman {
+namespace Adas {
+namespace AProject {
+namespace GWMV2MH {
+namespace Pas {
+
+int familyNum[] = {0,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,2,2,2,2,2};
+
 int i =0;
 
 int short_radius=0,long_radius=0;
@@ -44,7 +51,7 @@ void FordPDCTest::vUsecase_blockstate()
 		m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eSENSORDISTANCE,PDCServiceFord::eREARLEFTCNTR,(int*)&value);
 		usleep(DELAYPDC);
 	}
-	
+
 
 
 	vUsecase_FrontWalkThrough();
@@ -108,7 +115,7 @@ void FordPDCTest::vUsecase_LeftWalkThroughJC()
 void FordPDCTest::vUsecase_FrontWalkThroughJC()
 {
 	int value = 0;
-	
+
 	for(value=0;value<familyNum[PDCServiceFord::eFRONTLEFTCNTR];value++)
 	{
 		usleep(DELAYPDC*3*10);
@@ -136,14 +143,14 @@ void FordPDCTest::vUsecase_FrontWalkThrough()
 		m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eSENSORDISTANCE,PDCServiceFord::eFRONTLEFTCNTR,(int*)&value);
 		usleep(DELAYPDC);
 	}
-	
+
 	for(value=0;value<familyNum[PDCServiceFord::eFRONTRIGHTCNTR];value++)
 	{
 		PDCA_LOG_INFO("FRONT RIGHT CNTR  =%d\n",value);
 		m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eSENSORDISTANCE,PDCServiceFord::eFRONTRIGHTCNTR,(int*)&value);
 		usleep(DELAYPDC);
 	}
-	
+
 	for(value=0;value<familyNum[PDCServiceFord::eFRONTRIGHTCRNR];value++)
 	{
 		usleep(DELAYPDC*3);
@@ -207,7 +214,7 @@ void FordPDCTest::vUsecase_LeftWalkThrough()
 		m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eSENSORDISTANCE,PDCServiceFord::eSIDELEFT3,(int*)&value);
 		usleep(DELAYPDC);
 	}
-	
+
 	for(value=0;value<familyNum[PDCServiceFord::eSIDELEFT4];value++)
 	{
 		usleep(DELAYPDC*3);
@@ -263,14 +270,14 @@ void FordPDCTest::vUsecase_VDT_Forward_straight()
 {
 	int value = (int)PDCServiceFord::eGUIDELINETXT_ON;
  	m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eGUIDELINECMD,PDCServiceFord::eGUIDELINESTATE,(int*)&value);
-    
+
 	value = 0;
 	m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eGUIDELINERADISTATE,PDCServiceFord::eGUIDELINEDRVDRI,(int*)&value);
     //change vdt
     int val = 1000;
     m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eGUIDELINERADISTATE,PDCServiceFord::eGUIDELINERADILEFT,(int*)&val);
     m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eGUIDELINERADISTATE,PDCServiceFord::eGUIDELINERADIRIGHT,(int*)&val);
-  
+
     usleep(DELAYPDC*10);
 
 }
@@ -279,7 +286,7 @@ void FordPDCTest::vUsecase_VDT_Rearward_straight()
 {
 	int value = (int)PDCServiceFord::eGUIDELINETXT_ON;
  	m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eGUIDELINECMD,PDCServiceFord::eGUIDELINESTATE,(int*)&value);
-    
+
     value = 0;
 	m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eGUIDELINERADISTATE,PDCServiceFord::eGUIDELINEDRVDRI,(int*)&value);
     //change vdt
@@ -294,7 +301,7 @@ void  FordPDCTest::vUsecase_VDT_Rearward_LtNegative()
 {
 	int value = (int)PDCServiceFord::eGUIDELINETXT_ON;
  	m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eGUIDELINECMD,PDCServiceFord::eGUIDELINESTATE,(int*)&value);
-    
+
     value = 5;
 	m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eGUIDELINERADISTATE,PDCServiceFord::eGUIDELINEDRVDRI,(int*)&value);
     //change vdt
@@ -308,7 +315,7 @@ void  FordPDCTest::vUsecase_VDT_Rearward_RtPositive()
 {
 	int value = (int)PDCServiceFord::eGUIDELINETXT_ON;
  	m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eGUIDELINECMD,PDCServiceFord::eGUIDELINESTATE,(int*)&value);
-    
+
     value = 3;
 	m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eGUIDELINERADISTATE,PDCServiceFord::eGUIDELINEDRVDRI,(int*)&value);
     //change vdt
@@ -317,12 +324,12 @@ void  FordPDCTest::vUsecase_VDT_Rearward_RtPositive()
     val = 200;
     m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eGUIDELINERADISTATE,PDCServiceFord::eGUIDELINERADIRIGHT,(int*)&val);
     usleep(DELAYPDC*10);
-}	
+}
 void  FordPDCTest::vUsecase_VDT_Forward_RtPositive()
 {
 	int value = (int)PDCServiceFord::eGUIDELINETXT_ON;
  	m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eGUIDELINECMD,PDCServiceFord::eGUIDELINESTATE,(int*)&value);
-    
+
 	value = 2;
 	m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eGUIDELINERADISTATE,PDCServiceFord::eGUIDELINEDRVDRI,(int*)&value);
     //change vdt
@@ -330,7 +337,7 @@ void  FordPDCTest::vUsecase_VDT_Forward_RtPositive()
     m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eGUIDELINERADISTATE,PDCServiceFord::eGUIDELINERADILEFT,(int*)&val);
     val = 300;
     m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eGUIDELINERADISTATE,PDCServiceFord::eGUIDELINERADIRIGHT,(int*)&val);
-  
+
     usleep(DELAYPDC*10);
 }
 ///left negative - right val > left val
@@ -338,7 +345,7 @@ void  FordPDCTest::vUsecase_VDT_Forward_LtNegative()
 {
 	int value = (int)PDCServiceFord::eGUIDELINETXT_ON;
  	m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eGUIDELINECMD,PDCServiceFord::eGUIDELINESTATE,(int*)&value);
-    
+
 	value = 4;
 	m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eGUIDELINERADISTATE,PDCServiceFord::eGUIDELINEDRVDRI,(int*)&value);
     //change vdt
@@ -346,7 +353,7 @@ void  FordPDCTest::vUsecase_VDT_Forward_LtNegative()
     m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eGUIDELINERADISTATE,PDCServiceFord::eGUIDELINERADILEFT,(int*)&val);
     val = -500;
     m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eGUIDELINERADISTATE,PDCServiceFord::eGUIDELINERADIRIGHT,(int*)&val);
-  
+
     usleep(DELAYPDC*10);
 }
 
@@ -369,7 +376,7 @@ void  FordPDCTest::vUsecase_VDT_LaunchControl()
 	value = (int)PDCServiceFord::eGUIDELINETXT_ON;
  	m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eGUIDELINECMD,PDCServiceFord::eGUIDELINESTATE,(int*)&value);
  	m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eGUIDELINERADISTATE,PDCServiceFord::eGUIDELINEDRVDRI,(int*)&value);
-	value = (int)PDCServiceFord::eGUIDELINETXT_ON;   
+	value = (int)PDCServiceFord::eGUIDELINETXT_ON;
     int val = -400;
     m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eGUIDELINERADISTATE,PDCServiceFord::eGUIDELINERADILEFT,(int*)&val);
     val = -500;
@@ -395,7 +402,7 @@ void  FordPDCTest::vUsecase_VDT_Normal()
 	vUsecase_VDT_Rearward_LtNegative();
 	vUsecase_VDT_OFF();
 	usleep(DELAYPDC*3);*/
-	vUsecase_VDT_Rearward_RtPositive(); 
+	vUsecase_VDT_Rearward_RtPositive();
 	vUsecase_VDT_OFF();
 	usleep(DELAYPDC*3);
 	/*vUsecase_VDT_Forward_RtPositive();
@@ -427,7 +434,7 @@ void FordPDCTest::update()
 	vUsecase_VDT_Rearward_LtNegative();
 	vUsecase_VDT_OFF();
 	usleep(DELAYPDC*3);
-	vUsecase_VDT_Rearward_RtPositive();	
+	vUsecase_VDT_Rearward_RtPositive();
 	vUsecase_VDT_OFF();
 	usleep(DELAYPDC*3);
 	vUsecase_VDT_Forward_RtPositive();
@@ -463,8 +470,8 @@ void FordPDCTest::update()
 	usleep(DELAYPDC*3);
 
 
-	//m_PDCServiceFord->SetPDCViewState(false);  
-	//m_PDCServiceFord->vResetPDCGraphicState();  
+	//m_PDCServiceFord->SetPDCViewState(false);
+	//m_PDCServiceFord->vResetPDCGraphicState();
 
 
     m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eGUIDELINECMD,PDCServiceFord::eGUIDELINETXT_ON,(int*)&value);
@@ -472,7 +479,7 @@ void FordPDCTest::update()
     m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eGUIDELINERADIUS,0,(int*)guilieData);
     usleep(DELAYPDC*10);
     m_PDCServiceFord->bSetVDTDisable();
-	
+
 	{usleep(DELAYPDC*5);};
 
 	value = 5;//all sensor on
@@ -491,8 +498,8 @@ void FordPDCTest::update()
  // 	m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eSENSORDISTANCE,PDCServiceFord::eREARLEFTCRNR,(int*)&value);
 	// m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eSENSORDISTANCE,PDCServiceFord::eREARRIGHTCNTR,(int*)&value);
 	// usleep(DELAYPDC*13);
-	// m_PDCServiceFord->vResetPDCGraphicState();  
-	// usleep(DELAYPDC*13); 
+	// m_PDCServiceFord->vResetPDCGraphicState();
+	// usleep(DELAYPDC*13);
 	// value = 2;
  // 	m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eSENSORDISTANCE,PDCServiceFord::eREARLEFTCRNR,(int*)&value);
 	// m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eSENSORDISTANCE,PDCServiceFord::eREARRIGHTCNTR,(int*)&value);
@@ -506,7 +513,7 @@ void FordPDCTest::update()
 		eSymbolState symbolState;
         if (i<16)
         {
-       
+
             if(i%6==0)
             {
                 dvtstate = eForward;
@@ -563,7 +570,7 @@ void FordPDCTest::update()
             if(i==10)
             {
                 m_GraphicVPAFord->bSetVDTDisable();
-               
+
             }
 
 
@@ -627,8 +634,8 @@ void FordPDCTest::update()
 
 
 
-	m_PDCServiceFord->SetPDCViewState(false);  
-	//usleep(DELAYPDC*13); 
+	m_PDCServiceFord->SetPDCViewState(false);
+	//usleep(DELAYPDC*13);
 	//value = 3;
  	//m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eSENSORDISTANCE,PDCServiceFord::eREARLEFTCRNR,(int*)&value);
 	//usleep(DELAYPDC*3);
@@ -636,9 +643,9 @@ void FordPDCTest::update()
 	//value = 5;//all sensor on
 	//m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eSENSORTXT,PDCServiceFord::ePDCMSG,(int*)&value);
 	//usleep(DELAYPDC*3);
-#if 0	
-	
-	m_PDCServiceFord->vResetPDCGraphicState();	
+#if 0
+
+	m_PDCServiceFord->vResetPDCGraphicState();
 #endif
 	//value =1;
 	//m_PDCServiceFord->pushPDCMsg(PDCServiceFord::eSENSORTXT,PDCServiceFord::ePDCMSG,(int*)&value);
@@ -652,9 +659,15 @@ void FordPDCTest::setup()
 }
 
 FordPDCTest::FordPDCTest(PDCServiceFord* pPDCServiceFord,GraphicVPAFord* pGraphicVPAFord)
-:CRunableService("FordPDCTest",false)
+	: CRunableBase("FordPDCTest",false)
 {
 	PDCA_LOG_INFO("FordPDCTest created!");
 	m_PDCServiceFord = pPDCServiceFord;
 	m_GraphicVPAFord = pGraphicVPAFord;
 };
+
+} // namespace Pas
+} // namespace GWMV2MH
+} // namespace AProject
+} // namespace Adas
+} // namespace Harman

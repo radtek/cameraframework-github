@@ -1,5 +1,12 @@
-#ifndef _PDCMGDEFINEFORD_H
-#define _PDCMGDEFINEFORD_H
+
+#ifndef __HARMAN_ADAS_APROJECT_GWMV2MH_PAS_PDCMGDEFINEFORD_H__
+#define __HARMAN_ADAS_APROJECT_GWMV2MH_PAS_PDCMGDEFINEFORD_H__
+
+namespace Harman {
+namespace Adas {
+namespace AProject {
+namespace GWMV2MH {
+namespace Pas {
 
 enum EMsgType
 {
@@ -27,4 +34,10 @@ typedef struct stTagPDCEvents
 	char data[DATASIZE];
 }stPDCEvents;
 
-#endif
+} // namespace Pas
+} // namespace GWMV2MH
+} // namespace AProject
+} // namespace Adas
+} // namespace Harman
+
+#endif // __HARMAN_ADAS_APROJECT_GWMV2MH_PAS_PDCMGDEFINEFORD_H__
