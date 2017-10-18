@@ -7,11 +7,7 @@
 #include "CFunctor.h"
 #include "ADASManager/ModuleBase.h"
 #include "Observer.h"
-#include "ADASManager/Camera/FrontCamera.h"
-#include "ADASManager/Camera/ReserveCamera.h"
-#include "ADASManager/Camera/LeftCamera.h"
-#include "ADASManager/Camera/RightCamera.h"
-#include "ADASManager/Camera/CameraHub.h"
+
 using namespace std;
 using namespace Harman::Adas::AFramework::AFoundation;
 
