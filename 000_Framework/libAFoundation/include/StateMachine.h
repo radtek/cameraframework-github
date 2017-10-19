@@ -49,6 +49,8 @@ private:
                 //quit Thread
                 quit();
             }
+
+            virtual BOOLEAN initialize(string sServiceName){};
         };
 
         /**

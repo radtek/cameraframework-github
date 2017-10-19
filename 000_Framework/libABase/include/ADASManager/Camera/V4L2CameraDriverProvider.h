@@ -84,6 +84,7 @@ public:
     VOID update() override;
     VOID ShowInfo() override;
 
+
 private:
     ECode Init_read(UInt32 buffer_size);
     ECode Init_mmap();

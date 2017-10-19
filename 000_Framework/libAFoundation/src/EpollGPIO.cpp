@@ -58,8 +58,6 @@ VOID EpollGPIO::update()
             unsigned int valueback = REVERSE_GEAR_UNKNOWN_ACTION;
             GPIO_Get_Value(m_iReserveGearGPIO, &valueback);
             (*m_pFun)(valueback);
-
-            ALOGD("reserveGearGPIO value = %u\n", valueback);
         }
     }
 }
@@ -168,7 +166,7 @@ int EpollGPIO::GPIO_Get_Value(unsigned int gpio, unsigned int *value)
     }
 
     close(fd);
-    ALOGD("Sucessfully get GPIO-%d value\n", gpio);
+    ALOGD("Sucessfully get GPIO-%d value[%d]\n", gpio, *value);
     return 0;
 }
 

@@ -19,17 +19,23 @@ public:
     virtual ~CMQRunnableService();
     virtual VOID pushMessage(MessageForQueue* rMsg, Int32 ilen = 0);
     virtual VOID start();
-    BOOLEAN initialize(string sServiceName);
-    BOOLEAN unitialize();
+    virtual VOID init(){initialize(m_strRName);};
+    virtual BOOLEAN initialize(string sServiceName) = 0;
+
 
 protected:
     virtual VOID update();
-    virtual VOID beforeHandleMessageQueue();
-    virtual VOID afterHandleMessageQueue();
+
     VOID setMsgQueue(CMessageQueue* pMsgQueue){m_pMsgQueue = pMsgQueue;};
 
 private:
     BOOLEAN m_bInitialized;
+
+    string m_strRName;
+
+    mutex mEventlockMutex;
+    condition_variable  mWaitEventCondVar;
+
     CMessageQueue* m_pMsgQueue;
 };
 

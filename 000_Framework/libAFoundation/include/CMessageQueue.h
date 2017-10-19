@@ -15,6 +15,8 @@ namespace Adas {
 namespace AFramework {
 namespace AFoundation {
 
+#define MSQ_MAXSIZE   300
+
 class CMessageQueue
 {
 public:
@@ -41,8 +43,7 @@ private:
     string                    m_strMsgQueueName;
     queue<MessageForQueue*>     m_iMsgQueue;
 
-    mutex mEventlockMutex;
-    condition_variable  mWaitEventCondVar;
+
 
     MessageForQueue* m_pEventData;
 

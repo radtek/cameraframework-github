@@ -35,6 +35,8 @@ public:
 
     VOID update() override;
 
+    VOID init() {};
+
 private:
     /* gpio export */
     int GPIO_Export(unsigned int gpio);

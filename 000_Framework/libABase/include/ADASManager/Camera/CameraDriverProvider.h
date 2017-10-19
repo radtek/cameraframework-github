@@ -44,6 +44,8 @@ public:
 
     virtual Int32 StopCapture() = 0;
 
+    virtual VOID init(){};
+
     virtual ~CameraDriverProvider() {}
 
 protected:

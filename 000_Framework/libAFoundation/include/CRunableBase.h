@@ -6,11 +6,8 @@
 #include "stdio.h"
 #include "TraceMacros.h"
 
-#ifdef WIN_OS
-typedef Poco::Event CEvent;
-#else
+
 #include "CEvent.h"
-#endif
 
 using namespace std;
 
@@ -29,7 +26,7 @@ public:
     virtual VOID start(VOID* pData){;}
     virtual VOID quit();
     virtual VOID join();
-    virtual VOID init();
+    virtual VOID init() = 0;
     virtual VOID run();
     virtual VOID pause();
     virtual VOID resume();

@@ -7,13 +7,6 @@
 
 using namespace Harman::Adas::AFramework::AFoundation;
 
-#define ADAS_MODULE_RVC     string("RVC")
-#define ADAS_MODULE_AVM     string("AVM")
-#define ADAS_MODULE_PAS     string("PAS")
-#define ADAS_MODULE_APA     string("APA")
-#define ADAS_MODULE_SVC     string("SVC")
-#define ADAS_MODULE_COMMON  string("COMMON")
-
 namespace Harman {
 namespace Adas {
 namespace AFramework {
@@ -22,19 +15,6 @@ namespace ADASManager {
 
 class AdasModuleCtrl : public CMessageHandler
 {
-public:
-    enum eModuleType
-    {
-        eModuleType_RVC,
-        eModuleType_SVC,
-        eModuleType_AVM,
-        eModuleType_PAS,
-        eModuleType_APA,
-        eModuleType_COMMON,
-
-        eModuleType_UNKNOWN = 0x70000000
-    };
-
 public:
     AdasModuleCtrl();
     virtual ~AdasModuleCtrl();
