@@ -13,7 +13,7 @@ namespace AFoundation {
 #define PWM_MSG_BUF_LEN 32
 
 CMessageQueue::CMessageQueue(const string& strMsgQueueName, UInt32 uiQueueMaxSize, CMessageHandler* pHandler)
-    : m_strMsgQueueName(strMsgQueueName, TRUE)
+    : m_strMsgQueueName(strMsgQueueName)
     , m_pHandler(pHandler)
 {
     ALOGD("create message queue : [%s]\n", strMsgQueueName.c_str());
