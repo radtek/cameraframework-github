@@ -4,6 +4,9 @@
 
 #include "PAS/GraphicCore/IGraphicPDC.h"
 #include "TraceMacros.h"
+#include "AFoundation.h"
+
+using namespace Harman::Adas::AFramework::AFoundation;
 
 namespace Harman {
 namespace Adas {

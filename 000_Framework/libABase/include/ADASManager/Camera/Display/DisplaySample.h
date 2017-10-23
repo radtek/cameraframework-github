@@ -36,7 +36,10 @@
 #include "external/shared/platform.h"
 #include "external/shared/weston-egl-ext.h"
 
+#include "AFoundation.h"
+using namespace Harman::Adas::AFramework::AFoundation;
 using namespace std;
+
 
 namespace Harman {
 namespace Adas {

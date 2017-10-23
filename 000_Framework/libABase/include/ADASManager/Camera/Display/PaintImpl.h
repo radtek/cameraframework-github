@@ -9,6 +9,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "TypeDefine.h"
+#include "AFoundation.h"
+
+using namespace Harman::Adas::AFramework::AFoundation;
 
 
 class PaintImpl

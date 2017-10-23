@@ -26,9 +26,9 @@ EpollGPIO::EpollGPIO(const string& strName, int gpioNum, CALLBACK_CFunctor* pFun
     , m_pEpoll(nullptr)
     , m_pFun(pFunctor)
 {
-    GPIO_Export(m_iReserveGearGPIO);
-    GPIO_Set_Dir(m_iReserveGearGPIO, "in");
-    GPIO_Set_Edge(m_iReserveGearGPIO, "both");
+    // GPIO_Export(m_iReserveGearGPIO);
+    // GPIO_Set_Dir(m_iReserveGearGPIO, "in");
+    //GPIO_Set_Edge(m_iReserveGearGPIO, "both");
     ALOGD("Sucessfully Configure GPIO-%d as input\n", m_iReserveGearGPIO);
 
     m_pEpoll = new Epoller();

@@ -25,12 +25,16 @@ INCLUDE_PATH += $(ROOT_DIR)/include/external
 INCLUDE_PATH += $(ROOT_DIR)/../libAFoundation/include
 INCLUDE_PATH += $(ROOT_DIR)/../CaseClient/include
 
+LIBS := dlt
+
 
 CFLAGS= -Wl,--no-as-needed  -lpthread -std=c++11 -D LINUX_OS -D ENABLE_EGL -fPIC
 CFLAGS+= $(foreach dir, $(INCLUDE_PATH), -I$(dir))
+
+LDFLAGS += $(foreach lib, $(LIBS), -l$(lib))
 #CFLAGS += -D__FILENAME__='"$(subst $(dir $<),,$<)"'
 #将以下变量导出到子shell中，本次相当于导出到子目录下的makefile中
-export CXX BIN OBJS_DIR BIN_DIR ROOT_DIR CFLAGS
+export CXX BIN OBJS_DIR BIN_DIR ROOT_DIR CFLAGS LDFLAGS
 #注意这里的顺序，需要先执行SUBDIRS最后才能是DEBUG
 all:$(SUBDIRS) $(CUR_OBJS) DEBUG
 #递归执行子目录下的makefile文件，这是递归执行的关键
@@ -44,7 +48,7 @@ ECHO:
 	@echo $(SUBDIRS)
 #将c文件编译为o文件，并放在指定放置目标文件的目录中即OBJS_DIR
 $(CUR_OBJS):%.o:%.cpp
-	$(CXX) -c $^ -o $(ROOT_DIR)/$(OBJS_DIR)/$@
+	$(CXX) -c  $^ -o $(ROOT_DIR)/$(OBJS_DIR)/$@
 clean:
 	@rm $(OBJS_DIR)/*.o
 	@rm -rf $(BIN_DIR)/*.so

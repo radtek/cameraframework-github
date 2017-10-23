@@ -15,6 +15,7 @@ using namespace std;
 using Harman::Adas::AFramework::AFoundation::State;
 using Harman::Adas::AFramework::AFoundation::StateMachine;
 using Harman::Adas::AFramework::AFoundation::Subject;
+using namespace Harman::Adas::AFramework::AFoundation;
 
 namespace Harman {
 namespace Adas {

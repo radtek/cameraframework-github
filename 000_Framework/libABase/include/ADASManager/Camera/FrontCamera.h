@@ -4,6 +4,9 @@
 
 #include "Camera.h"
 #include "StateMachine.h"
+#include "AFoundation.h"
+
+using namespace Harman::Adas::AFramework::AFoundation;
 
 using namespace std;
 

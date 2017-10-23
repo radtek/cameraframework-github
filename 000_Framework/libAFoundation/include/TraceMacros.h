@@ -12,14 +12,9 @@
 #include <unistd.h>
 #include <time.h>
 #include <sys/syscall.h>
+#include <dlt/dlt.h>
+#include <stdarg.h> 
 
-namespace Harman {
-namespace Adas {
-namespace AFramework {
-namespace AFoundation {
-
-//#define CASECLIENT_LOG
-#ifdef DLTLOG
 
 //#include "../../ParkAssistSrv_Common/CommonCore.hpp"
 
@@ -31,7 +26,7 @@ namespace AFoundation {
 #define PDCA_LOG_INFO(B,...)          LOG_INFO(LOG_PDC,B, ## __VA_ARGS__)
 #define PDCL_LOG_INFO(B,...)          LOG_INFO(LOG_PDC,B, ## __VA_ARGS__)
 #define PDCC_LOG_INFO(B,...)          LOG_INFO(LOG_PDC,B, ## __VA_ARGS__)
-#else
+
 
 #ifdef  PAM_LOG_INFO
     #undef  PAM_LOG_INFO
@@ -63,7 +58,72 @@ namespace AFoundation {
 #define PDCA_LOG_INFO(B,...)           printf(B, ## __VA_ARGS__)
 #define PDCL_LOG_INFO(B,...)           printf(B, ## __VA_ARGS__)
 #define PDCC_LOG_INFO(B,...)           printf(B, ## __VA_ARGS__)
-#endif  //DLTLOG
+
+
+
+//============================================================
+
+#define DLTLOG
+
+//#define CASECLIENT_LOG
+#ifdef DLTLOG
+
+#define AAP_SERVICE_LOG_TAG "adas"
+
+#define PRINTINIT \
+        DLT_REGISTER_APP("adas", "ADASService"); \
+        
+
+#define PRINTDEINIT \
+        DLT_UNREGISTER_APP();
+
+static void printMessages(DltLogLevelType type, const char *func, int line, const char *msgType, const char *format, ... )
+{
+    DLT_DECLARE_CONTEXT(DLT_AAContext);
+    DLT_REGISTER_CONTEXT(DLT_AAContext, "MAIN", "ADAS_Service");
+    do {
+      char buffer[2056]; //Max 4096 bytes can be routed more than this would cause a crash.
+      char tmpbuf[1024];
+      {
+        va_list args;
+        va_start (args, format);
+        vsnprintf (tmpbuf, sizeof (tmpbuf), format, args);
+        va_end (args);
+      }
+      snprintf (buffer, sizeof (buffer), "%s [%s:%d:%s] : %s", AAP_SERVICE_LOG_TAG, func, line, msgType, tmpbuf);
+      DLT_LOG (DLT_AAContext, type, DLT_STRING(buffer));
+    }while(0);
+
+    DLT_UNREGISTER_CONTEXT(DLT_AAContext);
+}
+
+#define ALOGV(format, args...)   \
+    do {        \
+        printMessages(DLT_LOG_VERBOSE,  __func__, __LINE__, "Dbg1", format, ##args);    \
+    }while(0)
+ 
+#define ALOGI(format, args...)   \
+    do {    \
+        printMessages(DLT_LOG_INFO, __func__, __LINE__, "Info", format, ##args);    \
+    }while(0)
+ 
+#define ALOGD(format, args...)   \
+    do {        \
+        printMessages(DLT_LOG_DEBUG , __func__, __LINE__, "Dbg", format, ##args);    \
+    }while(0)
+ 
+#define ALOGW(format, args...)   \
+    do {        \
+        printMessages(DLT_LOG_WARN, __func__, __LINE__, "Warning", format, ##args);    \
+    }while(0)
+ 
+#define ALOGE(format, args...)   \
+    do {        \
+        printMessages(DLT_LOG_ERROR,  __func__, __LINE__, "Error", format, ##args);    \
+    }while(0)
+
+
+ //DLTLOG
 
 
 /********************Log Level(Just define one of them)********************************
@@ -72,61 +132,61 @@ namespace AFoundation {
  * #define INFO:    key point log info, include *INFO*    *ERROR*                   log
  * #define ERROR:   error log info,     include *ERROR*                             log
  **************************************************************************************/
-#ifndef    DEBUG
-#define DEBUG
+#else
+
+    #ifndef    DEBUG
+    #define DEBUG
+    #endif
+    //#define __FILENAME__ (strrchr(__FILE__, '/') ? (strrchr(__FILE__, '/') + 1):__FILE__)  std::this_thread::get_id()
+
+    static UInt64 GetTickCount()
+    {
+        struct timespec ts;
+        clock_gettime(CLOCK_MONOTONIC, &ts);
+        return (ts.tv_sec * 1000 + ts.tv_nsec / 1000000);
+    }
+
+    #ifndef ALOGD
+        #ifdef DEBUG
+            #define WARNING
+            #define ALOGD(fmt, ...)\
+                fprintf(stdout, "DBUG:[%lu]:[%s]:[%d]:[%ld]: " fmt, Harman::Adas::AFramework::AFoundation::GetTickCount(), __FUNCTION__, __LINE__, (long int)syscall(__NR_gettid), ##__VA_ARGS__);
+        #else
+            #define ALOGD(fmt, ...) ((void)0)
+        #endif //#ifdef DEBUG
+    #endif //#ifndef ALOGD
+
+    #ifndef ALOGW   // color : yellow
+        #ifdef WARNING
+            #define INFO
+            #define ALOGW(fmt, ...)\
+                fprintf(stdout, "\033[33mWARNING\033[0m:[%lu]:[%s]:[%d]:[%ld]: " fmt, Harman::Adas::AFramework::AFoundation::GetTickCount(), __FUNCTION__, __LINE__, (long int)syscall(__NR_gettid), ##__VA_ARGS__);
+        #else
+            #define ALOGW(fmt, ...) ((void)0)
+        #endif //#ifdef WARNING
+    #endif //#ifndef ALOGW
+
+    #ifndef ALOGI
+        #ifdef INFO
+            #define ERROR
+            #define ALOGI(fmt, ...)\
+                fprintf(stdout, "INFO:[%lu]:[%s]:[%d]:[%ld]: " fmt, Harman::Adas::AFramework::AFoundation::GetTickCount(), __FUNCTION__, __LINE__, (long int)syscall(__NR_gettid), ##__VA_ARGS__);
+        #else
+            #define ALOGI(fmt, ...) ((void)0)
+        #endif //#ifdef INFO
+    #endif //#ifndef ALOGI
+
+    #ifndef ALOGE // color : red
+        #ifdef ERROR
+            #define ALOGE(fmt, ...)\
+                fprintf(stderr, "\033[31mERROR\033[0m:[%lu]:[%s]:[%d]:[%ld]: " fmt, Harman::Adas::AFramework::AFoundation::GetTickCount(), __FUNCTION__, __LINE__, (long int)syscall(__NR_gettid), ##__VA_ARGS__);
+        #else
+            #define ALOGE(fmt, ...) ((void)0)
+        #endif //#ifdef ERROR
+    #endif //#ifndef ALOGE
+
 #endif
-//#define __FILENAME__ (strrchr(__FILE__, '/') ? (strrchr(__FILE__, '/') + 1):__FILE__)  std::this_thread::get_id()
 
-static UInt64 GetTickCount()
-{
-    struct timespec ts;
-    clock_gettime(CLOCK_MONOTONIC, &ts);
-    return (ts.tv_sec * 1000 + ts.tv_nsec / 1000000);
-}
-
-#ifndef ALOGD
-    #ifdef DEBUG
-        #define WARNING
-        #define ALOGD(fmt, ...)\
-            fprintf(stdout, "DBUG:[%lu]:[%s]:[%d]:[%ld]: " fmt, Harman::Adas::AFramework::AFoundation::GetTickCount(), __FUNCTION__, __LINE__, (long int)syscall(__NR_gettid), ##__VA_ARGS__);
-    #else
-        #define ALOGD(fmt, ...) ((void)0)
-    #endif //#ifdef DEBUG
-#endif //#ifndef ALOGD
-
-#ifndef ALOGW   // color : yellow
-    #ifdef WARNING
-        #define INFO
-        #define ALOGW(fmt, ...)\
-            fprintf(stdout, "\033[33mWARNING\033[0m:[%lu]:[%s]:[%d]:[%ld]: " fmt, Harman::Adas::AFramework::AFoundation::GetTickCount(), __FUNCTION__, __LINE__, (long int)syscall(__NR_gettid), ##__VA_ARGS__);
-    #else
-        #define ALOGW(fmt, ...) ((void)0)
-    #endif //#ifdef WARNING
-#endif //#ifndef ALOGW
-
-#ifndef ALOGI
-    #ifdef INFO
-        #define ERROR
-        #define ALOGI(fmt, ...)\
-            fprintf(stdout, "INFO:[%lu]:[%s]:[%d]:[%ld]: " fmt, Harman::Adas::AFramework::AFoundation::GetTickCount(), __FUNCTION__, __LINE__, (long int)syscall(__NR_gettid), ##__VA_ARGS__);
-    #else
-        #define ALOGI(fmt, ...) ((void)0)
-    #endif //#ifdef INFO
-#endif //#ifndef ALOGI
-
-#ifndef ALOGE // color : red
-    #ifdef ERROR
-        #define ALOGE(fmt, ...)\
-            fprintf(stderr, "\033[31mERROR\033[0m:[%lu]:[%s]:[%d]:[%ld]: " fmt, Harman::Adas::AFramework::AFoundation::GetTickCount(), __FUNCTION__, __LINE__, (long int)syscall(__NR_gettid), ##__VA_ARGS__);
-    #else
-        #define ALOGE(fmt, ...) ((void)0)
-    #endif //#ifdef ERROR
-#endif //#ifndef ALOGE
-
-} // namespace AFoundation
-} // namespace AFramework
-} // namespace Adas
-} // namespace Harman
 
 #endif // __HARMAN_ADAS_AFRAMEWORK_AFOUNDATION_TRACEMACROS_H__
 

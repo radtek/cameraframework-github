@@ -1,5 +1,6 @@
 #include "ADASManager/AVM/AvmDefaultState.h"
 #include "ADASManager/AVM/AvmStateMachine.h"
+#include "TraceMacros.h"
 
 namespace Harman {
 namespace Adas {

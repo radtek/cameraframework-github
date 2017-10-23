@@ -9,6 +9,9 @@
 //#include "CameraDriverProvider.h"
 #include "CameraDriverProviderFactory.h"
 #include "CameraStateMachine.h"
+#include "AFoundation.h"
+
+using namespace Harman::Adas::AFramework::AFoundation;
 
 using namespace std;
 

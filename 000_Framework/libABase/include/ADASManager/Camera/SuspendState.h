@@ -6,6 +6,9 @@
 #include "StateMachine.h"
 #include "CameraEventDefine.h"
 #include "CTimer.h"
+#include "AFoundation.h"
+
+using namespace Harman::Adas::AFramework::AFoundation;
 
 #include <signal.h>
 

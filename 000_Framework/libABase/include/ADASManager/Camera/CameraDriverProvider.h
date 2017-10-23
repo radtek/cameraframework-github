@@ -8,6 +8,9 @@
 #include "TraceMacros.h"
 #include "CameraEventDefine.h"
 #include <map>
+#include "AFoundation.h"
+
+using namespace Harman::Adas::AFramework::AFoundation;
 
 using Harman::Adas::AFramework::AFoundation::CRunableBase;
 

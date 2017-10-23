@@ -7,6 +7,6 @@ all:$(SUBDIRS) $(CUR_OBJS)
 $(SUBDIRS):ECHO
 	make -C $@
 $(CUR_OBJS):%.o:%.cpp
-	$(CXX) -c $(CFLAGS) $^ -o $(ROOT_DIR)/$(OBJS_DIR)/$@
+	$(CXX) -c $(CFLAGS) $(LDFLAGS) $^ -o $(ROOT_DIR)/$(OBJS_DIR)/$@
 ECHO:
 	@echo $(SUBDIRS)

@@ -4,6 +4,9 @@
 
 #include "MessageForQueue.h"
 #include "CameraEventDefine.h"
+#include "AFoundation.h"
+
+using namespace Harman::Adas::AFramework::AFoundation;
 
 using namespace std;
 

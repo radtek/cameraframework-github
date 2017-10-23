@@ -9,6 +9,9 @@
 
 #include <memory>
 #include <string>
+#include "AFoundation.h"
+
+using namespace Harman::Adas::AFramework::AFoundation;
 
 using Harman::Adas::AFramework::AFoundation::Observer;
 using Harman::Adas::AFramework::AFoundation::Subject;

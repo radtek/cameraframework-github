@@ -8,6 +8,9 @@
 #include "CTimer.h"
 
 #include <signal.h>
+#include "AFoundation.h"
+
+using namespace Harman::Adas::AFramework::AFoundation;
 
 using namespace std;
 
