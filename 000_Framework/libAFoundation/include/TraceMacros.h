@@ -63,7 +63,7 @@
 
 //============================================================
 
-#define DLTLOG
+//#define DLTLOG
 
 //#define CASECLIENT_LOG
 #ifdef DLTLOG
@@ -150,7 +150,7 @@ static void printMessages(DltLogLevelType type, const char *func, int line, cons
         #ifdef DEBUG
             #define WARNING
             #define ALOGD(fmt, ...)\
-                fprintf(stdout, "DBUG:[%lu]:[%s]:[%d]:[%ld]: " fmt, Harman::Adas::AFramework::AFoundation::GetTickCount(), __FUNCTION__, __LINE__, (long int)syscall(__NR_gettid), ##__VA_ARGS__);
+                fprintf(stdout, "DBUG:[%lu]:[%s]:[%d]:[%ld]: " fmt, GetTickCount(), __FUNCTION__, __LINE__, (long int)syscall(__NR_gettid), ##__VA_ARGS__);
         #else
             #define ALOGD(fmt, ...) ((void)0)
         #endif //#ifdef DEBUG
@@ -160,7 +160,7 @@ static void printMessages(DltLogLevelType type, const char *func, int line, cons
         #ifdef WARNING
             #define INFO
             #define ALOGW(fmt, ...)\
-                fprintf(stdout, "\033[33mWARNING\033[0m:[%lu]:[%s]:[%d]:[%ld]: " fmt, Harman::Adas::AFramework::AFoundation::GetTickCount(), __FUNCTION__, __LINE__, (long int)syscall(__NR_gettid), ##__VA_ARGS__);
+                fprintf(stdout, "\033[33mWARNING\033[0m:[%lu]:[%s]:[%d]:[%ld]: " fmt, GetTickCount(), __FUNCTION__, __LINE__, (long int)syscall(__NR_gettid), ##__VA_ARGS__);
         #else
             #define ALOGW(fmt, ...) ((void)0)
         #endif //#ifdef WARNING
@@ -170,7 +170,7 @@ static void printMessages(DltLogLevelType type, const char *func, int line, cons
         #ifdef INFO
             #define ERROR
             #define ALOGI(fmt, ...)\
-                fprintf(stdout, "INFO:[%lu]:[%s]:[%d]:[%ld]: " fmt, Harman::Adas::AFramework::AFoundation::GetTickCount(), __FUNCTION__, __LINE__, (long int)syscall(__NR_gettid), ##__VA_ARGS__);
+                fprintf(stdout, "INFO:[%lu]:[%s]:[%d]:[%ld]: " fmt, GetTickCount(), __FUNCTION__, __LINE__, (long int)syscall(__NR_gettid), ##__VA_ARGS__);
         #else
             #define ALOGI(fmt, ...) ((void)0)
         #endif //#ifdef INFO
@@ -179,7 +179,7 @@ static void printMessages(DltLogLevelType type, const char *func, int line, cons
     #ifndef ALOGE // color : red
         #ifdef ERROR
             #define ALOGE(fmt, ...)\
-                fprintf(stderr, "\033[31mERROR\033[0m:[%lu]:[%s]:[%d]:[%ld]: " fmt, Harman::Adas::AFramework::AFoundation::GetTickCount(), __FUNCTION__, __LINE__, (long int)syscall(__NR_gettid), ##__VA_ARGS__);
+                fprintf(stderr, "\033[31mERROR\033[0m:[%lu]:[%s]:[%d]:[%ld]: " fmt, GetTickCount(), __FUNCTION__, __LINE__, (long int)syscall(__NR_gettid), ##__VA_ARGS__);
         #else
             #define ALOGE(fmt, ...) ((void)0)
         #endif //#ifdef ERROR
