@@ -6,6 +6,7 @@ include_directories(${PROJECT_SOURCE_DIR}/../../CaseClient/include)
 include_directories(${PROJECT_SOURCE_DIR}/../include/ADASManager)
 include_directories(${PROJECT_SOURCE_DIR}/../include/ADASManager/RVC)
 include_directories(${PROJECT_SOURCE_DIR}/../include/ADASManager/Camera)
+include_directories(${PROJECT_SOURCE_DIR}/../include/ADASManager/Camera/Display)
 include_directories(${PROJECT_SOURCE_DIR}/../include/)
 
 
@@ -16,7 +17,7 @@ SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/../lib/linux)
 MESSAGE(STATUS "This is lib ABase dir " ${PROJECT_SOURCE_DIR})
 aux_source_directory(./ADASManager SRC_MANAGER)
 aux_source_directory(./ADASManager/Camera SRC_MGR_CAM)
-aux_source_directory(./ADASManager/CameraDisplay SRC_MGR_DIS)
+aux_source_directory(./ADASManager/Camera/Display SRC_MGR_DIS)
 aux_source_directory(./ADASManager/RVC SRC_MGR_RVC)
 aux_source_directory(./ADASManager/AVM SRC_MGR_AVM)
 
