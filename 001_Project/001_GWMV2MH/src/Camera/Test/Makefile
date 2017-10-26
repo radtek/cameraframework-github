@@ -22,8 +22,8 @@ OBJS2       = $(patsubst %.c,%.o,$(SRCS2))
 SRCS3       = $(wildcard $(SRC_PATH)/../*.cpp)
 OBJS3       = $(patsubst %.cpp,%.o,$(SRCS3))
 
-SRCS3       += $(wildcard $(SRC_PATH)/../../Pas/*.cpp)
-OBJS3       += $(patsubst %.cpp,%.o,$(SRCS3))
+#SRCS3       += $(wildcard $(SRC_PATH)/../../Pas/*.cpp)
+#OBJS3       += $(patsubst %.cpp,%.o,$(SRCS3))
 
 OBJS = $(OBJS1) $(OBJS2) $(OBJS3)
 
@@ -36,10 +36,11 @@ LIBS += wayland-egl
 LIBS += wayland-cursor
 LIBS += GLESv2 EGL
 LIBS += ivi-application
-LIBS += lodepng
+#LIBS += lodepng
 LIBS += ilmCommon
 LIBS += ilmClient
 LIBS += ilmControl
+LIBS += dlt
 
 ## used headers  file path
 INCLUDE_PATH := ../../../include

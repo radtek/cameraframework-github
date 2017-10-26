@@ -1,0 +1,37 @@
+
+
+一 目录结构
+000_Framework ： 框架 代码，其中包含 foundation abase client graphic 的源码，编译出4个so文件
+001_Project   ： 项目 代码，其中子文件夹 001_GWMV2MH 放的是长城项目的代码
+
+二 编译准备工作
+1. 安装 sdk2
+
+2. 安装 elina code generate 工具
+
+
+三 编译
+1. 进入项目树的根目录，执行source setEnv.sh （注意，一定要在项目树的根目录执行此命令，其他目录执行会使脚本的变量赋值出现错误）
+   执行后的结果是： 1. 引入sdk2的工具链;
+                    2. 加入命令：adas foundation foundationlib abase abaslib caseclient caseclientlib graphic graphiclib
+                  pushfoundation pushabase pushcaseclient pushgraphic pushproject c 
+  （c命令实现真正的清屏指令，不简单等同与clear命令;  adas命令是在任何目录回到项目的根目录，其他命令啥意思，一看setEnv.sh脚本的内容就知道）
+2. 终端执行 foundation 命令 ，会直接进入foundation的源码目录，执行make，会编译代码，生成 libAFoundation.so  
+                                                            执行make clean，会删除生成的中间文件和动态库文件
+                                                            执行 foundationlib，会直接跳转到 libAFoundation.so 所在的目录
+3. 终端执行 abase 命令 ，会直接进入abase的源码目录，执行make，会编译代码，生成 libABase.so  
+                                                            执行make clean，会删除生成的中间文件和动态库文件
+                                                            执行 abaslib，会直接跳转到 libABase.so 所在的目录
+4. 终端执行 caseclient 命令 ，会直接进入caseclient的源码目录，执行cmake .  会生成MakeFile文件
+                                                            执行make，会编译代码，生成 libACaseSocket.so 
+                                                            执行make clean，会删除生成的中间文件和动态库文件
+                                                            执行 caseclientlib，会直接跳转到 libACaseSocket.so 所在的目录
+5. 终端执行 graphic 命令 ，会直接进入graphic的源码目录，执行make，会编译代码，生成 libAGraphic.so  
+                                                            执行make clean，会删除生成的中间文件和动态库文件
+                                                            执行 graphiclib，会直接跳转到 libAGraphic.so 所在的目录
+6. 把编译出来的so 上传到板子上，使用命令 pushfoundation pushabase pushcaseclient pushgraphic
+   前提，请选确保setEnv.sh中的板子的remoteIP地址是正确的，板子的ip隔一段时间会变一次，变了就得手动改这个remoteIP地址
+
+
+
+
