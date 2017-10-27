@@ -10,6 +10,8 @@
 #include <GLES2/gl2.h>
 #include <assert.h>
 
+#define  LM_SUPPORT 1
+
 //#undef LM_SUPPORT
 
 #include <wayland-client.h>
@@ -36,8 +38,8 @@ struct display {
     struct wl_touch *touch;
     struct wl_keyboard *keyboard;
     struct wl_shm *shm;
-    // struct wl_cursor_theme *cursor_theme;
-    // struct wl_cursor *default_cursor;
+    struct wl_cursor_theme *cursor_theme;
+    struct wl_cursor *default_cursor;
     struct wl_surface *cursor_surface;
     struct {
         EGLDisplay dpy;

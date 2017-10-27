@@ -1,8 +1,11 @@
-
-#ifndef __HARMAN_ADAS_APROJECT_GWMV2MH_RVCSTUBIMPL_H__
-#define __HARMAN_ADAS_APROJECT_GWMV2MH_RVCSTUBIMPL_H__
+#ifndef RVC_STUB_IMPL_H_
+#define  RVC_STUB_IMPL_H_
 
 #include "ADASManager/RVC/ARvcBase.h"
+#include "TraceMacros.h"
+
+using namespace Harman::Adas::AFramework::AFoundation;
+
 
 using namespace std;
 using namespace Harman::Adas::AFramework::ABase::ADASManager;
@@ -15,22 +18,25 @@ namespace GWMV2MH {
 class RvcStubImpl : public ARvcBase
 {
 public:
-    RvcStubImpl(CameraHub* hub);
-    virtual ~RvcStubImpl();
+	RvcStubImpl(CameraHub* hub);
+	virtual ~RvcStubImpl();
 
 public:
-    a_status initialize();
-    VOID afterHandleMessageQueue();
+	virtual a_status   initialize();
+    VOID    	afterHandleMessageQueue();
 
-    VOID showCamera(const string& pData);
+    VOID    	showCamera(const string& pData);
 
 private:
-
+		
 };
 
-} // namespace GWMV2MH
-} // namespace AProject
-} // namespace Adas
-} // namespace Harman
+}
+}
+}
+}
 
-#endif // __HARMAN_ADAS_APROJECT_GWMV2MH_RVCSTUBIMPL_H__
+
+
+
+#endif

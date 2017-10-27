@@ -22,6 +22,11 @@ int i =0;
 
 int short_radius=0,long_radius=0;
 
+VOID FordPDCTest::init()
+{
+    return;
+}
+
 void FordPDCTest::vUsecase_blockstate()
 {
 	// testvalue = 0x5;//all sensor on

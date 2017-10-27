@@ -3,6 +3,9 @@
 /001_Project/100_testAFoundation/x86/testAFoudation/Debug
 /000_Framework/libAFoundation/proj/x86/libAFoundation/Debug
 /001_Project/001_GWMV2MH/prj/x86/vs2010/adas/Debug
+001_Project/001_GWMV2MH/gen
+001_Project/001_GWMV2MH/src-gen
+001_Project/001_GWMV2MH/build
 *.sdf
 *.suo
 *.ipch

@@ -23,6 +23,7 @@ public:
 	FordPDCTest(PDCServiceFord* pPDCServiceFord,GraphicVPAFord* pGraphicVPAFord);
     void update();
 	void setup();
+    virtual VOID init() override;
 private:
 	void vSendPDCState();
 	//AMB_PDCConsumerHandler m_testAMBPDC;

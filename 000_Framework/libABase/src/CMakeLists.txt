@@ -18,8 +18,11 @@ MESSAGE(STATUS "This is lib ABase dir " ${PROJECT_SOURCE_DIR})
 aux_source_directory(./ADASManager SRC_MANAGER)
 aux_source_directory(./ADASManager/Camera SRC_MGR_CAM)
 aux_source_directory(./ADASManager/Camera/Display SRC_MGR_DIS)
+#aux_source_directory(./ADASManager/PAS SRC_MGR_PAS)
+#aux_source_directory(./ADASManager/PAS/GraphicCore SRC_MGR_GRAPHICCORE)
 aux_source_directory(./ADASManager/RVC SRC_MGR_RVC)
 aux_source_directory(./ADASManager/AVM SRC_MGR_AVM)
 
 target_link_libraries(AFoundation)
-add_library(ABase SHARED ${SRC_MANAGER} ${SRC_MGR_CAM} ${SRC_MGR_DIS} ${SRC_MGR_RVC} ${SRC_MGR_AVM})
+add_library(ABase SHARED ${SRC_MANAGER} ${SRC_MGR_CAM} ${SRC_MGR_DIS} ${SRC_MGR_RVC} ${SRC_MGR_AVM}
+#add_library(ABase SHARED ${SRC_MANAGER} ${SRC_MGR_CAM} ${SRC_MGR_DIS} ${SRC_MGR_RVC} ${SRC_MGR_AVM} ${SRC_MGR_PAS} ${SRC_MGR_GRAPHICCORE})

@@ -104,6 +104,7 @@ public:
 
 	static PDCServiceFord* getInstance();
 	static void delInstance();
+	virtual BOOLEAN initialize(string sServiceName) override;
 	void vInitialize(CMessageQueue* pMsgQueue, GraphicVPAFord* pGraphicVPAFord);//remove ford graphic client in app
 	void vUpdateSize(void* pData);
 	void vUpdatePosition(void* pData);

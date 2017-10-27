@@ -58,6 +58,11 @@ PDCServiceFord::PDCServiceFord()
 
 }
 
+BOOLEAN PDCServiceFord::initialize(string sServiceName)
+{
+	return TRUE;
+}
+
 bool PDCServiceFord::bGetPDCState()
 {
 	return m_PDCSensorHub->bIsActive();

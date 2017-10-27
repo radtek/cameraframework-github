@@ -1,7 +1,7 @@
 #!/bin/sh
 
-export ADAS_ROOT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-export cpm_adas_adservice_PATH="$ADAS_ROOT_PATH/../cpm_adas_adservice"
+ADAS_ROOT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cpm_adas_adservice_PATH="$ADAS_ROOT_PATH/../cpm_adas_adservice"
 
 sdkPATH="/opt/elina/2.0.2015143A"
 
@@ -40,7 +40,7 @@ alias abaselib='cd $ADAS_ROOT_PATH/000_Framework/libABase/lib/linux'
 alias graphic='cd $ADAS_ROOT_PATH/000_Framework/libAGraphic/src'
 alias graphiclib='cd $ADAS_ROOT_PATH/000_Framework/libAGraphic/lib/linux'
 
-alias project='cd $ADAS_ROOT_PATH/001_Project/001_GWMV2MH/src/Camera/Test'
+alias project='cd $ADAS_ROOT_PATH/001_Project/001_GWMV2MH/Test/Camera'
 
 alias m='make'
 alias M='make'

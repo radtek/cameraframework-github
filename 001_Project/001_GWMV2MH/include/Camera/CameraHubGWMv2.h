@@ -7,6 +7,9 @@
 
 #include <map>
 #include <thread>
+#include "AFoundation.h"
+
+using namespace Harman::Adas::AFramework::AFoundation;
 
 using namespace std;
 
