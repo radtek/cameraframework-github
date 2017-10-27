@@ -1,37 +1,77 @@
 
+目前开发涉及到三棵树：（建议三棵代码树下载到同一个目录下，以便运用后面提供的很多方便的脚本）
+组内的framework代码仓库（维护4个so） ssh://git@stash1.harman.com:7999/gwm_camsdk/cameraframework.git   （框架代码树）
+项目的代码仓库（维护长城的代码） ssh://git@stash1.harman.com:7999/gwm_v2mh/cpm_adas_adservice.git   （项目代码树）
+项目的BB文件仓库（维护长城的BB文件）  ssh://git@stash1.harman.com:7999/gwm_v2mh/contracts-gwm.git （BB文件树）
+
+
+------------框架代码树----------------------
+下载框架代码树： git clone ssh://git@stash1.harman.com:7999/gwm_camsdk/cameraframework.git
 
 一 目录结构
 000_Framework ： 框架 代码，其中包含 foundation abase client graphic 的源码，编译出4个so文件
-001_Project   ： 项目 代码，其中子文件夹 001_GWMV2MH 放的是长城项目的代码
+001_Project   ： 项目 代码，其中子文件夹 001_GWMV2MH 放的是长城项目的代码（测试代码）
 
 二 编译准备工作
 1. 安装 sdk2
-
-2. 安装 elina code generate 工具
-
+下载： elina-oakland-glibc-x86_64-x86_64-toolchain-2.0.2015143A_9940_B1-sdk2.sh
+加可执行权限： chmod +x elina-oakland-glibc-x86_64-x86_64-toolchain-2.0.2015143A_9940_B1-sdk2.sh 
+运行脚本： ./elina-oakland-glibc-x86_64-x86_64-toolchain-2.0.2015143A_9940_B1-sdk2.sh （默认安装路径即可 /opt/elina/......）
+使用elina工具链： 进入安装好的目录 source environment-setup-corei7-64-elina-linux   （此动作隶属此终端，另外打开终端需要重做此步骤）
+(参考： https://confluence.harman.com/confluence/display/GWMV2MH/Development+Environment+Setup+for+GWM+V2MH)
+2. 安装 elina code generate 工具 （如果不是安装在opt目录下，那么不需要chmod的动作）
+sudo git clone ssh://git@stash1.harman.com:7999/int_devtools/elinaidelitelinux.git /opt/elinaidelitelinux
+cd /opt/elinaidelitelinux
+unzip ElinaLiteIDE-linux.gtk.x86_64.zip -d .
+cd /opt
+sudo chmod 777 elinaidelitelinux -R
+(参考： https://confluence.harman.com/confluence/pages/viewpage.action?spaceKey=GWMV2MH&title=CPM+code+generation+process+in+Yocto)
 
 三 编译
 1. 进入项目树的根目录，执行source setEnv.sh （注意，一定要在项目树的根目录执行此命令，其他目录执行会使脚本的变量赋值出现错误）
-   执行后的结果是： 1. 引入sdk2的工具链;
-                    2. 加入命令：adas foundation foundationlib abase abaslib caseclient caseclientlib graphic graphiclib
-                  pushfoundation pushabase pushcaseclient pushgraphic pushproject c 
-  （c命令实现真正的清屏指令，不简单等同与clear命令;  adas命令是在任何目录回到项目的根目录，其他命令啥意思，一看setEnv.sh脚本的内容就知道）
-2. 终端执行 foundation 命令 ，会直接进入foundation的源码目录，执行make，会编译代码，生成 libAFoundation.so  
+   执行后的结果是： 1. 引入sdk2的工具链（也就是做了source environment-setup-corei7-64-elina-linux，无需再手动去做这件事）;
+                   2. 加入命令：foundation foundationlib abase abaslib caseclient caseclientlib graphic graphiclib
+                  pushfoundation pushabase pushcaseclient pushgraphic pushproject c adas greatwall
+  （c命令实现真正的清屏指令，不简单等同与clear命令;  
+    adas命令是在任何目录回到框架代码树的根目录，
+    greatwall命令是在任何目录回到项目代码树的根目录，
+    其他命令啥意思，一看setEnv.sh脚本的内容就知道）
+2. 终端执行 foundation 命令 ，会直接进入foundation的源码目录，执行make，会编译代码，生成 libAFoundation.so
                                                             执行make clean，会删除生成的中间文件和动态库文件
                                                             执行 foundationlib，会直接跳转到 libAFoundation.so 所在的目录
-3. 终端执行 abase 命令 ，会直接进入abase的源码目录，执行make，会编译代码，生成 libABase.so  
+3. 终端执行 abase 命令 ，会直接进入abase的源码目录，执行make，会编译代码，生成 libABase.so
                                                             执行make clean，会删除生成的中间文件和动态库文件
                                                             执行 abaslib，会直接跳转到 libABase.so 所在的目录
 4. 终端执行 caseclient 命令 ，会直接进入caseclient的源码目录，执行cmake .  会生成MakeFile文件
-                                                            执行make，会编译代码，生成 libACaseSocket.so 
+                                                            执行make，会编译代码，生成 libACaseSocket.so
                                                             执行make clean，会删除生成的中间文件和动态库文件
                                                             执行 caseclientlib，会直接跳转到 libACaseSocket.so 所在的目录
-5. 终端执行 graphic 命令 ，会直接进入graphic的源码目录，执行make，会编译代码，生成 libAGraphic.so  
+5. 终端执行 graphic 命令 ，会直接进入graphic的源码目录，执行make，会编译代码，生成 libAGraphic.so
                                                             执行make clean，会删除生成的中间文件和动态库文件
                                                             执行 graphiclib，会直接跳转到 libAGraphic.so 所在的目录
 6. 把编译出来的so 上传到板子上，使用命令 pushfoundation pushabase pushcaseclient pushgraphic
    前提，请选确保setEnv.sh中的板子的remoteIP地址是正确的，板子的ip隔一段时间会变一次，变了就得手动改这个remoteIP地址
 
+------------BB文件树----------------------
+下载BB文件的代码树： git clone ssh://git@stash1.harman.com:7999/gwm_v2mh/contracts-gwm.git
+
+
+------------项目代码树----------------------
+下载项目代码树： ssh://git@stash1.harman.com:7999/gwm_v2mh/cpm_adas_adservice.git
+
+1. 部署框架代码树的 头文件和so到项目代码树
+   adas命令 直接可以到框架代码树的根目录
+   执行 ./deploy_2_cpm_adas_adservice.sh (此脚本打开一看就知道功能)
+
+2. 编译项目代码。
+   进入cpm_adas_adservice代码树的根目录，
+   mkdir build
+   cd build
+   cmake -DELINA_LITE_DCIF_GENERATOR=/opt/elinaidelitelinux/elina -DCDEPL_PATH=/home/snow/Workspace/contracts-gwm/contracts-gwm-v2mh/packages/adas/ADAS.cdl -DCMAKE_SYSROOT=/opt/elina/2.0.2015143A/sysroots/corei7-64-elina-linux  ../
+  （cmake 这条命令后面的参数中用到的路径需要改成自己机器上的路径，并且不能用相对路径，相对路径会有问题）
+   make target (功能：先生成gen和src-gen目录，然后编译，结果是生成了两个文件：libadas-dbus.so 和 adas)
+   要clean ，只需要 在build目录下执行 rm -rf * 即可，再用前面的步骤重编就可以了
+   
 
 
 

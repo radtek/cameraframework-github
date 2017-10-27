@@ -1,6 +1,7 @@
 #!/bin/sh
 
 export ADAS_ROOT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export cpm_adas_adservice_PATH="$ADAS_ROOT_PATH/../cpm_adas_adservice"
 
 sdkPATH="/opt/elina/2.0.2015143A"
 
@@ -23,6 +24,9 @@ fi
 
 alias adas='cd $ADAS_ROOT_PATH'
 alias ADAS='cd $ADAS_ROOT_PATH'
+
+alias greatwall='cd $cpm_adas_adservice_PATH'
+alias GREATWALL='cd $cpm_adas_adservice_PATH'
 
 alias foundation='cd $ADAS_ROOT_PATH/000_Framework/libAFoundation/src'
 alias foundationlib='cd $ADAS_ROOT_PATH/000_Framework/libAFoundation/lib/linux'
