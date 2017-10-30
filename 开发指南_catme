@@ -1,37 +1,52 @@
 
-目前开发涉及到三棵树：（建议三棵代码树下载到同一个目录下，以便运用后面提供的很多方便的脚本）
-组内的framework代码仓库（维护4个so） ssh://git@stash1.harman.com:7999/gwm_camsdk/cameraframework.git   （框架代码树）
-项目的代码仓库（维护长城的代码） ssh://git@stash1.harman.com:7999/gwm_v2mh/cpm_adas_adservice.git   （项目代码树）
-项目的BB文件仓库（维护长城的BB文件）  ssh://git@stash1.harman.com:7999/gwm_v2mh/contracts-gwm.git （BB文件树）
 
 
-------------框架代码树----------------------
-下载框架代码树： git clone ssh://git@stash1.harman.com:7999/gwm_camsdk/cameraframework.git
+声明：
+此开发指南涉及到很多脚本和快捷命令，这些只是辅助开发，不用这些东西一样可以是正常开发工作
 
-一 目录结构
-000_Framework ： 框架 代码，其中包含 foundation abase client graphic 的源码，编译出4个so文件
-001_Project   ： 项目 代码，其中子文件夹 001_GWMV2MH 放的是长城项目的代码（测试代码）
 
-二 编译准备工作
+------------代码树介绍----------------------
+目前开发涉及到四棵树：（建议四棵代码树下载到同一个父目录下，以便运用后面提供的很多方便的脚本）
+1. 组内的framework代码仓库（维护组内4个so） ssh://git@stash1.harman.com:7999/gwm_camsdk/cameraframework.git   （别名：框架代码树）
+2. 项目的代码仓库（头文件，so，长城项目文件） ssh://git@stash1.harman.com:7999/gwm_v2mh/cpm_adas_adservice.git   （别名：项目代码树）
+   这棵树的工作环境是自己在网页上创建的自己的分支，clone树之后要先切换到自己的分支上再工作，提交代码需要创建pull request
+3. 项目的BB文件仓库（维护长城TCFG环境的BB文件）  ssh://git@stash1.harman.com:7999/gwm_v2mh/cpm-gwm-v2mh.git  （别名：BB树）
+   这棵树的工作环境是自己在网页上创建的自己的fork树（fork的时候名字可以加上一个体现自己这次提交的后缀），clone树之后直接工作，提交代码需要创建pull request
+4. 项目的fidl/cdl文件仓库（维护组内相关fidl/cdl接口文件）  ssh://git@stash1.harman.com:7999/gwm_v2mh/contracts-gwm.git （别名：fidl/cdl树）
+   这棵树除了改动接口是需要clone下来工作提交代码，还有个用处就是colne下来是为了在本地编译长城project的代码。
+   这棵树的工作环境是自己在网页上创建的自己的fork树（fork的时候名字可以加上一个体现自己这次提交的后缀），clone树之后直接工作，提交代码需要创建pull request
+
+
+------------搭建开发环境----------------------
 1. 安装 sdk2
 下载： elina-oakland-glibc-x86_64-x86_64-toolchain-2.0.2015143A_9940_B1-sdk2.sh
 加可执行权限： chmod +x elina-oakland-glibc-x86_64-x86_64-toolchain-2.0.2015143A_9940_B1-sdk2.sh 
 运行脚本： ./elina-oakland-glibc-x86_64-x86_64-toolchain-2.0.2015143A_9940_B1-sdk2.sh （默认安装路径即可 /opt/elina/......）
-使用elina工具链： 进入安装好的目录 source environment-setup-corei7-64-elina-linux   （此动作隶属此终端，另外打开终端需要重做此步骤）
+如何使用elina工具链： 进入安装好的目录 source environment-setup-corei7-64-elina-linux   （source 动作隶属此终端，另外打开终端需要重做此步骤）
 (参考： https://confluence.harman.com/confluence/display/GWMV2MH/Development+Environment+Setup+for+GWM+V2MH)
-2. 安装 elina code generate 工具 （如果不是安装在opt目录下，那么不需要chmod的动作）
+2. 安装 elina code generate 工具 （如果不是安装在opt目录下，那么不需要chmod的动作，安装在opt目录下是为了产生个机器无关的路径，这样后面写脚本可以使用固定路径）
 sudo git clone ssh://git@stash1.harman.com:7999/int_devtools/elinaidelitelinux.git /opt/elinaidelitelinux
 cd /opt/elinaidelitelinux
 unzip ElinaLiteIDE-linux.gtk.x86_64.zip -d .
 cd /opt
 sudo chmod 777 elinaidelitelinux -R
 (参考： https://confluence.harman.com/confluence/pages/viewpage.action?spaceKey=GWMV2MH&title=CPM+code+generation+process+in+Yocto)
+3. 要在本地编译长城project的代码，需要下载fidl/cdl树： ssh://git@stash1.harman.com:7999/gwm_v2mh/contracts-gwm.git
 
-三 编译
-1. 进入项目树的根目录，执行source setEnv.sh （注意，一定要在项目树的根目录执行此命令，其他目录执行会使脚本的变量赋值出现错误）
+
+
+------------框架代码树----------------------
+下载框架代码树： git clone ssh://git@stash1.harman.com:7999/gwm_camsdk/cameraframework.git
+
+一 目录结构
+000_Framework ： 框架 代码，其中包含 foundation abase client graphic 的源码，编译出4个so文件（libAFoundation.so libABase.so libAGraphic.so libACaseSocket.so）
+001_Project   ： 项目 代码，其中子文件夹 001_GWMV2MH 放的是长城项目的代码 + 测试代码
+
+二 编译
+1. 进入项目树的根目录，执行source setEnv.sh （注意，一定要在项目树的根目录执行此命令，其他目录执行会使脚本的变量赋值出现错误, source 动作隶属此终端，另外打开终端需要重做此步骤）
    执行后的结果是： 1. 引入sdk2的工具链（也就是做了source environment-setup-corei7-64-elina-linux，无需再手动去做这件事）;
                    2. 加入命令：foundation foundationlib abase abaslib caseclient caseclientlib graphic graphiclib
-                  pushfoundation pushabase pushcaseclient pushgraphic pushproject c adas greatwall
+                  pushfoundation pushabase pushcaseclient pushgraphic pushadasdbus pushbinadas c adas greatwall cmakeconfig
   （c命令实现真正的清屏指令，不简单等同与clear命令;  
     adas命令是在任何目录回到框架代码树的根目录，
     greatwall命令是在任何目录回到项目代码树的根目录，
@@ -41,37 +56,73 @@ sudo chmod 777 elinaidelitelinux -R
                                                             执行 foundationlib，会直接跳转到 libAFoundation.so 所在的目录
 3. 终端执行 abase 命令 ，会直接进入abase的源码目录，执行make，会编译代码，生成 libABase.so
                                                             执行make clean，会删除生成的中间文件和动态库文件
-                                                            执行 abaslib，会直接跳转到 libABase.so 所在的目录
-4. 终端执行 caseclient 命令 ，会直接进入caseclient的源码目录，执行cmake .  会生成MakeFile文件
+                                                            执行 abaselib，会直接跳转到 libABase.so 所在的目录
+4. 终端执行 caseclient 命令 ，会直接进入caseclient的源码目录，执行 mkdir build  （build已经加入 .gitignore 不会被提交）
+                                                            cd build
+                                                            执行cmake ..  会生成MakeFile文件
                                                             执行make，会编译代码，生成 libACaseSocket.so
                                                             执行make clean，会删除生成的中间文件和动态库文件
                                                             执行 caseclientlib，会直接跳转到 libACaseSocket.so 所在的目录
 5. 终端执行 graphic 命令 ，会直接进入graphic的源码目录，执行make，会编译代码，生成 libAGraphic.so
                                                             执行make clean，会删除生成的中间文件和动态库文件
                                                             执行 graphiclib，会直接跳转到 libAGraphic.so 所在的目录
-6. 把编译出来的so 上传到板子上，使用命令 pushfoundation pushabase pushcaseclient pushgraphic
-   前提，请选确保setEnv.sh中的板子的remoteIP地址是正确的，板子的ip隔一段时间会变一次，变了就得手动改这个remoteIP地址
 
-------------BB文件树----------------------
-下载BB文件的代码树： git clone ssh://git@stash1.harman.com:7999/gwm_v2mh/contracts-gwm.git
+6. 终端执行 project 命令 ，会直接进入长城项目源码（其他目录）以及框架测试代码（Test子目录）的根目录  
+   1）编译长城项目源码
+   mkdir build  （build已经加入 .gitignore 不会被提交）
+   cd build
+   cmake -DELINA_LITE_DCIF_GENERATOR=/opt/elinaidelitelinux/elina -DCDEPL_PATH=/home/snow/Workspace/contracts-gwm/contracts-gwm-v2mh/packages/adas/ADAS.cdl -DCMAKE_SYSROOT=/opt/elina/2.0.2015143A/sysroots/corei7-64-elina-linux  ../         (简洁指令cmakeconfig， 前提是上面的路径参数都是对的，有自己的目录那么只能用长的命令 cmake ......)
+   make target (功能：先生成gen和src-gen目录（已经加入 .gitignore 不会被提交）），然后编译，结果是生成了两个文件：libadas-dbus.so 和 adas；  
+                      这里不能直接用make，make只是编译，并没有做生成代码的工作； make target = make generate + make)
+   要clean ，只需要 在build目录下执行 rm -rf * 即可，再用前面的cmake ...（简介指令cmakeconfig） , make target步骤重编就可以了
+
+   2）编译测试代码
+   cd Test/Camera
+   make
+
+
+7. 把编译出来的so 上传到板子上，使用命令 pushfoundation pushabase pushcaseclient pushgraphic pushadasdbus pushbinadas
+   前提，请选确保setEnv.sh中的板子的remoteIP地址是正确的，板子的ip隔一段时间会变一次，变了就得手动改这个remoteIP地址。 目前的值：remoteIP="10.80.105.55"
+   （根目录下有个脚本deploy_2_board.sh  执行一下可以把全部的so和binadas push到板子上）
 
 
 ------------项目代码树----------------------
 下载项目代码树： ssh://git@stash1.harman.com:7999/gwm_v2mh/cpm_adas_adservice.git
 
-1. 部署框架代码树的 头文件和so到项目代码树
-   adas命令 直接可以到框架代码树的根目录
+1. 首先切换到自己的分之
+
+2. 部署框架代码树的 头文件和so，以及项目代码 
+   到项目代码树  adas命令（直接可以到框架代码树的根目录，只有执行了source setEnv.sh才有这个命令 ）
    执行 ./deploy_2_cpm_adas_adservice.sh (此脚本打开一看就知道功能)
 
-2. 编译项目代码。
-   进入cpm_adas_adservice代码树的根目录，
-   mkdir build
-   cd build
-   cmake -DELINA_LITE_DCIF_GENERATOR=/opt/elinaidelitelinux/elina -DCDEPL_PATH=/home/snow/Workspace/contracts-gwm/contracts-gwm-v2mh/packages/adas/ADAS.cdl -DCMAKE_SYSROOT=/opt/elina/2.0.2015143A/sysroots/corei7-64-elina-linux  ../
-  （cmake 这条命令后面的参数中用到的路径需要改成自己机器上的路径，并且不能用相对路径，相对路径会有问题）
-   make target (功能：先生成gen和src-gen目录，然后编译，结果是生成了两个文件：libadas-dbus.so 和 adas)
-   要clean ，只需要 在build目录下执行 rm -rf * 即可，再用前面的步骤重编就可以了
-   
+2. 编译项目代码
+   到项目代码树  greatwall命令（直接可以到项目代码树的根目录，只有执行了source setEnv.sh才有这个命令 ）
+   如何编译，参照 框架代码树 中的第 6 1）编译长城项目源码，指令一模一样
 
 
+
+------------框架代码树 和 项目代码树 的关系----------------------
+框架代码树 完全包含 项目代码树 的内容，开发阶段，只要不集成到TCFG公司的主干树中，只需要在 框架代码树 上开发，测试，无需涉及 项目代码树
+如果需要集成到TCFG公司的主干树中，前提是 框架代码树 的代码全部通过编译，并且五个so，binadas可执行文件在板子上都测试通过
+那么clone 项目代码树，并切换到 自己的分支， 在 框架代码树 根目录执行 ./deploy_2_cpm_adas_adservice.sh，这样，框架代码树 的所有修改就到了 项目代码树 的当前自己分支
+然后到  项目代码树 编译 ，没问题就可提交代码，创建pull request
+如果有问题，那么要改 框架代码树，然后重新执行 ./deploy_2_cpm_adas_adservice.sh，再去编译 项目代码树
+项目代码树 不能手动改，只能通过 ./deploy_2_cpm_adas_adservice.sh 来改， 目的就是为了 “框架代码树 完全包含 项目代码树 的内容”原则
+如果deploy_2_cpm_adas_adservice.sh脚本中没有处理到新加入或者已经删除的文件/文件夹，那么修改deploy_2_cpm_adas_adservice.sh加上新加的目录/文件拷贝动作或者删掉已经删除的目录/文件拷贝动作
+
+
+通俗一点讲，就是 项目代码树 是 框架代码树 某一时间点上的一次 快照，项目代码树 只是用来提交代码的树， 框架代码树 是开发测试的树。
+
+
+
+
+------------BB文件树----------------------
+下载BB文件的代码树： ssh://git@stash1.harman.com:7999/gwm_v2mh/cpm-gwm-v2mh.git 由于这棵树是fork出来的，名字是自己起的，
+例如 此次提交是修改了GPIO的代码，那么可以加上后缀，名字起成： cpm-gwm-v2mh-modifyGpio
+所以真正的下载命令可能变成：ssh://git@stash1.harman.com:7999/gwm_v2mh/cpm-gwm-v2mh-modifyGpio.git
+
+
+
+------------代码提交的完整流程----------------------
+待总结
 

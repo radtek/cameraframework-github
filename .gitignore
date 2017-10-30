@@ -6,6 +6,7 @@
 001_Project/001_GWMV2MH/gen
 001_Project/001_GWMV2MH/src-gen
 001_Project/001_GWMV2MH/build
+000_Framework/CaseClient/src/SocketIPC/build
 *.sdf
 *.suo
 *.ipch
