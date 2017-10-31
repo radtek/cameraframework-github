@@ -9,15 +9,11 @@ namespace AFramework {
 namespace ABase {
 namespace ADASManager {
 
-int DisplaySample::running = 1;
 
 struct wl_registry_listener DisplaySample::registry_listener = {
     registry_handle_global,
     registry_handle_global_remove
 };
-
-struct display DisplaySample::m_Display = { 0 };
-struct window  DisplaySample::m_Window  = { 0 };
 
 DisplaySample::DisplaySample()
 {
@@ -40,6 +36,10 @@ DisplaySample::DisplaySample()
                  &registry_listener, &m_Display);
 
     wl_display_roundtrip(m_Display.display);
+
+    m_Window.surface = wl_compositor_create_surface(m_Display.compositor);
+
+    create_ivi_surface(&m_Window, &m_Display);
 }
 
 DisplaySample::~DisplaySample()
@@ -198,16 +198,15 @@ void DisplaySample::create_ivi_surface(struct window *window, struct display *di
 
     if (window->ivi_surface == NULL) {
         ALOGE("Failed to create ivi_client_surface\n");
-        abort();
     }
+
+    ALOGD("Success to create ivi_client_surface\n");
 }
 
 void DisplaySample::create_surface(struct window *window)
 {
     struct display *display = window->display;
     EGLBoolean ret;
-
-    window->surface = wl_compositor_create_surface(display->compositor);
 
     window->native =
         wl_egl_window_create(window->surface,
@@ -219,7 +218,6 @@ void DisplaySample::create_surface(struct window *window)
                            display->egl.conf,
                            window->native, NULL);
 
-    create_ivi_surface(window, display);
 
     ret = eglMakeCurrent(window->display->egl.dpy, window->egl_surface,
                  window->egl_surface, window->display->egl.ctx);

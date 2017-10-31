@@ -72,6 +72,19 @@ VOID ARvcBase::Update(Subject* subject, Int32 state)
     ALOGI("Update  | subject name[%s] state[%d]\n",
                 subject->GetSubjectName().c_str(),
                 state);
+    switch(state)
+    {
+        case 0:
+            camState = CAM_OFF;
+        break;
+        case 1:
+            camState = CAM_HLOD;
+        break;
+        case 2:
+            camState = CAM_ON;
+            ALOGI("Update  | camState[%d]\n", camState);         
+        break;
+    }
 }
 
 } // namespace ADASManager

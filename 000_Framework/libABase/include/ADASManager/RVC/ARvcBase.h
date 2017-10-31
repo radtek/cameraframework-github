@@ -24,6 +24,17 @@ namespace ADASManager {
 class ARvcBase : public ModuleBase
                             , Observer
 {
+
+public:
+	enum eCamState
+	{
+		CAM_OFF,
+		CAM_HLOD,
+		CAM_ON,
+		CAM_ERROR
+	};
+
+
 public:
 	ARvcBase(CameraHub* hub);
 	virtual ~ARvcBase();
@@ -46,12 +57,16 @@ protected:
 
               Camera* m_pRearCamera;
 
+    eCamState camState;
+
+
 private:
 	map<UInt32, CFunctor*> m_mMapRvcFunc;
 
 	BOOLEAN m_bRvcAvailable;
               CameraHub* m_pModuleHub;
 
+   
 
 };
 

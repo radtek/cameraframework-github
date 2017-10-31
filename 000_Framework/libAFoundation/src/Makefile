@@ -32,7 +32,7 @@ INCLUDE_PATH := ../include
 ## used include librarys file path
 LIBRARY_PATH := lib
 
-LIBS := dlt
+LIBS := dlt nanomsg
 
 ## debug for debug info, when use gdb to debug
 ifeq (1, ${DBG_ENABLE})
