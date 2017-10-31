@@ -25,9 +25,9 @@ public:
     ~NanoIPC(){};
 
     Int32 connect(eIPCMode mode, const string& uri);
-    VOID send();
-    VOID listener();
-    VOID close();
+    BOOLEAN send(Int32 sock, const CHAR* msg, Int32 size);
+    BOOLEAN receive(Int32 sock, VOID* buff);
+    VOID close(Int32 sock);
 };
 
 
@@ -38,11 +38,13 @@ public:
     ~SendNode();
 
     VOID create_node();
-    VOID send(const string& Data);
+    VOID send(const string& data);
     VOID release();
 
 private:
     NanoIPC* m_ipc;
+    const string m_uri;
+    Int32 m_sock;
 };
 
 
@@ -53,11 +55,13 @@ public:
     ~ReceiveNode();
 
     VOID create_node();
-    VOID receive();
+    VOID receive(CHAR* data);
     VOID release();
 
 private:
     NanoIPC* m_ipc;
+    const string m_uri;
+    Int32 m_sock;
 };
 
 
