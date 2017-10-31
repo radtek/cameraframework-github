@@ -29,7 +29,7 @@ public:
 	enum eCamState
 	{
 		CAM_OFF,
-		CAM_HLOD,
+		CAM_HOLD,
 		CAM_ON,
 		CAM_ERROR
 	};

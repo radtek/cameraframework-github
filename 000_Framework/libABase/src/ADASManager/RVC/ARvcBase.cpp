@@ -78,7 +78,7 @@ VOID ARvcBase::Update(Subject* subject, Int32 state)
             camState = CAM_OFF;
         break;
         case 1:
-            camState = CAM_HLOD;
+            camState = CAM_HOLD;
         break;
         case 2:
             camState = CAM_ON;
