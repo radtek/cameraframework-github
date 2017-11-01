@@ -13,6 +13,7 @@
 *.user
 *.opensdf
 *.o
+*.*~
 Debug
 *.ilk
 /003_OpenSrc/poco-1.7.8/bin/*.pdb

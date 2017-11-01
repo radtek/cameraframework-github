@@ -13,4 +13,5 @@
 #include "CTimer.h"
 #include "EpollGPIO.h"
 #include "Epoller.h"
+#include "NanoIPC.h"
 #endif // __HARMAN_ADAS_AFRAMEWORK_AFOUNDATION_AFOUNDATION_H__

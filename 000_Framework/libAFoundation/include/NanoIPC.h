@@ -4,6 +4,7 @@
 #include "nanomsg/nn.h"
 #include "nanomsg/pipeline.h"
 #include "TypeDefine.h"
+#include "CMessageHandler.h"
 
 using namespace std;
 
@@ -26,7 +27,7 @@ public:
 
     Int32 connect(eIPCMode mode, const string& uri);
     BOOLEAN send(Int32 sock, const CHAR* msg, Int32 size);
-    BOOLEAN receive(Int32 sock, VOID* buff);
+    Int32 receive(Int32 sock, VOID* buff);
     VOID close(Int32 sock);
 };
 
@@ -55,7 +56,7 @@ public:
     ~ReceiveNode();
 
     VOID create_node();
-    VOID receive(CHAR* data);
+    Int32 receive(CHAR* data);
     VOID release();
 
 private:

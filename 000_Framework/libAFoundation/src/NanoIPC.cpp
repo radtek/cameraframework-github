@@ -14,22 +14,26 @@ Int32 NanoIPC::connect(eIPCMode mode, const string& uri)
 	{
 		case SEND:
 			sock = nn_socket(AF_SP, NN_PUSH);
-			if(nn_connect(sock, uri.c_str()) >= 0)
+			if(sock < 0)
 			{
-				ALOGD("nano connect ok\n");	
-			}else
+				ALOGE("Unable to create read socket for mode[%d]\n", mode);
+				return -1;
+			}
+			if(nn_connect(sock, uri.c_str()) < 0)
 			{
-				ALOGD("nano[%s] connect failed\n", uri.c_str());	
+				ALOGE("nano[%s] connect failed\n", uri.c_str());
 			}
 		break;
 		case RECEIVE:
 			sock = nn_socket(AF_SP, NN_PULL);
-			if(nn_bind(sock, uri.c_str()) >= 0)
+			if(sock < 0)
 			{
-				ALOGD("nano connect ok\n");	
-			}else
+				ALOGE("Unable to create read socket for mode[%d]\n", mode);
+				return -1;
+			}
+			if(nn_bind(sock, uri.c_str()) < 0)
 			{
-				ALOGD("nano[%s] connect failed\n", uri.c_str());	
+				ALOGE("nano[%s] connect failed\n", uri.c_str());	
 			}
 		break;
 		default:
@@ -42,51 +46,59 @@ Int32 NanoIPC::connect(eIPCMode mode, const string& uri)
 BOOLEAN NanoIPC::send(Int32 sock, const CHAR* msg, Int32 size)
 {
 	Int32 bytes = size;
-
-	if(sock > 0)
+	if(sock >= 0)
 	{
+		
 		while(bytes > 0)
 		{
-			bytes = nn_send(sock, msg, bytes, NN_DONTWAIT);
-			msg = msg + bytes;
-			bytes = size - bytes;
+			int count = nn_send(sock, msg, bytes, 0);
+			if(count >= 0)
+			{
+				ALOGI("nn_send send[%s] [%d]bytes ok\n", msg, bytes);
+				bytes -= count;
+				msg += count;
+			}else{
+				ALOGE("nn_send failed errno[%s]\n", msg, bytes, strerror(errno));
+				return FALSE;
+			}
 		}
+		
 	}
 	else{
-		ALOGD("NanoIPC send sock unavailable.\n");
+		ALOGE("NanoIPC send sock unavailable.\n");
 		return FALSE;
 	}
 
-	ALOGD("NanoIPC send [%d]bytes ok\n");
 	return TRUE;
 }
 
-BOOLEAN NanoIPC::receive(Int32 sock, VOID* buff)
+Int32 NanoIPC::receive(Int32 sock, VOID* buff)
 {
-	Int32 bytes = -1;
+	Int32 bytes = 0;
 	VOID *buffer = NULL;
-	if(sock > 0)
+	if(sock >= 0)
 	{
 		bytes = nn_recv(sock, &buffer, NN_MSG, 0);
 		if (bytes < 0)
 		{
-			ALOGD("Error in reading Nano messages.\n");
-			return FALSE;	// Error
+			ALOGE("Error in reading Nano messages.\n");
+			return -1;	// Error
 		}
 	}else{
-
-		ALOGD("NanoIPC receive sock unavailable.\n");
-		return FALSE;
+		ALOGE("NanoIPC receive sock unavailable.\n");
+		return -1;
 	}
+
 	strncpy((CHAR*)buff, (CHAR*)buffer, bytes);
-	ALOGD("NanoIPC receive [%d]bytes ok\n");
+	ALOGI("NanoIPC receive [%d]bytes buff[%s] ok\n", bytes, buff);
+
 	nn_freemsg(buffer);
-	return TRUE;
+	return bytes;
 }
 
 VOID NanoIPC::close(Int32 sock)
 {
-	if(sock > 0)
+	if(sock >= 0)
 	{
 		nn_shutdown(sock, 0);
 		nn_close(sock);
@@ -128,7 +140,7 @@ VOID SendNode::send(const string& data)
 	BOOLEAN ret;
 	if(m_ipc != NULL)
 	{
-		ret = m_ipc->send(m_sock, data.c_str(), data.size());
+		ret = m_ipc->send(m_sock, data.c_str(), data.size()+1);
 	}
 }
 
@@ -146,7 +158,6 @@ ReceiveNode::ReceiveNode(const string& uri)
 	,m_ipc(new NanoIPC())
 	,m_sock(-1)
 {
-
 }
 
 ReceiveNode::~ReceiveNode()
@@ -162,6 +173,7 @@ VOID ReceiveNode::create_node()
 {
 	if(m_ipc != NULL)
 	{
+
 		m_sock = m_ipc->connect(RECEIVE, m_uri);
 		if(m_sock < 0)
 		{
@@ -171,13 +183,14 @@ VOID ReceiveNode::create_node()
 	}
 }
 
-VOID ReceiveNode::receive(CHAR* data)
+Int32 ReceiveNode::receive(CHAR* data)
 {
-	BOOLEAN ret;
+	Int32 ret = -1;
 	if(m_ipc != NULL)
 	{
 		ret = m_ipc->receive(m_sock, (VOID*)data);
 	}
+	return ret;
 }
 
 VOID ReceiveNode::release()
@@ -187,7 +200,6 @@ VOID ReceiveNode::release()
 		m_ipc->close(m_sock);
 	}
 }
-
 
 }
 }
