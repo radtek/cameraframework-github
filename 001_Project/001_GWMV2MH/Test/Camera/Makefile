@@ -44,6 +44,7 @@ LIBS += ilmCommon
 LIBS += ilmClient
 LIBS += ilmControl
 LIBS += dlt
+LIBS += nanomsg
 
 ## used headers  file path
 INCLUDE_PATH := ../../include

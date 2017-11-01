@@ -24,33 +24,48 @@ namespace ADASManager {
 class ARvcBase : public ModuleBase
                             , Observer
 {
-public:
-	ARvcBase(CameraHub* hub);
-	virtual ~ARvcBase();
 
 public:
-	virtual a_status  initialize();
-	virtual VOID       unInitialize(){};
-	virtual VOID       beforeHandleMessageQueue(){};
-	virtual VOID       afterHandleMessageQueue();
-	virtual a_status  isModuleAvailabel();
+    enum eCamState
+    {
+        CAM_OFF,
+        CAM_HOLD,
+        CAM_ON,
+        CAM_ERROR
+    };
+
+public:
+    ARvcBase(CameraHub* hub);
+    virtual ~ARvcBase();
+
+public:
+    virtual a_status  initialize();
+    virtual VOID       unInitialize(){};
+    virtual VOID       beforeHandleMessageQueue(){};
+    virtual VOID       afterHandleMessageQueue();
+    virtual a_status  isModuleAvailabel();
               virtual VOID Update(Subject* subject, Int32 state);
               virtual VOID onHandle(UInt32 uiEventID, const string& pData);
 
 private:
-	// typedef CFunctorArg1<const string&> 	CFunctor;
+    // typedef CFunctorArg1<const string&>  CFunctor;
 
 protected:
-	a_status registerFunc(UInt32 eventID, CFunctor* pFunctor);
+    a_status registerFunc(UInt32 eventID, CFunctor* pFunctor);
               VOID  updateModuleState();
 
               Camera* m_pRearCamera;
 
-private:
-	map<UInt32, CFunctor*> m_mMapRvcFunc;
+    eCamState camState;
 
-	BOOLEAN m_bRvcAvailable;
+
+private:
+    map<UInt32, CFunctor*> m_mMapRvcFunc;
+
+    BOOLEAN m_bRvcAvailable;
               CameraHub* m_pModuleHub;
+
+
 
 
 };
