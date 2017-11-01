@@ -13,6 +13,7 @@
 #include "provides/v0/com/harman/adas/AVMServiceStubImpl.hpp"
 #include "provides/v0/com/harman/adas/APAServiceStubImpl.hpp"
 #include "RvcServiceStubImplGWM.h"
+#include "PasServiceStubImplGWM.h"
 
 #include <iostream>
 #include <memory>
@@ -61,7 +62,7 @@ int main(int argc, char **argv) {
 
     std::string PASServiceInst0_prov_connection = "adas";
     std::string PASServiceInst0_prov_instance = "adas.PASServiceInst0";
-    std::shared_ptr<v0::com::harman::adas::PASServiceStubImpl> PASServiceInst0_prov_svc = std::make_shared<v0::com::harman::adas::PASServiceStubImpl>();
+    std::shared_ptr<v0::com::harman::adas::PASServiceStubImpl> PASServiceInst0_prov_svc = std::make_shared<v0::com::harman::adas::PASServiceStubImpl>(/*PasServiceStubImplGWM::getInstance()*/);
     runtime->registerService(domain, PASServiceInst0_prov_instance, PASServiceInst0_prov_svc, PASServiceInst0_prov_connection);
 
     std::string APAServiceInst0_prov_connection = "adas";

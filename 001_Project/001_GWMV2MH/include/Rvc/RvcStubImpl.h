@@ -18,17 +18,18 @@ namespace GWMV2MH {
 class RvcStubImpl : public ARvcBase
 {
 public:
-	RvcStubImpl(CameraHub* hub);
-	virtual ~RvcStubImpl();
+    RvcStubImpl(CameraHub* hub);
+    virtual ~RvcStubImpl();
 
 public:
-	virtual a_status   initialize();
-    VOID    	afterHandleMessageQueue();
+    virtual a_status   initialize();
+    VOID  afterHandleMessageQueue();
 
-    VOID    	showCamera(const string& pData);
+    VOID  showCamera(const string& pData);
+    VOID  hideCamera(const string& pData);
 
 private:
-		
+
 };
 
 }

@@ -7,7 +7,7 @@
 #include "Pas/PDCGraphicFord.h"
 #include "CMessageQueue.h"
 //concreate lib provide by graphic
-#include "PAS/GraphicCore/GraphicVPAFord.h"
+#include "ADASManager/PAS/GraphicCore/GraphicVPAFord.h"
 #include "Pas/FordPDCTest.h"
 
 namespace Harman {
@@ -47,20 +47,20 @@ PDCFactory::~PDCFactory()
 
 PDCFactory::PDCFactory()
 {
-	PDCA_LOG_INFO("PDCFactory() !\n");
+	ALOGI("PDCFactory() !\n");
 }
 PDCServiceFord* PDCFactory::vSetup()
 {
-	printf(" [%s, %d]\n", __FUNCTION__, __LINE__);
+	ALOGI(" [%s, %d]\n", __FUNCTION__, __LINE__);
 	CMessageQueue* pMsgQueue =NULL;
-#ifndef PRESCORE_SUPPORT
+#ifndef PRESCORE_SUPPORT   //#define PRESCORE_SUPPORT 1
     pMsgQueue = new CMessageQueue("FordPDCQueue", 300, new PDCMsgHandlerFord());
 #endif
     //create ford graphic proecess client
-    GraphicVPAFord* pGraphicVPAFord =new GraphicVPAFord();
+    GraphicVPAFord* pGraphicVPAFord = new GraphicVPAFord();
     if(pGraphicVPAFord->vInit(800,480))
 	{
-		PDCA_LOG_INFO("PDCFactory() vInit VPA graphic failed!\n");
+		ALOGI("PDCFactory() vInit VPA graphic failed!\n");
 	}
 	else
 	{

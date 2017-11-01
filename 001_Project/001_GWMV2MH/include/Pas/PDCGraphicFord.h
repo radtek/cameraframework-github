@@ -2,9 +2,9 @@
 #ifndef __HARMAN_ADAS_APROJECT_GWMV2MH_PAS_PDCGRAPHICFORD_H__
 #define __HARMAN_ADAS_APROJECT_GWMV2MH_PAS_PDCGRAPHICFORD_H__
 
-#include "PAS/PDCGraphic.h"
-#include "PAS/GraphicCore/GraphicVPAFord.h"
-#include "PAS/GraphicCore/IGraphicPDC.h"
+#include "ADASManager/PAS/PDCGraphic.h"
+#include "ADASManager/PAS/GraphicCore/GraphicVPAFord.h"
+#include "ADASManager/PAS/GraphicCore/IGraphicPDC.h"
 
 using Harman::Adas::AFramework::ABase::ADASManager::IGraphicPDC;
 

@@ -2,10 +2,10 @@
 #ifndef __HARMAN_ADAS_APROJECT_GWMV2MH_PAS_PDCSERVICEFORD_H__
 #define __HARMAN_ADAS_APROJECT_GWMV2MH_PAS_PDCSERVICEFORD_H__
 
-#include "PAS/ParkAssist_PDCService.h"
+#include "ADASManager/PAS/ParkAssist_PDCService.h"
 #include "CMessageHandler.h"
 #include "PDCGraphicFord.h"
-#include "PAS/GraphicCore/GraphicVPAFord.h"
+#include "ADASManager/PAS/GraphicCore/GraphicVPAFord.h"
 #include "PDCSensor.h"
 //#include "PDCServiceStubImpl.hpp"
 #include <string>

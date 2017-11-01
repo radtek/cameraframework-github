@@ -47,25 +47,17 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/include/Rvc)
 include_directories(${PROJECT_SOURCE_DIR}/include/Camera)
 include_directories(${PROJECT_SOURCE_DIR}/include/Client)
+include_directories(${PROJECT_SOURCE_DIR}/include/Pas)
 
 include_directories(${ALIBROOTDIR}/libAFoundation/include)
 include_directories(${ALIBROOTDIR}/libABase/include)
 include_directories(${ALIBROOTDIR}/CaseClient/include)
 
-link_directories(${ALIBROOTDIR}/libAFoundation/lib/linux)
-link_directories(${ALIBROOTDIR}/libABase/lib/linux)
-link_directories(${ALIBROOTDIR}/CaseClient/lib/linux)
+#link_directories(${ALIBROOTDIR}/libAFoundation/lib/linux)
+#link_directories(${ALIBROOTDIR}/libABase/lib/linux)
+#link_directories(${ALIBROOTDIR}/CaseClient/lib/linux)
 link_directories(${CMAKE_SYSROOT}/lib)
 link_directories(${CMAKE_SYSROOT}/usr/lib)
-
-include_directories(${ALIBROOTDIR}/../../000_Framework/libAFoundation/include)
-include_directories(${ALIBROOTDIR}/../../000_Framework/libABase/include)
-include_directories(${ALIBROOTDIR}/../../000_Framework/CaseClient/include)
-
-link_directories(${ALIBROOTDIR}/../../000_Framework/libAFoundation/lib/linux)
-link_directories(${ALIBROOTDIR}/../../000_Framework/libABase/lib/linux)
-link_directories(${ALIBROOTDIR}/../../000_Framework/CaseClient/lib/linux)
-
 
 #SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin/linux)
 
@@ -76,11 +68,12 @@ AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src MAIN_SRC)
 AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src/Camera CAM_SRC)
 AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src/Rvc RVC_SRC)
 AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src/Client CLIENT_SRC)
-
+AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src/lodepng LOADPNG_SRC)
+AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src/Pas PAS_SRC)
 
 add_executable(
 adas
-${MAIN_SRC} ${CAM_SRC} ${RVC_SRC} ${CLIENT_SRC}
+${MAIN_SRC} ${CAM_SRC} ${RVC_SRC} ${CLIENT_SRC} ${LOADPNG_SRC} ${PAS_SRC}
 
 provides/v0/com/harman/adas/AdasServiceStubImpl.cpp
 provides/v0/com/harman/adas/PASServiceStubImpl.cpp
@@ -93,6 +86,6 @@ target_link_libraries(
 adas
 adas_adas_types_static_stub
 AFoundation ABase ACaseSocket dlt
-wayland-client wayland-egl GLESv2 EGL ivi-application
+wayland-client wayland-egl wayland-cursor GLESv2 EGL ivi-application nanomsg ilmCommon ilmClient ilmControl
 -Wl,--no-undefined,--as-needed CommonAPI
 rt)

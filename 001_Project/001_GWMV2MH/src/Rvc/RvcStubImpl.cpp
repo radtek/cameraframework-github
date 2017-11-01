@@ -26,7 +26,10 @@ a_status  RvcStubImpl::initialize()
 {
     ALOGD("RvcStubImpl::initialize\n");
     registerFunc((UInt32)eCameraActivate_ON, makeFunctor(this, &RvcStubImpl::showCamera));
-    return a_status(0); 
+    registerFunc((UInt32)eCameraActivate_OFF, makeFunctor(this, &RvcStubImpl::hideCamera));
+    m_pRearCamera->OpenCamera();
+    m_pRearCamera->StartCapture();
+    return a_status(0);
 }
 
 VOID  RvcStubImpl::afterHandleMessageQueue()
@@ -36,11 +39,22 @@ VOID  RvcStubImpl::afterHandleMessageQueue()
 
 VOID  RvcStubImpl::showCamera(const string& pData)
 {
-    ALOGD("showCamera [%s]\n", pData.c_str());
-    m_pRearCamera->OpenCamera();
-    m_pRearCamera->StartCapture();
+    ALOGI("showCamera [%s]\n", pData.c_str());
 
-    RvcServiceStubImplGWM::getInstance()->setRvcStateAttribute(::v0::com::harman::adas::RVCBaseType::enRvcState::e_RVC_ON);
+    if(camState == CAM_ON)
+    {
+        RvcServiceStubImplGWM::getInstance()->setRvcStateAttribute(::v0::com::harman::adas::RVCBaseType::enRvcState::e_RVC_ON);
+    }
+}
+
+VOID  RvcStubImpl::hideCamera(const string& pData)
+{
+    ALOGI("hideCamera [%s]\n", pData.c_str());
+
+    if(camState == CAM_ON)
+    {
+        RvcServiceStubImplGWM::getInstance()->setRvcStateAttribute(::v0::com::harman::adas::RVCBaseType::enRvcState::e_RVC_OFF);
+    }
 }
 
 

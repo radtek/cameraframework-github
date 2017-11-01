@@ -393,6 +393,7 @@ void  FordPDCTest::vUsecase_VDT_LaunchControl()
 
 void  FordPDCTest::vUsecase_VDT_Normal()
 {
+	ALOGI("FordPDCTest::vUsecase_VDT_Normal() \n");
 #if 1
 	usleep(DELAYPDC*10);
 	int value = 0x5;//all sensor on

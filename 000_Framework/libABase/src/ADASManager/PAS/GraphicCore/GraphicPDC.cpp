@@ -156,7 +156,7 @@ bool GraphicPDC:: ReadConfigFile(const char* cfgfilepath)
                     cout<< "mode config "<<endl;
                     value = line.substr(assignmentPos+2);
                     modeStr = value.substr(0,value.size());
-					//printf(" [%s, %d] modeStr = %s\n", __FUNCTION__, __LINE__, modeStr.c_str());
+					printf(" [%s, %d] modeStr = %s\n", __FUNCTION__, __LINE__, modeStr.c_str());
 					//printf(" [%s, %d] len = %d\n", __FUNCTION__, __LINE__, value.size());
                 }
 
@@ -443,7 +443,7 @@ void GraphicPDC::SetMode()
     // cout<<"posY is ------"<<posY<<endl;
 
 
-    // cout<<"texFilePath is ------"<<texFilePath<<endl;
+    cout << "texFilePath is ------" << texFilePath << endl;
 }
 
 

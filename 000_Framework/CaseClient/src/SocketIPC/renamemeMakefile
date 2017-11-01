@@ -54,16 +54,16 @@ LDFLAGS += $(foreach lib, $(LIBRARY_PATH), -L$(lib))
 ## c++11 support
 CFLAGS += -Wl,--no-as-needed  -lpthread -std=c++11
 
-CFLAGS += -D__FILENAME__='"$(subst $(dir $<),,$<)"'
+#CFLAGS += -D__FILENAME__='"$(subst $(dir $<),,$<)"'
 
 CFLAGS += -D LINUX_OS -fPIC
 
 all:$(OBJS)
-	$(CPP) -shared -fPIC $(CFLAGS) $(LDFLAGS) -o $(TARGET_PATH)/$(TARGET) $(OBJS)
+	$(CXX) -shared -fPIC $(CFLAGS) $(LDFLAGS) -o $(TARGET_PATH)/$(TARGET) $(OBJS)
 
 ${DIR_OBJ}/%.o : $(SRC_PATH)/%.cpp
 	@echo Compiling $< ...
-	$(CPP) -c $(CFLAGS) $< -o ${DIR_OBJ}/$*.o
+	$(CXX) -c $(CFLAGS) $< -o ${DIR_OBJ}/$*.o
 
 clean:
 	$(RM) $(OBJS) $(TARGET_PATH)/$(TARGET)

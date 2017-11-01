@@ -56,11 +56,16 @@ CFLAGS += -D LINUX_OS -D ENABLE_EGL -fPIC
 #CFLAGS += -D__FILENAME__='"$(subst $(dir $<),,$<)"'
 
 all:$(OBJS)
-	$(CPP) -shared -fPIC $(CFLAGS) $(LDFLAGS) -o $(TARGET_PATH)/$(TARGET) $(OBJS)
+	$(CXX) -shared -fPIC $(CFLAGS) $(LDFLAGS) -o $(TARGET_PATH)/$(TARGET) $(OBJS)
+	$(RM) ../../../001_Project/001_GWMV2MH/libAGraphic/include/*
+	$(CP) -rf ../include/* ../../../001_Project/001_GWMV2MH/libAGraphic/include
+	$(RM) ../../../001_Project/001_GWMV2MH/libAGraphic/lib/linux/*
+	$(CP) -rf ../lib/linux/* ../../../001_Project/001_GWMV2MH/libAGraphic/lib/linux
+	sudo $(CP) -fv ../lib/linux/libAGraphic.so /opt/elina/2.0.2015143A/sysroots/corei7-64-elina-linux/lib/
 
 ${DIR_OBJ}/%.o : $(SRC_PATH)/%.cpp
 	@echo Compiling $< ...
-	$(CPP) -c $(CFLAGS) $< -o ${DIR_OBJ}/$*.o
+	$(CXX) -c $(CFLAGS) $< -o ${DIR_OBJ}/$*.o
 
 clean:
 	$(RM) $(OBJS) $(TARGET_PATH)/$(TARGET)

@@ -18,7 +18,7 @@ namespace GWMV2MH {
 
 ReverseSignalReceive::ReverseSignalReceive()
 {
-	m_pEGPIO = new EpollGPIO(string("epoll gpio"), REVERSE_GEAR_GPIO_NUM, 
+	m_pEGPIO = new EpollGPIO(string("epoll gpio"), REVERSE_GEAR_GPIO_NUM,
 			makeFunctor(this, &ReverseSignalReceive::GPIOCALLBACK));
 
 	m_pEGPIO->start();
@@ -39,10 +39,6 @@ VOID ReverseSignalReceive::GPIOCALLBACK(unsigned int value)
 			AdasModuleCtrlImpl::eModuleType_RVC,
 			eCameraActivate_ON,
 			"456"));
-
-		RvcServiceStubImplGWM::getInstance()->setRvcStateAttribute(
-			::v0::com::harman::adas::RVCBaseType::enRvcState::e_RVC_ON
-			);
 	}
 	else if(REVERSE_GEAR_HAS_GONE == value)
 	{
@@ -51,10 +47,6 @@ VOID ReverseSignalReceive::GPIOCALLBACK(unsigned int value)
 			AdasModuleCtrlImpl::eModuleType_RVC,
 			eCameraActivate_OFF,
 			"789"));
-
-		RvcServiceStubImplGWM::getInstance()->setRvcStateAttribute(
-			::v0::com::harman::adas::RVCBaseType::enRvcState::e_RVC_OFF
-			);
 	}
 }
 

@@ -1,4 +1,5 @@
 
+RM = rm -rf
 CP = cp
 #debug文件夹里的makefile文件需要最后执行，所以这里需要执行的子目录要排除debug文件夹，这里使用awk排除了debug文件夹，读取剩下的文件夹
 SUBDIRS=$(shell ls -l | grep ^d | awk '{if($$9 == "src") print $$9}')
@@ -34,9 +35,14 @@ CFLAGS+= $(foreach dir, $(INCLUDE_PATH), -I$(dir))
 LDFLAGS += $(foreach lib, $(LIBS), -l$(lib))
 #CFLAGS += -D__FILENAME__='"$(subst $(dir $<),,$<)"'
 #将以下变量导出到子shell中，本次相当于导出到子目录下的makefile中
-export CXX BIN OBJS_DIR BIN_DIR ROOT_DIR CFLAGS LDFLAGS
+export CXX BIN OBJS_DIR BIN_DIR ROOT_DIR CFLAGS LDFLAGS RM
 #注意这里的顺序，需要先执行SUBDIRS最后才能是DEBUG
 all:$(SUBDIRS) $(CUR_OBJS) DEBUG
+	$(RM) $(ROOT_DIR)/../../001_Project/001_GWMV2MH/libABase/include/*
+	$(CP) -rf $(ROOT_DIR)/include/* $(ROOT_DIR)/../../001_Project/001_GWMV2MH/libABase/include
+	$(RM) $(ROOT_DIR)/../../001_Project/001_GWMV2MH/libABase/lib/linux/*
+	$(CP) -rf $(ROOT_DIR)/lib/linux/* $(ROOT_DIR)/../../001_Project/001_GWMV2MH/libABase/lib/linux
+	sudo $(CP) -fv $(ROOT_DIR)/lib/linux/libABase.so /opt/elina/2.0.2015143A/sysroots/corei7-64-elina-linux/lib/
 #递归执行子目录下的makefile文件，这是递归执行的关键
 $(SUBDIRS):ECHO
 	make -C $@

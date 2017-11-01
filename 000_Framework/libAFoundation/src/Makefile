@@ -55,12 +55,18 @@ CFLAGS += -Wl,--no-as-needed  -lpthread -std=c++11
 
 CFLAGS += -D LINUX_OS -fPIC
 
-
+#echo -n "snow" | sudo -S $(CP) -fv ../lib/linux/libAFoundation.so /opt/elina/2.0.2015143A/sysroots/corei7-64-elina-linux/lib/
 
 #CFLAGS += -D__FILENAME__='"$(subst $(dir $<),,$<)"'
 
 all:$(OBJS)
 	$(CXX) -shared -fPIC $(CFLAGS) $(LDFLAGS) -o $(TARGET_PATH)/$(TARGET) $(OBJS)
+	$(RM) ../../../001_Project/001_GWMV2MH/libAFoundation/include/*
+	$(CP) -rf ../include/* ../../../001_Project/001_GWMV2MH/libAFoundation/include
+	$(RM) ../../../001_Project/001_GWMV2MH/libAFoundation/lib/linux/*
+	$(CP) -rf ../lib/linux/* ../../../001_Project/001_GWMV2MH/libAFoundation/lib/linux
+	sudo $(CP) -fv ../lib/linux/libAFoundation.so /opt/elina/2.0.2015143A/sysroots/corei7-64-elina-linux/lib/
+
 
 ${DIR_OBJ}/%.o : $(SRC_PATH)/%.cpp
 	@echo Compiling $< ...

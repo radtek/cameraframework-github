@@ -4,7 +4,7 @@
 
 //#include "../../../src-gen/consumes/v0/org/harman/ford/visualparkassist_types.hpp"
 //#include "../CAMB_PDCConsumerHandler.hpp"
-#include "PAS/GraphicCore/GraphicVPAFord.h"
+#include "ADASManager/PAS/GraphicCore/GraphicVPAFord.h"
 #include "Pas/PDCServiceFord.h"
 #include "CRunableBase.h"
 

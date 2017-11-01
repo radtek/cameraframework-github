@@ -1,9 +1,9 @@
 #!/bin/sh
 
-ADAS_ROOT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cpm_adas_adservice_PATH="$ADAS_ROOT_PATH/../cpm_adas_adservice"
+export ADAS_ROOT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export cpm_adas_adservice_PATH="$ADAS_ROOT_PATH/../cpm_adas_adservice"
 
-sdkPATH="/opt/elina/2.0.2015143A"
+export sdkPATH="/opt/elina/2.0.2015143A"
 
 alias sdk='cd $sdkPATH'
 
@@ -13,6 +13,7 @@ if [ -f "$sdkPATH/environment-setup-corei7-64-elina-linux" ]; then
     source "$sdkPATH/environment-setup-corei7-64-elina-linux"
     echo "CXX" = $CXX
     echo "CC" = $CC
+    export CMAKE_SYSROOT="/opt/elina/2.0.2015143A/sysroots/corei7-64-elina-linux"
 else
     echo "SDK do not EXIT"
     export CXX="g++"

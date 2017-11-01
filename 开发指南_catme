@@ -2,12 +2,13 @@
 
 
 声明：
-此开发指南涉及到很多脚本和快捷命令，这些只是辅助开发，不用这些东西一样可以是正常开发工作
+此开发指南涉及到很多脚本和快捷命令，这些只是辅助开发，不用这些东西一样可以是正常开发工作，内容有笔误的，请发现后随时更改，提交
 
 
 ------------代码树介绍----------------------
 目前开发涉及到四棵树：（建议四棵代码树下载到同一个父目录下，以便运用后面提供的很多方便的脚本）
 1. 组内的framework代码仓库（维护组内4个so） ssh://git@stash1.harman.com:7999/gwm_camsdk/cameraframework.git   （别名：框架代码树）
+   这棵树直接在master分支上开发，rebase， push 等操作，无需创建分支，fork仓库，也无需提交pull request 申请。
 2. 项目的代码仓库（头文件，so，长城项目文件） ssh://git@stash1.harman.com:7999/gwm_v2mh/cpm_adas_adservice.git   （别名：项目代码树）
    这棵树的工作环境是自己在网页上创建的自己的分支，clone树之后要先切换到自己的分支上再工作，提交代码需要创建pull request
 3. 项目的BB文件仓库（维护长城TCFG环境的BB文件）  ssh://git@stash1.harman.com:7999/gwm_v2mh/cpm-gwm-v2mh.git  （别名：BB树）
@@ -51,19 +52,16 @@ sudo chmod 777 elinaidelitelinux -R
     adas命令是在任何目录回到框架代码树的根目录，
     greatwall命令是在任何目录回到项目代码树的根目录，
     其他命令啥意思，一看setEnv.sh脚本的内容就知道）
-2. 终端执行 foundation 命令 ，会直接进入foundation的源码目录，执行make，会编译代码，生成 libAFoundation.so
+2. 终端执行 foundation 命令 ，会直接进入foundation的源码目录，执行make，会编译代码，生成 libAFoundation.so(如有提示请输入用户密码)
                                                             执行make clean，会删除生成的中间文件和动态库文件
                                                             执行 foundationlib，会直接跳转到 libAFoundation.so 所在的目录
-3. 终端执行 abase 命令 ，会直接进入abase的源码目录，执行make，会编译代码，生成 libABase.so
+3. 终端执行 abase 命令 ，会直接进入abase的源码目录，执行make，会编译代码，生成 libABase.so(如有提示请输入用户密码)
                                                             执行make clean，会删除生成的中间文件和动态库文件
                                                             执行 abaselib，会直接跳转到 libABase.so 所在的目录
-4. 终端执行 caseclient 命令 ，会直接进入caseclient的源码目录，执行 mkdir build  （build已经加入 .gitignore 不会被提交）
-                                                            cd build
-                                                            执行cmake ..  会生成MakeFile文件
-                                                            执行make，会编译代码，生成 libACaseSocket.so
+4. 终端执行 caseclient 命令 ，会直接进入 caseclient 的源码目录，执行make，会编译代码，生成 libACaseSocket.so(如有提示请输入用户密码)
                                                             执行make clean，会删除生成的中间文件和动态库文件
                                                             执行 caseclientlib，会直接跳转到 libACaseSocket.so 所在的目录
-5. 终端执行 graphic 命令 ，会直接进入graphic的源码目录，执行make，会编译代码，生成 libAGraphic.so
+5. 终端执行 graphic 命令 ，会直接进入graphic的源码目录，执行make，会编译代码，生成 libAGraphic.so(如有提示请输入用户密码)
                                                             执行make clean，会删除生成的中间文件和动态库文件
                                                             执行 graphiclib，会直接跳转到 libAGraphic.so 所在的目录
 

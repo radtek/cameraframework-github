@@ -22,8 +22,8 @@ OBJS2       = $(patsubst %.cpp,%.o,$(SRCS2))
 SRCS3       = $(wildcard $(SRC_PATH)/../../src/Camera/*.cpp)
 OBJS3       = $(patsubst %.cpp,%.o,$(SRCS3))
 
-#SRCS4       = $(wildcard $(SRC_PATH)/../../src/Pas/*.cpp)
-#OBJS4       = $(patsubst %.cpp,%.o,$(SRCS4))
+SRCS4       = $(wildcard $(SRC_PATH)/../../src/Pas/*.cpp)
+OBJS4       = $(patsubst %.cpp,%.o,$(SRCS4))
 
 #SRCS5       = $(wildcard $(SRC_PATH)/../../src/Rvc/*.cpp)
 #OBJS5       = $(patsubst %.cpp,%.o,$(SRCS5))
