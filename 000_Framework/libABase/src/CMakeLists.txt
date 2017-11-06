@@ -7,6 +7,8 @@ include_directories(${PROJECT_SOURCE_DIR}/../include/ADASManager)
 include_directories(${PROJECT_SOURCE_DIR}/../include/ADASManager/RVC)
 include_directories(${PROJECT_SOURCE_DIR}/../include/ADASManager/Camera)
 include_directories(${PROJECT_SOURCE_DIR}/../include/ADASManager/Camera/Display)
+include_directories(${PROJECT_SOURCE_DIR}/../include/ADASManager/PAS)
+include_directories(${PROJECT_SOURCE_DIR}/../include/ADASManager/PAS/GraphicCore)
 include_directories(${PROJECT_SOURCE_DIR}/../include/)
 
 
