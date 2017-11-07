@@ -31,9 +31,9 @@ public:
     */
     Epoller(BOOLEAN bEt = TRUE)
         : m_iEpollFd(-1)
+        , m_iMaxConnections(1024)
         , m_pEvents(nullptr)
         , m_bEt(bEt)
-        , m_iMaxConnections(1024)
     {
     }
 
@@ -123,7 +123,7 @@ protected:
     /**
     * epoll
     */
-    Int32 m_iEpollFd;
+    Int32 m_iEpollFd = 0;
 
     /**
     * 最大连接数

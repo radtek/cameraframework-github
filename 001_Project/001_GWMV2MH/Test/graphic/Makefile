@@ -10,39 +10,25 @@ SRC_PATH   := .
 OBJS_PATH  :=../../obj/
 
 ## target exec file name
-TARGET     := cameraStateTest
+TARGET     := graphicTest
 
 ## get all source files
 SRCS1       = $(wildcard $(SRC_PATH)/*.cpp)
 OBJS1       = $(patsubst %.cpp,%.o,$(SRCS1))
 
-SRCS2       = $(wildcard $(SRC_PATH)/../../src/lodepng/*.cpp)
-OBJS2       = $(patsubst %.cpp,%.o,$(SRCS2))
-
-SRCS3       = $(wildcard $(SRC_PATH)/../../src/Camera/*.cpp)
-OBJS3       = $(patsubst %.cpp,%.o,$(SRCS3))
-
-SRCS4       = $(wildcard $(SRC_PATH)/../../src/Pas/*.cpp)
-OBJS4       = $(patsubst %.cpp,%.o,$(SRCS4))
-
-#SRCS5       = $(wildcard $(SRC_PATH)/../../src/Rvc/*.cpp)
-#OBJS5       = $(patsubst %.cpp,%.o,$(SRCS5))
-
-OBJS = $(OBJS1) $(OBJS2) $(OBJS3) $(OBJS4) $(OBJS5)
+OBJS = $(OBJS1)
 
 ## need libs, add at here
 LIBS := AFoundation
 LIBS += ABase
 LIBS += ACaseSocket
+LIBS += AGraphic
 LIBS += wayland-client
 LIBS += wayland-egl
 LIBS += wayland-cursor
 LIBS += GLESv2 EGL
 LIBS += ivi-application
 #LIBS += lodepng
-LIBS += ilmCommon
-LIBS += ilmClient
-LIBS += ilmControl
 LIBS += dlt
 LIBS += nanomsg
 
@@ -53,11 +39,13 @@ INCLUDE_PATH += ../../../../000_Framework/libAFoundation/include
 INCLUDE_PATH += ../../../../000_Framework/libABase/include
 INCLUDE_PATH += ../../../../000_Framework/libABase/include/external
 INCLUDE_PATH += ../../../../000_Framework/libABase/include/ADASManager
+INCLUDE_PATH += ../../../../000_Framework/libAGraphic/include
 
 ## used include librarys file path
 LIBRARY_PATH := ../../../../000_Framework/libAFoundation/lib/linux
 LIBRARY_PATH += ../../../../000_Framework/libABase/lib/linux
 LIBRARY_PATH += ../../../../000_Framework/CaseClient/lib/linux
+LIBRARY_PATH += ../../../../000_Framework/libAGraphic/lib/linux
 LIBRARY_PATH += .
 #LIBRARY_PATH += ~/install/lib
 

@@ -31,9 +31,9 @@ public:
     */
     Epoller(BOOLEAN bEt = TRUE)
         : m_iEpollFd(-1)
+        , m_iMaxConnections(1024)
         , m_pEvents(nullptr)
         , m_bEt(bEt)
-        , m_iMaxConnections(1024)
     {
     }
 

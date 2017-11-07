@@ -25,8 +25,8 @@ PasServiceStubImplGWM* PasServiceStubImplGWM::getInstance()
 
 PasServiceStubImplGWM::PasServiceStubImplGWM()
 {
-    // PDCFactory *pTest = PDCFactory::getInstance();
-    // PDCServiceFord *m_PDCServiceFord = pTest->vSetup();
+    PDCFactory *pTest = PDCFactory::getInstance();
+    PDCServiceFord *m_PDCServiceFord = pTest->vSetup();
 
     //---------------------------------------
     //m_PDCServiceFord->pushPDCMsg();
@@ -37,12 +37,12 @@ PasServiceStubImplGWM::~PasServiceStubImplGWM()
 
 }
 
-// void PasServiceStubImplGWM::SwitchPASView(const std::shared_ptr<CommonAPI::ClientId> _client,
-//     ::v0::com::harman::adas::PASBaseType::enPASViewStatus m_ePASViewStatus,
-//     SwitchPASViewReply_t)
-// {
-
-// }
+void PasServiceStubImplGWM::SwitchPASView(const std::shared_ptr<CommonAPI::ClientId> _client,
+    ::v0::com::harman::adas::PASBaseType::enPASViewStatus m_ePASViewStatus,
+    SwitchPASViewReply_t)
+{
+    return;
+}
 
 } // namespace GWMV2MH
 } // namespace AProject

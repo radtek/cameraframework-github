@@ -13,7 +13,7 @@
 #include <time.h>
 #include <sys/syscall.h>
 #include <dlt/dlt.h>
-#include <stdarg.h> 
+#include <stdarg.h>
 
 
 //#include "../../ParkAssistSrv_Common/CommonCore.hpp"
@@ -72,7 +72,7 @@
 
 #define PRINTINIT \
         DLT_REGISTER_APP("adas", "ADASService"); \
-        
+
 
 #define PRINTDEINIT \
         DLT_UNREGISTER_APP();
@@ -101,22 +101,22 @@ static void printMessages(DltLogLevelType type, const char *func, int line, cons
     do {        \
         printMessages(DLT_LOG_VERBOSE,  __func__, __LINE__, "Dbg1", format, ##args);    \
     }while(0)
- 
+
 #define ALOGI(format, args...)   \
     do {    \
         printMessages(DLT_LOG_INFO, __func__, __LINE__, "Info", format, ##args);    \
     }while(0)
- 
+
 #define ALOGD(format, args...)   \
     do {        \
         printMessages(DLT_LOG_DEBUG , __func__, __LINE__, "Dbg", format, ##args);    \
     }while(0)
- 
+
 #define ALOGW(format, args...)   \
     do {        \
         printMessages(DLT_LOG_WARN, __func__, __LINE__, "Warning", format, ##args);    \
     }while(0)
- 
+
 #define ALOGE(format, args...)   \
     do {        \
         printMessages(DLT_LOG_ERROR,  __func__, __LINE__, "Error", format, ##args);    \

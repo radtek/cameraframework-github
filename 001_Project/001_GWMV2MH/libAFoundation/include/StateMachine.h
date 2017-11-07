@@ -50,7 +50,7 @@ private:
                 quit();
             }
 
-            virtual BOOLEAN initialize(string sServiceName){};
+            virtual BOOLEAN initialize(string sServiceName){ return TRUE; };
         };
 
         /**

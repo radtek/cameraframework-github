@@ -1,7 +1,8 @@
 #include "ADASManager/PAS/GraphicCore/GlShell.h"
+#include "ADASManager/PAS/GraphicCore/bmpconfig.h"
 
 //#define  FRAME_CALLBACK_SUPPROT 1 //enable  throttling to callback
-#define  LM_SUPPORT 1 //enable this line for layer manager
+//#define  LM_SUPPORT 1 //enable this line for layer manager
 
 //#undef LM_SUPPORT
 
@@ -26,23 +27,20 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#ifdef LM_SUPPORT
-#include "ilm/ilm_control.h"
-#include "ilm/ilm_client.h"
-#endif
 
 int           width = 800;
 int           height = 480;
-#ifdef LM_SUPPORT
-t_ilm_layer   ilmLayerId = 1000;
-t_ilm_surface ilmSurfaceId = 10;
-#endif
+
+// t_ilm_layer   ilmLayerId = 1008;
+// t_ilm_surface ilmSurfaceId = 52;
+
+#define PAS_SURFACE_ID 52
 
 #ifdef SHELL_SUPPORT
-#include "xdg-shell-client-protocol.h"
+//#include "xdg-shell-client-protocol.h"
 
-#include "protocol/ivi-application-client-protocol.h"
-#define IVI_SURFACE_ID 9000
+//#include "protocol/ivi-application-client-protocol.h"
+//#define IVI_SURFACE_ID 9000
 #include "shared/platform.h"
 
 #ifndef EGL_EXT_swap_buffers_with_damage
@@ -56,115 +54,213 @@ typedef EGLBoolean (EGLAPIENTRYP PFNEGLSWAPBUFFERSWITHDAMAGEEXTPROC)(EGLDisplay 
 #endif
 #endif //SHELL_SUPPORT
 
-#ifdef LM_SUPPORT
+// #ifdef LM_SUPPORT
 
-static void surfaceCallbackFunction(t_ilm_uint surface_id, struct ilmSurfaceProperties* sp, t_ilm_notification_mask m)
-{
-    ilmErrorTypes rtnv = (ilmErrorTypes)0;
+// static void surfaceCallbackFunction(t_ilm_uint surface_id, struct ilmSurfaceProperties* sp, t_ilm_notification_mask m)
+// {
+//     ilmErrorTypes rtnv = (ilmErrorTypes)0;
 
-    if ((unsigned)m & ILM_NOTIFICATION_CONFIGURED)
-    {
-        rtnv = ilm_surfaceSetDestinationRectangle(surface_id, 0, 0, sp->origSourceWidth, sp->origSourceHeight);
-        if(rtnv != ILM_SUCCESS)
-        {
-            printf("surfaceSetDestinationRectangle Failed (%d)\n", rtnv);
-            //return 1;
-        }
-        printf("surfaceCallbackFunction DestinationRectangle\n");
+//     if ((unsigned)m & ILM_NOTIFICATION_CONFIGURED)
+//     {
+//         rtnv = ilm_surfaceSetDestinationRectangle(surface_id, 0, 0, sp->origSourceWidth, sp->origSourceHeight);
+//         if(rtnv != ILM_SUCCESS)
+//         {
+//             printf("surfaceSetDestinationRectangle Failed (%d)\n", rtnv);
+//             //return 1;
+//         }
+//         printf("surfaceCallbackFunction DestinationRectangle\n");
 
 
-        rtnv = ilm_surfaceSetSourceRectangle(surface_id, 0, 0, sp->origSourceWidth, sp->origSourceHeight);
-        if(rtnv != ILM_SUCCESS)
-        {
-            printf("surfaceSetSourceRectangle Failed (%d)\n", rtnv);
-            //return 1;
-        }
-        printf("surfaceCallbackFunction SourceRectangle\n");
+//         rtnv = ilm_surfaceSetSourceRectangle(surface_id, 0, 0, sp->origSourceWidth, sp->origSourceHeight);
+//         if(rtnv != ILM_SUCCESS)
+//         {
+//             printf("surfaceSetSourceRectangle Failed (%d)\n", rtnv);
+//             //return 1;
+//         }
+//         printf("surfaceCallbackFunction SourceRectangle\n");
 
-        rtnv = ilm_surfaceSetVisibility(surface_id, ILM_TRUE);
-        if(rtnv != ILM_SUCCESS)
-        {
-            printf("surfaceSetVisibility Failed (%d)\n", rtnv);
-            //return 1;
-        }
-        printf("surfaceCallbackFunction Visibility\n");
+//         rtnv = ilm_surfaceSetVisibility(surface_id, ILM_TRUE);
+//         if(rtnv != ILM_SUCCESS)
+//         {
+//             printf("surfaceSetVisibility Failed (%d)\n", rtnv);
+//             //return 1;
+//         }
+//         printf("surfaceCallbackFunction Visibility\n");
 
-        rtnv = ilm_surfaceSetOpacity(surface_id, 1.0f);
-        if(rtnv != ILM_SUCCESS)
-        {
-            printf("surfaceSetOpacity Failed (%d)\n", rtnv);
-            //return 1;
-        }
+//         rtnv = ilm_surfaceSetOpacity(surface_id, 1.0f);
+//         if(rtnv != ILM_SUCCESS)
+//         {
+//             printf("surfaceSetOpacity Failed (%d)\n", rtnv);
+//             //return 1;
+//         }
 
-        rtnv =  ilm_layerAddSurface(ilmLayerId, surface_id);
-        if(rtnv != ILM_SUCCESS)
-        {
-            printf("layerAddSurface Failed (%d)\n", rtnv);
-            //return 1;
-        }
+//         rtnv =  ilm_layerAddSurface(ilmLayerId, surface_id);
+//         if(rtnv != ILM_SUCCESS)
+//         {
+//             printf("layerAddSurface Failed (%d)\n", rtnv);
+//             //return 1;
+//         }
 
-        rtnv = ilm_commitChanges();
-        if(rtnv != ILM_SUCCESS)
-        {
-            printf("commitChanges Failed in callback (%d)\n", rtnv);
-            //return 1;
-        }
-    }
-    printf("surfaceCallbackFunction---------------surfaceCallbackFunction Done\n");
-}
-#endif
+//         rtnv = ilm_commitChanges();
+//         if(rtnv != ILM_SUCCESS)
+//         {
+//             printf("commitChanges Failed in callback (%d)\n", rtnv);
+//             //return 1;
+//         }
+//     }
+//     printf("surfaceCallbackFunction---------------surfaceCallbackFunction Done\n");
+// }
+// #endif
 
-#ifdef LM_SUPPORT
-static int create_ilm_surface(struct display *display)
-{
-    ilmErrorTypes rtnv =  (ilmErrorTypes)0;
+// #ifdef LM_SUPPORT
+// static int create_ilm_surface(struct display *display)
+// {
+//     ilmErrorTypes rtnv =  (ilmErrorTypes)0;
 
-    ilmClient_init((t_ilm_nativedisplay)display->display);
-    if(rtnv != ILM_SUCCESS)
-    {
-        printf("ilmClient_init Failed (%d)\n", rtnv);
-        return 1;
-    }
+//     ilmClient_init((t_ilm_nativedisplay)display->display);
+//     if(rtnv != ILM_SUCCESS)
+//     {
+//         printf("ilmClient_init Failed (%d)\n", rtnv);
+//         return 1;
+//     }
 
-    // Creates surfce
-    rtnv = ilm_surfaceCreate((t_ilm_nativehandle)display->window->surface,
-                             width, height,
-                             ILM_PIXELFORMAT_RGBA_8888, &ilmSurfaceId);
-    if (rtnv != ILM_SUCCESS)
-    {
-        printf("surfaceCreate Failed (%d)\n", rtnv);
-        return 1;
-    }
+//     // Creates surfce
+//     rtnv = ilm_surfaceCreate((t_ilm_nativehandle)display->window->surface,
+//                              width, height,
+//                              ILM_PIXELFORMAT_RGBA_8888, &ilmSurfaceId);
+//     if (rtnv != ILM_SUCCESS)
+//     {
+//         printf("surfaceCreate Failed (%d)\n", rtnv);
+//         return 1;
+//     }
 
-    //wl_display_flush(display->display); //only requiredwhen ilm_init used
+//     //wl_display_flush(display->display); //only requiredwhen ilm_init used
 
-    ilm_initWithNativedisplay((t_ilm_nativedisplay)display->display);
-    //ilm_init();
-    if(rtnv != ILM_SUCCESS)
-    {
-        printf("ilm_init Failed (%d)\n", rtnv);
-        return 1;
-    }
+//     ilm_initWithNativedisplay((t_ilm_nativedisplay)display->display);
+//     //ilm_init();
+//     if(rtnv != ILM_SUCCESS)
+//     {
+//         printf("ilm_init Failed (%d)\n", rtnv);
+//         return 1;
+//     }
 
-    rtnv = ilm_surfaceAddNotification(ilmSurfaceId,&surfaceCallbackFunction);
-    if(rtnv != ILM_SUCCESS)
-    {
-        printf("ilm_surfaceAddNotification Failed (%d)\n", rtnv);
-        //return 1;
-    }
-    rtnv = ilm_commitChanges();
-    if(rtnv != ILM_SUCCESS)
-    {
-        printf("ilm_commitChanges 1 Failed\n");
-    }
+//     rtnv = ilm_surfaceAddNotification(ilmSurfaceId,&surfaceCallbackFunction);
+//     if(rtnv != ILM_SUCCESS)
+//     {
+//         printf("ilm_surfaceAddNotification Failed (%d)\n", rtnv);
+//         //return 1;
+//     }
+//     rtnv = ilm_commitChanges();
+//     if(rtnv != ILM_SUCCESS)
+//     {
+//         printf("ilm_commitChanges 1 Failed\n");
+//     }
 
-    printf("create_ilm_surface finished test2\n");
-    return rtnv;
-}
-#endif
+//     printf("create_ilm_surface finished test2\n");
+//     return rtnv;
+// }
+// #endif
 
 static void init_egl(struct display *display, struct window *window)
 {
+    // static const struct {
+    //     char *extension, *entrypoint;
+    // } swap_damage_ext_to_entrypoint[] = {
+    //     {
+    //         .extension = "EGL_EXT_swap_buffers_with_damage",
+    //         .entrypoint = "eglSwapBuffersWithDamageEXT",
+    //     },
+    //     {
+    //         .extension = "EGL_KHR_swap_buffers_with_damage",
+    //         .entrypoint = "eglSwapBuffersWithDamageKHR",
+    //     },
+    // };
+
+    // static const EGLint context_attribs[] = {
+    //     EGL_CONTEXT_CLIENT_VERSION, 2,
+    //     EGL_NONE
+    // };
+    // const char *extensions;
+
+    // EGLint config_attribs[] = {
+    //     EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+    //     EGL_RED_SIZE, 1,
+    //     EGL_GREEN_SIZE, 1,
+    //     EGL_BLUE_SIZE, 1,
+    //     EGL_ALPHA_SIZE, 1,
+    //     EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
+    //     EGL_NONE
+    // };
+
+    // EGLint major, minor, n, count, i, size;
+    // EGLConfig *configs;
+    // EGLBoolean ret;
+
+    // if (window1->opaque || window1->buffer_size == 16)
+    //     config_attribs[9] = 0;
+
+    // display1->egl.dpy =
+    //     weston_platform_get_egl_display(EGL_PLATFORM_WAYLAND_KHR,
+    //                     display1->display, NULL);
+    // assert(display1->egl.dpy);
+
+    // ret = eglInitialize(display1->egl.dpy, &major, &minor);
+    // assert(ret == EGL_TRUE);
+    // ret = eglBindAPI(EGL_OPENGL_ES_API);
+    // assert(ret == EGL_TRUE);
+
+    // if (!eglGetConfigs(display1->egl.dpy, NULL, 0, &count) || count < 1)
+    //     assert(0);
+
+    // configs = (EGLConfig *)calloc(count, sizeof *configs);
+    // assert(configs);
+
+    // ret = eglChooseConfig(display1->egl.dpy, config_attribs,
+    //               configs, count, &n);
+    // assert(ret && n >= 1);
+
+    // for (i = 0; i < n; i++) {
+    //     eglGetConfigAttrib(display1->egl.dpy,
+    //                configs[i], EGL_BUFFER_SIZE, &size);
+    //     if (window1->buffer_size == size) {
+    //         display1->egl.conf = configs[i];
+    //         break;
+    //     }
+    // }
+    // free(configs);
+    // if (display1->egl.conf == NULL) {
+    //     ALOGE("did not find config with buffer size %d\n",
+    //         window1->buffer_size);
+    //     exit(EXIT_FAILURE);
+    // }
+
+    // display1->egl.ctx = eglCreateContext(display1->egl.dpy,
+    //                     display1->egl.conf,
+    //                     EGL_NO_CONTEXT, context_attribs);
+    // assert(display1->egl.ctx);
+
+    // display1->swap_buffers_with_damage = NULL;
+    // extensions = eglQueryString(display1->egl.dpy, EGL_EXTENSIONS);
+    // if (extensions &&
+    //     weston_check_egl_extension(extensions, "EGL_EXT_buffer_age")) {
+    //     for (i = 0; i < (int) ARRAY_LENGTH(swap_damage_ext_to_entrypoint); i++) {
+    //         if (weston_check_egl_extension(extensions,
+    //                            swap_damage_ext_to_entrypoint[i].extension)) {
+    //             /* The EXTPROC is identical to the KHR one */
+    //             display1->swap_buffers_with_damage =
+    //                 (PFNEGLSWAPBUFFERSWITHDAMAGEEXTPROC)
+    //                 eglGetProcAddress(swap_damage_ext_to_entrypoint[i].entrypoint);
+    //             break;
+    //         }
+    //     }
+    // }
+
+    // if (display1->swap_buffers_with_damage)
+    //     ALOGD("has EGL_EXT_buffer_age and %s\n", swap_damage_ext_to_entrypoint[i].extension);
+
+
+
+
     static const EGLint context_attribs[] = {
         EGL_CONTEXT_CLIENT_VERSION, 2,
         EGL_NONE
@@ -243,36 +339,65 @@ static void fini_egl(struct display *display)
 static void create_surface(struct window *window)
 {
     struct display *display = window->display;
-    struct wl_region *region = NULL;
-    //printf("------> display = %x\n",display);
     EGLBoolean ret;
 
-    window->surface = wl_compositor_create_surface(display->compositor);
+    printf("------> create_surface window->geometry.width = %d\n",window->geometry.width);
+    printf("------> create_surface window->geometry.height = %d\n",window->geometry.height);
 
-    // Remove input event consumption from the window surface
-    region = wl_compositor_create_region(display->compositor);
-    wl_region_subtract(region, 0, 0, window->geometry.width, window->geometry.height);
-    wl_surface_set_input_region(window->surface, region);
-    wl_region_destroy(region);
-
-    //printf("------> surface = %x\n", window->surface);
     window->native =
         wl_egl_window_create(window->surface,
                      window->geometry.width,
                      window->geometry.height);
-    //printf("------> native = %x\n",window->native);
-    window->egl_surface = eglCreateWindowSurface(display->egl.dpy, display->egl.conf,
-                    (EGLNativeWindowType)window->native, NULL);
 
-    //printf("------> dpy = %x\n",window->display->egl.dpy);
-    //printf("------> egl_surface = %x\n",window->egl_surface);
+    window->egl_surface =
+        weston_platform_create_egl_surface(display->egl.dpy,
+                           display->egl.conf,
+                           window->native, NULL);
+
+
     ret = eglMakeCurrent(window->display->egl.dpy, window->egl_surface,
                  window->egl_surface, window->display->egl.ctx);
-
     assert(ret == EGL_TRUE);
 
     if (!window->frame_sync)
         eglSwapInterval(display->egl.dpy, 0);
+
+
+    wl_egl_window_resize(window->native,
+                     window->geometry.width,
+                     window->geometry.height, 0, 0);
+
+    // struct display *display = window->display;
+    // struct wl_region *region = NULL;
+    // //printf("------> display = %x\n",display);
+    // EGLBoolean ret;
+
+    // window->surface = wl_compositor_create_surface(display->compositor);
+
+    // // Remove input event consumption from the window surface
+    // region = wl_compositor_create_region(display->compositor);
+    // wl_region_subtract(region, 0, 0, window->geometry.width, window->geometry.height);
+    // wl_surface_set_input_region(window->surface, region);
+    // wl_region_destroy(region);
+
+    // //printf("------> surface = %x\n", window->surface);
+    // window->native =
+    //     wl_egl_window_create(window->surface,
+    //                  window->geometry.width,
+    //                  window->geometry.height);
+    // //printf("------> native = %x\n",window->native);
+    // window->egl_surface = eglCreateWindowSurface(display->egl.dpy, display->egl.conf,
+    //                 (EGLNativeWindowType)window->native, NULL);
+
+    // //printf("------> dpy = %x\n",window->display->egl.dpy);
+    // //printf("------> egl_surface = %x\n",window->egl_surface);
+    // ret = eglMakeCurrent(window->display->egl.dpy, window->egl_surface,
+    //              window->egl_surface, window->display->egl.ctx);
+
+    // assert(ret == EGL_TRUE);
+
+    // if (!window->frame_sync)
+    //     eglSwapInterval(display->egl.dpy, 0);
 
 }
 
@@ -512,53 +637,53 @@ static const struct wl_seat_listener seat_listener = {
 };
 
 
-static void registry_handle_global(void *data, struct wl_registry *registry,
-               uint32_t name, const char *interface, uint32_t version)
-{
-    printf("registry_handle_global ----------------------%s\n",interface);
-    #if 1
-    struct display *d = (struct display *)data;
+// static void registry_handle_global(void *data, struct wl_registry *registry,
+//                uint32_t name, const char *interface, uint32_t version)
+// {
+//     printf("registry_handle_global ----------------------%s\n",interface);
+//     #if 1
+//     struct display *d = (struct display *)data;
 
-    if (strcmp(interface, "wl_compositor") == 0) {
-        d->compositor =
-            (wl_compositor *)(wl_registry_bind(registry, name,
-                     &wl_compositor_interface, 1));
+//     if (strcmp(interface, "wl_compositor") == 0) {
+//         d->compositor =
+//             (wl_compositor *)(wl_registry_bind(registry, name,
+//                      &wl_compositor_interface, 1));
 
-    }
-    else if (strcmp(interface, "wl_seat") == 0) {
-        d->seat = (wl_seat*)(wl_registry_bind(registry, name,
-                       &wl_seat_interface, 1));
+//     }
+//     else if (strcmp(interface, "wl_seat") == 0) {
+//         d->seat = (wl_seat*)(wl_registry_bind(registry, name,
+//                        &wl_seat_interface, 1));
 
-        wl_seat_add_listener(d->seat, &seat_listener, d);
-    } else if (strcmp(interface, "wl_shm") == 0) {
-        d->shm = (wl_shm*)(wl_registry_bind(registry, name,
-                      &wl_shm_interface, 1));
+//         wl_seat_add_listener(d->seat, &seat_listener, d);
+//     } else if (strcmp(interface, "wl_shm") == 0) {
+//         d->shm = (wl_shm*)(wl_registry_bind(registry, name,
+//                       &wl_shm_interface, 1));
 
-        d->cursor_theme = wl_cursor_theme_load(NULL, 32, d->shm);
-        if (!d->cursor_theme) {
-            fprintf(stderr, "unable to load default theme\n");
-            return;
-        }
-        d->default_cursor =
-            wl_cursor_theme_get_cursor(d->cursor_theme, "left_ptr");
-        if (!d->default_cursor) {
-            fprintf(stderr, "unable to load default left pointer\n");
-            // TODO: abort ?
-        }
-    }
-    #endif
-}
+//         d->cursor_theme = wl_cursor_theme_load(NULL, 32, d->shm);
+//         if (!d->cursor_theme) {
+//             fprintf(stderr, "unable to load default theme\n");
+//             return;
+//         }
+//         d->default_cursor =
+//             wl_cursor_theme_get_cursor(d->cursor_theme, "left_ptr");
+//         if (!d->default_cursor) {
+//             fprintf(stderr, "unable to load default left pointer\n");
+//             // TODO: abort ?
+//         }
+//     }
+//     #endif
+// }
 
-static void
-registry_handle_global_remove(void *data, struct wl_registry *registry,
-                  uint32_t name)
-{
-}
+// static void
+// registry_handle_global_remove(void *data, struct wl_registry *registry,
+//                   uint32_t name)
+// {
+// }
 
-static const struct wl_registry_listener registry_listener = {
-    registry_handle_global,
-    registry_handle_global_remove
-};
+// static const struct wl_registry_listener registry_listener = {
+//     registry_handle_global,
+//     registry_handle_global_remove
+// };
 #if 0
 static void
 usage(int error_code)
@@ -624,19 +749,19 @@ GlShell::~GlShell()
 
   fprintf(stderr, "simple-egl exiting\n");
 
-#ifdef LM_SUPPORT
-    ilm_surfaceRemoveNotification(ilmSurfaceId);
-    ilm_commitChanges();
+// #ifdef LM_SUPPORT
+//     ilm_surfaceRemoveNotification(ilmSurfaceId);
+//     ilm_commitChanges();
 
-    if (ilmSurfaceId > 0)
-        ilm_surfaceRemove(ilmSurfaceId);
+//     if (ilmSurfaceId > 0)
+//         ilm_surfaceRemove(ilmSurfaceId);
 
-    //if(ilmLayerId > 0)
-        //ilm_layerRemove(ilmLayerId);
+//     //if(ilmLayerId > 0)
+//         //ilm_layerRemove(ilmLayerId);
 
-    ilmClient_destroy(); //disable for ILM 1.4.0
-    ilm_destroy();
-#endif
+//     ilmClient_destroy(); //disable for ILM 1.4.0
+//     ilm_destroy();
+// #endif
 
     destroy_surface(&window);
     fini_egl(&display);
@@ -657,19 +782,24 @@ bool GlShell::InitView(int screenWidth, int screenHeight, const char *carBuffer2
 {
     if(ReadShellConfig(CFG_PATH))
     {
+        printf("------> ReadShellConfig Finish1\n");
 	    InitEnV(screenWidth,screenHeight);
+        printf("------> ReadShellConfig Finish2\n");
 	    LoadShaders();
+        printf("------> ReadShellConfig Finish3\n");
 	    glGenTextures(1, &m_uiTexture);
 	    glBindTexture(GL_TEXTURE_2D, m_uiTexture);
 		GenCarTexture(carBuffer2, textWidth, texHeight);
 		GenWarningTexture(textWidth, texHeight);
 	    glViewport(0, 0,screenWidth, screenHeight);
 	    //to make surface working??
+        printf("------> ReadShellConfig Finish4\n");
 	    eglSwapBuffers(display.egl.dpy, window.egl_surface);
+        printf("------> ReadShellConfig Finish5\n");
 	    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	    glDisable(GL_DEPTH_TEST);
-	    //printf("------> eglSwapBuffers Finish %x %x\n",display.egl.dpy, window.egl_surface);
+	    printf("------> eglSwapBuffers Finish %x %x\n",display.egl.dpy, window.egl_surface);
 	    return false;
     }
 	else
@@ -679,42 +809,85 @@ bool GlShell::InitView(int screenWidth, int screenHeight, const char *carBuffer2
     }
 }
 
+void GlShell::create_ivi_surface(struct window *window, struct display *display)
+{
+    printf("GlShell::create_ivi_surface 1\n");
+    window->ivi_surface =
+        ivi_application_surface_create(display->ivi_application,
+                           PAS_SURFACE_ID, window->surface);
+
+    printf("GlShell::create_ivi_surface 2\n");
+
+    if (window->ivi_surface == NULL) {
+        ALOGE("Failed to create ivi_client_surface\n");
+    }
+
+    ALOGD("Success to create ivi_client_surface\n");
+}
+
+void GlShell::registry_handle_global(void *data, struct wl_registry *registry,
+               uint32_t name, const char *interface, uint32_t version)
+{
+    struct display *d = (struct display *)data;
+
+    if (strcmp(interface, "wl_compositor") == 0) {
+        d->compositor =
+            (wl_compositor*)wl_registry_bind(registry, name,
+                     &wl_compositor_interface,
+                     MIN(version, 4));
+    }
+    else if (strcmp(interface, "ivi_application") == 0) {
+        d->ivi_application =
+            (ivi_application*)wl_registry_bind(registry, name,
+                     &ivi_application_interface, 1);
+    }
+}
+
+void GlShell::registry_handle_global_remove(void *data, struct wl_registry *registry,
+                  uint32_t name)
+{
+}
+
+struct wl_registry_listener GlShell::registry_listener = {
+    registry_handle_global,
+    registry_handle_global_remove
+};
+
 void GlShell::InitEnV(int screenWidth, int screenHeight)
 {
     window.display = &display;
     display.window = &window;
     window.geometry.width  = screenWidth;
     window.geometry.height = screenHeight;
+    //  window.geometry.width  = 250;
+    // window.geometry.height = 250;
     window.window_size = window.geometry;
     window.buffer_size = 32;
     window.frame_sync = 1;
-
-
+    //window.delay = 0;
 
     display.display = wl_display_connect(NULL);
-    //printf("display.display[%x]\n",display.display);
     assert(display.display);
 
     display.registry = wl_display_get_registry(display.display);
-    //printf("display.registry[%x]\n",display.registry);
     wl_registry_add_listener(display.registry,
                  &registry_listener, &display);
 
-    wl_display_dispatch(display.display);
+    printf("GlShell::InitEnV 1\n");
+
+    wl_display_roundtrip(display.display);
+
+    printf("GlShell::InitEnV 2\n");
+
+    window.surface = wl_compositor_create_surface(display.compositor);
+
+    printf("GlShell::InitEnV 3\n");
+
+    create_ivi_surface(&window, &display);
 
     init_egl(&display, &window);
+
     create_surface(&window);
-    //init_gl(&window);
-    //printf("------> init_gl Finish \n");
-    display.cursor_surface =
-        wl_compositor_create_surface(display.compositor);
-    //printf("display.cursor_surface[%x]\n",display.cursor_surface);
-
-
-#ifdef LM_SUPPORT
-    create_ilm_surface(&display);
-#endif
-
 }
 
 void GlShell::LoadShaders()
@@ -750,12 +923,20 @@ void GlShell::GenCarTexture(const char *buffer, int textWidth, int texHeight)
 	glGenTextures(1, &m_uiCarTexture);
 	glBindTexture(GL_TEXTURE_2D, m_uiCarTexture);
 
+    IMAGEINFO imageinfo;
+    imageinfo.height = texHeight;
+    imageinfo.width = textWidth;
+    imageinfo.image_size = textWidth*texHeight*4;
+    saveAsBmp("/usr/bin/snowCarTexturebuffer.bmp", (void*)buffer, imageinfo);  // car without alarm
+
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textWidth, texHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
 
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
 void GlShell::GenWarningTexture(int textWidth, int texHeight)
@@ -801,15 +982,15 @@ bool GlShell:: ReadShellConfig(const char* cfgfilepath)
 
                 if(tmpKey == "ilmLayerId")
                 {
-                    value = line.substr(assignmentPos+2);//
-                    ilmLayerId = (t_ilm_layer)atoi(value.c_str());
-                    cout<< "ilmLayerId is______________"<<ilmLayerId<<endl;
+                    // value = line.substr(assignmentPos+2);//
+                    // ilmLayerId = (t_ilm_layer)atoi(value.c_str());
+                    // cout<< "ilmLayerId is______________"<<ilmLayerId<<endl;
                 }
                 else if(tmpKey == "ilmSurfaceId")
                 {
-                    value = line.substr(assignmentPos+2);//
-                    ilmSurfaceId = (t_ilm_surface)atoi(value.c_str());
-                    cout<< "ilmSurfaceId is _____________"<<ilmSurfaceId<<endl;
+                    // value = line.substr(assignmentPos+2);//
+                    // ilmSurfaceId = (t_ilm_surface)atoi(value.c_str());
+                    // cout<< "ilmSurfaceId is _____________"<<ilmSurfaceId<<endl;
                 }
 
             }

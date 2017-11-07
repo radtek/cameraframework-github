@@ -16,10 +16,16 @@ sudo scp  $ADAS_ROOT_PATH/000_Framework/libAGraphic/lib/linux/libAGraphic.so roo
 sudo scp  $ADAS_ROOT_PATH/000_Framework/CaseClient/lib/linux/libACaseSocket.so root@$remoteIP://usr/lib/
 sudo scp  $ADAS_ROOT_PATH/001_Project/001_GWMV2MH/build/gen/libadas-dbus.so root@$remoteIP://usr/lib/
 
-
+#------adas-------
 sudo scp -p  $ADAS_ROOT_PATH/001_Project/001_GWMV2MH/build/src/adas root@$remoteIP://usr/bin/
-# sudo scp -p  $ADAS_ROOT_PATH/001_Project/001_GWMV2MH/src/Camera/Test/cameraStateTest root@$remoteIP://usr/bin/
 
-
-#sudo scp -p  $ADAS_ROOT_PATH/001_Project/001_GWMV2MH/src/Pas/config/pdcusr.cfg root@$remoteIP://usr/share/pdcusr.cfg
+#------pas-------
+sudo scp -p  $ADAS_ROOT_PATH/001_Project/001_GWMV2MH/src/Pas/config/pdcusr.cfg root@$remoteIP://usr/share/pdcusr.cfg
 #sudo scp -p -r  $ADAS_ROOT_PATH/001_Project/001_GWMV2MH/src/Pas/res/Night_Camera root@$remoteIP://usr/share/Night_Camera
+
+#------camera test-------
+#sudo scp -p  $ADAS_ROOT_PATH/001_Project/001_GWMV2MH/Test/Camera/cameraStateTest root@$remoteIP://usr/bin/
+
+#------graphic test-------
+#sudo scp -p  $ADAS_ROOT_PATH/001_Project/001_GWMV2MH/Test/graphic/graphicTest root@$remoteIP://usr/bin/
+#sudo scp -p -r $ADAS_ROOT_PATH/001_Project/001_GWMV2MH/Test/graphic/res root@$remoteIP://usr/bin/res/

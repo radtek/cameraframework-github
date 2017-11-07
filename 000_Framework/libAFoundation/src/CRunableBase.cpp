@@ -38,7 +38,7 @@ CRunableBase::CRunableBase(const string& strName, BOOLEAN bwaitloop)
 
 CRunableBase::~CRunableBase()
 {
-    if(m_pevent) 
+    if(m_pevent)
     {
         delete m_pevent;
         m_pevent = NULL;
@@ -71,8 +71,8 @@ VOID CRunableBase::run()
 
 VOID CRunableBase::start()
 {
-     m_hThread = thread{&CRunableBase::run,this};
-     m_pevent->set();
+    m_hThread = thread{&CRunableBase::run,this};
+    m_pevent->set();
 }
 
 VOID CRunableBase::quit()

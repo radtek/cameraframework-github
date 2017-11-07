@@ -10,7 +10,8 @@
 #include <GLES2/gl2.h>
 #include <assert.h>
 
-#define  LM_SUPPORT 1
+//#define  LM_SUPPORT 1
+#define  SHELL_SUPPORT
 
 //#undef LM_SUPPORT
 
@@ -18,10 +19,24 @@
 #include <wayland-egl.h>
 #include <wayland-cursor.h>
 
-#ifdef LM_SUPPORT
-#include "ilm/ilm_control.h"
-#include "ilm/ilm_client.h"
-#endif
+// #ifdef LM_SUPPORT
+// #include "ilm/ilm_control.h"
+// #include "ilm/ilm_client.h"
+// #endif
+
+#include <EGL/eglext.h>
+
+#include <sys/types.h>
+#include <unistd.h>
+#include "external/ivi-application-client-protocol.h"
+
+// #define RVC_SURFACE_ID 50
+// #define GUAIDlINE_SURFACE_ID 51
+// #define PAS_SURFACE_ID 52
+
+#include "external/shared/helpers.h"
+#include "external/shared/platform.h"
+#include "external/shared/weston-egl-ext.h"
 
 struct window;
 struct seat;
@@ -72,7 +87,7 @@ struct window {
     struct wl_egl_window *native;
     struct wl_surface *surface;
 #ifdef SHELL_SUPPORT
-    struct xdg_surface *xdg_surface;
+    //struct xdg_surface *xdg_surface;
     struct ivi_surface *ivi_surface;
 #endif
     EGLSurface egl_surface;
@@ -98,6 +113,9 @@ public:
     void LoadShaders();
 	void GenCarTexture(const char *buffer, int textWidth, int texHeight);
 	void GenWarningTexture(int textWidth, int texHeight);
+    void create_ivi_surface(struct window *window, struct display *display);
+    static void registry_handle_global(void *data, struct wl_registry *registry, uint32_t name, const char *interface, uint32_t version);
+    static void registry_handle_global_remove(void *data, struct wl_registry *registry, uint32_t name);
 
 protected:
     GLuint m_uiTexture;
@@ -120,6 +138,8 @@ protected:
     EGLDisplay* dpy_shell;
     EGLSurface* egl_surface_shell;
     struct window* window_shell;
+
+    static struct wl_registry_listener registry_listener;
 
 };
 

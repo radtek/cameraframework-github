@@ -1,6 +1,7 @@
 
 #include "ADASManager/PAS/GraphicCore/GraphicVPAFord.h"
 #include "ADASManager/PAS/GraphicCore/GraphicPDC.h"
+#include "ADASManager/PAS/GraphicCore/bmpconfig.h"
 
 namespace Harman {
 namespace Adas {
@@ -11,6 +12,7 @@ namespace ADASManager {
 GraphicVPAFord::GraphicVPAFord()
     : CRunableBase("GraphicVPAFord", false)
 {
+    printf(" [%s, %d] GraphicVPAFord::GraphicVPAFord() \n", __FUNCTION__, __LINE__);
 	m_bPause = false;
 }
 
@@ -22,9 +24,9 @@ bool GraphicVPAFord::vInit(int screenWidth, int screenHeight)
 {
     setscSize(screenWidth,screenHeight);
 
-    if(!InitVDT(screenWidth,screenHeight)) {
-        PDCL_LOG_INFO(" InitVDT init is failed!\n");
-    }
+    // if(!InitVDT(screenWidth,screenHeight)) {
+    //     PDCL_LOG_INFO(" InitVDT init is failed!\n");
+    // }
 
     if(InitPDC(screenWidth,screenHeight)) {
         PDCL_LOG_INFO(" GraphicPDC init is failed!\n");
@@ -52,8 +54,10 @@ bool GraphicVPAFord::bSetVPASize(int w, int h)
     return true;
 }
 
-void GraphicVPAFord::init()
+VOID GraphicVPAFord::init()
 {
+    printf(" [%s, %d] GraphicVPAFord::init(), carBuffer2 = %p, texWidth = %d, texHeight = %d  \n", __FUNCTION__, __LINE__, carBuffer2,  texWidth, texHeight);
+
 	if(InitView(800, 480, carBuffer2, texWidth, texHeight)) {
 		PDCL_LOG_INFO("GraphicPDC::init failed!\n");
 		quit();
@@ -64,7 +68,8 @@ void GraphicVPAFord::init()
 
 void GraphicVPAFord::update()
 {
-    PDCL_LOG_INFO("GraphicPDC::update PDC test\n");
+    printf(" [%s, %d] GraphicVPAFord::update() \n", __FUNCTION__, __LINE__);
+
     //printf("   [%s, %d] OPENGL ES Render always step1   !!!!!!!!!!!!!!!!!!!!\n", __FUNCTION__, __LINE__);
     //make sure init is done...
     //glClearColor(0.6f, 0.8f, 1.0f, 1.0f);
@@ -81,6 +86,8 @@ void GraphicVPAFord::update()
 
 void GraphicVPAFord::CBPause()
 {
+    printf(" [%s, %d] GraphicVPAFord::CBPause() \n", __FUNCTION__, __LINE__);
+
     //glClearColor(0.6f, 0.8f, 1.0f, 1.0f);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
@@ -126,7 +133,7 @@ void GraphicVPAFord::vEleToArray(float *eleData,float *arrData)
 #define NUM_OF_LINE_TO_DRAW 2
 void GraphicVPAFord::Render()
 {
-	//printf("   [%s, %d] OPENGL ES Render always!!!!!!!!!!!!!!!!!!!!\n", __FUNCTION__, __LINE__);
+	printf("   [%s, %d] GraphicVPAFord::Render()!! begine,  bBackgroundEnable=%d\n", __FUNCTION__, __LINE__, bBackgroundEnable);
     glEnable(GL_BLEND);
 
     glEnableVertexAttribArray(VERTEX_ARRAY);
@@ -151,6 +158,12 @@ void GraphicVPAFord::Render()
     glBindTexture(GL_TEXTURE_2D, m_uiTexture);
 	glUniform1i(m_RenderObj.uiTxtLoc,0);
     glUniform2f(m_RenderObj.uiImgSize,m_iWidth-1,m_iHeight-1);
+
+    IMAGEINFO imageinfo;
+    imageinfo.height = texHeight;
+    imageinfo.width = texWidth;
+    imageinfo.image_size = texWidth*texHeight*4;
+    saveAsBmp("/usr/bin/snowuse.bmp", (void*)tex, imageinfo);
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texWidth, texHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, tex);
     //
@@ -232,6 +245,8 @@ void GraphicVPAFord::Render()
 	glDisableVertexAttribArray(VERTEX_ARRAY);
 	glDisableVertexAttribArray(TEXCOORD_ARRAY);
     glDisable(GL_BLEND);
+
+    printf("   [%s, %d] GraphicVPAFord::Render()!! end \n", __FUNCTION__, __LINE__);
 }
 
 //guilde line

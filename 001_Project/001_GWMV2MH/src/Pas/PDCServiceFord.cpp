@@ -459,7 +459,7 @@ void PDCServiceFord::onGuideLineRadius(const char* data)
 		PDCA_LOG_INFO("onGuideLineRadius left[0] right[0]\n");
 	}
 
-	printf("	 [%s, %d] VDTState is ===%d, %d, %d, %d===\n", __FUNCTION__, __LINE__, shortRadius);
+	printf("	 [%s, %d] VDTState is ===%d, %d, %d, %d===\n", __FUNCTION__, __LINE__, iDriveDir, vdtStatus, shortRadius, longRadius);
 	m_pVPAGraphicFord->bSetVDTState(iDriveDir,vdtStatus,shortRadius,longRadius);
 }
 

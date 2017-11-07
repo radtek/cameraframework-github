@@ -20,9 +20,9 @@ public:
     static PasServiceStubImplGWM* getInstance();
     virtual ~PasServiceStubImplGWM();
 
-    // virtual void SwitchPASView(const std::shared_ptr<CommonAPI::ClientId> _client,
-    //         ::v0::com::harman::adas::PASBaseType::enPASViewStatus m_ePASViewStatus,
-    //         SwitchPASViewReply_t) override;
+    virtual void SwitchPASView(const std::shared_ptr<CommonAPI::ClientId> _client,
+            ::v0::com::harman::adas::PASBaseType::enPASViewStatus m_ePASViewStatus,
+            SwitchPASViewReply_t) override;
 
 private:
     PasServiceStubImplGWM();

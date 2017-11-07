@@ -49,6 +49,7 @@ PDCFactory::PDCFactory()
 {
 	ALOGI("PDCFactory() !\n");
 }
+
 PDCServiceFord* PDCFactory::vSetup()
 {
 	ALOGI(" [%s, %d]\n", __FUNCTION__, __LINE__);
@@ -57,14 +58,17 @@ PDCServiceFord* PDCFactory::vSetup()
     pMsgQueue = new CMessageQueue("FordPDCQueue", 300, new PDCMsgHandlerFord());
 #endif
     //create ford graphic proecess client
-    GraphicVPAFord* pGraphicVPAFord = new GraphicVPAFord();
+    GraphicVPAFord* pGraphicVPAFord = new GraphicVPAFord();   //therad
     if(pGraphicVPAFord->vInit(800,480))
+    //if(pGraphicVPAFord->vInit(640,720))
 	{
 		ALOGI("PDCFactory() vInit VPA graphic failed!\n");
 	}
 	else
 	{
+        ALOGI("PDCFactory() vSetup call start begine!\n");
 		pGraphicVPAFord->start();// start graphic thread!!
+        ALOGI("PDCFactory() vSetup call start end!\n");
 	}
 	;//create surface todo -------init is not properly get!!!!
     //pGraphicVPAFord->bSetVPASize(VPA_w,VPA_h);//to be desided by camera team
@@ -79,6 +83,7 @@ PDCServiceFord* PDCFactory::vSetup()
 
 
 	//create ford PDC app client -- lost first serveral msg
+    ALOGI("PDCFactory() pMsgQueue = %p!\n", pMsgQueue);
 	PDCServiceFord::getInstance()->vInitialize(pMsgQueue, pGraphicVPAFord);
 	//setup msg handler
 
@@ -87,7 +92,8 @@ PDCServiceFord* PDCFactory::vSetup()
 	//run some test cases
 
 	FordPDCTest* ptest = new FordPDCTest(PDCServiceFord::getInstance(),pGraphicVPAFord);
-	ptest->start();
+	//ptest->start();
+
 	return PDCServiceFord::getInstance();
 	//PDCServiceFord::getInstance()->join();
 }

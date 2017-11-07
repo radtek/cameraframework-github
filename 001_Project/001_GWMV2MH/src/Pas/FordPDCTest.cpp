@@ -454,7 +454,9 @@ void FordPDCTest::update()
 	vUsecase_VDT_OFF();
 	usleep(DELAYPDC*3);
 #endif
+	ALOGI("FordPDCTest::update() begine ============================================\n");
 	vUsecase_VDT_Normal();
+	ALOGI("FordPDCTest::update() end ------------------------------------------------\n");
 	/*usleep(DELAYPDC*10);
 	static int value = 0;
 	value = 5;//all sensor on

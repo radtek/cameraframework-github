@@ -2,18 +2,20 @@
 
 
 声明：
-此开发指南涉及到很多脚本和快捷命令，这些只是辅助开发，不用这些东西一样可以是正常开发工作，内容有笔误的，请发现后随时更改，提交
+此开发指南涉及到很多脚本和快捷命令，这些只是辅助开发，不用这些东西一样可以是正常开发工作，内容有笔误的，请发现后随时更改，更新此文档
 
 
 ------------代码树介绍----------------------
-目前开发涉及到四棵树：（建议四棵代码树下载到同一个父目录下，以便运用后面提供的很多方便的脚本）
+目前开发涉及到五棵树：（建议五棵代码树下载到同一个父目录下，使用仓库的默认名字（除了fork的仓库有自定义名字之外），以便运用后面提供的很多方便的脚本）
 1. 组内的framework代码仓库（维护组内4个so） ssh://git@stash1.harman.com:7999/gwm_camsdk/cameraframework.git   （别名：框架代码树）
    这棵树直接在master分支上开发，rebase， push 等操作，无需创建分支，fork仓库，也无需提交pull request 申请。
-2. 项目的代码仓库（头文件，so，长城项目文件） ssh://git@stash1.harman.com:7999/gwm_v2mh/cpm_adas_adservice.git   （别名：项目代码树）
+2. 组内的framework代码仓库中的4个so和对应的头文件发布仓库 ssh://git@stash1.harman.com:7999/gwm_camsdk/camfw_gwmv2.git   （别名：框架发布树）
+   这棵树直接在master分支上开发，rebase， push 等操作，无需创建分支，fork仓库，也无需提交pull request 申请。
+3. 项目的代码仓库（头文件，so，长城项目文件） ssh://git@stash1.harman.com:7999/gwm_v2mh/cpm_adas_adservice.git   （别名：项目代码树）
    这棵树的工作环境是自己在网页上创建的自己的分支，clone树之后要先切换到自己的分支上再工作，提交代码需要创建pull request
-3. 项目的BB文件仓库（维护长城TCFG环境的BB文件）  ssh://git@stash1.harman.com:7999/gwm_v2mh/cpm-gwm-v2mh.git  （别名：BB树）
+4. 项目的BB文件仓库（维护长城TCFG环境的BB文件）  ssh://git@stash1.harman.com:7999/gwm_v2mh/cpm-gwm-v2mh.git  （别名：BB树）
    这棵树的工作环境是自己在网页上创建的自己的fork树（fork的时候名字可以加上一个体现自己这次提交的后缀），clone树之后直接工作，提交代码需要创建pull request
-4. 项目的fidl/cdl文件仓库（维护组内相关fidl/cdl接口文件）  ssh://git@stash1.harman.com:7999/gwm_v2mh/contracts-gwm.git （别名：fidl/cdl树）
+5. 项目的fidl/cdl文件仓库（维护组内相关fidl/cdl接口文件）  ssh://git@stash1.harman.com:7999/gwm_v2mh/contracts-gwm.git （别名：fidl/cdl树）
    这棵树除了改动接口是需要clone下来工作提交代码，还有个用处就是colne下来是为了在本地编译长城project的代码。
    这棵树的工作环境是自己在网页上创建的自己的fork树（fork的时候名字可以加上一个体现自己这次提交的后缀），clone树之后直接工作，提交代码需要创建pull request
 
@@ -36,7 +38,11 @@ sudo chmod 777 elinaidelitelinux -R
 
 
 
-------------框架代码树----------------------
+---------------------以上内容是每个人需要了解的，此行以下的内容是使用技巧，可选择参考-----------------------------
+
+
+
+------------框架代码树------根目录快捷指令 adas----------------
 下载框架代码树： git clone ssh://git@stash1.harman.com:7999/gwm_camsdk/cameraframework.git
 
 一 目录结构
@@ -47,7 +53,7 @@ sudo chmod 777 elinaidelitelinux -R
 1. 进入项目树的根目录，执行source setEnv.sh （注意，一定要在项目树的根目录执行此命令，其他目录执行会使脚本的变量赋值出现错误, source 动作隶属此终端，另外打开终端需要重做此步骤）
    执行后的结果是： 1. 引入sdk2的工具链（也就是做了source environment-setup-corei7-64-elina-linux，无需再手动去做这件事）;
                    2. 加入命令：foundation foundationlib abase abaslib caseclient caseclientlib graphic graphiclib
-                  pushfoundation pushabase pushcaseclient pushgraphic pushadasdbus pushbinadas c adas greatwall cmakeconfig
+                  pushfoundation pushabase pushcaseclient pushgraphic pushadasdbus pushadas c adas greatwall cmakeconfig
   （c命令实现真正的清屏指令，不简单等同与clear命令;  
     adas命令是在任何目录回到框架代码树的根目录，
     greatwall命令是在任何目录回到项目代码树的根目录，
@@ -84,7 +90,14 @@ sudo chmod 777 elinaidelitelinux -R
    （根目录下有个脚本deploy_2_board.sh  执行一下可以把全部的so和binadas push到板子上）
 
 
-------------项目代码树----------------------
+------------框架发布树------根目录快捷指令 publish----------------
+下载框架代码树： git clone ssh://git@stash1.harman.com:7999/gwm_camsdk/camfw_gwmv2.git
+此树只是 框架代码树 000_Framework 目录下 编译出来的四个so 以及 这四个so 对应的头文件
+快捷操作脚本： 在 框架代码树 根目录下执行 deploy_2_publish.sh 脚本，会自动把 框架代码树 中四个最新的so以及对应的头文件覆盖掉 框架发布树 老的文件
+
+
+
+------------项目代码树------根目录快捷指令 greatwall----------------
 下载项目代码树： ssh://git@stash1.harman.com:7999/gwm_v2mh/cpm_adas_adservice.git
 
 1. 首先切换到自己的分之

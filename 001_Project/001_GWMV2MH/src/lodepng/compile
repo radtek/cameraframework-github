@@ -1,2 +1,0 @@
-
-x86_64-elina-linux-g++  -m64 -march=corei7 -mtune=corei7 -mfpmath=sse -msse4.2 --sysroot=/opt/elina/2.0.2015143A/sysroots/corei7-64-elina-linux -shared -fPIC  -O2 -pipe -g -feliminate-unused-debug-types  -I../include -Wl,--no-as-needed  -lpthread -std=c++11 -D LINUX_OS -fPIC -Wl,-O1 -Wl,--hash-style=gnu -Wl,--as-needed  -Llib -o liblodepng.so  lodepng.cpp

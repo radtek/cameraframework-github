@@ -44,7 +44,7 @@ public:
     // bool bSetGraphicVPAPause();
     // bool bSetGraphicVPAResume();
     void update();
-	void init();
+	virtual VOID init() override;
 
     void Render();
     void RenderGroupLines(int index);

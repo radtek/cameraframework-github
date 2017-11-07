@@ -2,6 +2,7 @@
 #include "ADASManager/PAS/GraphicCore/GraphicPDC.h"
 #include "ADASManager/PAS/GraphicCore/lineBorderOp.h"
 #include "ADASManager/PAS/GraphicCore/lodepng.h"
+#include "ADASManager/PAS/GraphicCore/bmpconfig.h"
 //#include "ADASManager/PAS/GraphicCore/PDCSensor.h"
 
 namespace Harman {
@@ -111,9 +112,7 @@ bool GraphicPDC::InitPDC(int screenWidth, int screenHeight)
 
 bool GraphicPDC:: ReadConfigFile(const char* cfgfilepath)
 {
-    cout<<"Read Config File!"<<endl;
-
-    cout << "File path in GraphicPDC is >>" << cfgfilepath << "\n";
+    cout<<"GraphicPDC::ReadConfigFile() : File path = " << cfgfilepath <<endl;
 
     fstream cfgFile;
     cfgFile.open(cfgfilepath, std::fstream::in);//OpenFiles
@@ -157,36 +156,38 @@ bool GraphicPDC:: ReadConfigFile(const char* cfgfilepath)
                     value = line.substr(assignmentPos+2);
                     modeStr = value.substr(0,value.size());
 					printf(" [%s, %d] modeStr = %s\n", __FUNCTION__, __LINE__, modeStr.c_str());
-					//printf(" [%s, %d] len = %d\n", __FUNCTION__, __LINE__, value.size());
                 }
 
                 else if (tmpKey == "texfilesPathDayCam" )
                 {
                     cout<< "texfilesPathDayCam config "<<endl;
-                    value = line.substr(assignmentPos+2);//
+                    value = line.substr(assignmentPos+2);
                     texfilesPathDayCam = value.substr(0,value.size());
-                    //cout<< "texfilesPathDayCam is  ----------- "<<texfilesPathDayCam<<endl;
+                    cout<< "texfilesPathDayCam is  ----------- "<<texfilesPathDayCam<<endl;
 
                 }
                 else if (tmpKey == "texfilesPathDayNoCam" )
                 {
-                    //cout<< "texfilesPathDayNoCam config "<<endl;
+                    cout<< "texfilesPathDayNoCam config "<<endl;
                     value = line.substr(assignmentPos+2);//
                     texfilesPathDayNoCam = value.substr(0,value.size());
+                    cout<< "texfilesPathDayNoCam is  ----------- "<<texfilesPathDayNoCam<<endl;
 
                 }
                 else if (tmpKey == "texfilesPathNightCam" )
                 {
-                    //cout<< "texfilesPathNightCam config "<<endl;
+                    cout<< "texfilesPathNightCam config "<<endl;
                     value = line.substr(assignmentPos+2);//
                     texfilesPathNightCam = value.substr(0,value.size());
+                    cout<< "texfilesPathNightCam is  ----------- "<<texfilesPathNightCam<<endl;
 
                 }
                 else if (tmpKey == "texfilesPathNightNoCam" )
                 {
-                    //cout<< "texfilesPathNightNoCam config "<<endl;
+                    cout<< "texfilesPathNightNoCam config "<<endl;
                     value = line.substr(assignmentPos+2);//
                     texfilesPathNightNoCam = value.substr(0,value.size());
+                    cout<< "texfilesPathNightNoCam is  ----------- "<<texfilesPathNightNoCam<<endl;
 
                 }
                 else if(tmpKey == "groupNum")
@@ -195,32 +196,34 @@ bool GraphicPDC:: ReadConfigFile(const char* cfgfilepath)
                     value = line.substr(assignmentPos+2);//
                     m_iGroupNum = atoi(value.c_str());
                     //m_iGroupNum = atoi(value.c_str()) - 1;
-                   // cout<< "m_iGroupNum is -----"<<m_iGroupNum<<endl;
+                    cout<< "m_iGroupNum is -----"<<m_iGroupNum<<endl;
 
                 }
                 else if(tmpKey == "familyNum")
                 {
-                    //cout<< "familyNum config"<<endl;
+                    cout<< "familyNum config"<<endl;
                     size_t frontPos = line.find('[');//
                     size_t rearPos = line.find(']');//
                     int  delta = (rearPos - frontPos);
                     value = line.substr(frontPos+1,delta-1);
                     familyNumStr = value;
+                    cout<< "familyNumStr is -----"<<familyNumStr<<endl;
 
                 }
                 else if(tmpKey == "defaultShow")
                 {
-                    //cout<< "defaultShow config"<<endl;
+                    cout<< "defaultShow config"<<endl;
                     size_t frontPos = line.find('[');//
                     size_t rearPos = line.find(']');//
                     int  delta = (rearPos - frontPos);
                     value = line.substr(frontPos+1,delta-1);
                     defaultShowStr = value;
+                    cout<< "defaultShowStr is -----"<<defaultShowStr<<endl;
 
                 }
                 else if(tmpKey == "sectorTexString")
                 {
-                    //cout<< "sectorTexString config"<<endl;
+                    cout<< "sectorTexString config"<<endl;
 
                     size_t frontPos,endPos;
 
@@ -255,7 +258,7 @@ bool GraphicPDC:: ReadConfigFile(const char* cfgfilepath)
                                 }
 
                                 texNames[i] = value;
-                               // cout<<value<<endl;
+                                cout<<value<<endl;
                                 i++;
                             }
 
@@ -269,105 +272,123 @@ bool GraphicPDC:: ReadConfigFile(const char* cfgfilepath)
                 }
                 else if(tmpKey == "dayCamPosx")
                 {
-                    value = line.substr(assignmentPos+2);//
+                    cout<< "dayCamPosx config"<<endl;
+                    value = line.substr(assignmentPos+2);
                     dayCamPosx = atoi(value.c_str());
-                   // cout<< "dayCamPosx config"<<endl;
+                    cout<< "dayCamPosx is -----"<<dayCamPosx<<endl;
+
                 }
                 else if(tmpKey == "dayCamPosy")
                 {
-                    value = line.substr(assignmentPos+2);//
+                    cout<< "dayCamPosy config"<<endl;
+                    value = line.substr(assignmentPos+2);
                     dayCamPosy = atoi(value.c_str());
-                   // cout<< "dayCamPosy config"<<endl;
+                    cout<< "dayCamPosy is -----"<<dayCamPosy<<endl;
                 }
                 else if(tmpKey == "dayCamTexWidth")
                 {
-                    value = line.substr(assignmentPos+2);//
+                    cout<< "dayCamTexWidth config"<<endl;
+                    value = line.substr(assignmentPos+2);
                     dayCamTexWidth = atoi(value.c_str());
-                    //cout<< "dayCamTexWidth config"<<endl;
+                    cout<< "dayCamTexWidth is -----"<<dayCamTexWidth<<endl;
                 }
                 else if(tmpKey == "dayCamTexHeight")
                 {
-                    value = line.substr(assignmentPos+2);//
+                    cout<< "dayCamTexHeight config"<<endl;
+                    value = line.substr(assignmentPos+2);
                     dayCamTexHeight = atoi(value.c_str());
-                    //cout<< "dayCamTexHeight config"<<endl;
+                    cout<< "dayCamTexHeight is -----"<<dayCamTexHeight<<endl;
                 }
                 else if(tmpKey == "dayNoCamPosx")
                 {
-                    value = line.substr(assignmentPos+2);//
+                    cout<< "dayNoCamPosx config"<<endl;
+                    value = line.substr(assignmentPos+2);
                     dayNoCamPosx = atoi(value.c_str());
-                    //cout<< "dayNoCamPosx config"<<endl;
+                    cout<< "dayNoCamPosx is -----"<<dayNoCamPosx<<endl;
                 }
                 else if(tmpKey == "dayNoCamPosy")
                 {
-                    value = line.substr(assignmentPos+2);//
+                    cout<< "dayNoCamPosy config"<<endl;
+                    value = line.substr(assignmentPos+2);
                     dayNoCamPosy = atoi(value.c_str());
-                    //cout<< "dayNoCamPosy config"<<endl;
+                    cout<< "dayNoCamPosy is -----"<<dayNoCamPosy<<endl;
                 }
                 else if(tmpKey == "dayNoCamTexWidth")
                 {
-                    value = line.substr(assignmentPos+2);//
+                    cout<< "dayNoCamTexWidth config"<<endl;
+                    value = line.substr(assignmentPos+2);
                     dayNoCamTexWidth = atoi(value.c_str());
-                    //cout<< "dayNoCamTexWidth config"<<endl;
+                    cout<< "dayNoCamTexWidth is -----"<<dayNoCamTexWidth<<endl;
                 }
                 else if(tmpKey == "dayNoCamTexHeight")
                 {
-                    value = line.substr(assignmentPos+2);//
+                    cout<< "dayNoCamTexHeight config"<<endl;
+                    value = line.substr(assignmentPos+2);
                     dayNoCamTexHeight = atoi(value.c_str());
-                    //cout<< "dayNoCamTexHeight config"<<endl;
+                    cout<< "dayNoCamTexHeight is -----"<<dayNoCamTexHeight<<endl;
                 }
                 else if(tmpKey == "nightCamPosx")
                 {
-                    value = line.substr(assignmentPos+2);//
+                    cout<< "nightCamPosx config"<<endl;
+                    value = line.substr(assignmentPos+2);
                     nightCamPosx = atoi(value.c_str());
-                    //cout<< "nightCamPosx config"<<endl;
+                    cout<< "nightCamPosx is -----"<<nightCamPosx<<endl;
                 }
                 else if(tmpKey == "nightCamPosy")
                 {
-                    value = line.substr(assignmentPos+2);//
+                    cout<< "nightCamPosy config"<<endl;
+                    value = line.substr(assignmentPos+2);
                     nightCamPosy = atoi(value.c_str());
-                    //cout<< "nightCamPosy config"<<endl;
+                    cout<< "nightCamPosy is -----"<<nightCamPosy<<endl;
                 }
                 else if(tmpKey == "nightCamTexWidth")
                 {
-                    value = line.substr(assignmentPos+2);//
+                    cout<< "nightCamTexWidth config"<<endl;
+                    value = line.substr(assignmentPos+2);
                     nightCamTexWidth = atoi(value.c_str());
-                    //cout<< "nightCamTexWidth config"<<endl;
+                    cout<< "nightCamTexWidth is -----"<<nightCamTexWidth<<endl;
                 }
                 else if(tmpKey == "nightCamTexHeight")
                 {
-                    value = line.substr(assignmentPos+2);//
+                    cout<< "nightCamTexHeight config"<<endl;
+                    value = line.substr(assignmentPos+2);
                     nightCamTexHeight = atoi(value.c_str());
-                    //cout<< "nightCamTexHeight config"<<endl;
+                    cout<< "nightCamTexHeight is -----"<<nightCamTexHeight<<endl;
                 }
                 else if(tmpKey == "nightNoCamPosx")
                 {
-                    value = line.substr(assignmentPos+2);//
+                    cout<< "nightNoCamPosx config"<<endl;
+                    value = line.substr(assignmentPos+2);
                     nightNoCamPosx = atoi(value.c_str());
-                    //cout<< "nightNoCamPosx config"<<endl;
+                    cout<< "nightNoCamPosx is -----"<<nightNoCamPosx<<endl;
                 }
                 else if(tmpKey == "nightNoCamPosy")
                 {
-                    value = line.substr(assignmentPos+2);//
+                    cout<< "nightNoCamPosy config"<<endl;
+                    value = line.substr(assignmentPos+2);
                     nightNoCamPosy = atoi(value.c_str());
-                    //cout<< "nightNoCamPosy config"<<endl;
+                    cout<< "nightNoCamPosy is -----"<<nightNoCamPosy<<endl;
                 }
                 else if(tmpKey == "nightNoCamTexWidth")
                 {
-                    value = line.substr(assignmentPos+2);//
+                    cout<< "nightNoCamTexWidth config"<<endl;
+                    value = line.substr(assignmentPos+2);
                     nightNoCamTexWidth = atoi(value.c_str());
-                    //cout<< "nightNoCamTexWidth config"<<endl;
+                    cout<< "nightNoCamTexWidth is -----"<<nightNoCamTexWidth<<endl;
                 }
                 else if(tmpKey == "nightNoCamTexHeight")
                 {
-                    value = line.substr(assignmentPos+2);//
+                    cout<< "nightNoCamTexHeight config"<<endl;
+                    value = line.substr(assignmentPos+2);
                     nightNoCamTexHeight = atoi(value.c_str());
-                    //cout<< "nightNoCamTexHeight config"<<endl;
+                    cout<< "nightNoCamTexHeight is -----"<<nightNoCamTexHeight<<endl;
                 }
                 else if(tmpKey == "backgroundname")
                 {
+                    cout<< "backgroundName config"<<endl;
                     value = line.substr(assignmentPos+2);//
                     backgroundName = value.substr(0,value.size());
-                    cout<< "backgroundName  is config"<<backgroundName<<endl;
+                    cout<< "backgroundName  is -----"<<backgroundName<<endl;
                 }
 
             }
@@ -382,16 +403,17 @@ bool GraphicPDC:: ReadConfigFile(const char* cfgfilepath)
     {
         cfgFile.close();
     }
+
+    cout<<endl<<"GraphicPDC::ReadConfigFile() ok ! " <<endl<<endl;
+
     return true;
 
 }
 
 void GraphicPDC::SetMode()
 {
-    cout<<"Set Mode"<<endl;
+    cout<<"GraphicPDC::SetMode() Set Mode :" <<endl;
 
-	printf(" [%s, %d] modeStr = %s\n", __FUNCTION__, __LINE__, modeStr.c_str());
-	//printf(" [%s, %d] len = %d\n", __FUNCTION__, __LINE__, modeStr.size());
     if (modeStr=="DAY_CAMERA")
     {
         cout<<"Set DAY_CAMERA Mode"<<endl;
@@ -438,12 +460,16 @@ void GraphicPDC::SetMode()
         planeHeight = dayCamTexHeight;
         planeWidth = dayCamTexWidth;
     }
-    // cout<<"modeStr is ------"<<modeStr<<endl;
-    // cout<<"posX is ------"<<posX<<endl;
-    // cout<<"posY is ------"<<posY<<endl;
 
 
+    cout<<"modeStr is ------"<<modeStr<<endl;
+    cout<<"posX is ------"<<posX<<endl;
+    cout<<"posY is ------"<<posY<<endl;
+    cout<<"planeHeight is ------"<<planeHeight<<endl;
+    cout<<"planeWidth is ------"<<planeWidth<<endl;
     cout << "texFilePath is ------" << texFilePath << endl;
+
+    cout<<endl<<"GraphicPDC::SetMode() Set Mode OK!" <<endl<<endl;
 }
 
 
@@ -462,6 +488,8 @@ void GraphicPDC::SetSumNum()
         sumNum += familyNum[i];
         i++;
     }
+
+    cout << "GraphicPDC::SetSumNum() familyNumStr = "<<  familyNumStr << "sumNum = " << sumNum << "m_iGroupNum = " << m_iGroupNum << endl;
 }
 
 
@@ -541,11 +569,19 @@ void GraphicPDC::InitGroupMap()
     cout<<"Init Group Map (default)"<<endl;
     m_iGroupMaps = new groupMap[m_iGroupNum];
 
+    // typedef struct _groupMap{
+    //     int planeNum;//这个区域块一共有几个块，底块也算一个
+    //     int beginHead;//这个区域在familyNum数组中的起始下标
+    //     int showPlaneNum;// 这个区域需要显示几个色块
+    //     int planeSeq[10];// 这个区域要显示色块的下标（一个或多个）
+    // } groupMap;
+
     m_iGroupMaps[0].beginHead = 0;
     m_iGroupMaps[0].planeNum = familyNum[0];
     m_iGroupMaps[0].showPlaneNum = 1;
     m_iGroupMaps[0].planeSeq[0] = defaultShow[0];
-    printf("Init Group Map (default) %d\n",m_iGroupMaps[0].planeSeq[0]);
+    printf("Init Group Map (default) planeNum=%d, beginHead=%d, showPlaneNum=%d, planeSeq=%d\n",m_iGroupMaps[0].planeNum, m_iGroupMaps[0].beginHead,
+            m_iGroupMaps[0].showPlaneNum, m_iGroupMaps[0].planeSeq[0]);
 
     for (int i=1;i<m_iGroupNum;i++)
     {
@@ -553,7 +589,8 @@ void GraphicPDC::InitGroupMap()
         m_iGroupMaps[i].planeNum = familyNum[i];
         m_iGroupMaps[i].showPlaneNum = 1;
         m_iGroupMaps[i].planeSeq [0] = defaultShow[i];
-        printf("Init Group Map (default) %d\n",m_iGroupMaps[i].planeSeq[0]);
+        printf("Init Group Map (default) planeNum=%d, beginHead=%d, showPlaneNum=%d, planeSeq=%d\n",m_iGroupMaps[i].planeNum, m_iGroupMaps[i].beginHead,
+            m_iGroupMaps[i].showPlaneNum, m_iGroupMaps[i].planeSeq[0]);
     }
 
 }
@@ -561,8 +598,20 @@ void GraphicPDC::InitGroupMap()
 
 int GraphicPDC::LoadTextureData(int index)
 {
+    // typedef struct _planesData{
+    //     char* tex;  // *.png data
+    //     float* pBorderData;//two for vertex and two for TEXCOORD,so stride is 4
+    //     float* pArrayData;//two for vertex and two for TEXCOORD,so stride is 4
+    //     unsigned short* pBorderIndex;
+    //     unsigned short pBorderIndexNum;
+    //     unsigned short pBorderPtElemNum;
+    // }planesData;
+
     planesData* curPlaneData = &m_Planes[index];
     string filepath = texFilePath + texNames[index] +".png";
+
+    printf(" [%s, %d] GraphicPDC::LoadTextureData , filepath = %s\n", __FUNCTION__, __LINE__, filepath.c_str());
+
    // cout<<"filepath name is -----------------"<<filepath<<endl;
     //printf(" [%s, %d] %s\n", __FUNCTION__, __LINE__, filepath.c_str());
     std::vector<unsigned char> image; //the raw pixels
@@ -583,14 +632,27 @@ int GraphicPDC::LoadTextureData(int index)
     {
         for (int j=0;j<texWidth;j++)
         {
-            pTexData[4*i*texWidth+4*j] = (char)image[4*i*texWidth+4*j];
+            pTexData[4*i*texWidth+4*j] = (char)image[4*i*texWidth+4*j+2];
             pTexData[4*i*texWidth+4*j+1] = (char)image[4*i*texWidth+4*j+1];
-            pTexData[4*i*texWidth+4*j+2] = (char)image[4*i*texWidth+4*j+2];
+            pTexData[4*i*texWidth+4*j+2] = (char)image[4*i*texWidth+4*j];
             pTexData[4*i*texWidth+4*j+3] = (char)image[4*i*texWidth+4*j+3];
         }
     }
-	return 0;
 
+
+
+    IMAGEINFO imageinfo;
+    imageinfo.height = texHeight;
+    imageinfo.width = texWidth;
+    imageinfo.image_size = texWidth*texHeight*4;
+    string path("/usr/bin/snowpath/");
+    path += texNames[index];
+    path += ".bmp";
+    printf(" [%s, %d] GraphicPDC::LoadTextureData , path = %s\n", __FUNCTION__, __LINE__, path.c_str());
+    saveAsBmp(path.c_str(), (void*)pTexData, imageinfo);
+
+
+	return 0;
 }
 
 
@@ -609,9 +671,11 @@ int GraphicPDC::LoadTextures()
 //todo read default pdc state
 bool GraphicPDC::CompoundTex()
 {
+    printf(" [%s, %d] GraphicPDC::CompoundTex() \n", __FUNCTION__, __LINE__);
+
     for (int i=0;i<m_iGroupNum;i++)
     {
-        groupMap* currentMap = &m_iGroupMaps[i];
+        groupMap* currentMap = &m_iGroupMaps[i]; //one of 21 group
         if ((currentMap->planeSeq[0]<-1)||(currentMap->planeSeq[0]>=currentMap->planeNum))
         {
             printf( "GraphicPDC Defult Status is Exception index[%d] val[%d]\n",i,currentMap->planeSeq[0]);
@@ -622,13 +686,14 @@ bool GraphicPDC::CompoundTex()
 
     //flash last valid state first
     int indexTex = 0;
+    printf(" texWidth = %d , texHeight = %d \n", texWidth, texHeight);
     while(indexTex<(texWidth*texHeight*4))
     {
         tex[indexTex] = 0;
         indexTex++;
     }
     int k;
-    for(int i=0; i<m_iGroupNum-1-4; i++)
+    for(int i=0; i<m_iGroupNum-1-4; i++)  //16 ge qu yu
     {
 		groupMap* currentMap = &m_iGroupMaps[i];
         if (currentMap->planeSeq[0]==-1)
@@ -653,52 +718,69 @@ bool GraphicPDC::CompoundTex()
         }
     }
 
+    IMAGEINFO imageinfo;
+    imageinfo.height = texHeight;
+    imageinfo.width = texWidth;
+    imageinfo.image_size = texWidth*texHeight*4;
+    saveAsBmp("/usr/bin/snow.bmp", (void*)tex, imageinfo);
+
+
 	infoBuffer = new char[texWidth*texHeight*4*8];
 	if(NULL != infoBuffer)
 	{
 		memset(infoBuffer, 0, texWidth*texHeight*4*8);
 	}
 
-	//for(int i=sumNum-2; i<sumNum; i++)
-	{
-		planesData plansGroup1 = m_Planes[sumNum-2];
-		carBuffer1 = new char[texWidth*texHeight*4];
-		if(NULL != carBuffer1)
-		{
-			memset(carBuffer1, 0, texWidth*texHeight*4);
-			k=0;
-	        while(k<texWidth*texHeight*4)
-	        {
-	            if(plansGroup1.tex[k+3]!=0)
-	            {
-	                carBuffer1[k] =  plansGroup1.tex[k];
-	                carBuffer1[k+1] =  plansGroup1.tex[k+1];
-	                carBuffer1[k+2] =  plansGroup1.tex[k+2];
-	                carBuffer1[k+3] =  plansGroup1.tex[k+3];
-	            }
-	            k = k+4;
-	        }
-		}
 
-		planesData plansGroup2 = m_Planes[sumNum-1];
-		carBuffer2 = new char[texWidth*texHeight*4];
-		if(NULL != carBuffer2)
-		{
-			memset(carBuffer2, 0, texWidth*texHeight*4);
-			k=0;
-	        while(k<texWidth*texHeight*4)
-	        {
-	            if(plansGroup2.tex[k+3]!=0)
-	            {
-	                carBuffer2[k] =  plansGroup2.tex[k];
-	                carBuffer2[k+1] =  plansGroup2.tex[k+1];
-	                carBuffer2[k+2] =  plansGroup2.tex[k+2];
-	                carBuffer2[k+3] =  plansGroup2.tex[k+3];
-	            }
-	            k = k+4;
-	        }
-		}
+	planesData plansGroup1 = m_Planes[sumNum-2];
+	carBuffer1 = new char[texWidth*texHeight*4];
+	if(NULL != carBuffer1)
+	{
+		memset(carBuffer1, 0, texWidth*texHeight*4);
+		k=0;
+        while(k<texWidth*texHeight*4)
+        {
+            if(plansGroup1.tex[k+3]!=0)
+            {
+                carBuffer1[k] =  plansGroup1.tex[k];
+                carBuffer1[k+1] =  plansGroup1.tex[k+1];
+                carBuffer1[k+2] =  plansGroup1.tex[k+2];
+                carBuffer1[k+3] =  plansGroup1.tex[k+3];
+            }
+            k = k+4;
+        }
+
+        IMAGEINFO imageinfo;
+        imageinfo.height = texHeight;
+        imageinfo.width = texWidth;
+        imageinfo.image_size = texWidth*texHeight*4;
+        saveAsBmp("/usr/bin/snow1.bmp", (void*)carBuffer1, imageinfo); // car with alarm
 	}
+
+	planesData plansGroup2 = m_Planes[sumNum-1];
+	carBuffer2 = new char[texWidth*texHeight*4];
+	if(NULL != carBuffer2)
+	{
+		memset(carBuffer2, 0, texWidth*texHeight*4);
+		k=0;
+        while(k<texWidth*texHeight*4)
+        {
+            if(plansGroup2.tex[k+3]!=0)
+            {
+                carBuffer2[k] =  plansGroup2.tex[k];
+                carBuffer2[k+1] =  plansGroup2.tex[k+1];
+                carBuffer2[k+2] =  plansGroup2.tex[k+2];
+                carBuffer2[k+3] =  plansGroup2.tex[k+3];
+            }
+            k = k+4;
+        }
+        IMAGEINFO imageinfo;
+        imageinfo.height = texHeight;
+        imageinfo.width = texWidth;
+        imageinfo.image_size = texWidth*texHeight*4;
+        saveAsBmp("/usr/bin/snow2.bmp", (void*)carBuffer2, imageinfo);  // car without alarm
+	}
+
 
     PDCL_LOG_INFO( " GraphicPDC flash default graphic---------- \n");
     return true;
@@ -922,7 +1004,7 @@ void GraphicPDC::LoadBackgroundTexFiles()
     //return ;
     //cout<<"Load Background Tex Files"<<endl;
     string filepath = texFilePath + backgroundName +".png";
-    cout<<"Background file is ----------"<<filepath<<backgroundName<<endl;
+    cout<<"Background file is ----------"<<filepath<<endl;
     std::vector<unsigned char> image; //the raw pixels
     unsigned int width=0, height=0;
     unsigned int error = lodepng::decode(image, width, height, filepath, LCT_RGBA, 8);
@@ -941,12 +1023,23 @@ void GraphicPDC::LoadBackgroundTexFiles()
     {
         for (int j=0;j<texBackgroundWidth;j++)
         {
-            pTexData[4*i*width+4*j] = (char)image[4*i*width+4*j];
+            pTexData[4*i*width+4*j] = (char)image[4*i*width+4*j+2];
             pTexData[4*i*width+4*j+1] = (char)image[4*i*width+4*j+1];
-            pTexData[4*i*width+4*j+2] = (char)image[4*i*width+4*j+2];
+            pTexData[4*i*width+4*j+2] = (char)image[4*i*width+4*j];
             pTexData[4*i*width+4*j+3] = (char)image[4*i*width+4*j+3];
         }
     }
+
+    IMAGEINFO imageinfo;
+    imageinfo.height = backgroundHeight;
+    imageinfo.width = backgroundWidth;
+    imageinfo.image_size = backgroundWidth*backgroundHeight*4;
+    string path("/usr/bin/snowpath/");
+    path += backgroundName;
+    path += ".bmp";
+    printf(" [%s, %d] GraphicPDC::LoadBackgroundTexFiles , path = %s\n", __FUNCTION__, __LINE__, path.c_str());
+    saveAsBmp(path.c_str(), (void*)pTexData, imageinfo);
+
 }
 
 void GraphicPDC::CalBackgroundPlaneData()

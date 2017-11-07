@@ -1,10 +1,8 @@
 
-CC      = gcc
-CPP     = g++
 RM      = rm -rf
 CP      = cp
 
-DIR_OBJ := ../lib/linux
+DIR_OBJ := ../proj/linux
 
 ## debug flag
 DBG_ENABLE   = 0
@@ -34,6 +32,8 @@ INCLUDE_PATH := ../include
 ## used include librarys file path
 LIBRARY_PATH := lib
 
+LIBS := dlt nanomsg
+
 ## debug for debug info, when use gdb to debug
 ifeq (1, ${DBG_ENABLE})
 CFLAGS += -D_DEBUG -O0 -g -DDEBUG=1
@@ -45,13 +45,15 @@ CFLAGS  += $(foreach dir, $(INCLUDE_PATH), -I$(dir))
 ## get all library path
 LDFLAGS += $(foreach lib, $(LIBRARY_PATH), -L$(lib))
 
+LDFLAGS += $(foreach lib, $(LIBS), -l$(lib))
+
 ## get all librarys
 #LDFLAGS += $(foreach lib, $(LIBS), -l$(lib))
 
 ## c++11 support
 CFLAGS += -Wl,--no-as-needed  -lpthread -std=c++11
 
-CFLAGS += -D LINUX_OS -D ENABLE_EGL -fPIC
+CFLAGS += -D LINUX_OS -fPIC
 
 #CFLAGS += -D__FILENAME__='"$(subst $(dir $<),,$<)"'
 
@@ -70,4 +72,5 @@ ${DIR_OBJ}/%.o : $(SRC_PATH)/%.cpp
 clean:
 	$(RM) $(OBJS) $(TARGET_PATH)/$(TARGET)
 
-
+cp:
+	$(CP) $(TARGET_PATH)/$(TARGET) /usr/lib
