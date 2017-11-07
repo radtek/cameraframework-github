@@ -16,7 +16,16 @@ TARGET     := graphicTest
 SRCS1       = $(wildcard $(SRC_PATH)/*.cpp)
 OBJS1       = $(patsubst %.cpp,%.o,$(SRCS1))
 
-OBJS = $(OBJS1)
+SRCS3       = $(wildcard $(SRC_PATH)/../../src/Camera/*.cpp)
+OBJS3       = $(patsubst %.cpp,%.o,$(SRCS3))
+
+# SRCS4       = $(wildcard $(SRC_PATH)/../../src/Pas/*.cpp)
+# OBJS4       = $(patsubst %.cpp,%.o,$(SRCS4))
+
+#SRCS5       = $(wildcard $(SRC_PATH)/../../src/Rvc/*.cpp)
+#OBJS5       = $(patsubst %.cpp,%.o,$(SRCS5))
+
+OBJS = $(OBJS1) $(OBJS2) $(OBJS3) $(OBJS4) $(OBJS5)
 
 ## need libs, add at here
 LIBS := AFoundation
@@ -29,6 +38,9 @@ LIBS += wayland-cursor
 LIBS += GLESv2 EGL
 LIBS += ivi-application
 #LIBS += lodepng
+LIBS += ilmCommon
+LIBS += ilmClient
+LIBS += ilmControl
 LIBS += dlt
 LIBS += nanomsg
 

@@ -5,7 +5,7 @@
 #include <iostream>
 #include <unistd.h>
 #include "AGraphic.h"
-#include "lodepng.h"
+#include "PAS/GraphicCore/lodepng.h"
 
 
 #define PNG01_PATH "/usr/bin/res/pdc_focus_warning.png"
