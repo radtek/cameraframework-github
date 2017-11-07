@@ -63,7 +63,7 @@
 
 //============================================================
 
-//#define DLTLOG
+#define DLTLOG
 
 //#define CASECLIENT_LOG
 #ifdef DLTLOG

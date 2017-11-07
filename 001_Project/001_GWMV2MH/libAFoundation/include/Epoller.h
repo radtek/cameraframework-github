@@ -123,7 +123,7 @@ protected:
     /**
     * epoll
     */
-    Int32 m_iEpollFd = 0;
+    Int32 m_iEpollFd;
 
     /**
     * 最大连接数

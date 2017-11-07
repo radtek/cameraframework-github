@@ -1,7 +1,7 @@
 
 #include "ADASManager/PAS/GraphicCore/GraphicPDC.h"
 #include "ADASManager/PAS/GraphicCore/lineBorderOp.h"
-#include "ADASManager/PAS/GraphicCore/lodepng.h"
+//#include "ADASManager/PAS/GraphicCore/lodepng.h"
 #include "ADASManager/PAS/GraphicCore/bmpconfig.h"
 //#include "ADASManager/PAS/GraphicCore/PDCSensor.h"
 
@@ -616,7 +616,7 @@ int GraphicPDC::LoadTextureData(int index)
     //printf(" [%s, %d] %s\n", __FUNCTION__, __LINE__, filepath.c_str());
     std::vector<unsigned char> image; //the raw pixels
     unsigned width=0, height=0;
-    unsigned error = lodepng::decode(image, width, height, filepath, LCT_RGBA, 8);
+    unsigned error;// = lodepng::decode(image, width, height, filepath, LCT_RGBA, 8);
     //printf(" [%s, %d] error = %d\n", __FUNCTION__, __LINE__, error);
     texHeight = (int)height;
     texWidth = (int)width;
@@ -1007,7 +1007,7 @@ void GraphicPDC::LoadBackgroundTexFiles()
     cout<<"Background file is ----------"<<filepath<<endl;
     std::vector<unsigned char> image; //the raw pixels
     unsigned int width=0, height=0;
-    unsigned int error = lodepng::decode(image, width, height, filepath, LCT_RGBA, 8);
+    unsigned int error;// = lodepng::decode(image, width, height, filepath, LCT_RGBA, 8);
     if(error)
     {
        cout<<"lodepng::decode error"<<endl;
