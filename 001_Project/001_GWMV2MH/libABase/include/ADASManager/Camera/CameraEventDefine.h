@@ -21,6 +21,7 @@ namespace ADASManager {
 #define OFFCAMERASTATE      "OffState"
 #define ENABLECAMERASTATE   "EnableState"
 #define SUSPENDCAMERASTATE  "SuspendState"
+#define ERRORSTATE          "ErrorState"
 
 /******** cameraCreatFlag :  which model need which cameras *****
  * BIT  : 1:need  /  0:no need  /  X:reserve
@@ -45,6 +46,7 @@ typedef enum _vehicle_Camera_State{
     eSVS_Camera_State_OFF      = 0x0,
     eSVS_Camera_State_Suspend  = 0x1,
     eSVS_Camera_State_Enable   = 0x2,
+    eSVS_Camera_State_Error    = 0x3,
 
 
     eSVS_Camera_State_Invalid  = 0xFF

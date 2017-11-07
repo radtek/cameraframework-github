@@ -65,10 +65,12 @@ BOOLEAN OffState::ProcessMessage(UInt32 uiType, UInt32 uiMessageID, const string
                     m_pStateMachine->TransitionTo(csm->m_pSuspendState);
                 } else {
                     ALOGE("OffState : OpenDriver failed , keep OffState !!!!\n");
+                    m_pStateMachine->TransitionTo(csm->m_pErrorState);
                     return TRUE;
                 }
             } else {
                 ALOGE("OffState : error CameraStateMachine do not exit !!!!\n");
+                m_pStateMachine->TransitionTo(csm->m_pErrorState);
                 return TRUE;
             }
             break;
@@ -87,10 +89,12 @@ BOOLEAN OffState::ProcessMessage(UInt32 uiType, UInt32 uiMessageID, const string
                     m_pStateMachine->TransitionTo(csm->m_pSuspendState);
                 } else {
                     ALOGE("OffState : OpenDriver failed , keep OffState !!!\n");
+                    m_pStateMachine->TransitionTo(csm->m_pErrorState);
                     return TRUE;
                 }
             } else {
                 ALOGE("OffState : error CameraStateMachine do not exit !!!\n");
+                m_pStateMachine->TransitionTo(csm->m_pErrorState);
                 return TRUE;
             }
 

@@ -70,6 +70,7 @@ BOOLEAN SuspendState::ProcessMessage(UInt32 uiType, UInt32 uiMessageID, const st
                     m_pStateMachine->TransitionTo(csm->m_pOffState);
                 } else {
                     ALOGE("SuspendState CloseDriver failed , keep SuspendState !!!!\n");
+                    m_pStateMachine->TransitionTo(csm->m_pErrorState);
                     return TRUE;
                 }
             } else {
@@ -96,6 +97,7 @@ BOOLEAN SuspendState::ProcessMessage(UInt32 uiType, UInt32 uiMessageID, const st
                     m_pStateMachine->TransitionTo(csm->m_pEnableState);
                 } else {
                     ALOGE("SuspendState Getcapture failed , keep SuspendState !!!!\n");
+                    m_pStateMachine->TransitionTo(csm->m_pErrorState);
                     return TRUE;
                 }
             } else {

@@ -116,10 +116,12 @@ BOOLEAN EnableState::ProcessMessage(UInt32 uiType, UInt32 uiMessageID, const str
                     m_pStateMachine->TransitionTo(csm->m_pSuspendState);
                 } else {
                     ALOGE("SuspendState StopCapture failed , keep EnableState !!!!\n");
+                    m_pStateMachine->TransitionTo(csm->m_pErrorState);
                     return TRUE;
                 }
             } else {
                 ALOGE("error CameraStateMachine do not exit !!!!\n");
+                m_pStateMachine->TransitionTo(csm->m_pErrorState);
                 return TRUE;
             }
 

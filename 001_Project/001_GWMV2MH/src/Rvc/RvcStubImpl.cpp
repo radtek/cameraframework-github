@@ -43,7 +43,15 @@ VOID  RvcStubImpl::showCamera(const string& pData)
 
     if(camState == CAM_ON)
     {
+        
         RvcServiceStubImplGWM::getInstance()->setRvcStateAttribute(::v0::com::harman::adas::RVCBaseType::enRvcState::e_RVC_ON);
+    }
+
+    if(camState == CAM_ERROR)
+    {
+        
+        ALOGI("showCamera [%s] error\n", pData.c_str());
+        RvcServiceStubImplGWM::getInstance()->setRvcStateAttribute(::v0::com::harman::adas::RVCBaseType::enRvcState::e_RVC_UNAVAILABLE);
     }
 }
 
@@ -55,6 +63,13 @@ VOID  RvcStubImpl::hideCamera(const string& pData)
     {
         RvcServiceStubImplGWM::getInstance()->setRvcStateAttribute(::v0::com::harman::adas::RVCBaseType::enRvcState::e_RVC_OFF);
     }
+
+    if(camState == CAM_ERROR)
+    {
+        ALOGI("hideCamera [%s] error\n", pData.c_str());
+        RvcServiceStubImplGWM::getInstance()->setRvcStateAttribute(::v0::com::harman::adas::RVCBaseType::enRvcState::e_RVC_UNAVAILABLE);
+    }
+
 }
 
 

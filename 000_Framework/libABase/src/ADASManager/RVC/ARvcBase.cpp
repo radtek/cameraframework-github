@@ -82,7 +82,9 @@ VOID ARvcBase::Update(Subject* subject, Int32 state)
         break;
         case 2:
             camState = CAM_ON;
-            ALOGI("Update  | camState[%d]\n", camState);         
+        break;
+        case 3:
+            camState = CAM_ERROR;
         break;
     }
 }
