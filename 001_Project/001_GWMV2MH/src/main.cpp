@@ -60,10 +60,10 @@ int main(int argc, char **argv) {
     std::shared_ptr<v0::com::harman::adas::RvcServiceStubImpl> RvcServiceInst0_prov_svc(RvcServiceStubImplGWM::getInstance());
     runtime->registerService(domain, RvcServiceInst0_prov_instance, RvcServiceInst0_prov_svc, RvcServiceInst0_prov_connection);
 
-    std::string PASServiceInst0_prov_connection = "adas";
-    std::string PASServiceInst0_prov_instance = "adas.PASServiceInst0";
-    std::shared_ptr<v0::com::harman::adas::PASServiceStubImpl> PASServiceInst0_prov_svc(PasServiceStubImplGWM::getInstance());
-    runtime->registerService(domain, PASServiceInst0_prov_instance, PASServiceInst0_prov_svc, PASServiceInst0_prov_connection);
+    // std::string PASServiceInst0_prov_connection = "adas";
+    // std::string PASServiceInst0_prov_instance = "adas.PASServiceInst0";
+    // std::shared_ptr<v0::com::harman::adas::PASServiceStubImpl> PASServiceInst0_prov_svc(PasServiceStubImplGWM::getInstance());
+    // runtime->registerService(domain, PASServiceInst0_prov_instance, PASServiceInst0_prov_svc, PASServiceInst0_prov_connection);
 
     std::string APAServiceInst0_prov_connection = "adas";
     std::string APAServiceInst0_prov_instance = "adas.APAServiceInst0";
