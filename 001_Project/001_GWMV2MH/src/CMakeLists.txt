@@ -44,6 +44,7 @@ add_definitions(-DLINUX_OS)
 
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(${PROJECT_SOURCE_DIR}/include/Avm)
 include_directories(${PROJECT_SOURCE_DIR}/include/Rvc)
 include_directories(${PROJECT_SOURCE_DIR}/include/Camera)
 include_directories(${PROJECT_SOURCE_DIR}/include/Client)
@@ -67,13 +68,14 @@ MESSAGE(STATUS "This is binary ADAS dir " ${PROJECT_SOURCE_DIR})
 
 AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src MAIN_SRC)
 AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src/Camera CAM_SRC)
+AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src/Avm AVM_SRC)
 AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src/Rvc RVC_SRC)
 AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src/Client CLIENT_SRC)
 AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src/Pas PAS_SRC)
 
 add_executable(
 adas
-${MAIN_SRC} ${CAM_SRC} ${RVC_SRC} ${CLIENT_SRC} ${PAS_SRC}
+${MAIN_SRC} ${CAM_SRC} ${AVM_SRC} ${RVC_SRC} ${CLIENT_SRC} ${PAS_SRC}
 
 provides/v0/com/harman/adas/AdasServiceStubImpl.cpp
 provides/v0/com/harman/adas/PASServiceStubImpl.cpp

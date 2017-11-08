@@ -16,7 +16,7 @@ OBJS_PATH  :=../prj/linux/
 TARGET     := adasmain
 
 ## get all source files
-SRCS       += $(wildcard $(SRC_PATH)/*.cpp $(SRC_PATH)/Rvc/*.cpp $(SRC_PATH)/Camera/*.cpp)
+SRCS       += $(wildcard $(SRC_PATH)/*.cpp $(SRC_PATH)/Avm/*.cpp $(SRC_PATH)/Rvc/*.cpp $(SRC_PATH)/Camera/*.cpp)
 
 ## all .o based on all .c
 OBJS       := $(SRCS:.cpp=.o)

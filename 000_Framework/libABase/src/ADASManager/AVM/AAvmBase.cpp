@@ -27,6 +27,7 @@ CAvmBase::~CAvmBase()
 VOID CAvmBase::onHandle(UInt32 uiEventID, const string& pData)
 {
     ALOGD("CAvmBase::onHandle\n");
+    ALOGI("CAvmBase::onHandle\n");	
     auto it= m_mMapAvmFunc.find(uiEventID);
     if( it!= m_mMapAvmFunc.end() )
     {
@@ -42,6 +43,7 @@ VOID CAvmBase::onHandle(UInt32 uiEventID, const string& pData)
 a_status CAvmBase::registerFunc(UInt32 eventID, CFunctor* pFunctor)
 {
    ALOGD("CAvmBase::registerFunc\n");
+   ALOGI("CAvmBase::registerFunc\n");   
    m_mMapAvmFunc.insert(makePair(eventID, pFunctor));
 }
 
@@ -49,7 +51,6 @@ a_status CAvmBase::initialize()
 {
 	
 	ALOGD("CAvmBase::initialize \n");
-	registerFunc((UInt32)eMessageType_SwitchAVM, makeFunctor(this, &CAvmBase::SwitchAVM));
 }
 
 VOID  CAvmBase::afterHandleMessageQueue()
@@ -62,11 +63,6 @@ a_status CAvmBase::isModuleAvailabel()
     return OK;
 }
 
-VOID CAvmBase::SwitchAVM(const string& AVMMode)
-{
-	ALOGD("CAvmBase::SwitchAVM  to run stateMachine AVMMode is %s \n",AVMMode.c_str());
-	// To do with m_pFrontCamera...
-}
 
 VOID CAvmBase::updateModuleState()
 {

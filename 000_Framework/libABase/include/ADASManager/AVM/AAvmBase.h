@@ -18,40 +18,25 @@ namespace ABase {
 namespace ADASManager {
 
 
-enum eMessageType
-{
-	eMessageType_SwitchAVM,
-	eMessageType_SwitchAVMView,
-	eMessageType_SwitchGuideLine,
-	eMessageType_SwitchCTA,
-	eMessageType_UNKNOWN = 0x70000000
-};
-
-
 class CAvmBase : public ModuleBase
                             , Observer
 {
+
 public:
+	
 	CAvmBase();
 	virtual ~CAvmBase();
 
-public:
 	virtual a_status	initialize();
 	virtual VOID		unInitialize(){};
 	virtual VOID		beforeHandleMessageQueue(){};
 	virtual VOID		afterHandleMessageQueue();
 	virtual a_status	isModuleAvailabel();
 	virtual VOID		Update(Subject* subject, Int32 state);
-	virtual VOID		onHandle(UInt32 uiEventID, const string& pData);
-
-	//typedef CFunctorArg1<const string&>	CFunctor;
-	
-private:
-	 
+	virtual VOID		onHandle(UInt32 uiEventID, const string& pData);	 
 
 protected:
 	a_status registerFunc(UInt32 eventID, CFunctor* pFunctor);
-	VOID  SwitchAVM(const string& AVMMode);
 	VOID  updateModuleState();
 	
 private:
