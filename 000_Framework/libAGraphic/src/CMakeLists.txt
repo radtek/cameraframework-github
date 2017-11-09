@@ -1,0 +1,35 @@
+
+
+
+AUX_SOURCE_DIRECTORY(. AGRAPHIC_SRC)
+AUX_SOURCE_DIRECTORY(./GuideLine AGRAPHIC_SRC)
+
+MESSAGE(STATUS "HW Platform is " ${HW_PLATFORM})
+
+INCLUDE_DIRECTORIES(../include)
+INCLUDE_DIRECTORIES(../include/GuideLine)
+
+if("${HW_PLATFORM}" STREQUAL "UBUNTU_OS")  
+	INCLUDE_DIRECTORIES(/root/install/include)
+	LINK_DIRECTORIES(/root/install/lib)
+endif()
+
+MESSAGE(STATUS "This is lib AGraphic dir: " ${PROJECT_SOURCE_DIR})
+MESSAGE(STATUS "The src are: " ${AGRAPHIC_SRC})
+
+SET(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
+MESSAGE(STATUS "This is lib out dir " ${LIBRARY_OUTPUT_PATH})
+
+#add_library(AFoundation SHARED ${AFOUNDATION_SRC})
+#ADD_EXECUTABLE(testAGraphic ${AGRAPHIC_SRC})
+ADD_LIBRARY(AGraphic SHARED ${AGRAPHIC_SRC})
+ADD_LIBRARY(AGraphic_static STATIC ${AGRAPHIC_SRC})
+SET_TARGET_PROPERTIES(AGraphic_static PROPERTIES OUTPUT_NAME "AGraphic")
+
+#TARGET_LINK_LIBRARIES(testAGraphic libEGL.so)
+#TARGET_LINK_LIBRARIES(testAGraphic libGLESv2.so)
+#TARGET_LINK_LIBRARIES(testAGraphic libwayland-client.so)
+#TARGET_LINK_LIBRARIES(testAGraphic libwayland-egl.so)
+#TARGET_LINK_LIBRARIES(testAGraphic libpthread.so)
+#TARGET_LINK_LIBRARIES(testAGraphic libwayland-cursor.so)
+#TARGET_LINK_LIBRARIES(testAGraphic libilmControl.so)
