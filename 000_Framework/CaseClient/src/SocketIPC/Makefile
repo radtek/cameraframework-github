@@ -60,11 +60,10 @@ CFLAGS += -D LINUX_OS -fPIC
 
 all:$(OBJS)
 	$(CXX) -shared -fPIC $(CFLAGS) $(LDFLAGS) -o $(TARGET_PATH)/$(TARGET) $(OBJS)
-	$(RM) ../../../../001_Project/001_GWMV2MH/CaseClient/include/*
-	$(CP) -rf ../../include/* ../../../../001_Project/001_GWMV2MH/CaseClient/include
-	$(RM) ../../../../001_Project/001_GWMV2MH/CaseClient/lib/linux/*
-	$(CP) -rf ../../lib/linux/* ../../../../001_Project/001_GWMV2MH/CaseClient/lib/linux
-	sudo $(CP) -fv ../../lib/linux/libACaseSocket.so /opt/elina/2.0.2015143A/sysroots/corei7-64-elina-linux/lib/
+	sudo $(RM) -rf $(CMAKE_SYSROOT)/usr/include/adas/CaseClient
+	sudo $(CP) -rf ../../include $(CMAKE_SYSROOT)/usr/include/adas/CaseClient
+	sudo $(RM) $(CMAKE_SYSROOT)/usr/lib/adas/libACaseSocket*
+	sudo $(CP) -rf ../../lib/linux/libACaseSocket* $(CMAKE_SYSROOT)/usr/lib/adas
 
 ${DIR_OBJ}/%.o : $(SRC_PATH)/%.cpp
 	@echo Compiling $< ...

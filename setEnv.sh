@@ -30,6 +30,13 @@ if [ -f "$sdkPATH/environment-setup-corei7-64-elina-linux" ]; then
     echo "CXX" = $CXX
     echo "CC" = $CC
     export CMAKE_SYSROOT="/opt/elina/2.0.2015143A/sysroots/corei7-64-elina-linux"
+
+    if [ -d "$CMAKE_SYSROOT/usr/include/adas" ]; then
+        echo "adas file exist"
+    else
+        sudo mkdir -p $CMAKE_SYSROOT/usr/include/adas
+        echo "adas file create ok"
+    fi
 else
     echo "SDK do not EXIT"
     export CXX="g++"
@@ -37,6 +44,7 @@ else
     echo "set CXX = g++"
     echo "set CC = gcc"
 fi
+
 
 alias adas='cd $ADAS_ROOT_PATH'
 alias greatwall='cd $cpm_adas_adservice_PATH'

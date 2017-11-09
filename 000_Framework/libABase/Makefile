@@ -38,11 +38,10 @@ LDFLAGS += $(foreach lib, $(LIBS), -l$(lib))
 export CXX BIN OBJS_DIR BIN_DIR ROOT_DIR CFLAGS LDFLAGS RM
 #注意这里的顺序，需要先执行SUBDIRS最后才能是DEBUG
 all:$(SUBDIRS) $(CUR_OBJS) DEBUG
-	$(RM) $(ROOT_DIR)/../../001_Project/001_GWMV2MH/libABase/include/*
-	$(CP) -rf $(ROOT_DIR)/include/* $(ROOT_DIR)/../../001_Project/001_GWMV2MH/libABase/include
-	$(RM) $(ROOT_DIR)/../../001_Project/001_GWMV2MH/libABase/lib/linux/*
-	$(CP) -rf $(ROOT_DIR)/lib/linux/* $(ROOT_DIR)/../../001_Project/001_GWMV2MH/libABase/lib/linux
-	sudo $(CP) -fv $(ROOT_DIR)/lib/linux/libABase.so /opt/elina/2.0.2015143A/sysroots/corei7-64-elina-linux/lib/
+	sudo $(RM) -rf $(CMAKE_SYSROOT)/usr/include/adas/libABase
+	sudo $(CP) -rf $(ROOT_DIR)/include $(CMAKE_SYSROOT)/usr/include/adas/libABase
+	sudo $(RM) $(CMAKE_SYSROOT)/usr/lib/adas/libABase*
+	sudo $(CP) -rf $(ROOT_DIR)/lib/linux $(CMAKE_SYSROOT)/usr/lib/adas
 #递归执行子目录下的makefile文件，这是递归执行的关键
 $(SUBDIRS):ECHO
 	make -C $@

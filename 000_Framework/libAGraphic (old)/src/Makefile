@@ -57,11 +57,10 @@ CFLAGS += -D LINUX_OS -D ENABLE_EGL -fPIC
 
 all:$(OBJS)
 	$(CXX) -shared -fPIC $(CFLAGS) $(LDFLAGS) -o $(TARGET_PATH)/$(TARGET) $(OBJS)
-	$(RM) ../../../001_Project/001_GWMV2MH/libAGraphic/include/*
-	$(CP) -rf ../include/* ../../../001_Project/001_GWMV2MH/libAGraphic/include
-	$(RM) ../../../001_Project/001_GWMV2MH/libAGraphic/lib/linux/*
-	$(CP) -rf ../lib/linux/* ../../../001_Project/001_GWMV2MH/libAGraphic/lib/linux
-	sudo $(CP) -fv ../lib/linux/libAGraphic.so /opt/elina/2.0.2015143A/sysroots/corei7-64-elina-linux/lib/
+	sudo $(RM) -rf $(CMAKE_SYSROOT)/usr/include/adas/libAGraphic
+	sudo $(CP) -rf ../include $(CMAKE_SYSROOT)/usr/include/adas/libAGraphic
+	sudo $(RM) $(CMAKE_SYSROOT)/usr/lib/adas/libAGraphic*
+	sudo $(CP) -rf ../lib/linux/libAGraphic* $(CMAKE_SYSROOT)/usr/lib/adas
 
 ${DIR_OBJ}/%.o : $(SRC_PATH)/%.cpp
 	@echo Compiling $< ...
