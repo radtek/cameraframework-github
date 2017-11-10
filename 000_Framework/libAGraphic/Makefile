@@ -8,7 +8,7 @@ SUBDIRS=$(shell ls -l | grep ^d | awk '{if($$9 == "src") print $$9}')
 #记住当前工程的根目录路径
 ROOT_DIR=$(shell pwd)
 #最终bin文件的名字，可以更改为自己需要的
-BIN=libABase.so
+BIN=libAGraphic.so
 #目标文件所在的目录
 #OBJS_DIR=debug/obj
 OBJS_DIR=proj/linux/obj
@@ -21,8 +21,7 @@ CUR_SOURCE=${wildcard *.cpp}
 CUR_OBJS=${patsubst %.cpp, %.o, $(CUR_SOURCE)}
 
 INCLUDE_PATH := $(ROOT_DIR)/include
-INCLUDE_PATH += $(ROOT_DIR)/include/ADASManager
-INCLUDE_PATH += $(ROOT_DIR)/include/external
+INCLUDE_PATH += $(ROOT_DIR)/include/GuideLine
 INCLUDE_PATH += $(ROOT_DIR)/../libAFoundation/include
 INCLUDE_PATH += $(ROOT_DIR)/../CaseClient/include
 
@@ -38,10 +37,10 @@ LDFLAGS += $(foreach lib, $(LIBS), -l$(lib))
 export CXX BIN OBJS_DIR BIN_DIR ROOT_DIR CFLAGS LDFLAGS RM
 #注意这里的顺序，需要先执行SUBDIRS最后才能是DEBUG
 all:$(SUBDIRS) $(CUR_OBJS) DEBUG
-	sudo $(RM) -rf $(CMAKE_SYSROOT)/usr/include/adas/libABase
-	sudo $(CP) -rf $(ROOT_DIR)/include $(CMAKE_SYSROOT)/usr/include/adas/libABase
-	sudo $(RM) $(CMAKE_SYSROOT)/usr/lib/adas/libABase*
-	sudo $(CP) $(ROOT_DIR)/lib/linux/libABase* $(CMAKE_SYSROOT)/usr/lib/adas
+	sudo $(RM) -rf $(CMAKE_SYSROOT)/usr/include/adas/libAGraphic
+	sudo $(CP) -rf $(ROOT_DIR)/include $(CMAKE_SYSROOT)/usr/include/adas/libAGraphic
+	sudo $(RM) $(CMAKE_SYSROOT)/usr/lib/adas/libAGraphic*
+	sudo $(CP) $(ROOT_DIR)/lib/linux/libAGraphic* $(CMAKE_SYSROOT)/usr/lib/adas
 #递归执行子目录下的makefile文件，这是递归执行的关键
 $(SUBDIRS):ECHO
 	make -C $@

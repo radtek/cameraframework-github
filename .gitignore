@@ -1,11 +1,6 @@
 *.obj
 *.tlog
-/001_Project/100_testAFoundation/x86/testAFoudation/Debug
-/000_Framework/libAFoundation/proj/x86/libAFoundation/Debug
-/001_Project/001_GWMV2MH/prj/x86/vs2010/adas/Debug
-001_Project/001_GWMV2MH/gen
-001_Project/001_GWMV2MH/src-gen
-001_Project/001_GWMV2MH/build
+000_Framework/libAGraphic/build
 000_Framework/CaseClient/src/SocketIPC/build
 *.sdf
 *.suo
@@ -20,12 +15,9 @@ Debug
 *.pdb
 debug_shared
 /002_UseCase/wintool_CaseClient/LogBox.out
-/000_Framework/libAFoundation/proj/x86/libAFoundationX86/ReadMe.txt
 /003_OpenSrc/poco-1.7.8/Foundation/testsuite/bin/TestAppd.exe
 /003_OpenSrc/poco-1.7.8/Foundation/testsuite/bin/TestLibraryd.dll
 /003_OpenSrc/poco-1.7.8/Foundation/testsuite/bin/TestLibraryd.exp
 /003_OpenSrc/poco-1.7.8/Foundation/testsuite/bin/TestLibraryd.lib
 *.so
 adasmain
-
-
