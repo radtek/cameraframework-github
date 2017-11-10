@@ -10,7 +10,7 @@
 //#include <xdg-shell-unstable-v6-client-protocol.h>
 //#include <ivi-application-client-protocol.h>
 #include <GLES2/gl2.h>
-#include "TypeDefine.h"
+#include "graphicType.h"
 
 namespace Harman 			{
 namespace Adas 				{

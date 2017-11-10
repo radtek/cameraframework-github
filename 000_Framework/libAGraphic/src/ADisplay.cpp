@@ -100,6 +100,12 @@ CAdasDisplay::CAdasDisplay()
 	}
 	memset(mdispalyInfo, 0, sizeof(dispalyInfo));
 
+	mGuideLine = new GuideLine();
+	if(NULL == mGuideLine)
+	{
+		cout<<"Error: malloc GuideLine failed.\n";
+		return ;
+	}
 
 	/*mEGL = new CAdasEGL();
 	if(NULL == mEGL)
@@ -406,6 +412,67 @@ Int32 CAdasDisplay::Render(trenderData renderData)
 	}
 }
 
+Int32 CAdasDisplay::showGuideLine(UInt32 surfaceID, Float32 Angle)
+{
+	guidelineinfo infos;
+	infos.GUIDELINE_PARA.angle = Angle;
+	infos.GUIDELINE_PARA.dynamic = 1;
+	infos.GUIDELINE_PARA.rearspace = 0;
+	infos.GUIDELINE_PARA.wheelbase = 1.4;
+	infos.GUIDELINE_PARA.vichelSpeed = 0;
+	infos.GUIDELINE_PARA.forcastTime = 10;
+										
+	printf(" [%s, %d]  surfaceID = %d\n", __FUNCTION__, __LINE__, surfaceID);
+	
+	for(vector<surface>::iterator iter=mdispalyInfo->surfaceList.begin(); iter!=mdispalyInfo->surfaceList.end(); iter++)
+	{
+		if(surfaceID == iter->surfaceID)
+		{
+			//find the special surfaceID's EGL object
+			auto itEGL = mEGLMap.find(surfaceID); 
+			if(itEGL != mEGLMap.end())  
+			{
+       			cout<<"Find, the surface ID is " << itEGL->first <<": " << iter->surfaceName << endl;  
+			}
+    		else  
+			{
+       			cout<<"Do not Find surface ID " << itEGL->first << endl;
+				return -1;
+			}
+			
+			//switch to currnet EGL context
+			itEGL->second->EGLMakeCurrent(iter->eglInfo);
+
+			//find the special surfaceID's OpenGL object
+			auto itOpenGL = mOpenGLMap.find(surfaceID); 
+			if(itOpenGL != mOpenGLMap.end())  
+			{
+       			cout<<"Find, the surface ID is " << itOpenGL->first <<": " << iter->surfaceName << endl;  
+			}
+    		else  
+			{
+       			cout<<"Do not Find surface ID " << itOpenGL->first << endl;
+				return -1;
+			}
+
+			//OpenGL Render 
+			//itOpenGL->second->OpenGLESRender(renderData.bufferMap);
+			mGuideLine->GuideLineRender(infos);
+			
+			//EGL swap buffer
+			mEGL->EGLSwapBuffers(iter->eglInfo);
+			
+			return 0;
+		}
+	}
+	return 0;
+}
+
+Int32 CAdasDisplay::hideGuideLine()
+{
+	mGuideLine->GuideLineHide();
+	return 0;
+}
 
 
 }

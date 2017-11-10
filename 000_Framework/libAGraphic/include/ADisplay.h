@@ -5,7 +5,7 @@
 #endif
 
 #include <map>
-#include "TypeDefine.h"
+#include "graphicType.h"
 #include "wayland-client.h"
 #include "wayland-egl.h"
 #include "wayland-cursor.h"
@@ -14,6 +14,7 @@
 #include "ADisplay.h"
 #include "AEGL.h"
 #include "AOpenGLES.h"
+#include "GuideLine.h"
 
 using namespace std;
 
@@ -82,6 +83,8 @@ public:
 	Int32 createSurface(tsurfaceInfo surfaceInfo);
 	Int32 destroySurface(UInt32 surfaceID);
 	Int32 Render(trenderData renderData);
+	Int32 showGuideLine(UInt32 surfaceID, Float32 Angle);
+	Int32 hideGuideLine();
 
 private:
 
@@ -97,6 +100,7 @@ private:
 	//map<UInt32, ModuleBase*> m_mModuleMap;
 	//map<string, struct wl_surface *>  mSurfaceMap;
 	//map<UInt32, string>  mSurfaceMap;
+	GuideLine *mGuideLine;
 	map<UInt32, CAdasOpenGLES*>  mOpenGLMap;
 	map<UInt32, CAdasEGL*>  	 mEGLMap;
 

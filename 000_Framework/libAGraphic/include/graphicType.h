@@ -43,7 +43,7 @@ typedef struct
 {
 	BYTE 					*buffer;
 	UInt32					width;
-	UInt32					heigth;
+	UInt32					height;
 	bool 					bRender;
 }tbufInfo;
 

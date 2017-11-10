@@ -6,6 +6,7 @@ AUX_SOURCE_DIRECTORY(./GuideLine AGRAPHIC_SRC)
 
 MESSAGE(STATUS "HW Platform is " ${HW_PLATFORM})
 
+INCLUDE_DIRECTORIES(../../libAFoundation/include)
 INCLUDE_DIRECTORIES(../include)
 INCLUDE_DIRECTORIES(../include/GuideLine)
 

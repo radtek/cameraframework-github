@@ -14,6 +14,7 @@ class GuideLine
 {
 public:
 	void GuideLineRender(guidelineinfo infos);
+	void GuideLineHide();
 
 	GuideLine();
 

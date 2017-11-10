@@ -4,7 +4,7 @@
 #    error ERROR: This file requires C++ compilation (use a .cpp suffix)
 #endif
 
-#include "TypeDefine.h"
+#include "graphicType.h"
 //#include "wayland-client.h"
 //#include "wayland-egl.h"
 //#include "wayland-cursor.h"
@@ -42,6 +42,8 @@ public:
     Int32 createSurface(tsurfaceList surfaceInfoList);
 	Int32 destroySurface(UInt32 surfaceID);
 	Int32 Render(trenderData renderData);
+	Int32 showGuideLine(UInt32 surfaceID, Float32 Angle);
+	Int32 hideGuideLine();
 	//VOID update(const CHAR *buf);
 
 private:

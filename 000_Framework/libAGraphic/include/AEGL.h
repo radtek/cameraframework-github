@@ -6,7 +6,7 @@
 
 #include <EGL/egl.h>
 #include <EGL/eglext.h>
-#include "TypeDefine.h"
+#include "graphicType.h"
 
 using namespace std;
 

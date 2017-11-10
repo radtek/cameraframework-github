@@ -207,7 +207,7 @@ VOID CAdasOpenGLES::OpenGLESRenderPAS(map<string, tbufInfo>  bufferMap)
 	{
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, mGLInfo.unOpenGLType.pTypePAS->baseMapTexId);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, it1->second.width, it1->second.heigth, 0, GL_RGBA, GL_UNSIGNED_BYTE, it1->second.buffer);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, it1->second.width, it1->second.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, it1->second.buffer);
 		glUniform1i(mGLInfo.unOpenGLType.pTypePAS->baseMapLoc, 0);
 		//cout<<"Find, the surface ID is " << it->first <<": " << iter->surfaceName << endl;  
 	}
@@ -217,7 +217,7 @@ VOID CAdasOpenGLES::OpenGLESRenderPAS(map<string, tbufInfo>  bufferMap)
 	{
 	    glActiveTexture(GL_TEXTURE1);
 	    glBindTexture(GL_TEXTURE_2D, mGLInfo.unOpenGLType.pTypePAS->lightMapTexId);
-	    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, it2->second.width, it2->second.heigth, 0, GL_RGBA, GL_UNSIGNED_BYTE, it2->second.buffer);
+	    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, it2->second.width, it2->second.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, it2->second.buffer);
 	    glUniform1i(mGLInfo.unOpenGLType.pTypePAS->lightMapLoc, 1);
 	}
 
@@ -226,7 +226,7 @@ VOID CAdasOpenGLES::OpenGLESRenderPAS(map<string, tbufInfo>  bufferMap)
 	{
 	    glActiveTexture(GL_TEXTURE2);
 	    glBindTexture(GL_TEXTURE_2D, mGLInfo.unOpenGLType.pTypePAS->otherMapTexId);
-	    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, it3->second.width, it3->second.heigth, 0, GL_RGBA, GL_UNSIGNED_BYTE, it3->second.buffer);
+	    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, it3->second.width, it3->second.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, it3->second.buffer);
 	    glUniform1i(mGLInfo.unOpenGLType.pTypePAS->otherMapLoc, 2);
 	}
 	
@@ -264,17 +264,17 @@ VOID CAdasOpenGLES::OpenGLESRenderRVC(map<string, tbufInfo>  bufferMap)
 	{
 		glActiveTexture(GL_TEXTURE0);
 	    glBindTexture(GL_TEXTURE_2D, mGLInfo.unOpenGLType.pTypeRVC->textureYId);
-	    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, it->second.width, it->second.heigth, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, it->second.buffer);
+	    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, it->second.width, it->second.height, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, it->second.buffer);
 	    glUniform1i(mGLInfo.unOpenGLType.pTypeRVC->uiTxtformY, 0);
 		
 	    glActiveTexture(GL_TEXTURE1);
 	    glBindTexture(GL_TEXTURE_2D, mGLInfo.unOpenGLType.pTypeRVC->textureUId);
-	    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, it->second.width/2, it->second.heigth, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, it->second.buffer + (it->second.width*it->second.heigth));
+	    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, it->second.width/2, it->second.height, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, it->second.buffer + (it->second.width*it->second.height));
 	    glUniform1i(mGLInfo.unOpenGLType.pTypeRVC->uiTxtformU, 1);
 
 	    glActiveTexture(GL_TEXTURE2);
 	    glBindTexture(GL_TEXTURE_2D, mGLInfo.unOpenGLType.pTypeRVC->textureVId);
-	    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, it->second.width/2, it->second.heigth, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, it->second.buffer + (it->second.width*it->second.heigth >> 1));
+	    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, it->second.width/2, it->second.height, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, it->second.buffer + (it->second.width*it->second.height >> 1));
 	    glUniform1i(mGLInfo.unOpenGLType.pTypeRVC->uiTxtformV, 2);
 	}
 	

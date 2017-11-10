@@ -74,6 +74,21 @@ Int32 CAdasGraphic::Render(trenderData renderData)
 	return 0;
 }
 
+Int32 CAdasGraphic::showGuideLine(UInt32 surfaceID, Float32 Angle)
+{
+	mDisplay->showGuideLine(surfaceID, Angle);
+	
+	return 0;
+}
+
+Int32 CAdasGraphic::hideGuideLine()
+{
+	mDisplay->hideGuideLine();
+	
+	return 0;
+}
+
+
 
 }
 }
