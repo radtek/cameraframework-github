@@ -27,7 +27,7 @@ public:
 	CAdasGraphic();
 	virtual ~CAdasGraphic();
 	
-    Int32 createSurface(tsurfaceList surfaceInfoList);
+    	Int32 createSurface(tsurfaceList surfaceInfoList);
 	Int32 destroySurface(UInt32 surfaceID);
 	Int32 Render(trenderData renderData);
 	Int32 showGuideLine(UInt32 surfaceID, Float32 Angle);

@@ -9,7 +9,7 @@
 #include "graphicType.h"
 
 namespace Harman 			{
-namespace Adas 				{
+namespace Adas 			{
 namespace AFramework 		{
 namespace AGraphic 			{
 
@@ -59,51 +59,16 @@ typedef struct
 
 class CAdasOpenGLES
 {
-#if 0
-public:
-	typedef struct
-	{
-		// Handle to a program object
-		GLuint programObject;
-
-		// Attribute locations
-		GLint  positionLoc;
-		GLint  texCoordLoc;
-
-		// Sampler locations
-	#if 1
-		GLint baseMapLoc;
-		GLint lightMapLoc;
-		GLint otherMapLoc;
-	#else
-		GLint uiTxtformY;
-		GLint uiTxtformU;
-		GLint uiTxtformV;
-	#endif
-
-		// Texture handle
-	#if 1
-		GLuint baseMapTexId;
-		GLuint lightMapTexId;
-		GLuint otherMapTexId;
-	#else
-		GLuint textureYId;
-		GLuint textureUId;
-		GLuint textureVId;
-	#endif
-
-	} UserData;
-#endif
 
 public:
-    CAdasOpenGLES(emoduleType moduleType);
+    	CAdasOpenGLES(emoduleType moduleType);
 	virtual ~CAdasOpenGLES();
-    VOID OpenGLESInitialize(emoduleType moduleType);
+    	VOID OpenGLESInitialize(emoduleType moduleType);
 	VOID OpenGLESRender(map<string, tbufInfo>  bufferMap);
 
 private:
-    VOID OpenGLESInitPAS();
-    VOID OpenGLESInitRVC();
+    	VOID OpenGLESInitPAS();
+    	VOID OpenGLESInitRVC();
 	VOID OpenGLESRenderPAS(map<string, tbufInfo>  bufferMap);
 	VOID OpenGLESRenderRVC(map<string, tbufInfo>  bufferMap);
 	GLuint OpenGLESLoadProgram(const CHAR *vertShaderSrc, const CHAR *fragShaderSrc);

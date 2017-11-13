@@ -2,32 +2,11 @@
 
 #include "AOpenGLES.h"
 
-namespace Harman 				{
+namespace Harman 			{
 namespace Adas        			{
-namespace AFramework  			{
+namespace AFramework  		{
 namespace AGraphic    			{
 
-/*const CHAR* vShaderStr = "\
-		attribute mediump vec4 myVert;\
-		attribute mediump vec4 myUV;\
-		uniform mediump vec2 imgSize;\
-		varying mediump vec2 texCoord;\
-		void main()\
-		{\
-		  float x = 2.0*myVert.x/imgSize.x-1.0;\
-		  float y = 2.0 * myVert.y/imgSize.y - 1.0;\
-		  gl_Position = vec4(x,y,0.0,1.0);\
-		  texCoord = myUV.st;\
-		}";
-
-const CHAR* fShaderStr = "\
-	uniform lowp sampler2D tex;\
-	uniform mediump float myAlpha;\
-	varying mediump vec2 texCoord;\
-	void main()\
-	{\
-		gl_FragColor = vec4(texture2D(tex, texCoord).rgb,myAlpha);\
-	}";*/
 
 CAdasOpenGLES::CAdasOpenGLES(emoduleType moduleType)
 {
@@ -79,41 +58,25 @@ VOID CAdasOpenGLES::OpenGLESInitPAS()
 			"  baseColor = texture2D( s_baseMap, v_texCoord );	 \n"
 			"  lightColor = texture2D( s_lightMap, v_texCoord ); \n"
 			"  otherColor = texture2D( s_otherMap, v_texCoord ); \n"
-			//"  gl_FragColor = baseColor * (lightColor + 0.25);   \n"
-			//"  gl_FragColor = baseColor * (1.0 - lightColor.a) + lightColor;			 \n"
 			"  gl_FragColor = lightColor * (1.0 - baseColor.a) + baseColor; 		 \n"
 			"  gl_FragColor = gl_FragColor * (1.0 - otherColor.a) + otherColor; 		 \n"
-			//"  gl_FragColor = lightColor * (baseColor + Alpha);	\n"
-			//"  gl_FragColor = vec4(baseColor.rgb, Alpha);   \n"
+			
 			"}													 \n";
 	
-	// Load the shaders and get a linked program object
+	
 	mGLInfo.programObject = OpenGLESLoadProgram(vShaderStr, fShaderStr);
 
-	// Get the attribute locations
+	
 	mGLInfo.positionLoc = glGetAttribLocation(mGLInfo.programObject, "a_position");
 	mGLInfo.texCoordLoc = glGetAttribLocation(mGLInfo.programObject, "a_texCoord");
-	//printf("   [%s, %d] %d, %d\n", __FUNCTION__, __LINE__, userData->positionLoc, userData->texCoordLoc);
+	
 
 	glUseProgram(mGLInfo.programObject);
 
-	// Get the image location
-	//mGLInfo.baseMapLoc = glGetUniformLocation(mGLInfo.programObject, "s_baseMap");
-	//mGLInfo.lightMapLoc = glGetUniformLocation(mGLInfo.programObject, "s_lightMap");
-	//mGLInfo.otherMapLoc = glGetUniformLocation(mGLInfo.programObject, "s_otherMap");
 	mGLInfo.unOpenGLType.pTypePAS->baseMapLoc = glGetUniformLocation(mGLInfo.programObject, "s_baseMap");
 	mGLInfo.unOpenGLType.pTypePAS->lightMapLoc = glGetUniformLocation(mGLInfo.programObject, "s_lightMap");
 	mGLInfo.unOpenGLType.pTypePAS->otherMapLoc = glGetUniformLocation(mGLInfo.programObject, "s_otherMap");
 
-#if 0
-    glVertexAttribPointer(mGLInfo.positionLoc, 2, GL_FLOAT, 0, 0, vertexVertices);
-    glEnableVertexAttribArray(mGLInfo.positionLoc);
-
-    glVertexAttribPointer(mGLInfo.texCoordLoc, 2, GL_FLOAT, 0, 0, textureVertices);
-    glEnableVertexAttribArray(mGLInfo.texCoordLoc);
-#endif
-
-	// Load the textures
 	mGLInfo.unOpenGLType.pTypePAS->baseMapTexId = OpenGLESLoadTexture();
 	mGLInfo.unOpenGLType.pTypePAS->lightMapTexId = OpenGLESLoadTexture();
 	mGLInfo.unOpenGLType.pTypePAS->otherMapTexId = OpenGLESLoadTexture();
@@ -152,25 +115,19 @@ VOID CAdasOpenGLES::OpenGLESInitRVC()
              "  gl_FragColor = vec4(rgb, 1.0);  \n "
              "}                                                   \n";
 
-	// Load the shaders and get a linked program object
 	mGLInfo.programObject = OpenGLESLoadProgram(vShaderStr, fShaderStr);
 
-	// Get the attribute locations
-	//mGLInfo.positionLoc = glGetAttribLocation(mGLInfo.programObject, "a_position");
-	//mGLInfo.texCoordLoc = glGetAttribLocation(mGLInfo.programObject, "a_texCoord");
 	mGLInfo.positionLoc = 0;
 	mGLInfo.texCoordLoc = 1;
-    glBindAttribLocation(mGLInfo.programObject, mGLInfo.positionLoc, "vertexIn");
-    glBindAttribLocation(mGLInfo.programObject, mGLInfo.texCoordLoc, "textureIn");
+    	glBindAttribLocation(mGLInfo.programObject, mGLInfo.positionLoc, "vertexIn");
+    	glBindAttribLocation(mGLInfo.programObject, mGLInfo.texCoordLoc, "textureIn");
 
 	glUseProgram(mGLInfo.programObject);
 
-	// Get the image location
 	mGLInfo.unOpenGLType.pTypeRVC->uiTxtformY = glGetUniformLocation(mGLInfo.programObject, "tex_y");
 	mGLInfo.unOpenGLType.pTypeRVC->uiTxtformU = glGetUniformLocation(mGLInfo.programObject, "tex_u");
 	mGLInfo.unOpenGLType.pTypeRVC->uiTxtformV = glGetUniformLocation(mGLInfo.programObject, "tex_v");
 
-	// Load the textures
 	mGLInfo.unOpenGLType.pTypeRVC->textureYId = OpenGLESLoadTexture();
 	mGLInfo.unOpenGLType.pTypeRVC->textureUId = OpenGLESLoadTexture();
 	mGLInfo.unOpenGLType.pTypeRVC->textureVId = OpenGLESLoadTexture();
@@ -194,13 +151,11 @@ VOID CAdasOpenGLES::OpenGLESRenderPAS(map<string, tbufInfo>  bufferMap)
 
 	glViewport (0, 0, 1024, 600);
 
-	// Load the vertex position
-    glVertexAttribPointer(mGLInfo.positionLoc, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), vVertices);
-    glEnableVertexAttribArray(mGLInfo.positionLoc);
+    	glVertexAttribPointer(mGLInfo.positionLoc, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), vVertices);
+    	glEnableVertexAttribArray(mGLInfo.positionLoc);
 
-	// Load the texture coordinate
-    glVertexAttribPointer(mGLInfo.texCoordLoc, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), &vVertices[3]);
-    glEnableVertexAttribArray(mGLInfo.texCoordLoc);
+    	glVertexAttribPointer(mGLInfo.texCoordLoc, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), &vVertices[3]);
+    	glEnableVertexAttribArray(mGLInfo.texCoordLoc);
 
 	auto it1 = bufferMap.find(ADAS_PAS_CAR_STATUS); 
 	if(it1 != bufferMap.end())  
@@ -209,7 +164,6 @@ VOID CAdasOpenGLES::OpenGLESRenderPAS(map<string, tbufInfo>  bufferMap)
 		glBindTexture(GL_TEXTURE_2D, mGLInfo.unOpenGLType.pTypePAS->baseMapTexId);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, it1->second.width, it1->second.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, it1->second.buffer);
 		glUniform1i(mGLInfo.unOpenGLType.pTypePAS->baseMapLoc, 0);
-		//cout<<"Find, the surface ID is " << it->first <<": " << iter->surfaceName << endl;  
 	}
 	
 	auto it2 = bufferMap.find(ADAS_PAS_RADAR_STATUS); 
@@ -231,51 +185,49 @@ VOID CAdasOpenGLES::OpenGLESRenderPAS(map<string, tbufInfo>  bufferMap)
 	}
 	
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
-	//glDrawArrays(GL_TRIANGLES,0,6);
-
-    //glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	
 }
 
 VOID CAdasOpenGLES::OpenGLESRenderRVC(map<string, tbufInfo>  bufferMap)
 {
-    static const GLfloat vertexVertices[] = {
-        -1.0f, -1.0f,
-         1.0f, -1.0f,
-        -1.0f,  1.0f,
-         1.0f,  1.0f,
-    };
-    static const GLfloat textureVertices[] = {
-        0.0f,  1.0f,
-        1.0f,  1.0f,
-        0.0f,  0.0f,
-        1.0f,  0.0f,
-    };
+	static const GLfloat vertexVertices[] = {
+	        -1.0f, -1.0f,
+	         1.0f, -1.0f,
+	        -1.0f,  1.0f,
+	         1.0f,  1.0f,
+	};
+	static const GLfloat textureVertices[] = {
+	        0.0f,  1.0f,
+	        1.0f,  1.0f,
+	        0.0f,  0.0f,
+	        1.0f,  0.0f,
+	};
 	
-	glViewport (0, 0, 1024, 600);
+	glViewport (0, 0, 1280, 720);
 	
-    glVertexAttribPointer(mGLInfo.positionLoc, 2, GL_FLOAT, 0, 0, vertexVertices);
-    glEnableVertexAttribArray(mGLInfo.positionLoc);
+    	glVertexAttribPointer(mGLInfo.positionLoc, 2, GL_FLOAT, 0, 0, vertexVertices);
+    	glEnableVertexAttribArray(mGLInfo.positionLoc);
 
-    glVertexAttribPointer(mGLInfo.texCoordLoc, 2, GL_FLOAT, 0, 0, textureVertices);
-    glEnableVertexAttribArray(mGLInfo.texCoordLoc);
+    	glVertexAttribPointer(mGLInfo.texCoordLoc, 2, GL_FLOAT, 0, 0, textureVertices);
+    	glEnableVertexAttribArray(mGLInfo.texCoordLoc);
 
 	auto it = bufferMap.find(ADAS_PAS_CAR_STATUS); 
 	if(it != bufferMap.end()) 
 	{
 		glActiveTexture(GL_TEXTURE0);
-	    glBindTexture(GL_TEXTURE_2D, mGLInfo.unOpenGLType.pTypeRVC->textureYId);
-	    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, it->second.width, it->second.height, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, it->second.buffer);
-	    glUniform1i(mGLInfo.unOpenGLType.pTypeRVC->uiTxtformY, 0);
-		
-	    glActiveTexture(GL_TEXTURE1);
-	    glBindTexture(GL_TEXTURE_2D, mGLInfo.unOpenGLType.pTypeRVC->textureUId);
-	    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, it->second.width/2, it->second.height, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, it->second.buffer + (it->second.width*it->second.height));
-	    glUniform1i(mGLInfo.unOpenGLType.pTypeRVC->uiTxtformU, 1);
+		glBindTexture(GL_TEXTURE_2D, mGLInfo.unOpenGLType.pTypeRVC->textureYId);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, it->second.width, it->second.height, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, it->second.buffer);
+		glUniform1i(mGLInfo.unOpenGLType.pTypeRVC->uiTxtformY, 0);
+			
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, mGLInfo.unOpenGLType.pTypeRVC->textureUId);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, it->second.width/2, it->second.height, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, it->second.buffer + (it->second.width*it->second.height));
+		glUniform1i(mGLInfo.unOpenGLType.pTypeRVC->uiTxtformU, 1);
 
-	    glActiveTexture(GL_TEXTURE2);
-	    glBindTexture(GL_TEXTURE_2D, mGLInfo.unOpenGLType.pTypeRVC->textureVId);
-	    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, it->second.width/2, it->second.height, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, it->second.buffer + (it->second.width*it->second.height >> 1));
-	    glUniform1i(mGLInfo.unOpenGLType.pTypeRVC->uiTxtformV, 2);
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, mGLInfo.unOpenGLType.pTypeRVC->textureVId);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, it->second.width/2, it->second.height, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, it->second.buffer + (it->second.width*it->second.height >> 1));
+		glUniform1i(mGLInfo.unOpenGLType.pTypeRVC->uiTxtformV, 2);
 	}
 	
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -283,9 +235,6 @@ VOID CAdasOpenGLES::OpenGLESRenderRVC(map<string, tbufInfo>  bufferMap)
 
 VOID CAdasOpenGLES::OpenGLESInitialize(emoduleType moduleType)
 {
-	//mWidth = width;
-	//mHeight = height;
-	//mModuleType = moduleType;
 	printf("	 [%s, %d]  mModuleType = %d\n", __FUNCTION__, __LINE__, mModuleType);
 
 	switch(mModuleType)
@@ -300,23 +249,10 @@ VOID CAdasOpenGLES::OpenGLESInitialize(emoduleType moduleType)
 			break;
 	}
 
-	//glViewport(0, 0, width, height);
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-	glDisable(GL_DEPTH_TEST);
 }
 
 VOID CAdasOpenGLES::OpenGLESRender(map<string, tbufInfo>  bufferMap)
 {
-	printf("JC---debug draw\n");
-
-	// Clear the color buffer
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//glClear(GL_COLOR_BUFFER_BIT);
-	// Set the viewport
-	//glViewport (0, 0, 1024, 600);
-    glDisable(GL_DEPTH_TEST);
 	
 	switch(mModuleType)
 	{
@@ -324,7 +260,7 @@ VOID CAdasOpenGLES::OpenGLESRender(map<string, tbufInfo>  bufferMap)
 			OpenGLESRenderPAS(bufferMap);
 			break;
 		case MODULE_RVC:
-			OpenGLESRenderPAS(bufferMap);
+			OpenGLESRenderRVC(bufferMap);
 			break;
 		default:
 			break;
@@ -359,7 +295,7 @@ GLuint CAdasOpenGLES::OpenGLESLoadProgram(const CHAR *vertShaderSrc, const CHAR 
 	programObject = glCreateProgram(); 
 	if(0 == programObject)
 	{
-      return 0;
+      		return 0;
 	}
 
 	glAttachShader(programObject, vertexShader);
@@ -378,8 +314,7 @@ GLuint CAdasOpenGLES::OpenGLESLoadProgram(const CHAR *vertShaderSrc, const CHAR 
 		if(infoLen > 1)
 		{
 			char* infoLog = (char *)malloc (sizeof(char) * infoLen);
-			glGetProgramInfoLog( programObject, infoLen, NULL, infoLog);
-			//esLogMessage("Error linking program:\n%s\n", infoLog);            
+			glGetProgramInfoLog( programObject, infoLen, NULL, infoLog);     
 			free(infoLog);
 		}
 		

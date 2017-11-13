@@ -44,14 +44,14 @@ Int32 CAdasGraphic::createSurface(tsurfaceList surfaceInfoList)
 {
 	Int32 ret = -1;
 	for(auto surfaceInfo : surfaceInfoList)
-    {
-    	cout << "name: 	" << surfaceInfo.surfaceName << std::endl;
-    	cout << "ID  : 	" << surfaceInfo.surfaceId << std::endl;
-    	cout << "Type: 	" << surfaceInfo.moduleType << std::endl;
-    	cout << "EGL : 	" << surfaceInfo.bActiveEGL << std::endl;
-    	cout << "Pos : 	" << surfaceInfo.viewPos.viewPos.x << ", " << surfaceInfo.viewPos.viewPos.y << std::endl;
-    	cout << "Size: 	" << surfaceInfo.viewPos.width << ", " << surfaceInfo.viewPos.height << std::endl;
-    	ret = mDisplay->createSurface(surfaceInfo);
+    	{
+	    	cout << "name: 	" << surfaceInfo.surfaceName << std::endl;
+	    	cout << "ID  : 	" << surfaceInfo.surfaceId << std::endl;
+	    	cout << "Type: 	" << surfaceInfo.moduleType << std::endl;
+	    	cout << "EGL : 	" << surfaceInfo.bActiveEGL << std::endl;
+	    	cout << "Pos : 	" << surfaceInfo.viewPos.viewPos.x << ", " << surfaceInfo.viewPos.viewPos.y << std::endl;
+	    	cout << "Size: 	" << surfaceInfo.viewPos.width << ", " << surfaceInfo.viewPos.height << std::endl;
+	    	ret = mDisplay->createSurface(surfaceInfo);
 		if(-1 == ret)
 		{
 			cout<<"Error: createSurface failed.\n";
