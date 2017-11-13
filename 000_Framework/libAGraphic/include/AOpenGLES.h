@@ -4,11 +4,7 @@
 #    error ERROR: This file requires C++ compilation (use a .cpp suffix)
 #endif
 
-//#include "wayland-client.h"
-//#include "wayland-egl.h"
-//#include "wayland-cursor.h"
-//#include <xdg-shell-unstable-v6-client-protocol.h>
-//#include <ivi-application-client-protocol.h>
+
 #include <GLES2/gl2.h>
 #include "graphicType.h"
 

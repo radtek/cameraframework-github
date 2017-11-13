@@ -9,7 +9,6 @@
 #include "wayland-client.h"
 #include "wayland-egl.h"
 #include "wayland-cursor.h"
-//#include "wayland-egl-core.h"
 #include <ivi-application-client-protocol.h>
 #include "ADisplay.h"
 #include "AEGL.h"
@@ -19,7 +18,7 @@
 using namespace std;
 
 using namespace Harman::Adas::AFramework::AGraphic;
-//using namespace Harman::Adas::AFramework::AGraphic::CAdasOpenGLES;
+
 
 namespace Harman 			{
 namespace Adas 				{

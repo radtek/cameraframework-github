@@ -5,32 +5,20 @@
 #endif
 
 #include "graphicType.h"
-//#include "wayland-client.h"
-//#include "wayland-egl.h"
-//#include "wayland-cursor.h"
-//#include <xdg-shell-unstable-v6-client-protocol.h>
-//#include <ivi-application-client-protocol.h>
+
 #include "ADisplay.h"
 
 using namespace std;
 
 using namespace Harman::Adas::AFramework::AGraphic;
-//using Harman::Adas::AFramework::AGraphic::CAdasOpenGLES;
-//using namespace Harman::Adas::AFramework::AGraphic::CAdasDisplay;
+
 
 namespace Harman 			{
 namespace Adas 				{
 namespace AFramework 		{
 namespace AGraphic 			{
 
-/*typedef struct
-{
-	string					surfaceName;
-	UInt32					surfaceId;
-	bool					bActiveEGL;
-	//EGLSurface			  egl_surf;
-	viewInfo				viewPos;
-}tsurfaceInfo;*/
+
 typedef vector<tsurfaceInfo> tsurfaceList;
 
 class CAdasGraphic
@@ -44,17 +32,10 @@ public:
 	Int32 Render(trenderData renderData);
 	Int32 showGuideLine(UInt32 surfaceID, Float32 Angle);
 	Int32 hideGuideLine();
-	//VOID update(const CHAR *buf);
-
-private:
-
+	
 private:
 	CAdasDisplay *mDisplay;
 	
-private:
-	//map<UInt32, ModuleBase*> m_mModuleMap;
-	//map<string, struct wl_surface *>  mSurfaceMap;
-	//map<UInt32, string>  mSurfaceMap;
 
 };
 
