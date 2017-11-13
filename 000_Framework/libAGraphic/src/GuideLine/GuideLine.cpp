@@ -122,11 +122,32 @@ void GuideLine::GuideLineRender(guidelineinfo infos)
 
 void GuideLine::GuideLineHide()
 {
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-	
 	glDisable(GL_DEPTH_TEST);
+	glViewport(0,0,1280,720);
+
+	LoadProgram();
+	glUniform1i(glGetUniformLocation(programObject,"tex"),0);
+	const char* Attribs[] = { "myVert","myUV" };
+	for(int i=0;i<2;i++)
+	{
+		glBindAttribLocation(programObject, i, Attribs[i]);
+	}
+	glUseProgram(programObject);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, GuideLineTexture);
+	glUniform1f(glGetUniformLocation(programObject, "myAlpha"), 0);
+	glUniform2f(glGetUniformLocation(programObject, "imgSize"), 1280 - 1, 720 - 1);
+	glEnableVertexAttribArray(VERTEX_ARRAY);
+	glEnableVertexAttribArray(TEXCOORD_ARRAY);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	RenderGroupLines(8);
+	glDisableVertexAttribArray(VERTEX_ARRAY);
+	glDisableVertexAttribArray(TEXCOORD_ARRAY);
+	glDisable(GL_BLEND);
 }
 
 void GuideLine::GenTexture()
