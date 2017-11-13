@@ -60,6 +60,7 @@ if [ -d "$cpm_adas_adservice_PATH/build" ]; then
     alias project='cd $cpm_adas_adservice_PATH/build'
 else
     sudo mkdir -p $cpm_adas_adservice_PATH/build
+	sudo chmod 777 -R $cpm_adas_adservice_PATH/build
     alias project='cd $cpm_adas_adservice_PATH/build'
 fi
 alias ftest='cd $ADAS_ROOT_PATH/001_Project/001_GWMV2MH/'
@@ -86,7 +87,15 @@ alias mc='make clean'
 
 alias cm='printf "\033c" && make clean && make'
 
-alias makeall='foundation && mc  &&  abase && mc  &&  caseclient && mc  &&  graphic && mc  && project && rm -fr * && cmakeconfig && make target'
+alias makeall='foundation && cm  &&  abase && cm  &&  caseclient && cm  &&  graphic && cm  && project && rm -fr * && cmakeconfig && make target'
+
+
+alias mfoundation='foundation && cm'
+alias mabase='abase && cm'
+alias magraphic='graphic && cm'
+alias mcaseclient='caseclient && cm'
+
+alias makealllib='foundation && cm  &&  abase && cm  &&  caseclient && cm  &&  graphic && cm'
 
 alias h='history'
 
