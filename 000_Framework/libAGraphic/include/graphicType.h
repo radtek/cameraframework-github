@@ -11,7 +11,7 @@
 #define ADAS_PAS_WARNING_STATUS	"WARNING_STATUS"
 
 
-typedef enum
+typedef enum 
 {
     COLOR_YUV,
     COLOR_RGB,
@@ -19,7 +19,7 @@ typedef enum
     UNKNOWN_COLOR
 }ecolorType;
 
-typedef enum
+typedef enum 
 {
     MODULE_UNKNOW,
 	MODULE_PAS,

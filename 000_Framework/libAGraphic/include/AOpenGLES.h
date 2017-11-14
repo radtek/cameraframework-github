@@ -9,7 +9,7 @@
 #include "graphicType.h"
 
 namespace Harman 			{
-namespace Adas 			{
+namespace Adas 				{
 namespace AFramework 		{
 namespace AGraphic 			{
 
@@ -61,14 +61,14 @@ class CAdasOpenGLES
 {
 
 public:
-    	CAdasOpenGLES(emoduleType moduleType);
+    CAdasOpenGLES(emoduleType moduleType);
 	virtual ~CAdasOpenGLES();
-    	VOID OpenGLESInitialize(emoduleType moduleType);
+    VOID OpenGLESInitialize(emoduleType moduleType);
 	VOID OpenGLESRender(map<string, tbufInfo>  bufferMap);
 
 private:
-    	VOID OpenGLESInitPAS();
-    	VOID OpenGLESInitRVC();
+    VOID OpenGLESInitPAS();
+    VOID OpenGLESInitRVC();
 	VOID OpenGLESRenderPAS(map<string, tbufInfo>  bufferMap);
 	VOID OpenGLESRenderRVC(map<string, tbufInfo>  bufferMap);
 	GLuint OpenGLESLoadProgram(const CHAR *vertShaderSrc, const CHAR *fragShaderSrc);
