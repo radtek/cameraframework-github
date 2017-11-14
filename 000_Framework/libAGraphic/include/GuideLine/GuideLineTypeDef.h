@@ -39,14 +39,14 @@
 #define OVLAY_SUM_LINE_PER_GROUP   (OVLAY_NUM_DIST_MARKS + OVLAY_NUM_SIDE_LINE) 
 #define OVLAY_TRACK_WIDTH 0.73 // length of each distance line
 #define OVLAY_SIDE_WIDTH 0.72 //distance between two side lines
-#define GUIDELINE_MARKER_STARTDIS    0.23    //start location of first distance line
+#define GUIDELINE_MARKER_STARTDIS    0.21    //start location of first distance line
 #define OVLAY_DELTA_DIST_MARKS 0.3   // distance between two distance lines
 #define DIST_PER_POINT_CLOSE	0.01
 #define DIST_PER_POINT_FAR		0.5
 #define	START_FAR_DIST			30		// distance per point is doubled at this range---desided by camera?
 #define DIST_LINE_PTNUM         40
 #define DIST_LINE_WIDTH         0.015 //side line thickness
-#define SIDE_LINE_WIDTH         0.02//distance line thickness
+#define SIDE_LINE_WIDTH         0.045//distance line thickness
 #define PTELEMNUM 4
 #define INPUTELEMENTNUM 2
 #define INVERSE_REAR_RATIO_PRECISION 0.001
