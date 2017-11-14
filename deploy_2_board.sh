@@ -10,10 +10,21 @@ remoteIP="10.80.105.55"
 #sudo scp ./004_ToBoard/libmediactl.so.0.0.0     root@10.80.105.48://usr/lib/
 #sudo scp ./004_ToBoard/libv4l2subdev.so.0.0.0    root@10.80.105.48://usr/lib/
 
-sudo scp  $ADAS_ROOT_PATH/000_Framework/libAFoundation/lib/linux/libAFoundation.so root@$remoteIP://usr/lib/
-sudo scp  $ADAS_ROOT_PATH/000_Framework/libABase/lib/linux/libABase.so root@$remoteIP://usr/lib/
-sudo scp  $ADAS_ROOT_PATH/000_Framework/libAGraphic/lib/linux/libAGraphic.so root@$remoteIP://usr/lib/
-sudo scp  $ADAS_ROOT_PATH/000_Framework/CaseClient/lib/linux/libACaseSocket.so root@$remoteIP://usr/lib/
+# sudo scp  $ADAS_ROOT_PATH/000_Framework/libAFoundation/lib/linux/libAFoundation.so root@$remoteIP://usr/lib/
+# sudo scp  $ADAS_ROOT_PATH/000_Framework/libABase/lib/linux/libABase.so root@$remoteIP://usr/lib/
+# sudo scp  $ADAS_ROOT_PATH/000_Framework/libAGraphic/lib/linux/libAGraphic.so root@$remoteIP://usr/lib/
+# sudo scp  $ADAS_ROOT_PATH/000_Framework/CaseClient/lib/linux/libACaseSocket.so root@$remoteIP://usr/lib/
+
+
+sudo scp  $CMAKE_SYSROOT/usr/lib/adas/* root@$remoteIP://usr/lib/adas/
+
+sudo scp  $cpm_adas_adservice_PATH/build/gen/libadas-dbus.so root@$remoteIP://usr/lib/
+sudo scp -p  $cpm_adas_adservice_PATH/build/src/adas root@$remoteIP://usr/bin/
+
+# sudo scp -p $cpm_adas_adservice_PATH/src/Pas/config/pdcusr.cfg root@$remoteIP://usr/bin/pdcusr.cfg
+# sudo scp -p -r  $cpm_adas_adservice_PATH/src/Pas/res/Night_Camera root@$remoteIP://usr/bin/Night_Camera
+
+
 #sudo scp  $ADAS_ROOT_PATH/001_Project/001_GWMV2MH/build/gen/libadas-dbus.so root@$remoteIP://usr/lib/
 
 #------adas-------

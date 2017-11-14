@@ -95,7 +95,7 @@ public:
 
 protected:
     bool b_vdtState;
-	linesData* m_Lines;
+	paslinesData* m_Lines;
 	//line data
     char* m_linetex;
     float *m_temp[eLineMaxIndex];// line data

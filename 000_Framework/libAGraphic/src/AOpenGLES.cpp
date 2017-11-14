@@ -11,7 +11,7 @@ namespace AGraphic    			{
 CAdasOpenGLES::CAdasOpenGLES(emoduleType moduleType)
 {
 	mModuleType = moduleType;
-	
+
 	if(MODULE_PAS == mModuleType)
 	{
 		mGLInfo.unOpenGLType.pTypePAS = new tOpenGLPAS;
@@ -22,7 +22,7 @@ CAdasOpenGLES::CAdasOpenGLES(emoduleType moduleType)
 	}
 	else
 	{
-		
+
 	}
 }
 
@@ -41,7 +41,7 @@ VOID CAdasOpenGLES::OpenGLESInitPAS()
 			"	gl_Position = a_position; \n"
 			"	v_texCoord = a_texCoord;  \n"
 			"}							  \n";
-	
+
 	const CHAR fShaderStr[] =
 			"precision mediump float;							 \n"
 			"varying vec2 v_texCoord;							 \n"
@@ -60,16 +60,16 @@ VOID CAdasOpenGLES::OpenGLESInitPAS()
 			"  otherColor = texture2D( s_otherMap, v_texCoord ); \n"
 			"  gl_FragColor = lightColor * (1.0 - baseColor.a) + baseColor; 		 \n"
 			"  gl_FragColor = gl_FragColor * (1.0 - otherColor.a) + otherColor; 		 \n"
-			
+
 			"}													 \n";
-	
-	
+
+
 	mGLInfo.programObject = OpenGLESLoadProgram(vShaderStr, fShaderStr);
 
-	
+
 	mGLInfo.positionLoc = glGetAttribLocation(mGLInfo.programObject, "a_position");
 	mGLInfo.texCoordLoc = glGetAttribLocation(mGLInfo.programObject, "a_texCoord");
-	
+
 
 	glUseProgram(mGLInfo.programObject);
 
@@ -82,7 +82,7 @@ VOID CAdasOpenGLES::OpenGLESInitPAS()
 	mGLInfo.unOpenGLType.pTypePAS->otherMapTexId = OpenGLESLoadTexture();
 
 	if(mGLInfo.unOpenGLType.pTypePAS->baseMapTexId == 0 || mGLInfo.unOpenGLType.pTypePAS->lightMapTexId == 0  || mGLInfo.unOpenGLType.pTypePAS->otherMapTexId == 0)
-		return ;	
+		return ;
 }
 
 VOID CAdasOpenGLES::OpenGLESInitRVC()
@@ -132,14 +132,14 @@ VOID CAdasOpenGLES::OpenGLESInitRVC()
 	mGLInfo.unOpenGLType.pTypeRVC->textureUId = OpenGLESLoadTexture();
 	mGLInfo.unOpenGLType.pTypeRVC->textureVId = OpenGLESLoadTexture();
 	if(mGLInfo.unOpenGLType.pTypeRVC->textureYId == 0 || mGLInfo.unOpenGLType.pTypeRVC->textureUId == 0  || mGLInfo.unOpenGLType.pTypeRVC->textureVId == 0)
-		return ;	
+		return ;
 }
 
 VOID CAdasOpenGLES::OpenGLESRenderPAS(map<string, tbufInfo>  bufferMap)
 {
 	//auto it;
 	GLfloat vVertices[] = { -1.0f, 1.0f, 0.0f,  // Position 0
-		0.0f, 0.0f,        // TexCoord 0 
+		0.0f, 0.0f,        // TexCoord 0
 		-1.0f, -1.0f, 0.0f,  // Position 1
 		0.0f, 1.0f,        // TexCoord 1
 		1.0f, -1.0f, 0.0f,  // Position 2
@@ -149,7 +149,7 @@ VOID CAdasOpenGLES::OpenGLESRenderPAS(map<string, tbufInfo>  bufferMap)
 	};
 	GLushort indices[] = { 0, 1, 2, 0, 2, 3 };
 
-	glViewport (0, 0, 1024, 600);
+	glViewport (0, 0, 640, 720);
 
     	glVertexAttribPointer(mGLInfo.positionLoc, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), vVertices);
     	glEnableVertexAttribArray(mGLInfo.positionLoc);
@@ -157,17 +157,17 @@ VOID CAdasOpenGLES::OpenGLESRenderPAS(map<string, tbufInfo>  bufferMap)
     	glVertexAttribPointer(mGLInfo.texCoordLoc, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), &vVertices[3]);
     	glEnableVertexAttribArray(mGLInfo.texCoordLoc);
 
-	auto it1 = bufferMap.find(ADAS_PAS_CAR_STATUS); 
-	if(it1 != bufferMap.end())  
+	auto it1 = bufferMap.find(ADAS_PAS_CAR_STATUS);
+	if(it1 != bufferMap.end())
 	{
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, mGLInfo.unOpenGLType.pTypePAS->baseMapTexId);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, it1->second.width, it1->second.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, it1->second.buffer);
 		glUniform1i(mGLInfo.unOpenGLType.pTypePAS->baseMapLoc, 0);
 	}
-	
-	auto it2 = bufferMap.find(ADAS_PAS_RADAR_STATUS); 
-	if(it2 != bufferMap.end())  
+
+	auto it2 = bufferMap.find(ADAS_PAS_RADAR_STATUS);
+	if(it2 != bufferMap.end())
 	{
 	    glActiveTexture(GL_TEXTURE1);
 	    glBindTexture(GL_TEXTURE_2D, mGLInfo.unOpenGLType.pTypePAS->lightMapTexId);
@@ -175,17 +175,17 @@ VOID CAdasOpenGLES::OpenGLESRenderPAS(map<string, tbufInfo>  bufferMap)
 	    glUniform1i(mGLInfo.unOpenGLType.pTypePAS->lightMapLoc, 1);
 	}
 
-	auto it3 = bufferMap.find(ADAS_PAS_WARNING_STATUS); 
-	if(it3 != bufferMap.end())  
+	auto it3 = bufferMap.find(ADAS_PAS_WARNING_STATUS);
+	if(it3 != bufferMap.end())
 	{
 	    glActiveTexture(GL_TEXTURE2);
 	    glBindTexture(GL_TEXTURE_2D, mGLInfo.unOpenGLType.pTypePAS->otherMapTexId);
 	    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, it3->second.width, it3->second.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, it3->second.buffer);
 	    glUniform1i(mGLInfo.unOpenGLType.pTypePAS->otherMapLoc, 2);
 	}
-	
+
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
-	
+
 }
 
 VOID CAdasOpenGLES::OpenGLESRenderRVC(map<string, tbufInfo>  bufferMap)
@@ -202,23 +202,23 @@ VOID CAdasOpenGLES::OpenGLESRenderRVC(map<string, tbufInfo>  bufferMap)
 	        0.0f,  0.0f,
 	        1.0f,  0.0f,
 	};
-	
+
 	glViewport (0, 0, 1280, 720);
-	
+
     	glVertexAttribPointer(mGLInfo.positionLoc, 2, GL_FLOAT, 0, 0, vertexVertices);
     	glEnableVertexAttribArray(mGLInfo.positionLoc);
 
     	glVertexAttribPointer(mGLInfo.texCoordLoc, 2, GL_FLOAT, 0, 0, textureVertices);
     	glEnableVertexAttribArray(mGLInfo.texCoordLoc);
 
-	auto it = bufferMap.find(ADAS_PAS_CAR_STATUS); 
-	if(it != bufferMap.end()) 
+	auto it = bufferMap.find(ADAS_PAS_CAR_STATUS);
+	if(it != bufferMap.end())
 	{
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, mGLInfo.unOpenGLType.pTypeRVC->textureYId);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, it->second.width, it->second.height, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, it->second.buffer);
 		glUniform1i(mGLInfo.unOpenGLType.pTypeRVC->uiTxtformY, 0);
-			
+
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, mGLInfo.unOpenGLType.pTypeRVC->textureUId);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, it->second.width/2, it->second.height, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, it->second.buffer + (it->second.width*it->second.height));
@@ -229,7 +229,7 @@ VOID CAdasOpenGLES::OpenGLESRenderRVC(map<string, tbufInfo>  bufferMap)
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, it->second.width/2, it->second.height, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, it->second.buffer + (it->second.width*it->second.height >> 1));
 		glUniform1i(mGLInfo.unOpenGLType.pTypeRVC->uiTxtformV, 2);
 	}
-	
+
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
@@ -253,7 +253,7 @@ VOID CAdasOpenGLES::OpenGLESInitialize(emoduleType moduleType)
 
 VOID CAdasOpenGLES::OpenGLESRender(map<string, tbufInfo>  bufferMap)
 {
-	
+
 	switch(mModuleType)
 	{
 		case MODULE_PAS:
@@ -292,7 +292,7 @@ GLuint CAdasOpenGLES::OpenGLESLoadProgram(const CHAR *vertShaderSrc, const CHAR 
 	}
 
 	//Create the program object
-	programObject = glCreateProgram(); 
+	programObject = glCreateProgram();
 	if(0 == programObject)
 	{
       		return 0;
@@ -306,18 +306,18 @@ GLuint CAdasOpenGLES::OpenGLESLoadProgram(const CHAR *vertShaderSrc, const CHAR 
 
 	//Check the link status
 	glGetProgramiv(programObject, GL_LINK_STATUS, &linked);
-	if(!linked) 
+	if(!linked)
 	{
 		GLint infoLen = 0;
 
-		glGetProgramiv(programObject, GL_INFO_LOG_LENGTH, &infoLen);      
+		glGetProgramiv(programObject, GL_INFO_LOG_LENGTH, &infoLen);
 		if(infoLen > 1)
 		{
 			char* infoLog = (char *)malloc (sizeof(char) * infoLen);
-			glGetProgramInfoLog( programObject, infoLen, NULL, infoLog);     
+			glGetProgramInfoLog( programObject, infoLen, NULL, infoLog);
 			free(infoLog);
 		}
-		
+
 		glDeleteProgram(programObject);
 		return 0;
 	}
@@ -333,7 +333,7 @@ GLuint CAdasOpenGLES::OpenGLESLoadShader(GLenum type, const CHAR *shaderSrc)
 {
 	GLuint shader;
 	GLint compiled;
-   
+
 	//Create the shader object
 	shader = glCreateShader(type);
 	if(0 == shader)
@@ -343,13 +343,13 @@ GLuint CAdasOpenGLES::OpenGLESLoadShader(GLenum type, const CHAR *shaderSrc)
 
 	//Load the shader source
 	glShaderSource(shader, 1, &shaderSrc, NULL);
-   
+
 	//Compile the shader
 	glCompileShader(shader);
 
 	//Check the compile status
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
-	if(!compiled) 
+	if(!compiled)
 	{
 		GLint infoLen = 0;
 
@@ -358,7 +358,7 @@ GLuint CAdasOpenGLES::OpenGLESLoadShader(GLenum type, const CHAR *shaderSrc)
 		{
 			char* infoLog = (char *)malloc(sizeof(char) * infoLen);
 			glGetShaderInfoLog(shader, infoLen, NULL, infoLog);
-			//esLogMessage("Error compiling shader:\n%s\n", infoLog); 		   
+			//esLogMessage("Error compiling shader:\n%s\n", infoLog);
 			free(infoLog);
 	  }
 
@@ -374,7 +374,7 @@ GLuint CAdasOpenGLES::OpenGLESLoadTexture()//(Int32 width, Int32 height)
 	GLuint texId;
 	//textWidth = width;
 	//texHeight = height;
-	
+
 	glGenTextures(1, &texId);
 	glBindTexture(GL_TEXTURE_2D, texId);
 

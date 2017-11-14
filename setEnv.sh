@@ -57,12 +57,13 @@ fi
 alias adas='cd $ADAS_ROOT_PATH'
 alias publish='cd $camfw_gwmv2_PATH'
 if [ -d "$cpm_adas_adservice_PATH/build" ]; then
-    alias project='cd $cpm_adas_adservice_PATH/build'
+    alias project='cd $cpm_adas_adservice_PATH/build && git branch -a && echo "" && echo "must work depends on owner branch (not master branch)" && echo ""'
 else
     sudo mkdir -p $cpm_adas_adservice_PATH/build
 	sudo chmod 777 -R $cpm_adas_adservice_PATH/build
-    alias project='cd $cpm_adas_adservice_PATH/build'
+    alias project='cd $cpm_adas_adservice_PATH/build && git branch -a && echo "" && echo "must work depends on owner branch (not master branch)" && echo ""'
 fi
+
 alias ftest='cd $ADAS_ROOT_PATH/001_Project/001_GWMV2MH/'
 
 alias foundation='cd $ADAS_ROOT_PATH/000_Framework/libAFoundation/src'
@@ -116,8 +117,8 @@ alias pushfoundation='sudo scp $ADAS_ROOT_PATH/000_Framework/libAFoundation/lib/
 alias pushabase='sudo scp $ADAS_ROOT_PATH/000_Framework/libABase/lib/linux/libABase.so root@$remoteIP://usr/lib/'
 alias pushgraphic='sudo scp $ADAS_ROOT_PATH/000_Framework/libAGraphic/lib/linux/libAGraphic.so root@$remoteIP://usr/lib/'
 alias pushcaseclient='sudo scp $ADAS_ROOT_PATH/000_Framework/CaseClient/lib/linux/libACaseSocket.so root@$remoteIP://usr/lib/'
-alias pushadasdbus='sudo scp $ADAS_ROOT_PATH/001_Project/001_GWMV2MH/build/gen/libadas-dbus.so root@$remoteIP://usr/lib/'
 
+alias pushadasdbus='sudo scp $cpm_adas_adservice_PATH/build/gen/libadas-dbus.so root@$remoteIP://usr/lib/'
+alias pushadas='sudo scp $cpm_adas_adservice_PATH/build/src/adas root@$remoteIP://usr/bin/'
 
-alias pushadas='sudo scp $ADAS_ROOT_PATH/001_Project/001_GWMV2MH/build/src/adas root@$remoteIP://usr/bin/'
 alias pushproject='sudo scp $ADAS_ROOT_PATH/001_Project/001_GWMV2MH/src/Camera/Test/cameraStateTest root@$remoteIP://usr/bin/'

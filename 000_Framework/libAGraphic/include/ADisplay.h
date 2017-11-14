@@ -24,7 +24,7 @@ namespace Harman 			{
 namespace Adas 				{
 namespace AFramework 		{
 namespace AGraphic 			{
-	
+
 //#ifdef LINUX_OS
 typedef struct
 {
@@ -63,7 +63,7 @@ typedef struct
 
 class CAdasDisplay
 {
-public:		
+public:
 
 public:
 	static void handlePing(void *data, struct wl_shell_surface *shellSurface, uint32_t serial);
@@ -73,11 +73,11 @@ public:
 	static void registry_handle_global_remove(void *data, struct wl_registry *registry, uint32_t name);
 	//static void handle_surface_configure(void *data, struct zxdg_surface_v6 *surface, uint32_t serial);
 	//static void usage(int error_code);
-	
+
 public:
 	CAdasDisplay();
 	virtual ~CAdasDisplay();
-	
+
 	Int32 createDisplay();
 	Int32 createSurface(tsurfaceInfo surfaceInfo);
 	Int32 destroySurface(UInt32 surfaceID);
@@ -91,7 +91,7 @@ private:
 	CAdasEGL    	*mEGL;
 	CAdasOpenGLES	*mOpenGL;
 	dispalyInfo 	*mdispalyInfo;
-	
+
 private:
 	//static int running;
 	static struct wl_shell_surface_listener shellSurfaceListener;

@@ -15,7 +15,7 @@ using namespace std;
 #define LINE_PTN_NUM 300
 #define PLANE_SEG 2
 #define R_PI      3.1415926f
-#define CFG_PATH  "/usr/share/pdcusr.cfg"
+#define CFG_PATH  "/usr/bin/pdcusr.cfg"
 
 typedef struct _planesData{
 	char* tex;
@@ -26,7 +26,7 @@ typedef struct _planesData{
 	unsigned short pBorderPtElemNum;
 }planesData;
 
-typedef struct _linesData{
+typedef struct __linesData{
     //char* tex;
     float* pLineData;
     float* pArrayData;
@@ -34,7 +34,7 @@ typedef struct _linesData{
     unsigned short* pLineIndex;
     unsigned short pLineIndexNum;
     unsigned short pLinePtElemNum;
-}linesData;
+}paslinesData;
 
 typedef struct _groupMap{
 	int planeNum;//total plane number

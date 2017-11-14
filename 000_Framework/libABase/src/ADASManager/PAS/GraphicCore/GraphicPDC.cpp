@@ -3,7 +3,6 @@
 #include "ADASManager/PAS/GraphicCore/lineBorderOp.h"
 #include "ADASManager/PAS/GraphicCore/lodepng.h"
 #include "ADASManager/PAS/GraphicCore/bmpconfig.h"
-//#include "ADASManager/PAS/GraphicCore/PDCSensor.h"
 
 namespace Harman {
 namespace Adas {
@@ -76,9 +75,10 @@ GraphicPDC::~GraphicPDC(void)
 	}
 }
 #define GBUFF_NUM 8
-static char bigbuffPingPong[GBUFF_NUM][800*480*4*2];// add buffer gap
+static char bigbuffPingPong[GBUFF_NUM][640*720*4];// add buffer gap
 bool GraphicPDC::InitPDC(int screenWidth, int screenHeight)
 {
+    cout<<"GraphicPDC::InitPDC() : CFG_PATH = " << CFG_PATH <<endl;
     m_iScreenWidth = screenWidth;
     m_iScreenHeight = screenHeight;
     if(ReadConfigFile(CFG_PATH))
@@ -641,15 +641,15 @@ int GraphicPDC::LoadTextureData(int index)
 
 
 
-    IMAGEINFO imageinfo;
-    imageinfo.height = texHeight;
-    imageinfo.width = texWidth;
-    imageinfo.image_size = texWidth*texHeight*4;
-    string path("/usr/bin/snowpath/");
-    path += texNames[index];
-    path += ".bmp";
-    printf(" [%s, %d] GraphicPDC::LoadTextureData , path = %s\n", __FUNCTION__, __LINE__, path.c_str());
-    saveAsBmp(path.c_str(), (void*)pTexData, imageinfo);
+    // IMAGEINFO imageinfo;
+    // imageinfo.height = texHeight;
+    // imageinfo.width = texWidth;
+    // imageinfo.image_size = texWidth*texHeight*4;
+    // string path("/usr/bin/snowpath/");
+    // path += texNames[index];
+    // path += ".bmp";
+    // printf(" [%s, %d] GraphicPDC::LoadTextureData , path = %s\n", __FUNCTION__, __LINE__, path.c_str());
+    // saveAsBmp(path.c_str(), (void*)pTexData, imageinfo);
 
 
 	return 0;
@@ -718,11 +718,11 @@ bool GraphicPDC::CompoundTex()
         }
     }
 
-    IMAGEINFO imageinfo;
-    imageinfo.height = texHeight;
-    imageinfo.width = texWidth;
-    imageinfo.image_size = texWidth*texHeight*4;
-    saveAsBmp("/usr/bin/snow.bmp", (void*)tex, imageinfo);
+    // IMAGEINFO imageinfo;
+    // imageinfo.height = texHeight;
+    // imageinfo.width = texWidth;
+    // imageinfo.image_size = texWidth*texHeight*4;
+    // saveAsBmp("/usr/bin/snow.bmp", (void*)tex, imageinfo);
 
 
 	infoBuffer = new char[texWidth*texHeight*4*8];
@@ -750,11 +750,11 @@ bool GraphicPDC::CompoundTex()
             k = k+4;
         }
 
-        IMAGEINFO imageinfo;
-        imageinfo.height = texHeight;
-        imageinfo.width = texWidth;
-        imageinfo.image_size = texWidth*texHeight*4;
-        saveAsBmp("/usr/bin/snow1.bmp", (void*)carBuffer1, imageinfo); // car with alarm
+        // IMAGEINFO imageinfo;
+        // imageinfo.height = texHeight;
+        // imageinfo.width = texWidth;
+        // imageinfo.image_size = texWidth*texHeight*4;
+        // saveAsBmp("/usr/bin/snow1.bmp", (void*)carBuffer1, imageinfo); // car with alarm
 	}
 
 	planesData plansGroup2 = m_Planes[sumNum-1];
@@ -774,11 +774,11 @@ bool GraphicPDC::CompoundTex()
             }
             k = k+4;
         }
-        IMAGEINFO imageinfo;
-        imageinfo.height = texHeight;
-        imageinfo.width = texWidth;
-        imageinfo.image_size = texWidth*texHeight*4;
-        saveAsBmp("/usr/bin/snow2.bmp", (void*)carBuffer2, imageinfo);  // car without alarm
+        // IMAGEINFO imageinfo;
+        // imageinfo.height = texHeight;
+        // imageinfo.width = texWidth;
+        // imageinfo.image_size = texWidth*texHeight*4;
+        // saveAsBmp("/usr/bin/snow2.bmp", (void*)carBuffer2, imageinfo);  // car without alarm
 	}
 
 
@@ -1030,15 +1030,15 @@ void GraphicPDC::LoadBackgroundTexFiles()
         }
     }
 
-    IMAGEINFO imageinfo;
-    imageinfo.height = backgroundHeight;
-    imageinfo.width = backgroundWidth;
-    imageinfo.image_size = backgroundWidth*backgroundHeight*4;
-    string path("/usr/bin/snowpath/");
-    path += backgroundName;
-    path += ".bmp";
-    printf(" [%s, %d] GraphicPDC::LoadBackgroundTexFiles , path = %s\n", __FUNCTION__, __LINE__, path.c_str());
-    saveAsBmp(path.c_str(), (void*)pTexData, imageinfo);
+    // IMAGEINFO imageinfo;
+    // imageinfo.height = backgroundHeight;
+    // imageinfo.width = backgroundWidth;
+    // imageinfo.image_size = backgroundWidth*backgroundHeight*4;
+    // string path("/usr/bin/snowpath/");
+    // path += backgroundName;
+    // path += ".bmp";
+    // printf(" [%s, %d] GraphicPDC::LoadBackgroundTexFiles , path = %s\n", __FUNCTION__, __LINE__, path.c_str());
+    // saveAsBmp(path.c_str(), (void*)pTexData, imageinfo);
 
 }
 

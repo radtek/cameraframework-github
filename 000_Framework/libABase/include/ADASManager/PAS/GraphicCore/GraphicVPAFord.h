@@ -5,8 +5,7 @@
 #include "CRunableBase.h"
 #include "ADASManager/PAS/GraphicCore/IGraphicPDC.h"
 #include "ADASManager/PAS/GraphicCore/GraphicPDC.h"
-#include "ADASManager/PAS/GraphicCore/GraphicVDT.h"
-#include "ADASManager/PAS/GraphicCore/GlShell.h"
+#include "AGraphic.h"
 
 #include <thread>
 #include <unistd.h>
@@ -14,6 +13,7 @@
 using namespace std;
 
 using Harman::Adas::AFramework::AFoundation::CRunableBase;
+using Harman::Adas::AFramework::AGraphic::CAdasGraphic;
 
 #define PNG_BYTES_TO_CHECK 4
 #define VERTEX_ARRAY 0
@@ -25,7 +25,7 @@ namespace AFramework {
 namespace ABase {
 namespace ADASManager {
 
-class GraphicVPAFord : public CRunableBase , public GraphicPDC , public GraphicVDT , public GlShell
+class GraphicVPAFord : public CRunableBase , public GraphicPDC
 {
 
 public:
@@ -60,6 +60,9 @@ private:
 
     int m_iWidth;
     int m_iHeight;
+
+    CAdasGraphic* graphic = nullptr;
+    trenderData renderData1;
 };
 
 } // namespace ADASManager

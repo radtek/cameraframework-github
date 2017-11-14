@@ -11,7 +11,7 @@
 #define ADAS_PAS_WARNING_STATUS	"WARNING_STATUS"
 
 
-typedef enum 
+typedef enum
 {
     COLOR_YUV,
     COLOR_RGB,
@@ -19,7 +19,7 @@ typedef enum
     UNKNOWN_COLOR
 }ecolorType;
 
-typedef enum 
+typedef enum
 {
     MODULE_UNKNOW,
 	MODULE_PAS,
@@ -34,7 +34,7 @@ typedef struct
 	string					surfaceName;
 	UInt32					surfaceId;
 	emoduleType 			moduleType;
-	bool					bActiveEGL;
+	BOOLEAN					bActiveEGL;
 	//EGLSurface			  egl_surf;
 	viewInfo				viewPos;
 }tsurfaceInfo;
@@ -44,7 +44,7 @@ typedef struct
 	BYTE 					*buffer;
 	UInt32					width;
 	UInt32					height;
-	bool 					bRender;
+	BOOLEAN 				bRender;
 }tbufInfo;
 
 typedef struct

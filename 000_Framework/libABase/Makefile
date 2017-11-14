@@ -25,6 +25,8 @@ INCLUDE_PATH += $(ROOT_DIR)/include/ADASManager
 INCLUDE_PATH += $(ROOT_DIR)/include/external
 INCLUDE_PATH += $(ROOT_DIR)/../libAFoundation/include
 INCLUDE_PATH += $(ROOT_DIR)/../CaseClient/include
+INCLUDE_PATH += $(ROOT_DIR)/../libAGraphic/include
+INCLUDE_PATH += $(ROOT_DIR)/../libAGraphic/include/GuideLine
 
 LIBS := dlt
 
