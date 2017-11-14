@@ -15,31 +15,31 @@ GuideLine::GuideLine()
 	cameraPara_t camparam;
 	        	camparam.intrinsic = {
 	                    0.7,  //fx;
-	                0.58,  //fy;
+	                0.38,  //fy;
 	                0.49,  //cx;
-	                0.51,  //cy;
+	                0.7,  //cy;
 	                -0.42632,    //k1;
 	                0.280939,    //k2;
 	                    };
 	        	camparam.extrinsic = {
 	                    0.015,
-	                -0.25,
+	                -0.5,
 	                0.738,
-	                124.0,
+	                130.0,
 	                -1,
 	                -0.3
 	                    };
 		 float groupSeq[9 * 2]={
         			//start distance, end distance
-		           0.0, 0.1,
-		             0.15,0.2,//2 distLines
-			0.3,0.55,//2 distLines
-			0.65,0.95,
-			1.15,1.45,
-			1.55,1.80,
-			1.95,2.25,
-			2.35,2.65,
-		             0,0//background 
+		           	0.0, 0.25,//2 sideLines and 2distLines
+		          	0.3,0.55,//2 distLines
+			0.6,0.85,//2 distLines
+			0.9,1.15,
+			1.2,1.45,
+			1.5,1.75,
+			1.8,2.05,
+			2.1,2.35,
+			0,0//background 
             			};
         	color3 color[9]={ COLOR_PINK,COLOR_RED,COLOR_LIGNTBLUE,COLOR_YELLOW };
         	float tickLength[9] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
@@ -53,8 +53,8 @@ GuideLine::GuideLine()
                 				10
             					};
             	
-	info.width=1280;
-	info.height=720;
+	info.width=glscreen_width;
+	info.height=glscreen_height;
 	info.startX=0;
 	info.startY=0;
         	info.camparam=camparam;
@@ -124,7 +124,7 @@ void GuideLine::GuideLineHide()
 {
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	glDisable(GL_DEPTH_TEST);
-	glViewport(0,0,1280,720);
+	glViewport(0,0,glscreen_width,glscreen_height);
 
 	LoadProgram();
 	glUniform1i(glGetUniformLocation(programObject,"tex"),0);
@@ -139,7 +139,7 @@ void GuideLine::GuideLineHide()
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, GuideLineTexture);
 	glUniform1f(glGetUniformLocation(programObject, "myAlpha"), 0);
-	glUniform2f(glGetUniformLocation(programObject, "imgSize"), 1280 - 1, 720 - 1);
+	glUniform2f(glGetUniformLocation(programObject, "imgSize"), glscreen_width - 1, glscreen_height - 1);
 	glEnableVertexAttribArray(VERTEX_ARRAY);
 	glEnableVertexAttribArray(TEXCOORD_ARRAY);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
