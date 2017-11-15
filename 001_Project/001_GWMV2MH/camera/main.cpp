@@ -12,9 +12,12 @@ using namespace std;
 
 using Harman::Adas::AFramework::AFoundation::StateMachine;
 using Harman::Adas::AFramework::AFoundation::Observer;
-using Harman::Adas::AFramework::AFoundation::EpollGPIO;
 using Harman::Adas::AProject::GWMV2MH::Camera::CameraHubGWMv2;
 using Harman::Adas::AProject::GWMV2MH::Camera::CameraStateMachineGWMv2;
+
+#ifndef _UBUNTU_
+using Harman::Adas::AFramework::AFoundation::EpollGPIO;
+#endif
 
 class FakeRVC : public Observer
 {
@@ -22,7 +25,9 @@ public:
     FakeRVC(const string& name, CameraHub* hub)
         : Observer(name)
         , m_pHub(hub)
+        #ifndef _UBUNTU_
         , m_pEp(nullptr)
+        #endif
     {
         m_pReserveCamera = m_pHub->SubscribeToReserveCamera(this);
 
@@ -32,8 +37,15 @@ public:
         printf("FakeRVC : OpenCamera\n");
         m_pReserveCamera->OpenCamera();
 
+        #ifdef _UBUNTU_
+        printf("FakeRVC : StartCapture\n");
+        m_pReserveCamera->StartCapture();
+        #endif
+
+        #ifndef _UBUNTU_
         m_pEp = new EpollGPIO(string("epoll gpio"), REVERSE_GEAR_GPIO_NUM, makeFunctor(this, &FakeRVC::GPIOcallback));
         m_pEp->start();
+        #endif
     }
 
     VOID Update(Subject* subject, Int32 status) {  // called by statemachine/messageQueue Looper Thread
@@ -55,10 +67,12 @@ public:
 
         m_pHub->CancelSubscribeToReserveCamera(this);
 
+        #ifndef _UBUNTU_
         if(m_pEp != nullptr) {
             delete m_pEp;
             m_pEp = nullptr;
         }
+        #endif
     }
 
     VOID GPIOcallback(unsigned int v) { // called by GPIO epoll Thread
@@ -82,7 +96,9 @@ private:
 
     Camera* m_pReserveCamera = nullptr;
 
+#ifndef _UBUNTU_
     EpollGPIO* m_pEp = nullptr;
+#endif
 };
 
 int main(int argc, char** argv)

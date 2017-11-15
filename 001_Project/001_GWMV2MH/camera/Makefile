@@ -9,6 +9,10 @@ SRC_PATH   := .
 
 OBJS_PATH  :=../obj/
 
+ifneq ($(PLATFORM), board)
+CFLAGS += -D _UBUNTU_
+endif
+
 ## target exec file name
 TARGET     := cameraStateTest
 
@@ -32,11 +36,10 @@ LIBS += wayland-cursor
 LIBS += GLESv2 EGL
 LIBS += ivi-application
 #LIBS += lodepng
-LIBS += ilmCommon
-LIBS += ilmClient
-LIBS += ilmControl
+ifeq ($(PLATFORM), board)
 LIBS += dlt
 LIBS += nanomsg
+endif
 
 ## used headers  file path
 INCLUDE_PATH := $(cpm_adas_adservice_PATH)/include

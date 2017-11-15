@@ -12,8 +12,11 @@
 #include <unistd.h>
 #include <time.h>
 #include <sys/syscall.h>
-#include <dlt/dlt.h>
 #include <stdarg.h>
+
+#ifndef _UBUNTU_
+#include <dlt/dlt.h>
+#endif
 
 
 //#include "../../ParkAssistSrv_Common/CommonCore.hpp"
@@ -63,7 +66,9 @@
 
 //============================================================
 
+#ifndef _UBUNTU_
 #define DLTLOG
+#endif
 
 //#define CASECLIENT_LOG
 #ifdef DLTLOG

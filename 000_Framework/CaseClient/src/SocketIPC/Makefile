@@ -23,6 +23,10 @@ SRCS       := $(wildcard $(SRC_PATH)/*.cpp)
 #OBJS       := $(notdir $(SRCS:.cpp=.o))
 OBJS    := $(patsubst %.cpp, ${DIR_OBJ}/%.o, $(notdir ${SRCS}))
 
+ifneq ($(PLATFORM), board)
+CFLAGS += -D _UBUNTU_
+endif
+
 
 ## need libs, add at here
 LIBS := AFoundation
@@ -60,17 +64,22 @@ CFLAGS += -D LINUX_OS -fPIC
 
 all:$(OBJS)
 	$(CXX) -shared -fPIC $(CFLAGS) $(LDFLAGS) -o $(TARGET_PATH)/$(TARGET) $(OBJS)
+ifeq ($(PLATFORM), board)
 	sudo $(RM) -rf $(CMAKE_SYSROOT)/usr/include/adas/CaseClient
 	sudo $(CP) -rf ../../include $(CMAKE_SYSROOT)/usr/include/adas/CaseClient
 	sudo $(RM) $(CMAKE_SYSROOT)/usr/lib/adas/libACaseSocket*
 	sudo $(CP) -rf ../../lib/linux/libACaseSocket* $(CMAKE_SYSROOT)/usr/lib/adas
+else
+	sudo $(RM) /usr/lib/libACaseSocket*
+	sudo $(CP) -rf ../../lib/linux/libACaseSocket* /usr/lib/
+endif
 
 ${DIR_OBJ}/%.o : $(SRC_PATH)/%.cpp
 	@echo Compiling $< ...
 	$(CXX) -c $(CFLAGS) $< -o ${DIR_OBJ}/$*.o
 
 clean:
-	$(RM) $(OBJS) $(TARGET_PATH)/$(TARGET)
+	$(RM) $(DIR_OBJ)/*.o $(TARGET_PATH)/$(TARGET)
 
 cp:
 	$(CP) $(TARGET_PATH)/$(TARGET) /usr/lib

@@ -18,11 +18,31 @@ TARGET     := libAFoundation.so
 TARGET_PATH  := ../lib/linux
 
 ## get all source files
-SRCS       := $(wildcard $(SRC_PATH)/*.cpp)
+#SRCS       := $(wildcard $(SRC_PATH)/*.cpp)
+
+SRCS += CCRef.cpp
+SRCS += CMessageHandler.cpp
+SRCS += CRunableBase.cpp
+SRCS += CMessageQueue.cpp
+SRCS += CTimer.cpp
+SRCS += State.cpp
+SRCS += CMessage.cpp
+SRCS += CMQRunnableService.cpp
+SRCS += Epoller.cpp
+SRCS += MessageForQueue.cpp
+SRCS += StateMachine.cpp
+ifeq ($(PLATFORM), board)
+SRCS += EpollGPIO.cpp
+SRCS += NanoIPC.cpp
+endif
 
 ## all .o based on all .c
 #OBJS       := $(notdir $(SRCS:.cpp=.o))
 OBJS    := $(patsubst %.cpp, ${DIR_OBJ}/%.o, $(notdir ${SRCS}))
+
+ifneq ($(PLATFORM), board)
+CFLAGS += -D _UBUNTU_
+endif
 
 
 ## need libs, add at here
@@ -33,8 +53,6 @@ INCLUDE_PATH := ../include
 
 ## used include librarys file path
 LIBRARY_PATH := lib
-
-LIBS := dlt nanomsg
 
 ## debug for debug info, when use gdb to debug
 ifeq (1, ${DBG_ENABLE})
@@ -63,10 +81,15 @@ CFLAGS += -D LINUX_OS -fPIC
 
 all:$(OBJS)
 	$(CXX) -shared -fPIC $(CFLAGS) $(LDFLAGS) -o $(TARGET_PATH)/$(TARGET) $(OBJS)
+ifeq ($(PLATFORM), board)
 	sudo $(RM) -rf $(CMAKE_SYSROOT)/usr/include/adas/libAFoundation
 	sudo $(CP) -rf ../include $(CMAKE_SYSROOT)/usr/include/adas/libAFoundation
 	sudo $(RM) $(CMAKE_SYSROOT)/usr/lib/adas/libAFoundation*
 	sudo $(CP) -rf ../lib/linux/libAFoundation* $(CMAKE_SYSROOT)/usr/lib/adas
+else
+	sudo $(RM) /usr/lib/libAFoundation*
+	sudo $(CP) -rf ../lib/linux/libAFoundation* /usr/lib/
+endif
 
 
 ${DIR_OBJ}/%.o : $(SRC_PATH)/%.cpp
@@ -74,7 +97,7 @@ ${DIR_OBJ}/%.o : $(SRC_PATH)/%.cpp
 	$(CXX) -c $(CFLAGS) $< -o ${DIR_OBJ}/$*.o
 
 clean:
-	$(RM) $(OBJS) $(TARGET_PATH)/$(TARGET)
+	$(RM) $(DIR_OBJ)/*.o $(TARGET_PATH)/$(TARGET)
 
 cp:
 	$(CP) $(TARGET_PATH)/$(TARGET) /usr/lib

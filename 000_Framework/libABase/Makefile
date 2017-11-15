@@ -20,6 +20,10 @@ CUR_SOURCE=${wildcard *.cpp}
 #将对应的c文件名转为o文件后放在下面的CUR_OBJS变量中
 CUR_OBJS=${patsubst %.cpp, %.o, $(CUR_SOURCE)}
 
+ifneq ($(PLATFORM), board)
+CFLAGS += -D _UBUNTU_
+endif
+
 INCLUDE_PATH := $(ROOT_DIR)/include
 INCLUDE_PATH += $(ROOT_DIR)/include/ADASManager
 INCLUDE_PATH += $(ROOT_DIR)/include/external
@@ -28,11 +32,8 @@ INCLUDE_PATH += $(ROOT_DIR)/../CaseClient/include
 INCLUDE_PATH += $(ROOT_DIR)/../libAGraphic/include
 INCLUDE_PATH += $(ROOT_DIR)/../libAGraphic/include/GuideLine
 
-LIBS := dlt
-
-
-CFLAGS= -Wl,--no-as-needed  -lpthread -std=c++11 -D LINUX_OS -D ENABLE_EGL -fPIC
-CFLAGS+= $(foreach dir, $(INCLUDE_PATH), -I$(dir))
+CFLAGS += -Wl,--no-as-needed  -lpthread -std=c++11 -D LINUX_OS -D ENABLE_EGL -fPIC
+CFLAGS += $(foreach dir, $(INCLUDE_PATH), -I$(dir))
 
 LDFLAGS += $(foreach lib, $(LIBS), -l$(lib))
 #CFLAGS += -D__FILENAME__='"$(subst $(dir $<),,$<)"'
@@ -40,10 +41,16 @@ LDFLAGS += $(foreach lib, $(LIBS), -l$(lib))
 export CXX BIN OBJS_DIR BIN_DIR ROOT_DIR CFLAGS LDFLAGS RM
 #注意这里的顺序，需要先执行SUBDIRS最后才能是DEBUG
 all:$(SUBDIRS) $(CUR_OBJS) DEBUG
+ifeq ($(PLATFORM), board)
 	sudo $(RM) -rf $(CMAKE_SYSROOT)/usr/include/adas/libABase
 	sudo $(CP) -rf $(ROOT_DIR)/include $(CMAKE_SYSROOT)/usr/include/adas/libABase
 	sudo $(RM) $(CMAKE_SYSROOT)/usr/lib/adas/libABase*
 	sudo $(CP) $(ROOT_DIR)/lib/linux/libABase* $(CMAKE_SYSROOT)/usr/lib/adas
+else
+	sudo $(RM) /usr/lib/libABase*
+	sudo $(CP) -rf lib/linux/libABase* /usr/lib/
+endif
+
 #递归执行子目录下的makefile文件，这是递归执行的关键
 $(SUBDIRS):ECHO
 	make -C $@

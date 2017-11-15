@@ -11,7 +11,9 @@
 #include "CMQRunnableService.h"
 #include "TraceMacros.h"
 #include "CTimer.h"
-#include "EpollGPIO.h"
 #include "Epoller.h"
+#ifndef _UBUNTU_
+#include "EpollGPIO.h"
 #include "NanoIPC.h"
+#endif
 #endif // __HARMAN_ADAS_AFRAMEWORK_AFOUNDATION_AFOUNDATION_H__
