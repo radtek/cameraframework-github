@@ -13,7 +13,7 @@
 #include "ADisplay.h"
 #include "AEGL.h"
 #include "AOpenGLES.h"
-#include "GuideLine/GuideLine.h"
+#include "GuideLine.h"
 
 using namespace std;
 
