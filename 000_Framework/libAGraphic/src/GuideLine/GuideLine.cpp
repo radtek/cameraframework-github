@@ -20,10 +20,10 @@ GuideLine::~GuideLine()
 	{
 		glDeleteTextures(1, &GuideLineTexture);
 	}
-	
+
 	if (programObject)
 	{
-		glDeleteProgram(programObjectTmp);
+		glDeleteProgram(programObject);
 	}
 
 	if(calpointer!=nullptr)
