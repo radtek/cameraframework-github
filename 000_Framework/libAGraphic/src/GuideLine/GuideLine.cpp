@@ -12,6 +12,20 @@ GuideLine::GuideLine()
 	{
 		calpointer=new Calculator();
 	}
+}
+
+GuideLine::~GuideLine()
+{
+	glDeleteTextures(1, &GuideLineTexture);
+	if(calpointer!=nullptr)
+	{
+		delete calpointer;
+		calpointer=nullptr;
+	}
+}
+
+void GuideLine::GuideLineInit()
+{
 	cameraPara_t camparam;
 	        	camparam.intrinsic = {
 	                    0.7,  //fx;
@@ -63,18 +77,9 @@ GuideLine::GuideLine()
 	info.tickLength=tickLength;
 	info.GUIDELINE_PARA=GUIDELINE_PARA;
 	calpointer->Init(info);
-	GenTexture();
-	
-}
 
-GuideLine::~GuideLine()
-{
-	glDeleteTextures(1, &GuideLineTexture);
-	if(calpointer!=nullptr)
-	{
-		delete calpointer;
-		calpointer=nullptr;
-	}
+	LoadProgram();
+	GenTexture();
 }
 
 void GuideLine::GuideLineRender(guidelineinfo infos)
@@ -86,10 +91,8 @@ void GuideLine::GuideLineRender(guidelineinfo infos)
 	
 	calpointer->Update(info);
 
-	LoadProgram();
-
 	glUniform1i(glGetUniformLocation(programObject,"tex"),0);
-	
+	const char* Attribs[2] = { "myVert","myUV" };
 	for(int i=0;i<2;i++)
 	{
 		glBindAttribLocation(programObject, i, Attribs[i]);
@@ -118,7 +121,6 @@ void GuideLine::GuideLineRender(guidelineinfo infos)
 	glDisableVertexAttribArray(VERTEX_ARRAY);
 	glDisableVertexAttribArray(TEXCOORD_ARRAY);
 	glDisable(GL_BLEND);
-	glDeleteProgram(programObject);
 }
 
 void GuideLine::GuideLineHide()
@@ -127,9 +129,8 @@ void GuideLine::GuideLineHide()
 	glDisable(GL_DEPTH_TEST);
 	glViewport(0,0,glscreen_width,glscreen_height);
 
-	LoadProgram();
 	glUniform1i(glGetUniformLocation(programObject,"tex"),0);
-	
+	const char* Attribs[2] = { "myVert","myUV" };
 	for(int i=0;i<2;i++)
 	{
 		glBindAttribLocation(programObject, i, Attribs[i]);
@@ -163,6 +164,27 @@ void GuideLine::GenTexture()
 
 void GuideLine::LoadProgram()
 {
+	const char* vertexShader = "\
+	attribute mediump vec4 myVert;\
+	attribute mediump vec4 myUV;\
+	uniform mediump vec2 imgSize;\
+	varying mediump vec2 texCoord;\
+	void main()\
+	{\
+		float x = 2.0*myVert.x/imgSize.x-1.0;\
+		float y = 2.0 * myVert.y/imgSize.y - 1.0;\
+		gl_Position = vec4(x,-y,0.0,1.0);\
+		texCoord = myUV.st;\
+	}";
+
+	const char* fragmentShader = "\
+	uniform lowp sampler2D tex;\
+	uniform mediump float myAlpha;\
+	varying mediump vec2 texCoord;\
+	void main()\
+	{\
+		gl_FragColor = vec4(texture2D(tex, texCoord).rgb,myAlpha);\
+	}";
 	programObject = LoadShaders(vertexShader,fragmentShader);	
 	
 }
@@ -182,7 +204,7 @@ GLuint GuideLine::LoadShaders(const char* vertexShaderSrc,const char* fragmentSh
 	glShaderSource(vertex_shader, 1, (const char**)&vertexShaderSrc, NULL);
 	glCompileShader(vertex_shader);
 	glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &ShaderCompiled);
-	/*if (!ShaderCompiled)
+	if (!ShaderCompiled)
 	{
 		printf("vertex shader compile failded!!!!\n");
 		int i32InfoLogLength, i32CharsWritten;
@@ -193,7 +215,7 @@ GLuint GuideLine::LoadShaders(const char* vertexShaderSrc,const char* fragmentSh
 		free(pszInfoLog);
 		glDeleteShader(vertex_shader);
 		return 0;
-	}*/
+	}
 	glDeleteShader(vertex_shader);
 
 	fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
@@ -201,7 +223,7 @@ GLuint GuideLine::LoadShaders(const char* vertexShaderSrc,const char* fragmentSh
 	glShaderSource(fragment_shader, 1, (const char**)&fragmentShaderSrc, NULL);
 	glCompileShader(fragment_shader);
 	glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &ShaderCompiled);
-	/*if (!ShaderCompiled)
+	if (!ShaderCompiled)
 	{
 		printf("frag shader compile failded!!!!\n");
 		int i32InfoLogLength, i32CharsWritten;
@@ -212,13 +234,13 @@ GLuint GuideLine::LoadShaders(const char* vertexShaderSrc,const char* fragmentSh
 		free(pszInfoLog);
 		glDeleteShader(fragment_shader);
 		return 0;
-	}*/
+	}
 	glDeleteShader(fragment_shader);
 	
 
 	glLinkProgram(programObjectTmp);
 	glGetProgramiv(programObjectTmp, GL_LINK_STATUS, &linked);
-	/*if (!linked)
+	if (!linked)
 	{
 		GLint infoLen = 0;
 		glGetProgramiv(programObjectTmp, GL_INFO_LOG_LENGTH, &infoLen);
@@ -233,7 +255,7 @@ GLuint GuideLine::LoadShaders(const char* vertexShaderSrc,const char* fragmentSh
 		}
 		glDeleteProgram(programObjectTmp);
 		return 0;
-	}*/
+	}
 	
 
 	return programObjectTmp;
