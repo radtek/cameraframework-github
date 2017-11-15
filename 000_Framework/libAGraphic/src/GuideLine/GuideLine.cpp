@@ -118,7 +118,7 @@ void GuideLine::GuideLineRender(guidelineinfo infos)
 	glDisableVertexAttribArray(VERTEX_ARRAY);
 	glDisableVertexAttribArray(TEXCOORD_ARRAY);
 	glDisable(GL_BLEND);
-	
+	glDeleteProgram(programObject);
 }
 
 void GuideLine::GuideLineHide()
@@ -127,7 +127,7 @@ void GuideLine::GuideLineHide()
 	glDisable(GL_DEPTH_TEST);
 	glViewport(0,0,glscreen_width,glscreen_height);
 
-	
+	LoadProgram();
 	glUniform1i(glGetUniformLocation(programObject,"tex"),0);
 	
 	for(int i=0;i<2;i++)
