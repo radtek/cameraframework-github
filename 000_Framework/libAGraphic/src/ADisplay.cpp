@@ -253,6 +253,7 @@ Int32 CAdasDisplay::createSurface(tsurfaceInfo surfaceInfo)
 	
 	mdispalyInfo->surfaceList.push_back(surfaceData);
 	
+	mGuideLine->GuideLineInit();
 
 	return 0;
 }

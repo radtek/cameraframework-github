@@ -16,7 +16,16 @@ GuideLine::GuideLine()
 
 GuideLine::~GuideLine()
 {
-	glDeleteTextures(1, &GuideLineTexture);
+	if (GuideLineTexture)
+	{
+		glDeleteTextures(1, &GuideLineTexture);
+	}
+	
+	if (programObject)
+	{
+		glDeleteProgram(programObjectTmp);
+	}
+
 	if(calpointer!=nullptr)
 	{
 		delete calpointer;
