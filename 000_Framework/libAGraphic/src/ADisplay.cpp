@@ -91,8 +91,6 @@ CAdasDisplay::CAdasDisplay()
 		cout<<"Error: malloc GuideLine failed.\n";
 		return ;
 	}
-
-
 }
 
 CAdasDisplay::~CAdasDisplay()
@@ -241,14 +239,9 @@ Int32 CAdasDisplay::createSurface(tsurfaceInfo surfaceInfo)
 
 		if(MODULE_GUIDELINE == moduleType)
 		{
-			if(NULL == mGuideLine)
+			if(NULL != mGuideLine)
 			{
-				mGuideLine = new GuideLine();
-				if(NULL == mGuideLine)
-				{
-					cout<<"Error: malloc GuideLine failed.\n";
-					return -1;
-				}
+				mGuideLine->GuideLineInit();
 			}
 		}
 		else
@@ -279,8 +272,6 @@ Int32 CAdasDisplay::createSurface(tsurfaceInfo surfaceInfo)
 	}*/
 	
 	mdispalyInfo->surfaceList.push_back(surfaceData);
-	
-	mGuideLine->GuideLineInit();
 
 	return 0;
 }
