@@ -347,7 +347,7 @@ Int32 CAdasDisplay::showGuideLine(UInt32 surfaceID, Float32 Angle)
        			cout<<"Do not Find surface ID " << itOpenGL->first << endl;
 				return -1;
 			}
-
+			
 			mGuideLine->GuideLineRender(infos);
 			
 			//EGL swap buffer

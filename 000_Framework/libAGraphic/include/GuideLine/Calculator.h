@@ -114,7 +114,7 @@ public:
 	int m_iLinePixelWidth;
 	int m_iScreenWidth;
 	int m_iScreenHeight;
-	GLuint* pTexData[8];
+	GLuint pTexData[8][16];
 	int LineTex_width;
 	int LineTex_height;
 };

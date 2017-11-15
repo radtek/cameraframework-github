@@ -891,7 +891,7 @@ void Calculator::SetGuideLineColor()
 	LineTex_height = 4;
 	for (int k = 0; k < (m_iGroupNum - 1); k++)
 	{
-		pTexData[k] = new GLuint[LineTex_width*LineTex_height];
+		
 		for (int i = 0; i < 4; i++)
 		{
 			for (int j = 0; j < 4; j++)
