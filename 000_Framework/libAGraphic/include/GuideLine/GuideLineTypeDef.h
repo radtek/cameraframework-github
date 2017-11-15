@@ -34,9 +34,9 @@
 #define COLOR_PINK                {1.0,0.0,1.0}
 #define COLOR_LIGNTBLUE                {0.1,0.69,0.78}
 #define OVLAY_THICK_DIST_MARKS 0.08   //distance between two distance line which belong one group
-#define OVLAY_NUM_DIST_MARKS 1  // the number of distance line of each group 
+#define OVLAY_NUM_DIST_MARKS 1  // the number of distance line of each group
 #define OVLAY_NUM_SIDE_LINE   2  //side line numbers
-#define OVLAY_SUM_LINE_PER_GROUP   (OVLAY_NUM_DIST_MARKS + OVLAY_NUM_SIDE_LINE) 
+#define OVLAY_SUM_LINE_PER_GROUP   (OVLAY_NUM_DIST_MARKS + OVLAY_NUM_SIDE_LINE)
 #define OVLAY_TRACK_WIDTH 0.73 // length of each distance line
 #define OVLAY_SIDE_WIDTH 0.72 //distance between two side lines
 #define GUIDELINE_MARKER_STARTDIS    0.21    //start location of first distance line
@@ -104,24 +104,24 @@ typedef struct
 struct PVRTVec3 : public PVRTVECTOR3
 {
 	PVRTVec3() {}
-	
+
 	PVRTVec3(float fX, float fY, float fZ)
 	{
 		x = fX;	y = fY;	z = fZ;
 	}
-	
+
 	PVRTVec3(const float fValue)
 	{
 		x = fValue; y = fValue; z = fValue;
 	}
-	
+
 	PVRTVec3(const float* pVec)
 	{
 		x = (*pVec++); y = (*pVec++); z = *pVec;
 	}
-	
+
 	PVRTVec3(const PVRTVec4& vec4);
-	
+
 	PVRTVec3 operator+(const PVRTVec3& rhs) const
 	{
 		PVRTVec3 out;
@@ -130,7 +130,7 @@ struct PVRTVec3 : public PVRTVECTOR3
 		out.z = z + rhs.z;
 		return out;
 	}
-	
+
 	PVRTVec3 operator-(const PVRTVec3& rhs) const
 	{
 		PVRTVec3 out;
@@ -148,7 +148,7 @@ struct PVRTVec3 : public PVRTVECTOR3
 		return *this;
 	}
 
-	
+
 	PVRTVec3& operator-=(const PVRTVec3& rhs)
 	{
 		x -= rhs.x;
@@ -157,10 +157,10 @@ struct PVRTVec3 : public PVRTVECTOR3
 		return *this;
 	}
 
-	
+
 	friend PVRTVec3 operator - (const PVRTVec3& rhs) { return PVRTVec3(rhs) *= f2vt(-1); }
 
-	
+
 	friend PVRTVec3 operator*(const float lhs, const PVRTVec3&  rhs)
 	{
 		PVRTVec3 out;
@@ -180,12 +180,12 @@ struct PVRTVec3 : public PVRTVECTOR3
 	}
 
 	PVRTVec3 operator*(const PVRTMat3& rhs) const;
-	
-	
-	
+
+
+
 	PVRTVec3& operator*=(const PVRTMat3& rhs);
-	
-	
+
+
 	PVRTVec3 operator*(const float& rhs) const
 	{
 		PVRTVec3 out;
@@ -195,7 +195,7 @@ struct PVRTVec3 : public PVRTVECTOR3
 		return out;
 	}
 
-	
+
 	PVRTVec3& operator*=(const float& rhs)
 	{
 		x = VERTTYPEMUL(x, rhs);
@@ -204,7 +204,7 @@ struct PVRTVec3 : public PVRTVECTOR3
 		return *this;
 	}
 
-	
+
 	PVRTVec3 operator/(const float& rhs) const
 	{
 		PVRTVec3 out;
@@ -214,7 +214,7 @@ struct PVRTVec3 : public PVRTVECTOR3
 		return out;
 	}
 
-	
+
 	PVRTVec3& operator/=(const float& rhs)
 	{
 		x = VERTTYPEDIV(x, rhs);
@@ -238,7 +238,7 @@ struct PVRTVec3 : public PVRTVECTOR3
 
 		return true;
 	}
-	
+
 	float lenSqr() const
 	{
 		return VERTTYPEMUL(x, x) + VERTTYPEMUL(y, y) + VERTTYPEMUL(z, z);
@@ -347,7 +347,7 @@ struct PVRTVec4 : public PVRTVECTOR4
 		x = fX;	y = vec3.x;	z = vec3.y;	w = vec3.z;
 	}
 
-	
+
 	PVRTVec4(const float* pVec)
 	{
 		x = (*pVec++); y = (*pVec++); z = (*pVec++); w = *pVec;
@@ -393,9 +393,9 @@ struct PVRTVec4 : public PVRTVECTOR4
 
 	PVRTVec4 operator*(const PVRTMat4& rhs) const;
 
-	
+
 	PVRTVec4& operator*=(const PVRTMat4& rhs);
-	
+
 
 	PVRTVec4 operator*(const float& rhs) const
 	{
@@ -481,7 +481,7 @@ struct PVRTVec4 : public PVRTVECTOR4
 		w = VERTTYPEDIV(w, len);
 		return *this;
 	}
-	
+
 	PVRTVec4 normalized() const
 	{
 		PVRTVec4 out;
@@ -498,7 +498,7 @@ struct PVRTVec4 : public PVRTVECTOR4
 		return VERTTYPEMUL(x, rhs.x) + VERTTYPEMUL(y, rhs.y) + VERTTYPEMUL(z, rhs.z) + VERTTYPEMUL(w, rhs.w);
 	}
 
-	
+
 	float *ptr() { return (float*)this; }
 };
 
@@ -507,7 +507,7 @@ struct PVRTVec4 : public PVRTVECTOR4
 struct PVRTMat4 : public PVRTMATRIX
 {
 	PVRTMat4() {}
-	
+
 	PVRTMat4(float m0, float m1, float m2, float m3,
 		float m4, float m5, float m6, float m7,
 		float m8, float m9, float m10, float m11,
@@ -518,7 +518,7 @@ struct PVRTMat4 : public PVRTMATRIX
 		f[8] = m8; f[9] = m9; f[10] = m10; f[11] = m11;
 		f[12] = m12; f[13] = m13; f[14] = m14; f[15] = m15;
 	}
-	
+
 	PVRTMat4(const float* mat)
 	{
 		float* ptr = f;
@@ -533,7 +533,7 @@ struct PVRTMat4 : public PVRTMATRIX
 		return f[c * 4 + r];
 	}
 
-	
+
 	const float& operator()(const int r, const int c) const
 	{
 		return f[c * 4 + r];
@@ -541,7 +541,7 @@ struct PVRTMat4 : public PVRTMATRIX
 
 	PVRTMat4 operator*(const PVRTMat4& rhs) const;
 
-	
+
 	PVRTMat4 operator+(const PVRTMat4& rhs) const
 	{
 		PVRTMat4 out;
@@ -646,7 +646,7 @@ struct PVRTMat4 : public PVRTMATRIX
 		}
 		return *this;
 	}
-	
+
 	PVRTVec4 operator*(const PVRTVec4& rhs) const
 	{
 		PVRTVec4 out;
@@ -658,7 +658,7 @@ struct PVRTMat4 : public PVRTMATRIX
 		return out;
 	}
 
-	
+
 	PVRTVec4 operator*=(const PVRTVec4& rhs) const
 	{
 		PVRTVec4 out;
@@ -731,7 +731,7 @@ struct PVRTMat4 : public PVRTMATRIX
 		return postTranslate(tvec.x, tvec.y, tvec.z);
 	}
 
-	
+
 	PVRTMat4& preTranslate(float tx, float ty, float tz)
 	{
 		f[0] += VERTTYPEMUL(f[3], tx);	f[4] += VERTTYPEMUL(f[7], tx);	f[8] += VERTTYPEMUL(f[11], tx);	f[12] += VERTTYPEMUL(f[15], tx);
@@ -752,7 +752,7 @@ struct PVRTMat4 : public PVRTMATRIX
 
 	float *ptr() { return (float*)&f; }
 
-	
+
 	static PVRTMat4 Identity()
 	{
 		PVRTMat4 out;
@@ -764,12 +764,12 @@ struct PVRTMat4 : public PVRTMATRIX
 	}
 
 	static PVRTMat4 RotationX(VERTTYPE angle);
-	
+
 	static PVRTMat4 RotationY(VERTTYPE angle);
-	
+
 	static PVRTMat4 RotationZ(VERTTYPE angle);
 
-	
+
 	static PVRTMat4 Scale(const float fx, const float fy, const float fz)
 	{
 		return PVRTMat4(fx, 0, 0, 0,
@@ -788,7 +788,7 @@ struct PVRTMat4 : public PVRTMATRIX
 
 	enum eClipspace { OGL, D3D };
 
-	
+
 	static PVRTMat4 Ortho(float left, float top, float right,
 		float bottom, float nearPlane, float farPlane, const eClipspace cs, bool bRotate = false)
 	{
@@ -826,7 +826,7 @@ struct PVRTMat4 : public PVRTMATRIX
 	{
 		return LookAt(vEye, vAt, vUp, true);
 	}
-	
+
 	static PVRTMat4 LookAtLH(const PVRTVec3& vEye, const PVRTVec3& vAt, const PVRTVec3& vUp)
 	{
 		return LookAt(vEye, vAt, vUp, false);
@@ -838,47 +838,47 @@ struct PVRTMat4 : public PVRTMATRIX
 		return Perspective(width, height, nearPlane, farPlane, cs, true, bRotate);
 	}
 
-	
+
 	static PVRTMat4 PerspectiveLH(float width, float height, float nearPlane, float farPlane, const eClipspace cs, bool bRotate = false)
 	{
 		return Perspective(width, height, nearPlane, farPlane, cs, false, bRotate);
 	}
 
-	
+
 	static PVRTMat4 PerspectiveFloatDepthRH(float width, float height, float nearPlane, const eClipspace cs, bool bRotate = false)
 	{
 		return PerspectiveFloatDepth(width, height, nearPlane, cs, true, bRotate);
 	}
 
-	
+
 	static PVRTMat4 PerspectiveFloatDepthLH(float width, float height, float nearPlane, const eClipspace cs, bool bRotate = false)
 	{
 		return PerspectiveFloatDepth(width, height, nearPlane, cs, false, bRotate);
 	}
 
-	
+
 	static PVRTMat4 PerspectiveFovRH(float fovy, float aspect, float nearPlane, float farPlane, const eClipspace cs, bool bRotate = false)
 	{
 		return PerspectiveFov(fovy, aspect, nearPlane, farPlane, cs, true, bRotate);
 	}
-	
+
 	static PVRTMat4 PerspectiveFovLH(float fovy, float aspect, float nearPlane, float farPlane, const eClipspace cs, bool bRotate = false)
 	{
 		return PerspectiveFov(fovy, aspect, nearPlane, farPlane, cs, false, bRotate);
 	}
 
-	
+
 	static PVRTMat4 PerspectiveFovFloatDepthRH(float fovy, float aspect, float nearPlane, const eClipspace cs, bool bRotate = false)
 	{
 		return PerspectiveFovFloatDepth(fovy, aspect, nearPlane, cs, true, bRotate);
 	}
-	
+
 	static PVRTMat4 PerspectiveFovFloatDepthLH(float fovy, float aspect, float nearPlane, const eClipspace cs, bool bRotate = false)
 	{
 		return PerspectiveFovFloatDepth(fovy, aspect, nearPlane, cs, false, bRotate);
 	}
 
-	
+
 	static PVRTMat4 LookAt(const PVRTVec3& vEye, const PVRTVec3& vAt, const PVRTVec3& vUp, bool bRightHanded)
 	{
 		PVRTVec3 vForward, vUpNorm, vSide;
@@ -901,7 +901,7 @@ struct PVRTMat4 : public PVRTMATRIX
 		return result;
 	}
 
-	
+
 	static PVRTMat4 Perspective(
 		float width, float height,
 		float nearPlane, float farPlane,
@@ -942,7 +942,7 @@ struct PVRTMat4 : public PVRTMATRIX
 		return result;
 	}
 
-	
+
 	static PVRTMat4 PerspectiveFloatDepth(
 		float width, float height,
 		float nearPlane,
@@ -988,7 +988,7 @@ struct PVRTMat4 : public PVRTMATRIX
 		return Perspective(VERTTYPEMUL(height, aspect), height, nearPlane, farPlane, cs, bRightHanded, bRotate);
 	}
 
-	
+
 	static PVRTMat4 PerspectiveFovFloatDepth(
 		float fovy, float aspect,
 		float nearPlane,
@@ -1016,7 +1016,7 @@ public:
 struct PVRTMat3 : public PVRTMATRIX3
 {
 	PVRTMat3() {}
-	
+
 	PVRTMat3(const float* pMat)
 	{
 		float* ptr = f;
@@ -1035,20 +1035,20 @@ struct PVRTMat3 : public PVRTMATRIX3
 		f[6] = m6; f[7] = m7; f[8] = m8;
 	}
 
-	
+
 	PVRTMat3(const PVRTMat4& mat);
 
 	float& operator()(const int row, const int column)
 	{
 		return f[column * 3 + row];
 	}
-	
+
 	const float& operator()(const int row, const int column) const
 	{
 		return f[column * 3 + row];
 	}
 
-	
+
 	PVRTMat3 operator*(const PVRTMat3& rhs) const
 	{
 		PVRTMat3 out;
@@ -1069,7 +1069,7 @@ struct PVRTMat3 : public PVRTMATRIX3
 		return out;
 	}
 
-	
+
 	PVRTMat3 operator+(const PVRTMat3& rhs) const
 	{
 		PVRTMat3 out;
@@ -1198,7 +1198,7 @@ struct PVRTMat3 : public PVRTMATRIX3
 		return out;
 	}
 
-	
+
 	PVRTMat3 transpose() const
 	{
 		PVRTMat3 out;
@@ -1208,10 +1208,10 @@ struct PVRTMat3 : public PVRTMATRIX3
 		return out;
 	}
 
-	
+
 	float *ptr() { return (float*)&f; }
 
-	
+
 	static PVRTMat3 Identity()
 	{
 		PVRTMat3 out;
@@ -1221,16 +1221,16 @@ struct PVRTMat3 : public PVRTMATRIX3
 		return out;
 	}
 
-	
+
 	static PVRTMat3 RotationX(VERTTYPE angle);
 
-	
+
 	static PVRTMat3 RotationY(VERTTYPE angle);
 
-	
+
 	static PVRTMat3 RotationZ(VERTTYPE angle);
 
-	
+
 	static PVRTMat3 Scale(const float fx, const float fy, const float fz)
 	{
 		return PVRTMat3(fx, 0, 0,
@@ -1279,7 +1279,7 @@ typedef struct dynamic_para {
 }dynamic_para_t;
 
 typedef struct camera_matrix
-{	
+{
 	PVRTMat4          intrin;
 
 	PVRTMat4          ex_all;
@@ -1303,9 +1303,9 @@ typedef struct camera_para
 typedef float color3[3];
 
 typedef struct _linesData {
-	int lineNums;  
-	int* pLinePtNums;  
-	float** pLineData;  
+	int lineNums;
+	int* pLinePtNums;
+	float** pLineData;
 	unsigned short* pLinePtElemStartNum;
 	unsigned short* pLineIndexElemStartNum;
 	unsigned short* pLineBorderStartIndex;
@@ -1336,7 +1336,7 @@ typedef struct GMVehicleInfo
 {
 	float wheelBase;
 	float rearAxleOffset;
-	float maxSteeringAngle; 
+	float maxSteeringAngle;
 	float inverseFrontRatio;
 	float inverseRearRatio;
 	float vehicleAngle;
@@ -1349,19 +1349,19 @@ typedef enum {
 
 typedef struct _sideLineInfo
 {
-	int lineNum;   
-	int linePtNum; 
+	int lineNum;
+	int linePtNum;
 	float startDis;
 	float endDis;
-	bool bIsLSeg;   
-	float LSegExtendLength; 
+	bool bIsLSeg;
+	float LSegExtendLength;
 }sideLineInfo;
 
 typedef struct _distLineInfo
 {
-	int lineNum;  
+	int lineNum;
 	int linePtNum;
-	float* dist;  
+	float* dist;
 }distLineInfo;
 
 
@@ -1385,10 +1385,10 @@ public:
 
 typedef struct _guidelineinfo
 {
-	int width; 
+	int width;
 	int height;
 	int startX;
-	int startY; 
+	int startY;
 	cameraPara_t camparam;
 	dynamic_para_t GUIDELINE_PARA;
 	float* groupSeq;

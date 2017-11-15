@@ -36,52 +36,51 @@ GuideLine::~GuideLine()
 void GuideLine::GuideLineInit()
 {
 	cameraPara_t camparam;
-	        	camparam.intrinsic = {
-	                    0.7,  //fx;
-	                0.38,  //fy;
-	                0.49,  //cx;
-	                0.7,  //cy;
-	                -0.42632,    //k1;
-	                0.280939,    //k2;
-	                    };
-	        	camparam.extrinsic = {
-	                    0.015,
-	                -0.5,
-	                0.738,
-	                130.0,
-	                -1,
-	                -0.3
-	                    };
-		 float groupSeq[9 * 2]={
-        			//start distance, end distance
-		           	0.0, 0.25,//2 sideLines and 2distLines
-		          	0.3,0.55,//2 distLines
-			0.6,0.85,//2 distLines
-			0.9,1.15,
-			1.2,1.45,
-			1.5,1.75,
-			1.8,2.05,
-			2.1,2.35,
-			0,0//background 
-            			};
-        	color3 color[9]={ COLOR_PINK,COLOR_RED,COLOR_LIGNTBLUE,COLOR_YELLOW };
-        	float tickLength[9] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+	camparam.intrinsic = {
+		0.7,  //fx;
+		0.38,  //fy;
+		0.49,  //cx;
+		0.7,  //cy;
+		-0.42632,    //k1;
+		0.280939,    //k2;
+	};
+	camparam.extrinsic = {
+		0.015,
+		-0.5,
+		0.738,
+		130.0,
+		-1,
+		-0.3
+	};
+	float groupSeq[9 * 2]={
+		0.0, 0.25,
+		0.3,0.55,
+		0.6,0.85,
+		0.9,1.15,
+		1.2,1.45,
+		1.5,1.75,
+		1.8,2.05,
+		2.1,2.35,
+		0,0//background
+    };
+    color3 color[9]={ COLOR_PINK,COLOR_RED,COLOR_LIGNTBLUE,COLOR_YELLOW };
+    float tickLength[9] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 
-        	dynamic_para_t GUIDELINE_PARA={
-              				0,
-              			  	0,
-                				3.5,
-              				0.01,
-                				0,
-                				10
-            					};
-            	
+    dynamic_para_t GUIDELINE_PARA={
+        0,
+        0,
+        3.5,
+        0.01,
+        0,
+        10
+    };
+
 	info.width=glscreen_width;
 	info.height=glscreen_height;
 	info.startX=0;
 	info.startY=0;
-        	info.camparam=camparam;
-        	info.groupSeq=groupSeq;
+    info.camparam=camparam;
+    info.groupSeq=groupSeq;
 	info.color=color;
 	info.tickLength=tickLength;
 	info.GUIDELINE_PARA=GUIDELINE_PARA;
@@ -97,7 +96,7 @@ void GuideLine::GuideLineRender(guidelineinfo infos)
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	glDisable(GL_DEPTH_TEST);
 	glViewport(info.startX,info.startY,info.width,info.height);
-	
+
 	calpointer->Update(info);
 
 	glUniform1i(glGetUniformLocation(programObject,"tex"),0);
@@ -106,7 +105,7 @@ void GuideLine::GuideLineRender(guidelineinfo infos)
 	{
 		glBindAttribLocation(programObject, i, Attribs[i]);
 	}
-	
+
 	glUseProgram(programObject);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -118,13 +117,13 @@ void GuideLine::GuideLineRender(guidelineinfo infos)
 	glEnableVertexAttribArray(TEXCOORD_ARRAY);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	
-		
+
+
 	for (int i = 0; i < 8; i++)
 	{
-		
+
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, calpointer->LineTex_width, calpointer->LineTex_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, calpointer->pTexData[i]);
-		
+
 		RenderGroupLines(i);
 	}
 	glDisableVertexAttribArray(VERTEX_ARRAY);
@@ -168,7 +167,7 @@ void GuideLine::GenTexture()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);	
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 }
 
 void GuideLine::LoadProgram()
@@ -194,8 +193,8 @@ void GuideLine::LoadProgram()
 	{\
 		gl_FragColor = vec4(texture2D(tex, texCoord).rgb,myAlpha);\
 	}";
-	programObject = LoadShaders(vertexShader,fragmentShader);	
-	
+	programObject = LoadShaders(vertexShader,fragmentShader);
+
 }
 
 GLuint GuideLine::LoadShaders(const char* vertexShaderSrc,const char* fragmentShaderSrc)
@@ -207,7 +206,7 @@ GLuint GuideLine::LoadShaders(const char* vertexShaderSrc,const char* fragmentSh
 	GLint ShaderCompiled;
 
 	programObjectTmp=glCreateProgram();
-	
+
 	vertex_shader = glCreateShader(GL_VERTEX_SHADER);
 	glAttachShader(programObjectTmp, vertex_shader);
 	glShaderSource(vertex_shader, 1, (const char**)&vertexShaderSrc, NULL);
@@ -245,7 +244,7 @@ GLuint GuideLine::LoadShaders(const char* vertexShaderSrc,const char* fragmentSh
 		return 0;
 	}
 	glDeleteShader(fragment_shader);
-	
+
 
 	glLinkProgram(programObjectTmp);
 	glGetProgramiv(programObjectTmp, GL_LINK_STATUS, &linked);
@@ -265,7 +264,7 @@ GLuint GuideLine::LoadShaders(const char* vertexShaderSrc,const char* fragmentSh
 		glDeleteProgram(programObjectTmp);
 		return 0;
 	}
-	
+
 
 	return programObjectTmp;
 }
@@ -285,6 +284,6 @@ void GuideLine::RenderGroupLines(int index)
 
 
 }//namespace AGraphic
-}//namespace Adas 
+}//namespace Adas
 }//namespace AFramework
 }//namespace Harman

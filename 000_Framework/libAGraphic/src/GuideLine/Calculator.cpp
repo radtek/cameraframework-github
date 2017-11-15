@@ -42,7 +42,7 @@ void Calculator::Init(guidelineinfo info)
 	cameraPara = info.camparam;
 	setCameraMatrix();
 	SetWindowParam(info.width, info.height);
-	
+
 	steer_params vechicleInfo;
 	vechicleInfo.wheelBase = info.GUIDELINE_PARA.wheelbase;
 	vechicleInfo.rearAxleOffset = info.GUIDELINE_PARA.rearspace;
@@ -891,7 +891,7 @@ void Calculator::SetGuideLineColor()
 	LineTex_height = 4;
 	for (int k = 0; k < (m_iGroupNum - 1); k++)
 	{
-		
+
 		for (int i = 0; i < 4; i++)
 		{
 			for (int j = 0; j < 4; j++)
@@ -931,6 +931,6 @@ void Calculator::SetGuideLineColor()
 
 
 }//namespace AGraphic
-}//namespace Adas 
+}//namespace Adas
 }//namespace AFramework
 }//namespace Harman
