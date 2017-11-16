@@ -1,0 +1,20 @@
+
+cmake_minimum_required(VERSION 2.6)
+
+PROJECT(AFOUNDATION C CXX)
+
+set(OUTPUT_DIR ${CMAKE_SOURCE_DIR})
+set(RE_BUILD_COMMAND make rebuild_cache)
+set(COMPILE_COMMAND make compile)
+
+#SET(CMAKE_SYSTEM_NAME Linux_OS)
+SET(GNU_FLAGS "-std=c++11 -fPIC -g -Wl,-O1 -Wl,--hash-style=gnu -Wl,--no-as-needed -lpthread")
+#SET(CMAKE_C_COMPILER   gcc)
+#SET(CMAKE_CXX_COMPILER g++)
+SET(CMAKE_C_FLAGS "${GNU_FLAGS} ")
+SET(CMAKE_CXX_FLAGS "${GNU_FLAGS} ")
+
+MESSAGE(STATUS "This is BINARY dir " ${PROJECT_BINARY_DIR})
+MESSAGE(STATUS "This is SOURCE dir " ${PROJECT_SOURCE_DIR})
+
+ADD_SUBDIRECTORY(src)

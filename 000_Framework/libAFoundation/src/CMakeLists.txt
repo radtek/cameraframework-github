@@ -1,11 +1,44 @@
-project (AFoundation)
-add_definitions("-Wl,--no-as-needed  -lpthread -std=c++11")
+
 add_definitions(-DLINUX_OS)
 
-SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/../lib/linux)
+AUX_SOURCE_DIRECTORY(. AFOUNDATION_SRC)
 
-MESSAGE(STATUS "This is lib AFoundation dir" ${PROJECT_SOURCE_DIR})
-include_directories(${PROJECT_SOURCE_DIR}/../include/)
-AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR} AFOUNDATION_SRC)
+MESSAGE(STATUS "HW Platform is " ${HW_PLATFORM})
 
-add_library(AFoundation SHARED ${AFOUNDATION_SRC})
+INCLUDE_DIRECTORIES(../include)
+
+MESSAGE(STATUS "This is lib AFoundation dir: " ${PROJECT_SOURCE_DIR})
+MESSAGE(STATUS "The src are: " ${AFOUNDATION})
+
+SET(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
+MESSAGE(STATUS "This is lib out dir " ${LIBRARY_OUTPUT_PATH})
+
+#add_library(AFoundation SHARED ${AFOUNDATION_SRC})
+#ADD_EXECUTABLE(testAGraphic ${AGRAPHIC_SRC})
+ADD_LIBRARY(AFoundation SHARED ${AFOUNDATION_SRC})
+ADD_LIBRARY(AFoundation_static STATIC ${AFOUNDATION_SRC})
+SET_TARGET_PROPERTIES(AFoundation_static PROPERTIES OUTPUT_NAME "AFoundation")
+
+#TARGET_LINK_LIBRARIES(testAGraphic libEGL.so)
+#TARGET_LINK_LIBRARIES(testAGraphic libGLESv2.so)
+#TARGET_LINK_LIBRARIES(testAGraphic libwayland-client.so)
+#TARGET_LINK_LIBRARIES(testAGraphic libwayland-egl.so)
+#TARGET_LINK_LIBRARIES(testAGraphic libpthread.so)
+#TARGET_LINK_LIBRARIES(testAGraphic libwayland-cursor.so)
+#TARGET_LINK_LIBRARIES(testAGraphic libilmControl.so)
+
+IF("${HW_PLATFORM}" STREQUAL "UBUNTU_OS")  
+	#SET(DESTINATION lib)
+	INSTALL(TARGETS AFoundation AFoundation_static
+		#RUNTIME DESTINATION bin
+		LIBRARY DESTINATION lib
+		ARCHIVE DESTINATION lib
+	)
+ELSEIF("${HW_PLATFORM}" STREQUAL "LINUX_OS") 
+	#SET(DESTINATION elina/2.0.2015143A/sysroots/corei7-64-elina-linux/usr)	
+	INSTALL(TARGETS AFoundation AFoundation_static
+		#RUNTIME DESTINATION bin
+		LIBRARY DESTINATION lib/ADAS
+		ARCHIVE DESTINATION lib/ADAS
+	)
+ENDIF()
