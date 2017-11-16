@@ -112,6 +112,12 @@ CAdasDisplay::~CAdasDisplay()
 		delete mdispalyInfo;
 		mdispalyInfo = NULL;
 	}
+	
+	if(NULL != mGuideLine)
+	{
+		delete mGuideLine;
+		mGuideLine = NULL;
+	}
 }
 
 Int32 CAdasDisplay::createDisplay()
