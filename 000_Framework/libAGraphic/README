@@ -1,14 +1,15 @@
+How to build AGraphic
 
 1. mkdir build
 2. cd build
 3. 
 	3.1 Ubuntu environment: you should modify wayland path if your wayland is not installed in /usr/lib
-	    cmake -DHW_PLATFORM=UBUNTU_OS ../
+	    cmake -DCMAKE_INSTALL_PREFIX=/usr -DHW_PLATFORM=UBUNTU_OS ../
 	3.2 embedded Linux:
 		source /workspace/harman/elina/2.0.2015143A/environment-setup-corei7-64-elina-linux
-	    cmake -DHW_PLATFORM=LINUX_OS ../
+	    cmake -DCMAKE_INSTALL_PREFIX=/workspace/harman/elina/2.0.2015143A/sysroots/corei7-64-elina-linux/usr -DHW_PLATFORM=LINUX_OS ../
 	3.3 other
 	    cmake ../
-4. make VERBOSE=1
+4. make VERBOSE=1;make install
 5. the library is at path build/lib/
 
