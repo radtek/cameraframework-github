@@ -88,6 +88,13 @@ V4L2CameraDriverProvider::V4L2CameraDriverProvider(const string& cameraName, eIo
         m_pPaint = new PaintImpl();
     }
 
+#ifdef _UBUNTU_
+    if (graphicptr==nullptr)
+    {
+       graphicptr=new CAdasGraphic();
+    }
+#endif
+
     ALOGD("provider for camera : %s,  DriverPath : %s\n", cameraName.c_str(), m_strDriverPath.c_str());
 }
 
@@ -116,6 +123,14 @@ V4L2CameraDriverProvider::~V4L2CameraDriverProvider()
         m_pPaint = nullptr;
     }
 
+#ifdef _UBUNTU_
+    if (graphicptr!=nullptr)
+    {
+        delete graphicptr;
+        graphicptr=nullptr;
+    }
+#endif
+    
     m_bIsStarted = FALSE;
 }
 
@@ -679,9 +694,14 @@ VOID V4L2CameraDriverProvider::Process_image(const VOID* p, Int32 size){
 VOID V4L2CameraDriverProvider::Display(VOID* p, Int32 width, Int32 height)
 {
 
+#ifndef _UBUNTU_
     m_pPaint->update(width, height, p);
     m_pPaint->draw();
     m_displaySample->Start();
+
+#else
+    graphicptr->showGuideLine(51,10);
+#endif
 
 }
 
@@ -806,10 +826,25 @@ VOID V4L2CameraDriverProvider::update()
     ALOGD("V4L2CameraDriverProvider::update\n");
 
     if(!m_bEglInitFlag) {
+       
+#ifndef _UBUNTU_
         m_displaySample->Init();
         m_pPaint->init();
+        
+#else
+        surfaceInfo.surfaceName = "GuideLine";
+        surfaceInfo.surfaceId = 51;
+        surfaceInfo.moduleType = MODULE_GUIDELINE;
+        surfaceInfo.bActiveEGL = TRUE;
+        surfaceInfo.viewPos.width = 1280;//width;
+        surfaceInfo.viewPos.height = 720;//height;
+        surfaceInfo.viewPos.viewPos.x = 0;
+        surfaceInfo.viewPos.viewPos.y = 0;
+        surfaceArry.push_back(surfaceInfo);
+        
+        graphicptr->createSurface(surfaceArry);
+#endif
         m_bEglInitFlag = TRUE;
-
     }
 
     if(!m_bIsStreamOff){

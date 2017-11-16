@@ -28,6 +28,11 @@
 #include "ADASManager/Camera/Display/DisplaySample.h"
 #include "ADASManager/Camera/Display/PaintImpl.h"
 
+#ifdef _UBUNTU_
+#include "AGraphic.h"
+using namespace Harman::Adas::AFramework::AGraphic;
+#endif
+
 //#define WRITE_FILE
 
 namespace Harman {
@@ -119,6 +124,14 @@ private:
 
     PaintImpl* m_pPaint = nullptr;
 
+#ifdef _UBUNTU_
+    CAdasGraphic* graphicptr=nullptr;
+    tsurfaceList surfaceArry;
+    tsurfaceInfo surfaceInfo;
+    trenderData renderData;
+    tbufInfo bufferInfo;
+#endif
+    
     //VOID* m_pBuffer = nullptr;
 
 #ifdef WRITE_FILE
