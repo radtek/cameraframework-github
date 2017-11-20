@@ -60,6 +60,8 @@ struct EGLInfo* CAdasEGL::EGLInitialize(VOID *display)
         EGL_ALPHA_SIZE, 8,
         EGL_DEPTH_SIZE, 24,
         EGL_STENCIL_SIZE, 8,
+        EGL_SAMPLE_BUFFERS, 1,
+        EGL_SAMPLES, 2,
         EGL_NONE };
 
 	EGLint major, minor, n, count, i, size;
