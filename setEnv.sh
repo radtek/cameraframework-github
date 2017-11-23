@@ -191,3 +191,20 @@ alias pushproject='pushadasdbus && pushadas'
 alias pushcamera='sudo scp $ADAS_ROOT_PATH/001_Project/001_GWMV2MH/camera/cameraStateTest root@$remoteIP://usr/bin/'
 
 alias pushall='pushlib && pushproject && pushcamera'
+
+remoteIPnlin="10.80.104.115"
+alias makeguideline='ftest && cd guideline && cm'
+
+alias npushfoundation='sudo scp $ADAS_ROOT_PATH/000_Framework/libAFoundation/lib/linux/libAFoundation.so root@$remoteIPnlin://usr/lib/'
+alias npushabase='sudo scp $ADAS_ROOT_PATH/000_Framework/libABase/lib/linux/libABase.so root@$remoteIPnlin://usr/lib/'
+alias npushgraphic='sudo scp $ADAS_ROOT_PATH/000_Framework/libAGraphic/lib/linux/libAGraphic.so root@$remoteIPnlin://usr/lib/'
+alias npushcaseclient='sudo scp $ADAS_ROOT_PATH/000_Framework/CaseClient/lib/linux/libACaseSocket.so root@$remoteIPnlin://usr/lib/'
+alias npushlib='npushfoundation && npushabase && npushgraphic && npushcaseclient'
+alias pushguideline='sudo scp $ADAS_ROOT_PATH/001_Project/001_GWMV2MH/guideline/GuideLineTest root@$remoteIPnlin://usr/bin/'
+
+alias cleanfoundation='foundation && mc'
+alias cleanabase='abase && mc'
+alias cleangraphic='graphic && mc'
+alias cleancaseclient='caseclient && mc'
+alias cleanlib='cleanfoundation && cleanabase && cleangraphic && cleancaseclient'
+alias cleanguideline='ftest && cd guideline && mc'
