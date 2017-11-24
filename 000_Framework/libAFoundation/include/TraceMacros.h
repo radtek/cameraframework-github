@@ -67,7 +67,7 @@
 //============================================================
 
 #ifndef _UBUNTU_
-#define DLTLOG
+//#define DLTLOG
 #endif
 
 //#define CASECLIENT_LOG

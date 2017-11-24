@@ -23,7 +23,7 @@
 ------------搭建开发环境----------------------
 1. 安装 sdk2
 下载： elina-oakland-glibc-x86_64-x86_64-toolchain-2.0.2015143A_9940_B1-sdk2.sh
-加可执行权限： chmod +x elina-oakland-glibc-x86_64-x86_64-toolchain-2.0.2015143A_9940_B1-sdk2.sh 
+加可执行权限： chmod +x elina-oakland-glibc-x86_64-x86_64-toolchain-2.0.2015143A_9940_B1-sdk2.sh
 运行脚本： ./elina-oakland-glibc-x86_64-x86_64-toolchain-2.0.2015143A_9940_B1-sdk2.sh （默认安装路径即可 /opt/elina/......）
 如何使用elina工具链： 进入安装好的目录 source environment-setup-corei7-64-elina-linux   （source 动作隶属此终端，另外打开终端需要重做此步骤）
 (参考： https://confluence.harman.com/confluence/display/GWMV2MH/Development+Environment+Setup+for+GWM+V2MH)
@@ -54,32 +54,51 @@ sudo chmod 777 elinaidelitelinux -R
    执行后的结果是： 1. 引入sdk2的工具链（也就是做了source environment-setup-corei7-64-elina-linux，无需再手动去做这件事）;
                    2. 加入命令：foundation foundationlib abase abaslib caseclient caseclientlib graphic graphiclib
                   pushfoundation pushabase pushcaseclient pushgraphic pushadasdbus pushadas c adas cmakeconfig project ftest publish
-  （c命令实现真正的清屏指令，不简单等同与clear命令;  
+                  makefoundation makeabase makecaseclient makegraphic makelib makecamera makeproject makeall
+                  pushlib pushproject pushcamera pushall
+  （c命令实现真正的清屏指令，不简单等同与clear命令;
     adas命令是在任何目录回到框架代码树的根目录，  【cameraframework】
-    project 命令是在任何目录回到 项目代码树的根目录， 【cpm_adas_adservice】
-    ftest 命令是在任何目录回到 测试代码，
+    project 命令是在任何目录回到 项目代码树的build目录， 【cpm_adas_adservice/build】
+    ftest 命令是在任何目录回到 测试代码， 【cameraframework/001_Project/001_GWMV2MH】
     publish 命令是在任何目录回到 框架发布树  【camfw_gwmv2】
     其他命令啥意思，一看setEnv.sh脚本的内容就知道）
 2. 终端执行 foundation 命令 ，会直接进入foundation的源码目录，执行make，会编译代码，生成 libAFoundation.so(如有提示请输入用户密码)
                                                             执行make clean，会删除生成的中间文件和动态库文件
                                                             执行 foundationlib，会直接跳转到 libAFoundation.so 所在的目录
+   makefoundation = foundation + make
+
 3. 终端执行 abase 命令 ，会直接进入abase的源码目录，执行make，会编译代码，生成 libABase.so(如有提示请输入用户密码)
                                                             执行make clean，会删除生成的中间文件和动态库文件
                                                             执行 abaselib，会直接跳转到 libABase.so 所在的目录
+    makeabase = abase + make
+
 4. 终端执行 caseclient 命令 ，会直接进入 caseclient 的源码目录，执行make，会编译代码，生成 libACaseSocket.so(如有提示请输入用户密码)
                                                             执行make clean，会删除生成的中间文件和动态库文件
                                                             执行 caseclientlib，会直接跳转到 libACaseSocket.so 所在的目录
+    makecaseclient = caseclient + make
+
 5. 终端执行 graphic 命令 ，会直接进入graphic的源码目录，执行make，会编译代码，生成 libAGraphic.so(如有提示请输入用户密码)
                                                             执行make clean，会删除生成的中间文件和动态库文件
                                                             执行 graphiclib，会直接跳转到 libAGraphic.so 所在的目录
+    makegraphic = graphic + make
+
 6. 编译测试代码
    执行命令 ftest
-   进入具体的某个test，执行make命令即可
+   进入具体的某个test，执行make命令即可  (编译camera快捷命令 makecamera)
 
 
-7. 把编译出来的so 上传到板子上，使用命令 pushfoundation pushabase pushcaseclient pushgraphic pushadasdbus pushadas
+快捷编译指令：
+   makelib = makefoundation + makeabase + makecaseclient + makegraphic
+   makeproject = 编译长城项目代码
+   makecamera = 编译camera的测试代码
+   makeall = 一键编译所有东西 = makelib + makeproject + makecamera
+
+
+7. 把编译出来的so 上传到板子上，使用命令 pushfoundation pushabase pushcaseclient pushgraphic pushadasdbus pushadas pushcamera
+   pushlib = pushfoundation pushabase pushcaseclient pushgraphic
+   pushproject = pushadasdbus pushadas
+   pushall = pushlib + pushproject + pushcamera
    前提，请选确保setEnv.sh中的板子的remoteIP地址是正确的，板子的ip隔一段时间会变一次，变了就得手动改这个remoteIP地址。 目前的值：remoteIP="10.80.105.55"
-   （根目录下有个脚本deploy_2_board.sh  执行一下可以把全部的so和binadas push到板子上）
 
 
 ------------框架发布树------根目录快捷指令 publish----------------
@@ -98,10 +117,12 @@ sudo chmod 777 elinaidelitelinux -R
    终端执行 project 命令 ，会直接进入项目代码树 的 build目录(cpm_adas_adservice/build  【build已经加入 .gitignore 不会被提交】)
 
    cmake -DELINA_LITE_DCIF_GENERATOR=/opt/elinaidelitelinux/elina -DCDEPL_PATH=/home/snow/Workspace/contracts-gwm/contracts-gwm-v2mh/packages/adas/ADAS.cdl -DCMAKE_SYSROOT=/opt/elina/2.0.2015143A/sysroots/corei7-64-elina-linux  ../         (简洁指令cmakeconfig， 前提是上面的路径参数都是对的，有自己的目录那么只能用长的命令 cmake ......)
-   make target (功能：先生成gen和src-gen目录（已经加入 .gitignore 不会被提交）），然后编译，结果是生成了两个文件：libadas-dbus.so 和 adas；  
+   make target (功能：先生成gen和src-gen目录（已经加入 .gitignore 不会被提交）），然后编译，结果是生成了两个文件：libadas-dbus.so 和 adas；
                       这里不能直接用make，make只是编译，并没有做生成代码的工作； make target = make generate + make)
    要clean ，只需要 在build目录下执行 rm -rf * 即可，再用前面的cmake ...（简洁指令cmakeconfig） , make target步骤重编就可以了
    如果接口没有变动，make target 只需要执行一次，以后clean动作不需要rm -rf *，再重新 make target。直接make clean 然后 make 就可有了。
+
+   一键编译长城代码 makeproject
 
 
 
@@ -110,8 +131,4 @@ sudo chmod 777 elinaidelitelinux -R
 例如 此次提交是修改了GPIO的代码，那么可以加上后缀，名字起成： cpm-gwm-v2mh-modifyGpio
 所以真正的下载命令可能变成：ssh://git@stash1.harman.com:7999/gwm_v2mh/cpm-gwm-v2mh-modifyGpio.git
 
-
-
-------------代码提交的完整流程----------------------
-待总结
 

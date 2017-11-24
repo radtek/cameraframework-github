@@ -18,7 +18,7 @@ using namespace std;
 #define CFG_PATH  "/usr/bin/pdcusr.cfg"
 
 typedef struct _planesData{
-	char* tex;
+	unsigned char* tex;
 	float* pBorderData;//two for vertex and two for TEXCOORD,so stride is 4
 	float* pArrayData;//two for vertex and two for TEXCOORD,so stride is 4
 	unsigned short* pBorderIndex;

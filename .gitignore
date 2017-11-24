@@ -2,6 +2,7 @@
 *.tlog
 000_Framework/libAGraphic/build
 000_Framework/CaseClient/src/SocketIPC/build
+001_Project/001_GWMV2MH/camera/cameraStateTest
 *.sdf
 *.suo
 *.ipch

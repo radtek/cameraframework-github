@@ -7,7 +7,7 @@
 #include <map>
 #include <queue>
 #include <utility>
-
+#include <assert.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -25,6 +25,9 @@ using std::vector;
 // namespace AFoundation {
 
 #define STRING_NULL     string("")
+
+#define ASSERT(x) assert(x);
+//#define ASSERT(x) ;
 
 #ifdef TRUE
 #undef	TRUE

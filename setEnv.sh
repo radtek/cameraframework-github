@@ -178,13 +178,13 @@ alias remote='ssh snow@10.80.105.179'
 
 #echo -n "snow" | sudo -S $(CP) -fv ../lib/linux/libAFoundation.so /opt/elina/2.0.2015143A/sysroots/corei7-64-elina-linux/lib/
 
-alias pushfoundation='sudo scp $ADAS_ROOT_PATH/000_Framework/libAFoundation/lib/linux/libAFoundation.so root@$remoteIP://usr/lib/adas/'
-alias pushabase='sudo scp $ADAS_ROOT_PATH/000_Framework/libABase/lib/linux/libABase.so root@$remoteIP://usr/lib/adas/'
-alias pushgraphic='sudo scp $ADAS_ROOT_PATH/000_Framework/libAGraphic/lib/linux/libAGraphic.so root@$remoteIP://usr/lib/adas/'
-alias pushcaseclient='sudo scp $ADAS_ROOT_PATH/000_Framework/CaseClient/lib/linux/libACaseSocket.so root@$remoteIP://usr/lib/adas/'
-alias pushlib='sudo scp $CMAKE_SYSROOT/usr/lib/adas/*.so root@$remoteIP://usr/lib/adas/'
+alias pushfoundation='sudo scp $ADAS_ROOT_PATH/000_Framework/libAFoundation/lib/linux/libAFoundation.so root@$remoteIP://usr/lib/adas/ && sudo scp $ADAS_ROOT_PATH/000_Framework/libAFoundation/lib/linux/libAFoundation.so root@$remoteIP://usr/lib/'
+alias pushabase='sudo scp $ADAS_ROOT_PATH/000_Framework/libABase/lib/linux/libABase.so root@$remoteIP://usr/lib/adas/ && sudo scp $ADAS_ROOT_PATH/000_Framework/libABase/lib/linux/libABase.so root@$remoteIP://usr/lib/'
+alias pushgraphic='sudo scp $ADAS_ROOT_PATH/000_Framework/libAGraphic/lib/linux/libAGraphic.so root@$remoteIP://usr/lib/adas/ && sudo scp $ADAS_ROOT_PATH/000_Framework/libAGraphic/lib/linux/libAGraphic.so root@$remoteIP://usr/lib/'
+alias pushcaseclient='sudo scp $ADAS_ROOT_PATH/000_Framework/CaseClient/lib/linux/libACaseSocket.so root@$remoteIP://usr/lib/adas/ && sudo scp $ADAS_ROOT_PATH/000_Framework/CaseClient/lib/linux/libACaseSocket.so root@$remoteIP://usr/lib/'
+alias pushlib='sudo scp $CMAKE_SYSROOT/usr/lib/adas/*.so root@$remoteIP://usr/lib/adas/ && sudo scp $CMAKE_SYSROOT/usr/lib/adas/*.so root@$remoteIP://usr/lib/'
 
-alias pushadasdbus='sudo scp $cpm_adas_adservice_PATH/build/gen/libadas-dbus.so root@$remoteIP://usr/lib/adas/'
+alias pushadasdbus='sudo scp $cpm_adas_adservice_PATH/build/gen/libadas-dbus.so root@$remoteIP://usr/lib/adas/ && sudo scp $cpm_adas_adservice_PATH/build/gen/libadas-dbus.so root@$remoteIP://usr/lib/'
 alias pushadas='sudo scp $cpm_adas_adservice_PATH/build/src/adas root@$remoteIP://usr/bin/'
 alias pushproject='pushadasdbus && pushadas'
 

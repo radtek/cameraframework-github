@@ -38,9 +38,6 @@ LIBS += wayland-cursor
 LIBS += GLESv2 EGL
 LIBS += ivi-application
 #LIBS += lodepng
-LIBS += ilmCommon
-LIBS += ilmClient
-LIBS += ilmControl
 LIBS += dlt
 LIBS += nanomsg
 
