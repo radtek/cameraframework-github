@@ -203,7 +203,7 @@ void CAdasEGL::EGLSwapBuffers(struct EGLInfo *egl)
 		return ;
 	}
 	
-	printf(" [%s, %d]  %p, %p\n", __FUNCTION__, __LINE__, egl->egl_disp, egl->egl_surf);
+	//printf(" [%s, %d]  %p, %p\n", __FUNCTION__, __LINE__, egl->egl_disp, egl->egl_surf);
 	ret = eglSwapBuffers(egl->egl_disp, egl->egl_surf);
     if(EGL_TRUE != ret) 
 	{
