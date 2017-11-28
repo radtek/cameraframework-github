@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <unistd.h> 
 #include "AGraphic.h"
 
 using namespace std;
@@ -29,7 +29,21 @@ int main()
     
     graphicptr->createSurface(surfaceArry);
 
-    graphicptr->showGuideLine(51,10);
+     while(1)
+    {
+        graphicptr->showGuideLine(51,10);
+        sleep(1);
+        graphicptr->hideGuideLine();
+        sleep(1);
+        graphicptr->showGuideLine(51,0);
+        sleep(1);
+        graphicptr->hideGuideLine();
+        sleep(1);
+        graphicptr->showGuideLine(51,-10);
+        sleep(1);
+        graphicptr->hideGuideLine();
+        sleep(1);
+    }
 
    
 
