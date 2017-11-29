@@ -81,9 +81,9 @@ Int32 CAdasGraphic::showGuideLine(UInt32 surfaceID, Float32 Angle)
 	return 0;
 }
 
-Int32 CAdasGraphic::hideGuideLine()
+Int32 CAdasGraphic::hideGuideLine(UInt32 surfaceID)
 {
-	mDisplay->hideGuideLine();
+	mDisplay->hideGuideLine(surfaceID);
 	
 	return 0;
 }

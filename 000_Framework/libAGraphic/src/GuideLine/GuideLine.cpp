@@ -118,12 +118,9 @@ void GuideLine::GuideLineRender(guidelineinfo infos)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-
 	for (int i = 0; i < 8; i++)
 	{
-
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, calpointer->LineTex_width, calpointer->LineTex_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, calpointer->pTexData[i]);
-
 		RenderGroupLines(i);
 	}
 	glDisableVertexAttribArray(VERTEX_ARRAY);
@@ -154,6 +151,7 @@ void GuideLine::GuideLineHide()
 	glEnableVertexAttribArray(TEXCOORD_ARRAY);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, calpointer->LineTex_width, calpointer->LineTex_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
 	RenderGroupLines(8);
 	glDisableVertexAttribArray(VERTEX_ARRAY);
 	glDisableVertexAttribArray(TEXCOORD_ARRAY);

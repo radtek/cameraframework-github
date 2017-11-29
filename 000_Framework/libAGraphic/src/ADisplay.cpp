@@ -382,7 +382,6 @@ Int32 CAdasDisplay::showGuideLine(UInt32 surfaceID, Float32 Angle)
 			auto itEGL = mEGLMap.find(surfaceID); 
 			if(itEGL != mEGLMap.end())  
 			{
-       			//cout<<"Find, the surface ID is " << itEGL->first <<": " << iter->surfaceName << endl;  
 			}
     		else  
 			{
@@ -404,9 +403,34 @@ Int32 CAdasDisplay::showGuideLine(UInt32 surfaceID, Float32 Angle)
 	return 0;
 }
 
-Int32 CAdasDisplay::hideGuideLine()
+Int32 CAdasDisplay::hideGuideLine(UInt32 surfaceID)
 {
-	mGuideLine->GuideLineHide();
+	for(vector<surface>::iterator iter=mdispalyInfo->surfaceList.begin(); iter!=mdispalyInfo->surfaceList.end(); iter++)
+	{
+		if(surfaceID == iter->surfaceID)
+		{
+			//find the special surfaceID's EGL object
+			auto itEGL = mEGLMap.find(surfaceID); 
+			if(itEGL != mEGLMap.end())  
+			{  
+			}
+    		else  
+			{
+       			cout<<"Do not Find surface ID " << itEGL->first << endl;
+				return -1;
+			}
+			
+			//switch to currnet EGL context
+			itEGL->second->EGLMakeCurrent(iter->eglInfo);
+
+			mGuideLine->GuideLineHide();
+			
+			//EGL swap buffer
+			mEGL->EGLSwapBuffers(iter->eglInfo);
+			
+			return 0;
+		}
+	}
 	return 0;
 }
 

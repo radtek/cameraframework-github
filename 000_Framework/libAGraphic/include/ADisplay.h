@@ -82,7 +82,7 @@ public:
 	Int32 destroySurface(UInt32 surfaceID);
 	Int32 Render(trenderData renderData);
 	Int32 showGuideLine(UInt32 surfaceID, Float32 Angle);
-	Int32 hideGuideLine();
+	Int32 hideGuideLine(UInt32 surfaceID);
 
 private:
 	CAdasEGL    	*mEGL;
