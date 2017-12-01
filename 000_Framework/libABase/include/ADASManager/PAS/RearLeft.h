@@ -2,8 +2,8 @@
 #ifndef __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_REARLEFT_H__
 #define __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_REARLEFT_H__
 
+#include "ADASManager/PAS/RadarSenser.h"
 #include "ADASManager/PAS/ColorBlock.h"
-#include "ADASManager/PAS/Area.h"
 
 namespace Harman {
 namespace Adas {
@@ -11,81 +11,78 @@ namespace AFramework {
 namespace ABase {
 namespace ADASManager {
 
-class RearLeft
+class RearLeft : public RadarSenser
 {
 public:
-    RearLeft(Area* area);
+    RearLeft(const string& radarSenserName, BYTE* hasCompoundedArea);
 
     virtual ~RearLeft();
-
-public:
-    vector<Area*> m_vRearLeftColorBlockArray;
 };
 
-class RearLeftDefault : public DecoratorArea , public ColorBlock
+class RearLeftDefault : public ColorBlock
 {
 public:
-    RearLeftDefault(const string& pngResourceFile, const BOOLEAN isCalculateValidErea);
+    RearLeftDefault(const string& pngResourceFile, BYTE* hasCompoundedArea);
 
     virtual void CompoundArea() override;
 
     virtual void DeCompoundArea() override;
 };
 
-class RearLeftOneStep : public DecoratorArea , public ColorBlock
+class RearLeftOneStep : public ColorBlock
 {
 public:
-    RearLeftOneStep(const string& pngResourceFile, const BOOLEAN isCalculateValidErea, Area* area);
+    RearLeftOneStep(const string& pngResourceFile, BYTE* hasCompoundedArea);
 
     virtual void CompoundArea() override;
 
     virtual void DeCompoundArea() override;
 };
 
-class RearLeftTwoStep : public DecoratorArea , public ColorBlock
+class RearLeftTwoStep : public ColorBlock
 {
 public:
-    RearLeftTwoStep(const string& pngResourceFile, const BOOLEAN isCalculateValidErea, Area* area);
+    RearLeftTwoStep(const string& pngResourceFile, BYTE* hasCompoundedArea);
 
     virtual void CompoundArea() override;
 
     virtual void DeCompoundArea() override;
 };
 
-class RearLeftThreeStep : public DecoratorArea , public ColorBlock
+class RearLeftThreeStep : public ColorBlock
 {
 public:
-    RearLeftThreeStep(const string& pngResourceFile, const BOOLEAN isCalculateValidErea, Area* area);
+    RearLeftThreeStep(const string& pngResourceFile, BYTE* hasCompoundedArea);
 
     virtual void CompoundArea() override;
 
     virtual void DeCompoundArea() override;
 };
 
-class RearLeftFourStep : public DecoratorArea , public ColorBlock
+class RearLeftFourStep : public ColorBlock
 {
 public:
-    RearLeftFourStep(const string& pngResourceFile, const BOOLEAN isCalculateValidErea, Area* area);
+    RearLeftFourStep(const string& pngResourceFile, BYTE* hasCompoundedArea);
 
     virtual void CompoundArea() override;
 
     virtual void DeCompoundArea() override;
 };
 
-class RearLeftFiveStep : public DecoratorArea , public ColorBlock
+class RearLeftFiveStep : public ColorBlock
 {
 public:
-    RearLeftFiveStep(const string& pngResourceFile, const BOOLEAN isCalculateValidErea, Area* area);
+    RearLeftFiveStep(const string& pngResourceFile, BYTE* hasCompoundedArea);
 
     virtual void CompoundArea() override;
 
     virtual void DeCompoundArea() override;
 };
 
-class RearLeftSixStep : public DecoratorArea , public ColorBlock
+class RearLeftSixStep : public ColorBlock
 {
 public:
-    RearLeftSixStep(const string& pngResourceFile, const BOOLEAN isCalculateValidErea, Area* area);
+    RearLeftSixStep(const string& pngResourceFile, BYTE* hasCompoundedArea);
 
     virtual void CompoundArea() override;
 

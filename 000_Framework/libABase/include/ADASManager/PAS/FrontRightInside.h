@@ -2,8 +2,8 @@
 #ifndef __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_FRONTRIGHTINSIDE_H__
 #define __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_FRONTRIGHTINSIDE_H__
 
+#include "ADASManager/PAS/RadarSenser.h"
 #include "ADASManager/PAS/ColorBlock.h"
-#include "ADASManager/PAS/Area.h"
 
 namespace Harman {
 namespace Adas {
@@ -11,41 +11,38 @@ namespace AFramework {
 namespace ABase {
 namespace ADASManager {
 
-class FrontRightInside
+class FrontRightInside : public RadarSenser
 {
 public:
-    FrontRightInside(Area* area);
+    FrontRightInside(const string& radarSenserName, BYTE* hasCompoundedArea);
 
     virtual ~FrontRightInside();
-
-public:
-    vector<Area*> m_vFrontRightInsideColorBlockArray;
 };
 
-class FrontRightInsideDefault : public DecoratorArea , public ColorBlock
+class FrontRightInsideDefault : public ColorBlock
 {
 public:
-    FrontRightInsideDefault(const string& pngResourceFile, const BOOLEAN isCalculateValidErea);
+    FrontRightInsideDefault(const string& pngResourceFile, BYTE* hasCompoundedArea);
 
     virtual void CompoundArea() override;
 
     virtual void DeCompoundArea() override;
 };
 
-class FrontRightInsideOneStep : public DecoratorArea , public ColorBlock
+class FrontRightInsideOneStep : public ColorBlock
 {
 public:
-    FrontRightInsideOneStep(const string& pngResourceFile, const BOOLEAN isCalculateValidErea, Area* area);
+    FrontRightInsideOneStep(const string& pngResourceFile, BYTE* hasCompoundedArea);
 
     virtual void CompoundArea() override;
 
     virtual void DeCompoundArea() override;
 };
 
-class FrontRightInsideTwoStep : public DecoratorArea , public ColorBlock
+class FrontRightInsideTwoStep : public ColorBlock
 {
 public:
-    FrontRightInsideTwoStep(const string& pngResourceFile, const BOOLEAN isCalculateValidErea, Area* area);
+    FrontRightInsideTwoStep(const string& pngResourceFile, BYTE* hasCompoundedArea);
 
     virtual void CompoundArea() override;
 

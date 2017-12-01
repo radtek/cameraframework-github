@@ -1,9 +1,14 @@
 
 #include "ADASManager/PAS/RearRight.h"
-#include "ADASManager/PAS/DefaultArea.h"
 #include "ADASManager/PAS/ResourcePngDefine.h"
 
-//#include "ADASManager/PAS/GraphicCore/PasUtils.h"
+#include "./Res/pdc_rear_right_0.h"
+#include "./Res/pdc_rear_right_1.h"
+#include "./Res/pdc_rear_right_2.h"
+#include "./Res/pdc_rear_right_3.h"
+#include "./Res/pdc_rear_right_4.h"
+#include "./Res/pdc_rear_right_5.h"
+#include "./Res/pdc_rear_right_6.h"
 
 namespace Harman {
 namespace Adas {
@@ -11,223 +16,184 @@ namespace AFramework {
 namespace ABase {
 namespace ADASManager {
 
-RearRight::RearRight(Area* area)
+RearRight::RearRight(const string& radarSenserName, BYTE* hasCompoundedArea)
+    : RadarSenser(radarSenserName)
 {
-    m_vRearRightColorBlockArray.push_back(((DefaultArea*)area)->m_pRearRightDefault);
-    m_vRearRightColorBlockArray.push_back(new RearRightOneStep(REAR_RIGHT_ONE_STEP, TRUE, ((DefaultArea*)area)->m_pRearRightDefault));
-    m_vRearRightColorBlockArray.push_back(new RearRightTwoStep(REAR_RIGHT_TWO_STEP, TRUE, ((DefaultArea*)area)->m_pRearRightDefault));
-    m_vRearRightColorBlockArray.push_back(new RearRightThreeStep(REAR_RIGHT_THREE_STEP, TRUE, ((DefaultArea*)area)->m_pRearRightDefault));
-    m_vRearRightColorBlockArray.push_back(new RearRightFourStep(REAR_RIGHT_FOUR_STEP, TRUE, ((DefaultArea*)area)->m_pRearRightDefault));
-    m_vRearRightColorBlockArray.push_back(new RearRightFiveStep(REAR_RIGHT_FIVE_STEP, TRUE, ((DefaultArea*)area)->m_pRearRightDefault));
-    m_vRearRightColorBlockArray.push_back(new RearRightSixStep(REAR_RIGHT_SIX_STEP, TRUE, ((DefaultArea*)area)->m_pRearRightDefault));
-
-    // IMAGEINFO imageinfo;
-    // imageinfo.height = 152;
-    // imageinfo.width = 228;
-    // imageinfo.image_size = 152*228*4;
-    // RearRightSixStep* tmp = (RearRightSixStep*)(m_vRearRightColorBlockArray[6]);
-    // ColorBlock* tmp2 = (ColorBlock*)tmp;
-    // PasUtils::SaveAsBmp("/usr/bin/snowback.bmp", (void*)(tmp2->m_pColorBlockBuffer), imageinfo);
+    m_vColorBlockArray.push_back(new RearRightDefault(REAR_RIGHT_DEFAULT, hasCompoundedArea));
+    m_vColorBlockArray.push_back(new RearRightOneStep(REAR_RIGHT_ONE_STEP, hasCompoundedArea));
+    m_vColorBlockArray.push_back(new RearRightTwoStep(REAR_RIGHT_TWO_STEP, hasCompoundedArea));
+    m_vColorBlockArray.push_back(new RearRightThreeStep(REAR_RIGHT_THREE_STEP, hasCompoundedArea));
+    m_vColorBlockArray.push_back(new RearRightFourStep(REAR_RIGHT_FOUR_STEP, hasCompoundedArea));
+    m_vColorBlockArray.push_back(new RearRightFiveStep(REAR_RIGHT_FIVE_STEP, hasCompoundedArea));
+    m_vColorBlockArray.push_back(new RearRightSixStep(REAR_RIGHT_SIX_STEP, hasCompoundedArea));
 }
 
 RearRight::~RearRight()
 {
-    for(auto val : m_vRearRightColorBlockArray) {
-        delete ((ColorBlock*)val);
+    for(auto val : m_vColorBlockArray) {
+        delete val;
     }
 }
 
-RearRightDefault::RearRightDefault(const string& pngResourceFile, const BOOLEAN isCalculateValidErea)
-    : ColorBlock(pngResourceFile, isCalculateValidErea)
-    , DecoratorArea(nullptr)
+RearRightDefault::RearRightDefault(const string& pngResourceFile, BYTE* hasCompoundedArea)
+    : ColorBlock(pngResourceFile)
 {
+    m_uiLength = pdc_rear_right_0PngResource.length;
+    m_uiWidth = pdc_rear_right_0PngResource.width;
+    m_uiHight = pdc_rear_right_0PngResource.hight;
+    m_ValidDataArea.beginIndex =  pdc_rear_right_0PngResource.beginIndex;
+    m_ValidDataArea.endIndex = pdc_rear_right_0PngResource.endIndex;
+    m_pColorBlockBuffer = pdc_rear_right_0PngResource.uClsinfo;
+
+    m_HasCompoundedAreaHolder = hasCompoundedArea;
 }
 
 void RearRightDefault::CompoundArea()
 {
-    for(UInt32 k = m_ValidDataArea.beginIndex; k <= m_ValidDataArea.endIndex;){
-        if(m_pColorBlockBuffer[k+3] != 0)
-        {
-            m_pHasCompoundedArea[k] =  m_pColorBlockBuffer[k];
-            m_pHasCompoundedArea[k+1] =  m_pColorBlockBuffer[k+1];
-            m_pHasCompoundedArea[k+2] =  m_pColorBlockBuffer[k+2];
-            m_pHasCompoundedArea[k+3] =  m_pColorBlockBuffer[k+3];
-        }
-        k = k+4;
-    }
+    ColorBlock::CompoundArea();
 }
 
 void RearRightDefault::DeCompoundArea()
 {
-
+    ColorBlock::DeCompoundArea();
 }
 
-RearRightOneStep::RearRightOneStep(const string& pngResourceFile, const BOOLEAN isCalculateValidErea, Area* area)
-    : ColorBlock(pngResourceFile, isCalculateValidErea)
-    , DecoratorArea(area)
+RearRightOneStep::RearRightOneStep(const string& pngResourceFile, BYTE* hasCompoundedArea)
+    : ColorBlock(pngResourceFile)
 {
+    m_uiLength = pdc_rear_right_1PngResource.length;
+    m_uiWidth = pdc_rear_right_1PngResource.width;
+    m_uiHight = pdc_rear_right_1PngResource.hight;
+    m_ValidDataArea.beginIndex =  pdc_rear_right_1PngResource.beginIndex;
+    m_ValidDataArea.endIndex = pdc_rear_right_1PngResource.endIndex;
+    m_pColorBlockBuffer = pdc_rear_right_1PngResource.uClsinfo;
 
+    m_HasCompoundedAreaHolder = hasCompoundedArea;
 }
 
 void RearRightOneStep::CompoundArea()
 {
-    m_pArea->CompoundArea();
-
-    for(UInt32 k = m_ValidDataArea.beginIndex; k <= m_ValidDataArea.endIndex;){
-        if(m_pColorBlockBuffer[k+3] != 0)
-        {
-            m_pHasCompoundedArea[k] =  m_pColorBlockBuffer[k];
-            m_pHasCompoundedArea[k+1] =  m_pColorBlockBuffer[k+1];
-            m_pHasCompoundedArea[k+2] =  m_pColorBlockBuffer[k+2];
-            m_pHasCompoundedArea[k+3] =  m_pColorBlockBuffer[k+3];
-        }
-        k = k+4;
-    }
+    ColorBlock::CompoundArea();
 }
 
 void RearRightOneStep::DeCompoundArea()
 {
-
+    ColorBlock::DeCompoundArea();
 }
 
-RearRightTwoStep::RearRightTwoStep(const string& pngResourceFile, const BOOLEAN isCalculateValidErea, Area* area)
-    : ColorBlock(pngResourceFile, isCalculateValidErea)
-    , DecoratorArea(area)
+RearRightTwoStep::RearRightTwoStep(const string& pngResourceFile, BYTE* hasCompoundedArea)
+    : ColorBlock(pngResourceFile)
 {
+    m_uiLength = pdc_rear_right_2PngResource.length;
+    m_uiWidth = pdc_rear_right_2PngResource.width;
+    m_uiHight = pdc_rear_right_2PngResource.hight;
+    m_ValidDataArea.beginIndex =  pdc_rear_right_2PngResource.beginIndex;
+    m_ValidDataArea.endIndex = pdc_rear_right_2PngResource.endIndex;
+    m_pColorBlockBuffer = pdc_rear_right_2PngResource.uClsinfo;
 
+    m_HasCompoundedAreaHolder = hasCompoundedArea;
 }
 
 void RearRightTwoStep::CompoundArea()
 {
-    m_pArea->CompoundArea();
-
-    for(UInt32 k = m_ValidDataArea.beginIndex; k <= m_ValidDataArea.endIndex;){
-        if(m_pColorBlockBuffer[k+3] != 0)
-        {
-            m_pHasCompoundedArea[k] =  m_pColorBlockBuffer[k];
-            m_pHasCompoundedArea[k+1] =  m_pColorBlockBuffer[k+1];
-            m_pHasCompoundedArea[k+2] =  m_pColorBlockBuffer[k+2];
-            m_pHasCompoundedArea[k+3] =  m_pColorBlockBuffer[k+3];
-        }
-        k = k+4;
-    }
+    ColorBlock::CompoundArea();
 }
 
 void RearRightTwoStep::DeCompoundArea()
 {
-
+    ColorBlock::DeCompoundArea();
 }
 
-RearRightThreeStep::RearRightThreeStep(const string& pngResourceFile, const BOOLEAN isCalculateValidErea, Area* area)
-    : ColorBlock(pngResourceFile, isCalculateValidErea)
-    , DecoratorArea(area)
+RearRightThreeStep::RearRightThreeStep(const string& pngResourceFile, BYTE* hasCompoundedArea)
+    : ColorBlock(pngResourceFile)
 {
+    m_uiLength = pdc_rear_right_3PngResource.length;
+    m_uiWidth = pdc_rear_right_3PngResource.width;
+    m_uiHight = pdc_rear_right_3PngResource.hight;
+    m_ValidDataArea.beginIndex =  pdc_rear_right_3PngResource.beginIndex;
+    m_ValidDataArea.endIndex = pdc_rear_right_3PngResource.endIndex;
+    m_pColorBlockBuffer = pdc_rear_right_3PngResource.uClsinfo;
 
+    m_HasCompoundedAreaHolder = hasCompoundedArea;
 }
 
 void RearRightThreeStep::CompoundArea()
 {
-    m_pArea->CompoundArea();
-
-    for(UInt32 k = m_ValidDataArea.beginIndex; k <= m_ValidDataArea.endIndex;){
-        if(m_pColorBlockBuffer[k+3] != 0)
-        {
-            m_pHasCompoundedArea[k] =  m_pColorBlockBuffer[k];
-            m_pHasCompoundedArea[k+1] =  m_pColorBlockBuffer[k+1];
-            m_pHasCompoundedArea[k+2] =  m_pColorBlockBuffer[k+2];
-            m_pHasCompoundedArea[k+3] =  m_pColorBlockBuffer[k+3];
-        }
-        k = k+4;
-    }
+    ColorBlock::CompoundArea();
 }
 
 void RearRightThreeStep::DeCompoundArea()
 {
-
+    ColorBlock::DeCompoundArea();
 }
 
-RearRightFourStep::RearRightFourStep(const string& pngResourceFile, const BOOLEAN isCalculateValidErea, Area* area)
-    : ColorBlock(pngResourceFile, isCalculateValidErea)
-    , DecoratorArea(area)
+RearRightFourStep::RearRightFourStep(const string& pngResourceFile, BYTE* hasCompoundedArea)
+    : ColorBlock(pngResourceFile)
 {
+    m_uiLength = pdc_rear_right_4PngResource.length;
+    m_uiWidth = pdc_rear_right_4PngResource.width;
+    m_uiHight = pdc_rear_right_4PngResource.hight;
+    m_ValidDataArea.beginIndex =  pdc_rear_right_4PngResource.beginIndex;
+    m_ValidDataArea.endIndex = pdc_rear_right_4PngResource.endIndex;
+    m_pColorBlockBuffer = pdc_rear_right_4PngResource.uClsinfo;
 
+    m_HasCompoundedAreaHolder = hasCompoundedArea;
 }
 
 void RearRightFourStep::CompoundArea()
 {
-    m_pArea->CompoundArea();
-
-    for(UInt32 k = m_ValidDataArea.beginIndex; k <= m_ValidDataArea.endIndex;){
-        if(m_pColorBlockBuffer[k+3] != 0)
-        {
-            m_pHasCompoundedArea[k] =  m_pColorBlockBuffer[k];
-            m_pHasCompoundedArea[k+1] =  m_pColorBlockBuffer[k+1];
-            m_pHasCompoundedArea[k+2] =  m_pColorBlockBuffer[k+2];
-            m_pHasCompoundedArea[k+3] =  m_pColorBlockBuffer[k+3];
-        }
-        k = k+4;
-    }
+    ColorBlock::CompoundArea();
 }
 
 void RearRightFourStep::DeCompoundArea()
 {
-
+    ColorBlock::DeCompoundArea();
 }
 
-RearRightFiveStep::RearRightFiveStep(const string& pngResourceFile, const BOOLEAN isCalculateValidErea, Area* area)
-    : ColorBlock(pngResourceFile, isCalculateValidErea)
-    , DecoratorArea(area)
+RearRightFiveStep::RearRightFiveStep(const string& pngResourceFile, BYTE* hasCompoundedArea)
+    : ColorBlock(pngResourceFile)
 {
+    m_uiLength = pdc_rear_right_5PngResource.length;
+    m_uiWidth = pdc_rear_right_5PngResource.width;
+    m_uiHight = pdc_rear_right_5PngResource.hight;
+    m_ValidDataArea.beginIndex =  pdc_rear_right_5PngResource.beginIndex;
+    m_ValidDataArea.endIndex = pdc_rear_right_5PngResource.endIndex;
+    m_pColorBlockBuffer = pdc_rear_right_5PngResource.uClsinfo;
 
+    m_HasCompoundedAreaHolder = hasCompoundedArea;
 }
 
 void RearRightFiveStep::CompoundArea()
 {
-    m_pArea->CompoundArea();
-
-    for(UInt32 k = m_ValidDataArea.beginIndex; k <= m_ValidDataArea.endIndex;){
-        if(m_pColorBlockBuffer[k+3] != 0)
-        {
-            m_pHasCompoundedArea[k] =  m_pColorBlockBuffer[k];
-            m_pHasCompoundedArea[k+1] =  m_pColorBlockBuffer[k+1];
-            m_pHasCompoundedArea[k+2] =  m_pColorBlockBuffer[k+2];
-            m_pHasCompoundedArea[k+3] =  m_pColorBlockBuffer[k+3];
-        }
-        k = k+4;
-    }
+    ColorBlock::CompoundArea();
 }
 
 void RearRightFiveStep::DeCompoundArea()
 {
-
+    ColorBlock::DeCompoundArea();
 }
 
-RearRightSixStep::RearRightSixStep(const string& pngResourceFile, const BOOLEAN isCalculateValidErea, Area* area)
-    : ColorBlock(pngResourceFile, isCalculateValidErea)
-    , DecoratorArea(area)
+RearRightSixStep::RearRightSixStep(const string& pngResourceFile, BYTE* hasCompoundedArea)
+    : ColorBlock(pngResourceFile)
 {
+    m_uiLength = pdc_rear_right_6PngResource.length;
+    m_uiWidth = pdc_rear_right_6PngResource.width;
+    m_uiHight = pdc_rear_right_6PngResource.hight;
+    m_ValidDataArea.beginIndex =  pdc_rear_right_6PngResource.beginIndex;
+    m_ValidDataArea.endIndex = pdc_rear_right_6PngResource.endIndex;
+    m_pColorBlockBuffer = pdc_rear_right_6PngResource.uClsinfo;
 
+    m_HasCompoundedAreaHolder = hasCompoundedArea;
 }
 
 void RearRightSixStep::CompoundArea()
 {
-    m_pArea->CompoundArea();
-
-    for(UInt32 k = m_ValidDataArea.beginIndex; k <= m_ValidDataArea.endIndex;){
-        if(m_pColorBlockBuffer[k+3] != 0)
-        {
-            m_pHasCompoundedArea[k] =  m_pColorBlockBuffer[k];
-            m_pHasCompoundedArea[k+1] =  m_pColorBlockBuffer[k+1];
-            m_pHasCompoundedArea[k+2] =  m_pColorBlockBuffer[k+2];
-            m_pHasCompoundedArea[k+3] =  m_pColorBlockBuffer[k+3];
-        }
-        k = k+4;
-    }
+    ColorBlock::CompoundArea();
 }
 
 void RearRightSixStep::DeCompoundArea()
 {
-
+    ColorBlock::DeCompoundArea();
 }
 
 } // namespace ADASManager

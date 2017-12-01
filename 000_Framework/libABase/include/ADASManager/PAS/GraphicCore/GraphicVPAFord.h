@@ -46,10 +46,6 @@ private:
     trenderData renderData1;
 
     tsurfaceList surfaceArry;
-
-    unsigned char *buffer1 = nullptr;
-    unsigned char *buffer3 = nullptr;
-
 };
 
 } // namespace ADASManager

@@ -2,8 +2,8 @@
 #ifndef __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_REARRIGHTINSIDE_H__
 #define __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_REARRIGHTINSIDE_H__
 
+#include "ADASManager/PAS/RadarSenser.h"
 #include "ADASManager/PAS/ColorBlock.h"
-#include "ADASManager/PAS/Area.h"
 
 namespace Harman {
 namespace Adas {
@@ -11,51 +11,48 @@ namespace AFramework {
 namespace ABase {
 namespace ADASManager {
 
-class RearRightInside
+class RearRightInside : public RadarSenser
 {
 public:
-    RearRightInside(Area* area);
+    RearRightInside(const string& radarSenserName, BYTE* hasCompoundedArea);
 
     virtual ~RearRightInside();
-
-public:
-    vector<Area*> m_vRearRightInsideColorBlockArray;
 };
 
-class RearRightInsideDefault : public DecoratorArea , public ColorBlock
+class RearRightInsideDefault : public ColorBlock
 {
 public:
-    RearRightInsideDefault(const string& pngResourceFile, const BOOLEAN isCalculateValidErea);
+    RearRightInsideDefault(const string& pngResourceFile, BYTE* hasCompoundedArea);
 
     virtual void CompoundArea() override;
 
     virtual void DeCompoundArea() override;
 };
 
-class RearRightInsideOneStep : public DecoratorArea , public ColorBlock
+class RearRightInsideOneStep : public ColorBlock
 {
 public:
-    RearRightInsideOneStep(const string& pngResourceFile, const BOOLEAN isCalculateValidErea, Area* area);
+    RearRightInsideOneStep(const string& pngResourceFile, BYTE* hasCompoundedArea);
 
     virtual void CompoundArea() override;
 
     virtual void DeCompoundArea() override;
 };
 
-class RearRightInsideTwoStep : public DecoratorArea , public ColorBlock
+class RearRightInsideTwoStep : public ColorBlock
 {
 public:
-    RearRightInsideTwoStep(const string& pngResourceFile, const BOOLEAN isCalculateValidErea, Area* area);
+    RearRightInsideTwoStep(const string& pngResourceFile, BYTE* hasCompoundedArea);
 
     virtual void CompoundArea() override;
 
     virtual void DeCompoundArea() override;
 };
 
-class RearRightInsideThreeStep : public DecoratorArea , public ColorBlock
+class RearRightInsideThreeStep : public ColorBlock
 {
 public:
-    RearRightInsideThreeStep(const string& pngResourceFile, const BOOLEAN isCalculateValidErea, Area* area);
+    RearRightInsideThreeStep(const string& pngResourceFile, BYTE* hasCompoundedArea);
 
     virtual void CompoundArea() override;
 

@@ -2,17 +2,8 @@
 #ifndef __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_PASMANAGER_H__
 #define __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_PASMANAGER_H__
 
-#include "ADASManager/PAS/FrontLeftInside.h"
-#include "ADASManager/PAS/FrontLeft.h"
-#include "ADASManager/PAS/FrontRight.h"
-#include "ADASManager/PAS/FrontRightInside.h"
-
-#include "ADASManager/PAS/RearLeftInside.h"
-#include "ADASManager/PAS/RearLeft.h"
-#include "ADASManager/PAS/RearRight.h"
-#include "ADASManager/PAS/RearRightInside.h"
-
-#include "ADASManager/PAS/DefaultArea.h"
+#include "ADASManager/PAS/RadarSenser.h"
+#include "ADASManager/PAS/ColorBlock.h"
 
 namespace Harman {
 namespace Adas {
@@ -36,19 +27,25 @@ private:
     PasManager();
 
 public:
-    FrontLeftInside* m_pFrontLeftInside = nullptr;
-    FrontLeft* m_pFrontLeft = nullptr;
-    FrontRight* m_pFrontRight = nullptr;
-    FrontRightInside* m_pFrontRightInside = nullptr;
+    RadarSenser* m_pFrontLeftInside = nullptr;
+    RadarSenser* m_pFrontLeft = nullptr;
+    RadarSenser* m_pFrontRight = nullptr;
+    RadarSenser* m_pFrontRightInside = nullptr;
 
-    RearLeftInside* m_pRearLeftInside = nullptr;
-    RearLeft* m_pRearLeft = nullptr;
-    RearRight* m_pRearRight = nullptr;
-    RearRightInside* m_pRearRightInside = nullptr;
+    RadarSenser* m_pRearLeftInside = nullptr;
+    RadarSenser* m_pRearLeft = nullptr;
+    RadarSenser* m_pRearRight = nullptr;
+    RadarSenser* m_pRearRightInside = nullptr;
 
-    DefaultArea* m_pDefaultArea = nullptr;
+    ColorBlock* m_pCar = nullptr;
 
     static PasManager* m_pInstance;
+
+    static BYTE* m_pHasCompoundedArea;
+
+    static BYTE* m_pHasCompoundedBackGround;
+
+    static BYTE* m_pCarBuffer;
 };
 
 } // namespace ADASManager

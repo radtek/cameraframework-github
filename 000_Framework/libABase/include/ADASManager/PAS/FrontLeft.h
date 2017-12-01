@@ -2,8 +2,8 @@
 #ifndef __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_FRONTLEFT_H__
 #define __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_FRONTLEFT_H__
 
+#include "ADASManager/PAS/RadarSenser.h"
 #include "ADASManager/PAS/ColorBlock.h"
-#include "ADASManager/PAS/Area.h"
 
 namespace Harman {
 namespace Adas {
@@ -11,51 +11,48 @@ namespace AFramework {
 namespace ABase {
 namespace ADASManager {
 
-class FrontLeft
+class FrontLeft : public RadarSenser
 {
 public:
-    FrontLeft(Area* area);
+    FrontLeft(const string& radarSenserName, BYTE* hasCompoundedArea);
 
     virtual ~FrontLeft();
-
-public:
-    vector<Area*> m_vFrontLeftColorBlockArray;
 };
 
-class FrontLeftDefault : public DecoratorArea , public ColorBlock
+class FrontLeftDefault : public ColorBlock
 {
 public:
-    FrontLeftDefault(const string& pngResourceFile, const BOOLEAN isCalculateValidErea);
+    FrontLeftDefault(const string& pngResourceFile, BYTE* hasCompoundedArea);
 
     virtual void CompoundArea() override;
 
     virtual void DeCompoundArea() override;
 };
 
-class FrontLeftOneStep : public DecoratorArea , public ColorBlock
+class FrontLeftOneStep : public ColorBlock
 {
 public:
-    FrontLeftOneStep(const string& pngResourceFile, const BOOLEAN isCalculateValidErea, Area* area);
+    FrontLeftOneStep(const string& pngResourceFile, BYTE* hasCompoundedArea);
 
     virtual void CompoundArea() override;
 
     virtual void DeCompoundArea() override;
 };
 
-class FrontLeftTwoStep : public DecoratorArea , public ColorBlock
+class FrontLeftTwoStep : public ColorBlock
 {
 public:
-    FrontLeftTwoStep(const string& pngResourceFile, const BOOLEAN isCalculateValidErea, Area* area);
+    FrontLeftTwoStep(const string& pngResourceFile, BYTE* hasCompoundedArea);
 
     virtual void CompoundArea() override;
 
     virtual void DeCompoundArea() override;
 };
 
-class FrontLeftThreeStep : public DecoratorArea , public ColorBlock
+class FrontLeftThreeStep : public ColorBlock
 {
 public:
-    FrontLeftThreeStep(const string& pngResourceFile, const BOOLEAN isCalculateValidErea, Area* area);
+    FrontLeftThreeStep(const string& pngResourceFile, BYTE* hasCompoundedArea);
 
     virtual void CompoundArea() override;
 

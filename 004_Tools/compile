@@ -1,0 +1,8 @@
+
+g++ LoadPng.cpp lodepng.cpp -o LoadPng
+
+g++ Res2Cpp.cpp -o Res2Cpp
+
+
+
+
