@@ -37,7 +37,7 @@ RearLeftInsideDefault::RearLeftInsideDefault(const string& pngResourceFile, BYTE
     m_uiHight = pdc_rear_left_inside_0PngResource.hight;
     m_ValidDataArea.beginIndex =  pdc_rear_left_inside_0PngResource.beginIndex;
     m_ValidDataArea.endIndex = pdc_rear_left_inside_0PngResource.endIndex;
-    m_pColorBlockBuffer = pdc_rear_left_inside_0PngResource.uClsinfo;
+    m_pColorBlockBuffer = const_cast<BYTE*>(pdc_rear_left_inside_0PngResource.uClsinfo);
 
     m_HasCompoundedAreaHolder = hasCompoundedArea;
 }
@@ -60,7 +60,7 @@ RearLeftInsideOneStep::RearLeftInsideOneStep(const string& pngResourceFile, BYTE
     m_uiHight = pdc_rear_left_inside_1PngResource.hight;
     m_ValidDataArea.beginIndex =  pdc_rear_left_inside_1PngResource.beginIndex;
     m_ValidDataArea.endIndex = pdc_rear_left_inside_1PngResource.endIndex;
-    m_pColorBlockBuffer = pdc_rear_left_inside_1PngResource.uClsinfo;
+    m_pColorBlockBuffer = const_cast<BYTE*>(pdc_rear_left_inside_1PngResource.uClsinfo);
 
     m_HasCompoundedAreaHolder = hasCompoundedArea;
 }
@@ -83,7 +83,7 @@ RearLeftInsideTwoStep::RearLeftInsideTwoStep(const string& pngResourceFile, BYTE
     m_uiHight = pdc_rear_left_inside_2PngResource.hight;
     m_ValidDataArea.beginIndex =  pdc_rear_left_inside_2PngResource.beginIndex;
     m_ValidDataArea.endIndex = pdc_rear_left_inside_2PngResource.endIndex;
-    m_pColorBlockBuffer = pdc_rear_left_inside_2PngResource.uClsinfo;
+    m_pColorBlockBuffer = const_cast<BYTE*>(pdc_rear_left_inside_2PngResource.uClsinfo);
 
     m_HasCompoundedAreaHolder = hasCompoundedArea;
 }
@@ -106,7 +106,7 @@ RearLeftInsideThreeStep::RearLeftInsideThreeStep(const string& pngResourceFile, 
     m_uiHight = pdc_rear_left_inside_3PngResource.hight;
     m_ValidDataArea.beginIndex =  pdc_rear_left_inside_3PngResource.beginIndex;
     m_ValidDataArea.endIndex = pdc_rear_left_inside_3PngResource.endIndex;
-    m_pColorBlockBuffer = pdc_rear_left_inside_3PngResource.uClsinfo;
+    m_pColorBlockBuffer = const_cast<BYTE*>(pdc_rear_left_inside_3PngResource.uClsinfo);
 
     m_HasCompoundedAreaHolder = hasCompoundedArea;
 }

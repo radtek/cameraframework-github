@@ -4,7 +4,7 @@ SUBDIRS=$(shell ls -l | grep ^d | awk '{if($$9 == "Res" || $$9 == "GraphicCore")
 CUR_SOURCE=${wildcard *.cpp}
 CUR_OBJS=${patsubst %.cpp, %.o, $(CUR_SOURCE)}
 
-CFLAGS += -fpermissive
+#CFLAGS += -fpermissive
 
 all:$(SUBDIRS) $(CUR_OBJS)
 $(SUBDIRS):ECHO

@@ -37,7 +37,7 @@ FrontLeftDefault::FrontLeftDefault(const string& pngResourceFile, BYTE* hasCompo
     m_uiHight = pdc_front_left_0PngResource.hight;
     m_ValidDataArea.beginIndex =  pdc_front_left_0PngResource.beginIndex;
     m_ValidDataArea.endIndex = pdc_front_left_0PngResource.endIndex;
-    m_pColorBlockBuffer = pdc_front_left_0PngResource.uClsinfo;
+    m_pColorBlockBuffer = const_cast<BYTE*>(pdc_front_left_0PngResource.uClsinfo);
 
     m_HasCompoundedAreaHolder = hasCompoundedArea;
 }
@@ -60,7 +60,7 @@ FrontLeftOneStep::FrontLeftOneStep(const string& pngResourceFile, BYTE* hasCompo
     m_uiHight = pdc_front_left_1PngResource.hight;
     m_ValidDataArea.beginIndex =  pdc_front_left_1PngResource.beginIndex;
     m_ValidDataArea.endIndex = pdc_front_left_1PngResource.endIndex;
-    m_pColorBlockBuffer = pdc_front_left_1PngResource.uClsinfo;
+    m_pColorBlockBuffer = const_cast<BYTE*>(pdc_front_left_1PngResource.uClsinfo);
 
     m_HasCompoundedAreaHolder = hasCompoundedArea;
 }
@@ -83,7 +83,7 @@ FrontLeftTwoStep::FrontLeftTwoStep(const string& pngResourceFile, BYTE* hasCompo
     m_uiHight = pdc_front_left_2PngResource.hight;
     m_ValidDataArea.beginIndex =  pdc_front_left_2PngResource.beginIndex;
     m_ValidDataArea.endIndex = pdc_front_left_2PngResource.endIndex;
-    m_pColorBlockBuffer = pdc_front_left_2PngResource.uClsinfo;
+    m_pColorBlockBuffer = const_cast<BYTE*>(pdc_front_left_2PngResource.uClsinfo);
 
     m_HasCompoundedAreaHolder = hasCompoundedArea;
 }
@@ -106,7 +106,7 @@ FrontLeftThreeStep::FrontLeftThreeStep(const string& pngResourceFile, BYTE* hasC
     m_uiHight = pdc_front_left_3PngResource.hight;
     m_ValidDataArea.beginIndex =  pdc_front_left_3PngResource.beginIndex;
     m_ValidDataArea.endIndex = pdc_front_left_3PngResource.endIndex;
-    m_pColorBlockBuffer = pdc_front_left_3PngResource.uClsinfo;
+    m_pColorBlockBuffer = const_cast<BYTE*>(pdc_front_left_3PngResource.uClsinfo);
 
     m_HasCompoundedAreaHolder = hasCompoundedArea;
 }

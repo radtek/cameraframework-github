@@ -28,7 +28,7 @@ Car::Car(const string& pngResourceFile, BYTE* carBuffer)
     m_uiHight = pdc_fiestaPngResource.hight;
     m_ValidDataArea.beginIndex =  pdc_fiestaPngResource.beginIndex;
     m_ValidDataArea.endIndex = pdc_fiestaPngResource.endIndex;
-    m_pColorBlockBuffer = pdc_fiestaPngResource.uClsinfo;
+    m_pColorBlockBuffer = const_cast<BYTE*>(pdc_fiestaPngResource.uClsinfo);
 
     m_HasCompoundedAreaHolder = carBuffer;
 }

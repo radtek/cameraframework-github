@@ -35,7 +35,7 @@ FrontRightInsideDefault::FrontRightInsideDefault(const string& pngResourceFile, 
     m_uiHight = pdc_front_right_inside_0PngResource.hight;
     m_ValidDataArea.beginIndex =  pdc_front_right_inside_0PngResource.beginIndex;
     m_ValidDataArea.endIndex = pdc_front_right_inside_0PngResource.endIndex;
-    m_pColorBlockBuffer = pdc_front_right_inside_0PngResource.uClsinfo;
+    m_pColorBlockBuffer = const_cast<BYTE*>(pdc_front_right_inside_0PngResource.uClsinfo);
 
     m_HasCompoundedAreaHolder = hasCompoundedArea;
 }
@@ -58,7 +58,7 @@ FrontRightInsideOneStep::FrontRightInsideOneStep(const string& pngResourceFile, 
     m_uiHight = pdc_front_right_inside_1PngResource.hight;
     m_ValidDataArea.beginIndex =  pdc_front_right_inside_1PngResource.beginIndex;
     m_ValidDataArea.endIndex = pdc_front_right_inside_1PngResource.endIndex;
-    m_pColorBlockBuffer = pdc_front_right_inside_1PngResource.uClsinfo;
+    m_pColorBlockBuffer = const_cast<BYTE*>(pdc_front_right_inside_1PngResource.uClsinfo);
 
     m_HasCompoundedAreaHolder = hasCompoundedArea;
 }
@@ -81,7 +81,7 @@ FrontRightInsideTwoStep::FrontRightInsideTwoStep(const string& pngResourceFile, 
     m_uiHight = pdc_front_right_inside_2PngResource.hight;
     m_ValidDataArea.beginIndex =  pdc_front_right_inside_2PngResource.beginIndex;
     m_ValidDataArea.endIndex = pdc_front_right_inside_2PngResource.endIndex;
-    m_pColorBlockBuffer = pdc_front_right_inside_2PngResource.uClsinfo;
+    m_pColorBlockBuffer = const_cast<BYTE*>(pdc_front_right_inside_2PngResource.uClsinfo);
 
     m_HasCompoundedAreaHolder = hasCompoundedArea;
 }
