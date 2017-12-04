@@ -192,7 +192,7 @@ alias pushcamera='sudo scp $ADAS_ROOT_PATH/001_Project/001_GWMV2MH/camera/camera
 
 alias pushall='pushlib && pushproject && pushcamera'
 
-remoteIPnlin="10.80.104.115"
+remoteIPnlin="10.80.104.165"
 alias makeguideline='ftest && cd guideline && cm'
 
 alias npushfoundation='sudo scp $ADAS_ROOT_PATH/000_Framework/libAFoundation/lib/linux/libAFoundation.so root@$remoteIPnlin://usr/lib/'
