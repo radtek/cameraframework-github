@@ -39,7 +39,7 @@ private:
 	void SetSWAUpdatePrecision(float delta);
 	void SetWindowParam(int winWidth, int winHeight);
 	void InitTrajectory(steer_params& param);
-	void InitLineParam(int groupNum, float* sepDis, float* LSegExtendLength, color3* groupColor, float markStartDis,
+	void InitLineParam(int groupNum, float* sepDis, float* LSegExtendLength, float markStartDis,
 				float markDeltaDis, float markThickDis, int markNum, float trackWidth, int lineWidth, GuideLineType type = eStaticGuideLine, bool bUnDistort = false);
 	void SetSideLineParam(float* sepDis, float* tickLength);
 	void SetDistLineParam(float startDis, float deltaDis, float thick, int lineNum);
@@ -49,7 +49,6 @@ private:
 	void MallocGroupDistLineData(int index);
 	void MallocGroupBorderData(int index);
 	void CalLine2DBorderPtNum(int ptNum, unsigned short& outPtElemNum, unsigned short& outIndexNum);
-	void SetGroupColor(color3* pColor);
 	void CalGuideLineData();
 	int CalSidePtNum(float startDis, float endDis);
 	void CalGroupValue(int index);

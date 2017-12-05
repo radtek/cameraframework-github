@@ -63,7 +63,7 @@ void GuideLine::GuideLineInit()
 		2.1,2.35,
 		0,0//background
     };
-    color3 color[9]={ COLOR_PINK,COLOR_RED,COLOR_LIGNTBLUE,COLOR_YELLOW };
+    
     float tickLength[9] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 
     dynamic_para_t GUIDELINE_PARA={
@@ -81,7 +81,6 @@ void GuideLine::GuideLineInit()
 	info.startY=0;
     info.camparam=camparam;
     info.groupSeq=groupSeq;
-	info.color=color;
 	info.tickLength=tickLength;
 	info.GUIDELINE_PARA=GUIDELINE_PARA;
 	calpointer->Init(info);

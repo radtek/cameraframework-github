@@ -51,13 +51,13 @@ void Calculator::Init(guidelineinfo info)
 	int GuideLine_Type = info.GUIDELINE_PARA.dynamic;
 	if (eStaticGuideLine == GuideLine_Type || info.GUIDELINE_PARA.angle == 0)
 	{
-		InitLineParam(GUIDELINE_GROUP_NUM, info.groupSeq, info.tickLength, info.color,
+		InitLineParam(GUIDELINE_GROUP_NUM, info.groupSeq, info.tickLength,
 			GUIDELINE_MARKER_STARTDIS, OVLAY_DELTA_DIST_MARKS, OVLAY_THICK_DIST_MARKS,
 			OVLAY_NUM_DIST_MARKS, OVLAY_TRACK_WIDTH, GUIDELINE_WIDTH, eStaticGuideLine, false);
 	}
 	else if (eDynamicGuideLine == GuideLine_Type)
 	{
-		InitLineParam(GUIDELINE_GROUP_NUM, info.groupSeq, info.tickLength, info.color,
+		InitLineParam(GUIDELINE_GROUP_NUM, info.groupSeq, info.tickLength,
 			GUIDELINE_MARKER_STARTDIS, OVLAY_DELTA_DIST_MARKS, OVLAY_THICK_DIST_MARKS,
 			OVLAY_NUM_DIST_MARKS, OVLAY_TRACK_WIDTH, GUIDELINE_WIDTH, eDynamicGuideLine, false);
 	}
@@ -281,7 +281,7 @@ void Calculator::InitTrajectory(steer_params& param)
 }
 
 
-void Calculator::InitLineParam(int groupNum, float* sepDis, float* LSegExtendLength, color3* groupColor, float markStartDis,
+void Calculator::InitLineParam(int groupNum, float* sepDis, float* LSegExtendLength, float markStartDis,
 	float markDeltaDis, float markThickDis, int markNum, float trackWidth, int lineWidth, GuideLineType type, bool bUnDistort)
 {
 
@@ -298,8 +298,6 @@ void Calculator::InitLineParam(int groupNum, float* sepDis, float* LSegExtendLen
 	SetSideLineParam(sepDis, LSegExtendLength);
 	SetDistLineParam(markStartDis, markDeltaDis, markThickDis, markNum);
 	MallocGroupLineData();
-	SetGroupColor(groupColor);
-	CalGuideLineData();
 	SetGuideLineColor();
 
 
@@ -497,15 +495,6 @@ void Calculator::CalLine2DBorderPtNum(int ptNum, unsigned short& outPtElemNum, u
 	}
 	outPtElemNum = ptNum * 2 * PTELEMNUM;
 	outIndexNum = (ptNum - 1) * 6;
-}
-
-void Calculator::SetGroupColor(color3* pColor)
-{
-	for (int i = 0; i < m_iGroupNum; i++)
-	{
-		for (int j = 0; j < 3; j++)
-			m_pGroups[i].color[j] = pColor[i][j];
-	}
 }
 
 void Calculator::CalGuideLineData()
