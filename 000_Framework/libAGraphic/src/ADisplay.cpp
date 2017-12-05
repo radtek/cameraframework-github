@@ -247,7 +247,12 @@ Int32 CAdasDisplay::createSurface(tsurfaceInfo surfaceInfo)
 		{
 			if(NULL != mGuideLine)
 			{
-				mGuideLine->GuideLineInit();
+				int ret=mGuideLine->GuideLineInit();
+				if (ret!=0)
+				{
+					cout<<"Error: GuideLineInit failed.\n";
+					return ret;
+				}
 			}
 		}
 		else
@@ -392,7 +397,12 @@ Int32 CAdasDisplay::showGuideLine(UInt32 surfaceID, Float32 Angle)
 			//switch to currnet EGL context
 			itEGL->second->EGLMakeCurrent(iter->eglInfo);
 
-			mGuideLine->GuideLineRender(infos);
+			int ret=mGuideLine->GuideLineRender(infos);
+			if (ret!=0)
+			{
+				cout<<"GuideLineRender Failed" << endl;
+				return ret;
+			}
 			
 			//EGL swap buffer
 			mEGL->EGLSwapBuffers(iter->eglInfo);
