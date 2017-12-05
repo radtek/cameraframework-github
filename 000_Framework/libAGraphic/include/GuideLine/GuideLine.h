@@ -13,8 +13,8 @@ namespace AGraphic {
 class GuideLine
 {
 public:
-	void GuideLineInit();
-	void GuideLineRender(guidelineinfo infos);
+	int GuideLineInit();
+	int GuideLineRender(guidelineinfo infos);
 	void GuideLineHide();
 
 	GuideLine();
@@ -23,7 +23,7 @@ public:
 
 private:
 	void GenTexture();
-	void LoadProgram();
+	int LoadProgram();
 	GLuint LoadShaders(const char* vertexShaderSrc,const char* fragmentShaderSrc);
 	void RenderGroupLines(int index);
 

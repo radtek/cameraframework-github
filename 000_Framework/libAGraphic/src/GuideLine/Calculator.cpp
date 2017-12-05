@@ -37,8 +37,9 @@ Calculator::~Calculator()
 	}
 }
 
-void Calculator::Init(guidelineinfo info)
+int Calculator::Init(guidelineinfo info)
 {
+	int ret=0;
 	cameraPara = info.camparam;
 	setCameraMatrix();
 	SetWindowParam(info.width, info.height);
@@ -47,6 +48,19 @@ void Calculator::Init(guidelineinfo info)
 	vechicleInfo.wheelBase = info.GUIDELINE_PARA.wheelbase;
 	vechicleInfo.rearAxleOffset = info.GUIDELINE_PARA.rearspace;
 	vechicleInfo.swaDeltaAngle = info.GUIDELINE_PARA.angle/2;
+
+	if (vechicleInfo.wheelBase<0 || vechicleInfo.wheelBase >GUIDELINE_MAXWHEELBASE)
+	{
+		//printf("wheelbase out of range\n");
+		return GUIDELINE_ERROR_WHEELBASEOUTOFRANGE;
+	}
+
+	if (vechicleInfo.swaDeltaAngle <-GUIDELINE_MAXANGEL || vechicleInfo.swaDeltaAngle>GUIDELINE_MAXANGEL)
+	{
+		//printf("Angel out of range\n");
+		return GUIDELINE_ERROR_ANGELOUTOFRANGE;
+	}
+
 	InitTrajectory(vechicleInfo);
 	int GuideLine_Type = info.GUIDELINE_PARA.dynamic;
 	if (eStaticGuideLine == GuideLine_Type || info.GUIDELINE_PARA.angle == 0)
@@ -62,15 +76,28 @@ void Calculator::Init(guidelineinfo info)
 			OVLAY_NUM_DIST_MARKS, OVLAY_TRACK_WIDTH, GUIDELINE_WIDTH, eDynamicGuideLine, false);
 	}
 	SetSWAUpdatePrecision(STEERING_WHEEL_DELTA);
+	return ret;
 }
 
-void Calculator::Update(guidelineinfo info)
+int Calculator::Update(guidelineinfo info)
 {
+	int ret=0;
 	m_GuideLineType = eDynamicGuideLine;
 	steer_params vechicleInfo;
 	vechicleInfo.wheelBase = info.GUIDELINE_PARA.wheelbase;
 	vechicleInfo.rearAxleOffset = info.GUIDELINE_PARA.rearspace;
 	vechicleInfo.swaDeltaAngle = info.GUIDELINE_PARA.angle/2;
+	if (vechicleInfo.wheelBase<0 || vechicleInfo.wheelBase >10)
+	{
+		//printf("wheelbase out of range\n");
+		return GUIDELINE_ERROR_WHEELBASEOUTOFRANGE;
+	}
+
+	if (vechicleInfo.swaDeltaAngle <-45 || vechicleInfo.swaDeltaAngle>45)
+	{
+		//printf("Angel out of range\n");
+		return GUIDELINE_ERROR_ANGELOUTOFRANGE;
+	}
 	InitTrajectory(vechicleInfo);
 	SetVehicleSteeringAngle(info.GUIDELINE_PARA.angle);
 	CalGuideLineData();

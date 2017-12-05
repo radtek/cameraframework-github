@@ -33,7 +33,7 @@ GuideLine::~GuideLine()
 	}
 }
 
-void GuideLine::GuideLineInit()
+int GuideLine::GuideLineInit()
 {
 	cameraPara_t camparam;
 	camparam.intrinsic = {
@@ -83,21 +83,37 @@ void GuideLine::GuideLineInit()
     info.groupSeq=groupSeq;
 	info.tickLength=tickLength;
 	info.GUIDELINE_PARA=GUIDELINE_PARA;
-	calpointer->Init(info);
+	int ret=0;
+	ret=calpointer->Init(info);
+	if (ret!=0)
+	{	
+		//printf("GuideLine Calculator Initialize Failed\n");
+		return ret;
+	}
 
-	LoadProgram();
+	ret=LoadProgram();
+	if (ret!=0)
+	{	
+		//printf("GuideLine LoadProgram Failed\n");
+		return ret;
+	}
 	GenTexture();
+	return ret;
 }
 
-void GuideLine::GuideLineRender(guidelineinfo infos)
+int GuideLine::GuideLineRender(guidelineinfo infos)
 {
+	int ret=0;
 	info.GUIDELINE_PARA=infos.GUIDELINE_PARA;
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	glDisable(GL_DEPTH_TEST);
 	glViewport(info.startX,info.startY,info.width,info.height);
 
-	calpointer->Update(info);
-
+	ret=calpointer->Update(info);
+	if (ret!=0)
+	{
+		return ret;
+	}
 	glUniform1i(glGetUniformLocation(programObject,"tex"),0);
 	const char* Attribs[2] = { "myVert","myUV" };
 	for(int i=0;i<2;i++)
@@ -125,6 +141,8 @@ void GuideLine::GuideLineRender(guidelineinfo infos)
 	glDisableVertexAttribArray(VERTEX_ARRAY);
 	glDisableVertexAttribArray(TEXCOORD_ARRAY);
 	glDisable(GL_BLEND);
+
+	return ret;
 }
 
 void GuideLine::GuideLineHide()
@@ -167,7 +185,7 @@ void GuideLine::GenTexture()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 }
 
-void GuideLine::LoadProgram()
+int GuideLine::LoadProgram()
 {
 	const char* vertexShader = "\
 	attribute mediump vec4 myVert;\
@@ -190,8 +208,13 @@ void GuideLine::LoadProgram()
 	{\
 		gl_FragColor = vec4(texture2D(tex, texCoord).rgb,myAlpha);\
 	}";
+	int ret=0;
 	programObject = LoadShaders(vertexShader,fragmentShader);
-
+	if (programObject==-1)
+	{
+		return GUIDELINE_ERROR_LOADPROGRAM_FAILED;
+	}
+	return ret;
 }
 
 GLuint GuideLine::LoadShaders(const char* vertexShaderSrc,const char* fragmentShaderSrc)
@@ -219,7 +242,7 @@ GLuint GuideLine::LoadShaders(const char* vertexShaderSrc,const char* fragmentSh
 	        	printf("Vert error:\n");
 		free(pszInfoLog);
 		glDeleteShader(vertex_shader);
-		return 0;
+		return -1;
 	}
 	glDeleteShader(vertex_shader);
 
@@ -238,7 +261,7 @@ GLuint GuideLine::LoadShaders(const char* vertexShaderSrc,const char* fragmentSh
 	        	printf("Frag error:\n");
 		free(pszInfoLog);
 		glDeleteShader(fragment_shader);
-		return 0;
+		return -1;
 	}
 	glDeleteShader(fragment_shader);
 
@@ -259,7 +282,7 @@ GLuint GuideLine::LoadShaders(const char* vertexShaderSrc,const char* fragmentSh
 			free(infoLog);
 		}
 		glDeleteProgram(programObjectTmp);
-		return 0;
+		return -1;
 	}
 
 

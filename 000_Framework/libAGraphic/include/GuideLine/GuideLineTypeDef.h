@@ -9,7 +9,7 @@
 #include <assert.h>
 #include <string.h>
 #include <math.h>
-
+#include "GraphicError.h"
 #define	PVRTCOS(x)	PVRTFCOS(x)
 #define	PVRTSIN(x)	PVRTFSIN(x)
 #define	PVRTTAN(x)	PVRTFTAN(x)
@@ -59,6 +59,8 @@
 #define TEXCOORD_ARRAY 1
 #define glscreen_width 1280
 #define glscreen_height 720
+#define GUIDELINE_MAXANGEL 45
+#define GUIDELINE_MAXWHEELBASE 10
 
 using namespace std;
 

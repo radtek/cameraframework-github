@@ -13,9 +13,9 @@ namespace AGraphic {
 class Calculator
 {
 public:
-	void Init(guidelineinfo info);
+	int Init(guidelineinfo info);
 
-	void Update(guidelineinfo info);
+	int Update(guidelineinfo info);
 
 	Calculator();
 
