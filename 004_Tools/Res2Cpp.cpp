@@ -7,8 +7,10 @@ typedef struct _data
 {
     unsigned int width;
     unsigned int hight;
-    unsigned int beginIndex;
-    unsigned int endIndex;
+    unsigned int beginX;
+    unsigned int beginY;
+    unsigned int endX;
+    unsigned int endY;
 } AREA;
 
 //argv[1] is the read file, argv[2] is write file
@@ -62,8 +64,10 @@ int main(int argc, char *argv[])
     fprintf(fWfile, "    unsigned int    length;\n");
     fprintf(fWfile, "    unsigned int    width;\n");
     fprintf(fWfile, "    unsigned int    hight;\n");
-    fprintf(fWfile, "    unsigned int    beginIndex;\n");
-    fprintf(fWfile, "    unsigned int    endIndex;\n");
+    fprintf(fWfile, "    unsigned int    beginX;\n");
+    fprintf(fWfile, "    unsigned int    beginY;\n");
+    fprintf(fWfile, "    unsigned int    endX;\n");
+    fprintf(fWfile, "    unsigned int    endY;\n");
     fprintf(fWfile, "    unsigned char   uClsinfo[%d];\n", len +1);
     fprintf(fWfile, "}%sResStruct;\n", argv[3]);
     fprintf(fWfile, "\n");
@@ -77,8 +81,10 @@ int main(int argc, char *argv[])
     fprintf(fWfile, "%u, \n", len);
     fprintf(fWfile, "%u, \n", area.width);
     fprintf(fWfile, "%u, \n", area.hight);
-    fprintf(fWfile, "%u, \n", area.beginIndex);
-    fprintf(fWfile, "%u, \n", area.endIndex);
+    fprintf(fWfile, "%u, \n", area.beginX);
+    fprintf(fWfile, "%u, \n", area.beginY);
+    fprintf(fWfile, "%u, \n", area.endX);
+    fprintf(fWfile, "%u, \n", area.endY);
 
     do {
         fprintf(fWfile, "\t\"");

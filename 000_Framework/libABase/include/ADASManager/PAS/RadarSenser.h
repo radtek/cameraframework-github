@@ -2,13 +2,18 @@
 #ifndef __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_RADARSENSER_H__
 #define __HARMAN_ADAS_AFRAMEWORK_ABASE_ADASMANAGER_RADARSENSER_H__
 
+#include "ThreadPool.h"
 #include "ADASManager/PAS/ColorBlock.h"
+
+using Harman::Adas::AFramework::AFoundation::ThreadPool;
 
 namespace Harman {
 namespace Adas {
 namespace AFramework {
 namespace ABase {
 namespace ADASManager {
+
+class PASMessageHandler;
 
 class RadarSenser
 {
@@ -17,12 +22,18 @@ public:
 
     virtual ~RadarSenser();
 
-    void Flush(UInt32 degree);
+    void Flush(const UInt32 degree) const;
+
+    VOID SetHandler(PASMessageHandler* handler);
 
 public:
     vector<ColorBlock*> m_vColorBlockArray;
 
     const string& m_strRadarSenserName;
+
+    PASMessageHandler* m_pHandler = nullptr;
+
+    static ThreadPool* m_pThreadPoolHolder;
 };
 
 } // namespace ADASManager

@@ -167,37 +167,41 @@ VOID CAdasOpenGLES::OpenGLESRenderPAS(map<string, tbufInfo>  bufferMap)
     glVertexAttribPointer(mGLInfo.texCoordLoc, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), &vVertices[3]);
     glEnableVertexAttribArray(mGLInfo.texCoordLoc);
 
-	auto it1 = bufferMap.find(ADAS_PAS_CAR_STATUS);
-	if(it1 != bufferMap.end())
-	{
+    static BOOLEAN isBakegroundShowed = FALSE;
+    static BOOLEAN isCarShowed = FALSE;
+
+    if(!isBakegroundShowed){
+		auto it3 = bufferMap.find(ADAS_PAS_BACKGROUND_STATUS);
+		if(it3 != bufferMap.end()) {
+		    glActiveTexture(GL_TEXTURE2);
+		    glBindTexture(GL_TEXTURE_2D, mGLInfo.unOpenGLType.pTypePAS->otherMapTexId);
+		    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, it3->second.width, it3->second.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, it3->second.buffer);
+		    glUniform1i(mGLInfo.unOpenGLType.pTypePAS->otherMapLoc, 0);
+
+		    isBakegroundShowed = TRUE;
+		}
+	}
+
+    if(!isCarShowed){
+    	auto it2 = bufferMap.find(ADAS_PAS_CAR_STATUS);
+		if(it2 != bufferMap.end()) {
+		    glActiveTexture(GL_TEXTURE1);
+		    glBindTexture(GL_TEXTURE_2D, mGLInfo.unOpenGLType.pTypePAS->lightMapTexId);
+		    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, it2->second.width, it2->second.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, it2->second.buffer);
+		    glUniform1i(mGLInfo.unOpenGLType.pTypePAS->lightMapLoc, 2);
+
+		    isCarShowed = TRUE;
+		}
+    }
+
+    auto it1 = bufferMap.find(ADAS_PAS_RADAR_STATUS);
+	if(it1 != bufferMap.end()) {
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, mGLInfo.unOpenGLType.pTypePAS->baseMapTexId);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, it1->second.width, it1->second.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, it1->second.buffer);
 		glUniform1i(mGLInfo.unOpenGLType.pTypePAS->baseMapLoc, 1);
-		//cout<<"Find, the surface ID is " << it->first <<": " << iter->surfaceName << endl;
 	}
 
-	auto it2 = bufferMap.find(ADAS_PAS_RADAR_STATUS);
-	if(it2 != bufferMap.end())
-	{
-	    glActiveTexture(GL_TEXTURE1);
-	    glBindTexture(GL_TEXTURE_2D, mGLInfo.unOpenGLType.pTypePAS->lightMapTexId);
-	    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, it2->second.width, it2->second.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, it2->second.buffer);
-	    glUniform1i(mGLInfo.unOpenGLType.pTypePAS->lightMapLoc, 2);
-	}
-
-	auto it3 = bufferMap.find(ADAS_PAS_WARNING_STATUS);
-	if(it3 != bufferMap.end())
-	{
-        // glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        // glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-        // glDisable(GL_DEPTH_TEST);
-
-	    glActiveTexture(GL_TEXTURE2);
-	    glBindTexture(GL_TEXTURE_2D, mGLInfo.unOpenGLType.pTypePAS->otherMapTexId);
-	    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, it3->second.width, it3->second.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, it3->second.buffer);
-	    glUniform1i(mGLInfo.unOpenGLType.pTypePAS->otherMapLoc, 0);
-	}
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
 }

@@ -11,6 +11,8 @@ namespace AFramework {
 namespace ABase {
 namespace ADASManager {
 
+class PASMessageHandler;
+
 class PasManager
 {
 public:
@@ -22,6 +24,8 @@ public:
     PasManager& operator=(const PasManager&) = delete;
 
     ~PasManager();
+
+    VOID SetHandler(PASMessageHandler* handler) const;
 
 private:
     PasManager();

@@ -10,67 +10,67 @@ namespace ADASManager {
 
 BYTE* const PasUtils::LodePNGImage(const string& filename, /* out */ UInt32* const width, /* out */ UInt32* const height, BOOLEAN isCalculateValidErea, VALIDEREA* erea)
 {
-    ASSERT(width != nullptr);
-    ASSERT(height != nullptr);
-    if(isCalculateValidErea) {
-        ASSERT(erea != nullptr);
-    }
+    // ASSERT(width != nullptr);
+    // ASSERT(height != nullptr);
+    // if(isCalculateValidErea) {
+    //     ASSERT(erea != nullptr);
+    // }
 
-    UInt32 l_width = *width = 0;
-    UInt32 l_height = *height = 0;
-    if(isCalculateValidErea) {
-        (*erea).beginIndex = 0;
-        (*erea).endIndex = 0;
-    }
+    // UInt32 l_width = *width = 0;
+    // UInt32 l_height = *height = 0;
+    // if(isCalculateValidErea) {
+    //     (*erea).beginIndex = 0;
+    //     (*erea).endIndex = 0;
+    // }
 
-    std::vector<BYTE> image;
-    if(lodepng::decode(/* out */image, /* out */l_width, /* out */l_height, filename, LCT_RGBA, 8) != 0){
-        ALOGE(" open file : %s fail\n", filename.c_str());
-        return nullptr;
-    }
-    *width = l_width;
-    *height = l_height;
-    if(isCalculateValidErea) {
-        (*erea).beginIndex = l_height*l_width*4;
-    }
+    // std::vector<BYTE> image;
+    // if(lodepng::decode(/* out */image, /* out */l_width, /* out */l_height, filename, LCT_RGBA, 8) != 0){
+    //     ALOGE(" open file : %s fail\n", filename.c_str());
+    //     return nullptr;
+    // }
+    // *width = l_width;
+    // *height = l_height;
+    // if(isCalculateValidErea) {
+    //     (*erea).beginIndex = l_height*l_width*4;
+    // }
 
-    ALOGD(" filename : %s, l_width = %u, l_height = %u image.size() = %d\n", filename.c_str(), l_width, l_height, image.size());
+    // ALOGD(" filename : %s, l_width = %u, l_height = %u image.size() = %d\n", filename.c_str(), l_width, l_height, image.size());
 
-    if(!image.empty()){
-        BYTE* buffer = (BYTE*)malloc(l_width * l_height * 4);   // free by class : ColorBlock
-        if(nullptr == buffer) {
-            ALOGE(" malloc failed !\n");
-            return nullptr;
-        }
+    // if(!image.empty()){
+    //     BYTE* buffer = (BYTE*)malloc(l_width * l_height * 4);   // free by class : ColorBlock
+    //     if(nullptr == buffer) {
+    //         ALOGE(" malloc failed !\n");
+    //         return nullptr;
+    //     }
 
-        memcpy(buffer, &image[0], image.size()*sizeof(BYTE)); //dangerous but safe
+    //     memcpy(buffer, &image[0], image.size()*sizeof(BYTE)); //dangerous but safe
 
-        if(isCalculateValidErea){
-            for(Int32 index = 0; index < l_width * l_height * 4;)
-            {
-                if(buffer[index+3]!=0)
-                {
-                    (*erea).beginIndex = index;
-                    break;
-                }
-                index += 4;
-            }
-            for(Int32 index = l_width * l_height * 4 - 1; index > 0;)
-            {
-                if(buffer[index]!=0)
-                {
-                    (*erea).endIndex = index - 3;
-                    break;
-                }
-                index -= 4;
-            }
-            ALOGD("      ValidErea : %s,  beginIndex = %u, endIndex = %u\n", filename.c_str(), (*erea).beginIndex, (*erea).endIndex);
-        }
+    //     if(isCalculateValidErea){
+    //         for(Int32 index = 0; index < l_width * l_height * 4;)
+    //         {
+    //             if(buffer[index+3]!=0)
+    //             {
+    //                 (*erea).beginIndex = index;
+    //                 break;
+    //             }
+    //             index += 4;
+    //         }
+    //         for(Int32 index = l_width * l_height * 4 - 1; index > 0;)
+    //         {
+    //             if(buffer[index]!=0)
+    //             {
+    //                 (*erea).endIndex = index - 3;
+    //                 break;
+    //             }
+    //             index -= 4;
+    //         }
+    //         ALOGD("      ValidErea : %s,  beginIndex = %u, endIndex = %u\n", filename.c_str(), (*erea).beginIndex, (*erea).endIndex);
+    //     }
 
-        return buffer;
-    }else{
-        return nullptr;
-    }
+    //     return buffer;
+    // }else{
+    //     return nullptr;
+    // }
 
     return nullptr;
 }

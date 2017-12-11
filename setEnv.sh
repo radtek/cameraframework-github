@@ -21,6 +21,10 @@ fi
 export camfw_gwmv2_PATH="$ADAS_ROOT_PATH/../camfw_gwmv2"
 alias publish='cd $camfw_gwmv2_PATH'
 
+#============= tree : cpm-gwm-v2mh ====================================
+export cpm_gwm_v2mh_PATH="$ADAS_ROOT_PATH/../cpm-gwm-v2mh"
+alias bb='cd $cpm_gwm_v2mh_PATH'
+
 #============= sdk ===================================================
 export sdkPATH="/opt/elina/2.0.2015143A"
 alias sdk='cd $sdkPATH'
@@ -47,6 +51,7 @@ alias cmakeconfig='cmake -DELINA_LITE_DCIF_GENERATOR=/opt/elinaidelitelinux/elin
 alias makelib='makefoundation && makeabase && makegraphic && makecaseclient && adas'
 alias makeproject='project && rm -fr * && cmakeconfig && make target && adas'
 alias makecamera='ftest && cd camera && cm'
+alias makeguideline='ftest && cd guideline && cm'
 
 
 #=================make a distinction between platform[ubuntu/board]===
@@ -170,13 +175,12 @@ alias opendir='nautilus .'
 
 #================= deploy to board ======================================
 
+
+#------------------------------------li hui----------------------------------------------
 remoteIP="10.80.105.55"
 
 alias board='ssh root@$remoteIP'
-
 alias remote='ssh snow@10.80.105.179'
-
-#echo -n "snow" | sudo -S $(CP) -fv ../lib/linux/libAFoundation.so /opt/elina/2.0.2015143A/sysroots/corei7-64-elina-linux/lib/
 
 alias pushfoundation='sudo scp $ADAS_ROOT_PATH/000_Framework/libAFoundation/lib/linux/libAFoundation.so root@$remoteIP://usr/lib/adas/ && sudo scp $ADAS_ROOT_PATH/000_Framework/libAFoundation/lib/linux/libAFoundation.so root@$remoteIP://usr/lib/'
 alias pushabase='sudo scp $ADAS_ROOT_PATH/000_Framework/libABase/lib/linux/libABase.so root@$remoteIP://usr/lib/adas/ && sudo scp $ADAS_ROOT_PATH/000_Framework/libABase/lib/linux/libABase.so root@$remoteIP://usr/lib/'
@@ -191,9 +195,10 @@ alias pushproject='pushadasdbus && pushadas'
 alias pushcamera='sudo scp $ADAS_ROOT_PATH/001_Project/001_GWMV2MH/camera/cameraStateTest root@$remoteIP://usr/bin/'
 
 alias pushall='pushlib && pushproject && pushcamera'
+#------------------------------------li hui----------------------------------------------
 
+#------------------------------------lin nan----------------------------------------------
 remoteIPnlin="10.80.104.165"
-alias makeguideline='ftest && cd guideline && cm'
 
 alias npushfoundation='sudo scp $ADAS_ROOT_PATH/000_Framework/libAFoundation/lib/linux/libAFoundation.so root@$remoteIPnlin://usr/lib/'
 alias npushabase='sudo scp $ADAS_ROOT_PATH/000_Framework/libABase/lib/linux/libABase.so root@$remoteIPnlin://usr/lib/'
@@ -208,3 +213,4 @@ alias cleangraphic='graphic && mc'
 alias cleancaseclient='caseclient && mc'
 alias cleanlib='cleanfoundation && cleanabase && cleangraphic && cleancaseclient'
 alias cleanguideline='ftest && cd guideline && mc'
+#------------------------------------lin nan----------------------------------------------

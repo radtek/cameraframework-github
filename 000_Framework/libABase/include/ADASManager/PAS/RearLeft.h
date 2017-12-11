@@ -14,79 +14,63 @@ namespace ADASManager {
 class RearLeft : public RadarSenser
 {
 public:
-    RearLeft(const string& radarSenserName, BYTE* hasCompoundedArea);
+    RearLeft(const string& radarSenserName, BYTE* const hasCompoundedArea);
 
     virtual ~RearLeft();
-};
-
-class RearLeftDefault : public ColorBlock
-{
-public:
-    RearLeftDefault(const string& pngResourceFile, BYTE* hasCompoundedArea);
-
-    virtual void CompoundArea() override;
-
-    virtual void DeCompoundArea() override;
 };
 
 class RearLeftOneStep : public ColorBlock
 {
 public:
-    RearLeftOneStep(const string& pngResourceFile, BYTE* hasCompoundedArea);
-
-    virtual void CompoundArea() override;
-
-    virtual void DeCompoundArea() override;
+    RearLeftOneStep(const string& pngResourceFile, BYTE* const hasCompoundedArea);
 };
 
 class RearLeftTwoStep : public ColorBlock
 {
 public:
-    RearLeftTwoStep(const string& pngResourceFile, BYTE* hasCompoundedArea);
-
-    virtual void CompoundArea() override;
-
-    virtual void DeCompoundArea() override;
+    RearLeftTwoStep(const string& pngResourceFile, BYTE* const hasCompoundedArea);
 };
 
 class RearLeftThreeStep : public ColorBlock
 {
 public:
-    RearLeftThreeStep(const string& pngResourceFile, BYTE* hasCompoundedArea);
-
-    virtual void CompoundArea() override;
-
-    virtual void DeCompoundArea() override;
+    RearLeftThreeStep(const string& pngResourceFile, BYTE* const hasCompoundedArea);
 };
 
 class RearLeftFourStep : public ColorBlock
 {
 public:
-    RearLeftFourStep(const string& pngResourceFile, BYTE* hasCompoundedArea);
-
-    virtual void CompoundArea() override;
-
-    virtual void DeCompoundArea() override;
+    RearLeftFourStep(const string& pngResourceFile, BYTE* const hasCompoundedArea);
 };
 
 class RearLeftFiveStep : public ColorBlock
 {
 public:
-    RearLeftFiveStep(const string& pngResourceFile, BYTE* hasCompoundedArea);
-
-    virtual void CompoundArea() override;
-
-    virtual void DeCompoundArea() override;
+    RearLeftFiveStep(const string& pngResourceFile, BYTE* const hasCompoundedArea);
 };
 
 class RearLeftSixStep : public ColorBlock
 {
 public:
-    RearLeftSixStep(const string& pngResourceFile, BYTE* hasCompoundedArea);
+    RearLeftSixStep(const string& pngResourceFile, BYTE* const hasCompoundedArea);
+};
 
-    virtual void CompoundArea() override;
+class RearLeftSevenStep : public ColorBlock
+{
+public:
+    RearLeftSevenStep(const string& pngResourceFile, BYTE* const hasCompoundedArea);
+};
 
-    virtual void DeCompoundArea() override;
+class RearLeftEightStep : public ColorBlock
+{
+public:
+    RearLeftEightStep(const string& pngResourceFile, BYTE* const hasCompoundedArea);
+};
+
+class RearLeftNineStep : public ColorBlock
+{
+public:
+    RearLeftNineStep(const string& pngResourceFile, BYTE* const hasCompoundedArea);
 };
 
 } // namespace ADASManager

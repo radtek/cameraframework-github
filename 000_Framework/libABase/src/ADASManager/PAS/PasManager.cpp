@@ -19,12 +19,11 @@ namespace AFramework {
 namespace ABase {
 namespace ADASManager {
 
-static BYTE* MallocBuffer()
+static BYTE* MallocBufferColorBlock()
 {
-    unsigned char* buffer = (unsigned char*)malloc(152*228*4);
-    if(nullptr != buffer)
-    {
-        memset(buffer, '\x00', 152*228*4);
+    unsigned char* buffer = (unsigned char*)malloc(PAS_SCREEN_WIDTH * PAS_SCREEN_HIGHT * 4);
+    if(nullptr != buffer) {
+        memset(buffer, 0, PAS_SCREEN_WIDTH * PAS_SCREEN_HIGHT * 4);
         return buffer;
     }
 
@@ -33,17 +32,16 @@ static BYTE* MallocBuffer()
     return nullptr;
 }
 
-BYTE* PasManager::m_pHasCompoundedArea = MallocBuffer();
+BYTE* PasManager::m_pHasCompoundedArea = MallocBufferColorBlock();
 
 static BYTE* MallocBufferBackGround()
 {
-    unsigned char* buffer = (unsigned char*)malloc(640*720*4);
+    unsigned char* buffer = (unsigned char*)malloc(PAS_SCREEN_WIDTH * PAS_SCREEN_HIGHT * 4);
 
-    if(NULL != buffer)
-    {
-        memset(buffer, 0, 640*720*4);
+    if(NULL != buffer) {
+        memset(buffer, 0, PAS_SCREEN_WIDTH * PAS_SCREEN_HIGHT * 4);
 
-        for(int i = 0; i < 640*720*4;){
+        for(int i = 0; i < PAS_SCREEN_WIDTH * PAS_SCREEN_HIGHT * 4;){
             buffer[i+3] = 255;
             i += 4;
         }
@@ -60,10 +58,9 @@ BYTE* PasManager::m_pHasCompoundedBackGround = MallocBufferBackGround();
 
 static BYTE* MallocBufferCar()
 {
-    unsigned char* buffer = (unsigned char*)malloc(152*228*4);
-    if(nullptr != buffer)
-    {
-        memset(buffer, '\x00', 152*228*4);
+    unsigned char* buffer = (unsigned char*)malloc(PAS_SCREEN_WIDTH * PAS_SCREEN_HIGHT * 4);
+    if(nullptr != buffer) {
+        memset(buffer, 0, PAS_SCREEN_WIDTH * PAS_SCREEN_HIGHT * 4);
         return buffer;
     }
 
@@ -86,11 +83,25 @@ PasManager* PasManager::GetInstance()
 
 void PasManager::DelInstance()
 {
-    if (m_pInstance != nullptr)
-    {
+    if (m_pInstance != nullptr){
         delete m_pInstance;
         m_pInstance = nullptr;
     }
+}
+
+VOID PasManager::SetHandler(PASMessageHandler* handler) const
+{
+    m_pFrontLeftInside->SetHandler(handler);
+    m_pFrontLeft->SetHandler(handler);
+    m_pFrontRight->SetHandler(handler);
+    m_pFrontRightInside->SetHandler(handler);
+
+    m_pRearLeftInside->SetHandler(handler);
+    m_pRearLeft->SetHandler(handler);
+    m_pRearRight->SetHandler(handler);
+    m_pRearRightInside->SetHandler(handler);
+
+    //m_pCar->SetHandler(handler);
 }
 
 PasManager::PasManager()
@@ -154,6 +165,21 @@ PasManager::~PasManager()
     if(nullptr != m_pCar){
         delete m_pCar;
         m_pCar = nullptr;
+    }
+
+    if(nullptr != m_pHasCompoundedArea){
+        free(m_pHasCompoundedArea);
+        m_pHasCompoundedArea = nullptr;
+    }
+
+    if(nullptr != m_pHasCompoundedBackGround){
+        free(m_pHasCompoundedBackGround);
+        m_pHasCompoundedBackGround = nullptr;
+    }
+
+    if(nullptr != m_pCarBuffer){
+        free(m_pCarBuffer);
+        m_pCarBuffer = nullptr;
     }
 }
 

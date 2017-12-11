@@ -34,8 +34,10 @@ typedef struct imageInformation
 
 typedef struct validArea
 {
-    UInt32 beginIndex;
-    UInt32 endIndex;
+    UInt32 beginX;
+    UInt32 beginY;
+    UInt32 endX;
+    UInt32 endY;
 } VALIDEREA;
 
 class PasUtils

@@ -9,8 +9,10 @@ namespace AFramework {
 namespace ABase {
 namespace ADASManager {
 
-ColorBlock::ColorBlock(const string& pngResourceFile)
+ColorBlock::ColorBlock(const string& pngResourceFile, BYTE* const compoundedBuffer, const BYTE* const srcBuffer)
     : m_sPngResourceFile(pngResourceFile)
+    , m_HasCompoundedAreaHolder(compoundedBuffer)
+    , m_pColorBlockBuffer(srcBuffer)
 {
 }
 
@@ -18,40 +20,39 @@ ColorBlock::~ColorBlock()
 {
 }
 
-void ColorBlock::CompoundArea()
+VOID ColorBlock::CompoundArea()
 {
-    UInt32 compoundedAreaIndex = m_ValidDataArea.beginIndex;
-    UInt32 clsinfoIndex = 0;
-    while(compoundedAreaIndex <= m_ValidDataArea.endIndex){
-        if(m_pColorBlockBuffer[clsinfoIndex+3] != 0){
-            m_HasCompoundedAreaHolder[compoundedAreaIndex] =  m_pColorBlockBuffer[clsinfoIndex];
-            m_HasCompoundedAreaHolder[compoundedAreaIndex+1] =  m_pColorBlockBuffer[clsinfoIndex+1];
-            m_HasCompoundedAreaHolder[compoundedAreaIndex+2] =  m_pColorBlockBuffer[clsinfoIndex+2];
-            m_HasCompoundedAreaHolder[compoundedAreaIndex+3] =  m_pColorBlockBuffer[clsinfoIndex+3];
-        }
+    UInt32 index = 0;
+    for(UInt32 hightIndex = m_ValidDataArea.beginY; hightIndex <= m_ValidDataArea.endY; hightIndex++){  // hang
+        for(UInt32 widthIndex = m_ValidDataArea.beginX; widthIndex <= m_ValidDataArea.endX; widthIndex++){ //lie
+            if(m_pColorBlockBuffer[index+3] != 0) {
+                m_HasCompoundedAreaHolder[4*hightIndex*m_uiWidth+4*widthIndex] =   m_pColorBlockBuffer[index];
+                m_HasCompoundedAreaHolder[4*hightIndex*m_uiWidth+4*widthIndex+1] = m_pColorBlockBuffer[index + 1];
+                m_HasCompoundedAreaHolder[4*hightIndex*m_uiWidth+4*widthIndex+2] = m_pColorBlockBuffer[index + 2];
+                m_HasCompoundedAreaHolder[4*hightIndex*m_uiWidth+4*widthIndex+3] = m_pColorBlockBuffer[index + 3];
+            }
 
-        compoundedAreaIndex += 4;
-        clsinfoIndex += 4;
+            index += 4;
+        }
     }
 
     m_bIsDecoratored = TRUE;
-    //m_bIsDecoratoredHistory = TRUE;
 }
 
-void ColorBlock::DeCompoundArea()
+VOID ColorBlock::DeCompoundArea()
 {
-    UInt32 compoundedAreaIndex = m_ValidDataArea.beginIndex;
-    UInt32 clsinfoIndex = 0;
-    while(compoundedAreaIndex <= m_ValidDataArea.endIndex){
-        if(m_pColorBlockBuffer[clsinfoIndex+3] != 0){
-            m_HasCompoundedAreaHolder[compoundedAreaIndex] =  0;
-            m_HasCompoundedAreaHolder[compoundedAreaIndex+1] =  0;
-            m_HasCompoundedAreaHolder[compoundedAreaIndex+2] =  0;
-            m_HasCompoundedAreaHolder[compoundedAreaIndex+3] =  0;
-        }
+    UInt32 index = 0;
+    for(UInt32 hightIndex = m_ValidDataArea.beginY; hightIndex <= m_ValidDataArea.endY; hightIndex++){  // hang
+        for(UInt32 widthIndex = m_ValidDataArea.beginX; widthIndex <= m_ValidDataArea.endX; widthIndex++){ //lie
+            if(m_pColorBlockBuffer[index+3] != 0) {
+                m_HasCompoundedAreaHolder[4*hightIndex*m_uiWidth+4*widthIndex] =   0;
+                m_HasCompoundedAreaHolder[4*hightIndex*m_uiWidth+4*widthIndex+1] = 0;
+                m_HasCompoundedAreaHolder[4*hightIndex*m_uiWidth+4*widthIndex+2] = 0;
+                m_HasCompoundedAreaHolder[4*hightIndex*m_uiWidth+4*widthIndex+3] = 0;
+            }
 
-        compoundedAreaIndex += 4;
-        clsinfoIndex += 4;
+            index += 4;
+        }
     }
 
     m_bIsDecoratored = FALSE;

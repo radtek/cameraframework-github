@@ -41,6 +41,25 @@ using std::vector;
 #define FALSE	false
 #define makePair     std::make_pair
 
+#define RVC_SURFACE_ID 50
+#define GUAIDlINE_SURFACE_ID 51
+#define PAS_SURFACE_ID 52
+
+#define PAS_SURFACE_NAME "PAS_SURFACE"
+#define RVC_SURFACE_NAME "RVC_SURFACE"
+#define SVC_SURFACE_NAME "SVC_SURFACE"
+#define APA_SURFACE_NAME "APA_SURFACE"
+#define GUAIDLINE_SURFACE_NAME "GUAIDLINE_SURFACE"
+
+#define RVC_SCREEN_WIDTH 1280
+#define RVC_SCREEN_HIGHT 720
+#define SVC_SCREEN_WIDTH 1280
+#define SVC_SCREEN_HIGHT 720
+#define PAS_SCREEN_WIDTH 640
+#define PAS_SCREEN_HIGHT 720
+#define GUAIDLINE_SCREEN_WIDTH 1280
+#define GUAIDLINE_SCREEN_HIGHT 720
+
 typedef unsigned int            UInt32;
 typedef unsigned long           UInt64;
 typedef bool                    BOOLEAN;

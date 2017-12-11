@@ -14,39 +14,63 @@ namespace ADASManager {
 class FrontLeftInside : public RadarSenser
 {
 public:
-    FrontLeftInside(const string& radarSenserName, BYTE* hasCompoundedArea);
+    FrontLeftInside(const string& radarSenserName, BYTE* const hasCompoundedArea);
 
     virtual ~FrontLeftInside();
-};
-
-class FrontLeftInsideDefault : public ColorBlock
-{
-public:
-    FrontLeftInsideDefault(const string& pngResourceFile, BYTE* hasCompoundedArea);
-
-    virtual void CompoundArea() override;
-
-    virtual void DeCompoundArea() override;
 };
 
 class FrontLeftInsideOneStep : public ColorBlock
 {
 public:
-    FrontLeftInsideOneStep(const string& pngResourceFile, BYTE* hasCompoundedArea);
-
-    virtual void CompoundArea() override;
-
-    virtual void DeCompoundArea() override;
+    FrontLeftInsideOneStep(const string& pngResourceFile, BYTE* const hasCompoundedArea);
 };
 
 class FrontLeftInsideTwoStep : public ColorBlock
 {
 public:
-    FrontLeftInsideTwoStep(const string& pngResourceFile, BYTE* hasCompoundedArea);
+    FrontLeftInsideTwoStep(const string& pngResourceFile, BYTE* const hasCompoundedArea);
+};
 
-    virtual void CompoundArea() override;
+class FrontLeftInsideThreeStep : public ColorBlock
+{
+public:
+    FrontLeftInsideThreeStep(const string& pngResourceFile, BYTE* const hasCompoundedArea);
+};
 
-    virtual void DeCompoundArea() override;
+class FrontLeftInsideFourStep : public ColorBlock
+{
+public:
+    FrontLeftInsideFourStep(const string& pngResourceFile, BYTE* const hasCompoundedArea);
+};
+
+class FrontLeftInsideFiveStep : public ColorBlock
+{
+public:
+    FrontLeftInsideFiveStep(const string& pngResourceFile, BYTE* const hasCompoundedArea);
+};
+
+class FrontLeftInsideSixStep : public ColorBlock
+{
+public:
+    FrontLeftInsideSixStep(const string& pngResourceFile, BYTE* const hasCompoundedArea);
+};
+
+class FrontLeftInsideSevenStep : public ColorBlock
+{
+public:
+    FrontLeftInsideSevenStep(const string& pngResourceFile, BYTE* const hasCompoundedArea);
+};
+
+class FrontLeftInsideEightStep : public ColorBlock
+{
+public:
+    FrontLeftInsideEightStep(const string& pngResourceFile, BYTE* const hasCompoundedArea);
+};
+
+class FrontLeftInsideNineStep : public ColorBlock
+{
+public:
+    FrontLeftInsideNineStep(const string& pngResourceFile, BYTE* const hasCompoundedArea);
 };
 
 } // namespace ADASManager

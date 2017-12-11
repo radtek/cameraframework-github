@@ -12,6 +12,7 @@
 #include "TraceMacros.h"
 #include "CTimer.h"
 #include "Epoller.h"
+#include "ThreadPool.h"
 #ifndef _UBUNTU_
 #include "EpollGPIO.h"
 #include "NanoIPC.h"

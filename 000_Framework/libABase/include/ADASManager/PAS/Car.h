@@ -10,14 +10,17 @@ namespace AFramework {
 namespace ABase {
 namespace ADASManager {
 
+//class PASMessageHandler;
+
 class Car : public ColorBlock
 {
 public:
-    Car(const string& pngResourceFile, BYTE* carWithDefault);
+    Car(const string& pngResourceFile, BYTE* const carCompoundedBuffer);
 
-    virtual void CompoundArea() override;
+    //VOID SetHandler(const PASMessageHandler* const handler) const;
 
-    virtual void DeCompoundArea() override;
+public:
+    //const PASMessageHandler* m_pHandler = nullptr;
 };
 
 } // namespace ADASManager

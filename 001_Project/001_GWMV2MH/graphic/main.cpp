@@ -174,7 +174,7 @@ void * func1(void *arg)
 	bufferInfo3.width = width;
 	bufferInfo3.heigth = height;
 	bufferInfo3.bRender = TRUE;
-	renderData1.bufferMap.insert(make_pair(ADAS_PAS_WARNING_STATUS, bufferInfo3));
+	renderData1.bufferMap.insert(make_pair(ADAS_PAS_BACKGROUND_STATUS, bufferInfo3));
 
 	unsigned int count = 1;
 	unsigned char *buffer4;
@@ -255,7 +255,7 @@ void * func2(void *arg)
 	bufferInfo3.width = widthex;
 	bufferInfo3.heigth = heightex;
 	bufferInfo3.bRender = TRUE;
-	renderData2.bufferMap.insert(make_pair(ADAS_PAS_WARNING_STATUS, bufferInfo3));
+	renderData2.bufferMap.insert(make_pair(ADAS_PAS_BACKGROUND_STATUS, bufferInfo3));
 
 	unsigned int count = 1;
 	unsigned char *buffer4;
@@ -394,7 +394,7 @@ int main(int argc, char *argv[])
 	bufferInfo3.width = width;
 	bufferInfo3.heigth = height;
 	bufferInfo3.bRender = TRUE;
-	renderData1.bufferMap.insert(make_pair(ADAS_PAS_WARNING_STATUS, bufferInfo3));
+	renderData1.bufferMap.insert(make_pair(ADAS_PAS_BACKGROUND_STATUS, bufferInfo3));
 	//printf(" [%s, %d]  buffer = %x %x\n", __FUNCTION__, __LINE__, buffer[0], buffer[1]);
 	//printf(" [%s, %d]  buffer = %d, %d\n", __FUNCTION__, __LINE__, width, height);
 
@@ -423,7 +423,7 @@ int main(int argc, char *argv[])
 	bufferInfo6.width = widthex;
 	bufferInfo6.heigth = heightex;
 	bufferInfo6.bRender = TRUE;
-	renderData2.bufferMap.insert(make_pair(ADAS_PAS_WARNING_STATUS, bufferInfo6));
+	renderData2.bufferMap.insert(make_pair(ADAS_PAS_BACKGROUND_STATUS, bufferInfo6));
 	/*bufferex = new unsigned char[widthex*heightex*4*3];
 	memcpy(bufferex, buffer4, widthex*heightex*4);
 	memcpy(bufferex+widthex*heightex*4, buffer5, widthex*heightex*4);

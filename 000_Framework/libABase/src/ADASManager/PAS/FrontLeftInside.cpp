@@ -2,9 +2,15 @@
 #include "ADASManager/PAS/FrontLeftInside.h"
 #include "ADASManager/PAS/ResourcePngDefine.h"
 
-#include "./Res/pdc_front_left_inside_0.h"
 #include "./Res/pdc_front_left_inside_1.h"
 #include "./Res/pdc_front_left_inside_2.h"
+#include "./Res/pdc_front_left_inside_3.h"
+#include "./Res/pdc_front_left_inside_4.h"
+#include "./Res/pdc_front_left_inside_5.h"
+#include "./Res/pdc_front_left_inside_6.h"
+#include "./Res/pdc_front_left_inside_7.h"
+#include "./Res/pdc_front_left_inside_8.h"
+#include "./Res/pdc_front_left_inside_9.h"
 
 namespace Harman {
 namespace Adas {
@@ -12,12 +18,21 @@ namespace AFramework {
 namespace ABase {
 namespace ADASManager {
 
-FrontLeftInside::FrontLeftInside(const string& radarSenserName, BYTE* hasCompoundedArea)
+FrontLeftInside::FrontLeftInside(const string& radarSenserName, BYTE* const hasCompoundedArea)
     : RadarSenser(radarSenserName)
 {
-    m_vColorBlockArray.push_back(new FrontLeftInsideDefault(FRONT_LEFT_INSIDE_DEFAULT, hasCompoundedArea));
+    m_vColorBlockArray.push_back(nullptr);
     m_vColorBlockArray.push_back(new FrontLeftInsideOneStep(FRONT_LEFT_INSIDE_ONE_STEP, hasCompoundedArea));
     m_vColorBlockArray.push_back(new FrontLeftInsideTwoStep(FRONT_LEFT_INSIDE_TWO_STEP, hasCompoundedArea));
+    m_vColorBlockArray.push_back(new FrontLeftInsideThreeStep(FRONT_LEFT_INSIDE_THREE_STEP, hasCompoundedArea));
+
+    m_vColorBlockArray.push_back(new FrontLeftInsideFourStep(FRONT_LEFT_INSIDE_FOUR_STEP, hasCompoundedArea));
+    m_vColorBlockArray.push_back(new FrontLeftInsideFiveStep(FRONT_LEFT_INSIDE_FIVE_STEP, hasCompoundedArea));
+    m_vColorBlockArray.push_back(new FrontLeftInsideSixStep(FRONT_LEFT_INSIDE_SIX_STEP, hasCompoundedArea));
+
+    m_vColorBlockArray.push_back(new FrontLeftInsideSevenStep(FRONT_LEFT_INSIDE_SEVEN_STEP, hasCompoundedArea));
+    m_vColorBlockArray.push_back(new FrontLeftInsideEightStep(FRONT_LEFT_INSIDE_EIGHT_STEP, hasCompoundedArea));
+    m_vColorBlockArray.push_back(new FrontLeftInsideNineStep(FRONT_LEFT_INSIDE_NINE_STEP, hasCompoundedArea));
 }
 
 FrontLeftInside::~FrontLeftInside()
@@ -27,73 +42,58 @@ FrontLeftInside::~FrontLeftInside()
     }
 }
 
-FrontLeftInsideDefault::FrontLeftInsideDefault(const string& pngResourceFile, BYTE* hasCompoundedArea)
-    : ColorBlock(pngResourceFile)
+FrontLeftInsideOneStep::FrontLeftInsideOneStep(const string& pngResourceFile, BYTE* const hasCompoundedArea)
+    : ColorBlock(pngResourceFile, hasCompoundedArea, GET_PNG_RESOURCE(pdc_front_left_inside_1))
 {
-    m_uiLength = pdc_front_left_inside_0PngResource.length;
-    m_uiWidth = pdc_front_left_inside_0PngResource.width;
-    m_uiHight = pdc_front_left_inside_0PngResource.hight;
-    m_ValidDataArea.beginIndex =  pdc_front_left_inside_0PngResource.beginIndex;
-    m_ValidDataArea.endIndex = pdc_front_left_inside_0PngResource.endIndex;
-    m_pColorBlockBuffer = const_cast<BYTE*>(pdc_front_left_inside_0PngResource.uClsinfo);
-
-    m_HasCompoundedAreaHolder = hasCompoundedArea;
+    GET_PNG_ARGS(pdc_front_left_inside_1)
 }
 
-void FrontLeftInsideDefault::CompoundArea()
+FrontLeftInsideTwoStep::FrontLeftInsideTwoStep(const string& pngResourceFile, BYTE* const hasCompoundedArea)
+    : ColorBlock(pngResourceFile, hasCompoundedArea, GET_PNG_RESOURCE(pdc_front_left_inside_2))
 {
-    ColorBlock::CompoundArea();
+    GET_PNG_ARGS(pdc_front_left_inside_2)
 }
 
-void FrontLeftInsideDefault::DeCompoundArea()
+FrontLeftInsideThreeStep::FrontLeftInsideThreeStep(const string& pngResourceFile, BYTE* const hasCompoundedArea)
+    : ColorBlock(pngResourceFile, hasCompoundedArea, GET_PNG_RESOURCE(pdc_front_left_inside_3))
 {
-    ColorBlock::DeCompoundArea();
+    GET_PNG_ARGS(pdc_front_left_inside_3)
 }
 
-FrontLeftInsideOneStep::FrontLeftInsideOneStep(const string& pngResourceFile, BYTE* hasCompoundedArea)
-    : ColorBlock(pngResourceFile)
+FrontLeftInsideFourStep::FrontLeftInsideFourStep(const string& pngResourceFile, BYTE* const hasCompoundedArea)
+    : ColorBlock(pngResourceFile, hasCompoundedArea, GET_PNG_RESOURCE(pdc_front_left_inside_4))
 {
-    m_uiLength = pdc_front_left_inside_1PngResource.length;
-    m_uiWidth = pdc_front_left_inside_1PngResource.width;
-    m_uiHight = pdc_front_left_inside_1PngResource.hight;
-    m_ValidDataArea.beginIndex =  pdc_front_left_inside_1PngResource.beginIndex;
-    m_ValidDataArea.endIndex = pdc_front_left_inside_1PngResource.endIndex;
-    m_pColorBlockBuffer = const_cast<BYTE*>(pdc_front_left_inside_1PngResource.uClsinfo);
-
-    m_HasCompoundedAreaHolder = hasCompoundedArea;
+    GET_PNG_ARGS(pdc_front_left_inside_4)
 }
 
-void FrontLeftInsideOneStep::CompoundArea()
+FrontLeftInsideFiveStep::FrontLeftInsideFiveStep(const string& pngResourceFile, BYTE* const hasCompoundedArea)
+    : ColorBlock(pngResourceFile, hasCompoundedArea, GET_PNG_RESOURCE(pdc_front_left_inside_5))
 {
-    ColorBlock::CompoundArea();
+    GET_PNG_ARGS(pdc_front_left_inside_5)
 }
 
-void FrontLeftInsideOneStep::DeCompoundArea()
+FrontLeftInsideSixStep::FrontLeftInsideSixStep(const string& pngResourceFile, BYTE* const hasCompoundedArea)
+    : ColorBlock(pngResourceFile, hasCompoundedArea, GET_PNG_RESOURCE(pdc_front_left_inside_6))
 {
-    ColorBlock::DeCompoundArea();
+    GET_PNG_ARGS(pdc_front_left_inside_6)
 }
 
-FrontLeftInsideTwoStep::FrontLeftInsideTwoStep(const string& pngResourceFile, BYTE* hasCompoundedArea)
-    : ColorBlock(pngResourceFile)
+FrontLeftInsideSevenStep::FrontLeftInsideSevenStep(const string& pngResourceFile, BYTE* const hasCompoundedArea)
+    : ColorBlock(pngResourceFile, hasCompoundedArea, GET_PNG_RESOURCE(pdc_front_left_inside_7))
 {
-    m_uiLength = pdc_front_left_inside_2PngResource.length;
-    m_uiWidth = pdc_front_left_inside_2PngResource.width;
-    m_uiHight = pdc_front_left_inside_2PngResource.hight;
-    m_ValidDataArea.beginIndex =  pdc_front_left_inside_2PngResource.beginIndex;
-    m_ValidDataArea.endIndex = pdc_front_left_inside_2PngResource.endIndex;
-    m_pColorBlockBuffer = const_cast<BYTE*>(pdc_front_left_inside_2PngResource.uClsinfo);
-
-    m_HasCompoundedAreaHolder = hasCompoundedArea;
+    GET_PNG_ARGS(pdc_front_left_inside_7)
 }
 
-void FrontLeftInsideTwoStep::CompoundArea()
+FrontLeftInsideEightStep::FrontLeftInsideEightStep(const string& pngResourceFile, BYTE* const hasCompoundedArea)
+    : ColorBlock(pngResourceFile, hasCompoundedArea, GET_PNG_RESOURCE(pdc_front_left_inside_8))
 {
-    ColorBlock::CompoundArea();
+    GET_PNG_ARGS(pdc_front_left_inside_8)
 }
 
-void FrontLeftInsideTwoStep::DeCompoundArea()
+FrontLeftInsideNineStep::FrontLeftInsideNineStep(const string& pngResourceFile, BYTE* const hasCompoundedArea)
+    : ColorBlock(pngResourceFile, hasCompoundedArea, GET_PNG_RESOURCE(pdc_front_left_inside_9))
 {
-    ColorBlock::DeCompoundArea();
+    GET_PNG_ARGS(pdc_front_left_inside_9)
 }
 
 } // namespace ADASManager

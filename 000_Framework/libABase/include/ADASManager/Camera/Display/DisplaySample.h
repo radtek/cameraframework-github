@@ -28,10 +28,6 @@
 #include <unistd.h>
 #include "external/ivi-application-client-protocol.h"
 
-#define RVC_SURFACE_ID 50
-#define GUAIDlINE_SURFACE_ID 51
-#define PAS_SURFACE_ID 52
-
 #include "external/shared/helpers.h"
 #include "external/shared/platform.h"
 #include "external/shared/weston-egl-ext.h"

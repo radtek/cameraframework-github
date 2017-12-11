@@ -13,30 +13,28 @@ namespace ADASManager {
 class ColorBlock
 {
 public:
-    ColorBlock(const string& pngResourceFile);
+    ColorBlock(const string& pngResourceFile, BYTE* const compoundedBuffer, const BYTE* const srcBuffer);
 
     virtual ~ColorBlock();
 
-    virtual void CompoundArea();
+    virtual VOID CompoundArea();
 
-    virtual void DeCompoundArea();
+    virtual VOID DeCompoundArea();
 
 public:
     VALIDEREA m_ValidDataArea;
 
+    UInt32 m_uiLength = 0;
     UInt32 m_uiWidth = 0;
     UInt32 m_uiHight = 0;
-    UInt32 m_uiLength = 0;
 
     const string& m_sPngResourceFile;
 
     BOOLEAN m_bIsDecoratored = FALSE;
 
-    BYTE* m_HasCompoundedAreaHolder = nullptr;
+    BYTE* const m_HasCompoundedAreaHolder;
 
-    BYTE* m_pColorBlockBuffer = nullptr;
-
-    //BOOLEAN m_bIsDecoratoredHistory = FALSE;
+    const BYTE* const m_pColorBlockBuffer;
 };
 
 } // namespace ADASManager

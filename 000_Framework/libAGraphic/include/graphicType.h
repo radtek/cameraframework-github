@@ -8,10 +8,10 @@
 
 #define ADAS_PAS_RADAR_STATUS	"RADAR_STATUS"
 #define ADAS_PAS_CAR_STATUS		"CAR_STATUS"
-#define ADAS_PAS_WARNING_STATUS	"WARNING_STATUS"
+#define ADAS_PAS_BACKGROUND_STATUS	"BACKGROUND_STATUS"
 
 
-typedef enum 
+typedef enum
 {
     COLOR_YUV,
     COLOR_RGB,
@@ -19,7 +19,7 @@ typedef enum
     UNKNOWN_COLOR
 }ecolorType;
 
-typedef enum 
+typedef enum
 {
     MODULE_UNKNOW,
 	MODULE_PAS,
