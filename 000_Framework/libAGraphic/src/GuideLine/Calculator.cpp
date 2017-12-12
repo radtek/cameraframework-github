@@ -101,6 +101,7 @@ int Calculator::Update(guidelineinfo info)
 	InitTrajectory(vechicleInfo);
 	SetVehicleSteeringAngle(info.GUIDELINE_PARA.angle);
 	CalGuideLineData();
+	return ret;
 }
 
 void Calculator::SetVehicleSteeringAngle(float Deg)
