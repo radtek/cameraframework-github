@@ -49,7 +49,7 @@ alias makecaseclient='caseclient && cm'
 alias cmakeconfig='cmake -DELINA_LITE_DCIF_GENERATOR=/opt/elinaidelitelinux/elina -DCDEPL_PATH=$ADAS_ROOT_PATH/../contracts-gwm/contracts-gwm-v2mh/packages/adas/ADAS.cdl -DCMAKE_SYSROOT=/opt/elina/2.0.2015143A/sysroots/corei7-64-elina-linux  ../'
 
 alias makelib='makefoundation && makeabase && makegraphic && makecaseclient && adas'
-alias makeproject='project && rm -fr * && cmakeconfig && make target && adas'
+alias makeproject='project && rm -fr ../gen && rm -fr ../src-gen  && rm -fr * && cmakeconfig && make target && adas'
 alias makecamera='ftest && cd camera && cm'
 alias makeguideline='ftest && cd guideline && cm'
 
