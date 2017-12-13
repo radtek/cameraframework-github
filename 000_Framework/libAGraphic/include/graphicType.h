@@ -4,12 +4,12 @@
 
 #include <iostream>
 #include "TypeDefine.h"
-
+#include "TraceMacros.h"
 
 #define ADAS_PAS_RADAR_STATUS	"RADAR_STATUS"
 #define ADAS_PAS_CAR_STATUS		"CAR_STATUS"
 #define ADAS_PAS_BACKGROUND_STATUS	"BACKGROUND_STATUS"
-
+//#define graphic_DEBUG
 
 typedef enum
 {

@@ -10,6 +10,7 @@
 #include <string.h>
 #include <math.h>
 #include "GraphicError.h"
+#include "TraceMacros.h"
 #define	PVRTCOS(x)	PVRTFCOS(x)
 #define	PVRTSIN(x)	PVRTFSIN(x)
 #define	PVRTTAN(x)	PVRTFTAN(x)
@@ -61,7 +62,7 @@
 #define glscreen_height 720
 #define GUIDELINE_MAXANGEL 45
 #define GUIDELINE_MAXWHEELBASE 10
-
+//#define gl_DEBUG
 using namespace std;
 
 typedef unsigned char  BYTE;

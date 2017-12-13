@@ -1,33 +1,29 @@
 #include "GuideLine.h"
 
 
-namespace Harman {
-namespace Adas {
-namespace AFramework {
-namespace AGraphic {
+namespace Harman{
+namespace Adas{
+namespace AFramework{
+namespace AGraphic{
 
 GuideLine::GuideLine()
 {
-	if(calpointer==nullptr)
-	{
+	if(calpointer==nullptr) {
 		calpointer=new Calculator();
 	}
 }
 
 GuideLine::~GuideLine()
 {
-	if (GuideLineTexture)
-	{
+	if (GuideLineTexture) {
 		glDeleteTextures(1, &GuideLineTexture);
 	}
 
-	if (programObject)
-	{
+	if (programObject) {
 		glDeleteProgram(programObject);
 	}
 
-	if(calpointer!=nullptr)
-	{
+	if(calpointer!=nullptr) {
 		delete calpointer;
 		calpointer=nullptr;
 	}
@@ -52,7 +48,7 @@ int GuideLine::GuideLineInit()
 		-1,
 		-0.3
 	};
-	float groupSeq[9 * 2]={
+	float groupSeq[9 * 2]= {
 		0.0, 0.25,
 		0.3,0.55,
 		0.6,0.85,
@@ -62,39 +58,41 @@ int GuideLine::GuideLineInit()
 		1.8,2.05,
 		2.1,2.35,
 		0,0//background
-    };
-    
-    float tickLength[9] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+	};
 
-    dynamic_para_t GUIDELINE_PARA={
-        0,
-        0,
-        3.5,
-        0.01,
-        0,
-        10
-    };
+	float tickLength[9] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+	dynamic_para_t GUIDELINE_PARA= {
+		0,
+		0,
+		3.5,
+		0.01,
+		0,
+		10
+	};
 
 	info.width=glscreen_width;
 	info.height=glscreen_height;
 	info.startX=0;
 	info.startY=0;
-    info.camparam=camparam;
-    info.groupSeq=groupSeq;
+	info.camparam=camparam;
+	info.groupSeq=groupSeq;
 	info.tickLength=tickLength;
 	info.GUIDELINE_PARA=GUIDELINE_PARA;
 	int ret=0;
 	ret=calpointer->Init(info);
-	if (ret!=0)
-	{	
-		//printf("GuideLine Calculator Initialize Failed\n");
+	if (ret!=0) {
+#ifdef gl_DEBUG
+		ALOGE("GuideLine Calculator Initialize Failed\n");
+#endif
 		return ret;
 	}
 
 	ret=LoadProgram();
-	if (ret!=0)
-	{	
-		//printf("GuideLine LoadProgram Failed\n");
+	if (ret!=0) {
+#ifdef gl_DEBUG
+		ALOGE("GuideLine LoadProgram Failed\n");
+#endif
 		return ret;
 	}
 	GenTexture();
@@ -110,14 +108,12 @@ int GuideLine::GuideLineRender(guidelineinfo infos)
 	glViewport(info.startX,info.startY,info.width,info.height);
 
 	ret=calpointer->Update(info);
-	if (ret!=0)
-	{
+	if (ret!=0) {
 		return ret;
 	}
 	glUniform1i(glGetUniformLocation(programObject,"tex"),0);
 	const char* Attribs[2] = { "myVert","myUV" };
-	for(int i=0;i<2;i++)
-	{
+	for(int i=0; i<2; i++) {
 		glBindAttribLocation(programObject, i, Attribs[i]);
 	}
 
@@ -133,8 +129,7 @@ int GuideLine::GuideLineRender(guidelineinfo infos)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	for (int i = 0; i < 8; i++)
-	{
+	for (int i = 0; i < 8; i++) {
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, calpointer->LineTex_width, calpointer->LineTex_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, calpointer->pTexData[i]);
 		RenderGroupLines(i);
 	}
@@ -153,8 +148,7 @@ void GuideLine::GuideLineHide()
 
 	glUniform1i(glGetUniformLocation(programObject,"tex"),0);
 	const char* Attribs[2] = { "myVert","myUV" };
-	for(int i=0;i<2;i++)
-	{
+	for(int i=0; i<2; i++) {
 		glBindAttribLocation(programObject, i, Attribs[i]);
 	}
 	glUseProgram(programObject);
@@ -210,8 +204,7 @@ int GuideLine::LoadProgram()
 	}";
 	int ret=0;
 	programObject = LoadShaders(vertexShader,fragmentShader);
-	if (programObject==-1)
-	{
+	if (programObject==-1) {
 		return GUIDELINE_ERROR_LOADPROGRAM_FAILED;
 	}
 	return ret;
@@ -232,14 +225,17 @@ GLuint GuideLine::LoadShaders(const char* vertexShaderSrc,const char* fragmentSh
 	glShaderSource(vertex_shader, 1, (const char**)&vertexShaderSrc, NULL);
 	glCompileShader(vertex_shader);
 	glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &ShaderCompiled);
-	if (!ShaderCompiled)
-	{
-		printf("vertex shader compile failded!!!!\n");
+	if (!ShaderCompiled) {
+#ifdef gl_DEBUG
+		ALOGE("vertex shader compile failded!!!!\n");
+#endif
 		int i32InfoLogLength, i32CharsWritten;
 		glGetShaderiv(vertex_shader, GL_INFO_LOG_LENGTH, &i32InfoLogLength);
 		char* pszInfoLog = (char*)malloc(i32InfoLogLength);
-	        	glGetShaderInfoLog(vertex_shader, i32InfoLogLength, &i32CharsWritten, pszInfoLog);
-	        	printf("Vert error:\n");
+		glGetShaderInfoLog(vertex_shader, i32InfoLogLength, &i32CharsWritten, pszInfoLog);
+#ifdef gl_DEBUG
+		ALOGE("Vert error:\n");
+#endif
 		free(pszInfoLog);
 		glDeleteShader(vertex_shader);
 		return -1;
@@ -251,14 +247,17 @@ GLuint GuideLine::LoadShaders(const char* vertexShaderSrc,const char* fragmentSh
 	glShaderSource(fragment_shader, 1, (const char**)&fragmentShaderSrc, NULL);
 	glCompileShader(fragment_shader);
 	glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &ShaderCompiled);
-	if (!ShaderCompiled)
-	{
-		printf("frag shader compile failded!!!!\n");
+	if (!ShaderCompiled) {
+#ifdef gl_DEBUG
+		ALOGE("frag shader compile failded!!!!\n");
+#endif
 		int i32InfoLogLength, i32CharsWritten;
 		glGetShaderiv(fragment_shader, GL_INFO_LOG_LENGTH, &i32InfoLogLength);
 		char* pszInfoLog = (char*)malloc(i32InfoLogLength);
-	        	glGetShaderInfoLog(fragment_shader, i32InfoLogLength, &i32CharsWritten, pszInfoLog);
-	        	printf("Frag error:\n");
+		glGetShaderInfoLog(fragment_shader, i32InfoLogLength, &i32CharsWritten, pszInfoLog);
+#ifdef gl_DEBUG
+		ALOGE("Frag error:\n");
+#endif
 		free(pszInfoLog);
 		glDeleteShader(fragment_shader);
 		return -1;
@@ -268,23 +267,21 @@ GLuint GuideLine::LoadShaders(const char* vertexShaderSrc,const char* fragmentSh
 
 	glLinkProgram(programObjectTmp);
 	glGetProgramiv(programObjectTmp, GL_LINK_STATUS, &linked);
-	if (!linked)
-	{
+	if (!linked) {
 		GLint infoLen = 0;
 		glGetProgramiv(programObjectTmp, GL_INFO_LOG_LENGTH, &infoLen);
-		if (infoLen > 1)
-		{
+		if (infoLen > 1) {
 			char* infoLog = (char*)malloc(sizeof(char) * infoLen);
 
 			glGetProgramInfoLog(programObjectTmp, infoLen, NULL, infoLog);
-
-			printf("PROGRAM: %s\n", infoLog);
+#ifdef gl_DEBUG
+			ALOGE("PROGRAM: %s\n", infoLog);
+#endif
 			free(infoLog);
 		}
 		glDeleteProgram(programObjectTmp);
 		return -1;
 	}
-
 
 	return programObjectTmp;
 }

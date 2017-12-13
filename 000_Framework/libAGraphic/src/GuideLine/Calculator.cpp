@@ -51,13 +51,17 @@ int Calculator::Init(guidelineinfo info)
 
 	if (vechicleInfo.wheelBase<0 || vechicleInfo.wheelBase >GUIDELINE_MAXWHEELBASE)
 	{
-		//printf("wheelbase out of range\n");
+#ifdef gl_DEBUG
+		ALOGE("wheelbase out of range\n");
+#endif
 		return GUIDELINE_ERROR_WHEELBASEOUTOFRANGE;
 	}
 
 	if (vechicleInfo.swaDeltaAngle <-GUIDELINE_MAXANGEL || vechicleInfo.swaDeltaAngle>GUIDELINE_MAXANGEL)
 	{
-		//printf("Angel out of range\n");
+#ifdef gl_DEBUG
+		ALOGE("Angel out of range\n");
+#endif
 		return GUIDELINE_ERROR_ANGELOUTOFRANGE;
 	}
 
@@ -89,13 +93,17 @@ int Calculator::Update(guidelineinfo info)
 	vechicleInfo.swaDeltaAngle = info.GUIDELINE_PARA.angle/2;
 	if (vechicleInfo.wheelBase<0 || vechicleInfo.wheelBase >10)
 	{
-		//printf("wheelbase out of range\n");
+#ifdef gl_DEBUG
+		ALOGE("wheelbase out of range\n");
+#endif
 		return GUIDELINE_ERROR_WHEELBASEOUTOFRANGE;
 	}
 
 	if (vechicleInfo.swaDeltaAngle <-45 || vechicleInfo.swaDeltaAngle>45)
 	{
-		//printf("Angel out of range\n");
+#ifdef gl_DEBUG
+		ALOGE("Angel out of range\n");
+#endif
 		return GUIDELINE_ERROR_ANGELOUTOFRANGE;
 	}
 	InitTrajectory(vechicleInfo);
@@ -133,7 +141,6 @@ void Calculator::CalTrajectoryParam()
 			tmpCenter = vehicle.wheelBase / tan(m_fFrontWheelAngle);
 			m_fTurningCenterX = tmpCenter;
 			m_fTurningCenterY = 0.0;
-
 		}
 		else
 		{
@@ -148,7 +155,9 @@ void Calculator::CalTrajectoryParam()
 	if (m_fInvRadius > 10.0)
 	{
 		m_bTurnRadiusSmall = true;
-		printf("radius is too small(less than 0.1 meter);\n");
+#ifdef gl_DEBUG
+		ALOGE("radius is too small(less than 0.1 meter);\n");
+#endif
 		return;
 	}
 
@@ -656,7 +665,6 @@ void Calculator::CalDistLineScreenPos(float dist, int ptNum, float* pData)
 	{
 		for (int i = 0; i < ptNum; i++)
 		{
-
 			CalScreenPos(curX, curY, pData[elemIndex], pData[elemIndex + 1]);
 			CalScreenPos(curX, curYS, pData[elemIndex + 2], pData[elemIndex + 3]);
 			elemIndex += 4;
