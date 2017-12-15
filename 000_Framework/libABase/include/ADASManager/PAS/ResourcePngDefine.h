@@ -104,6 +104,8 @@ namespace ADASManager {
 
 #define PDC_CAR                             "pdc_fiesta"
 
+#define PDC_ROAD                            "pdc_road"
+
 #define PDC_BACKGROUND                      "popup_default"
 
 } // namespace ADASManager

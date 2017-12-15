@@ -12,6 +12,7 @@
 #include "ADASManager/PAS/RearRightInside.h"
 
 #include "ADASManager/PAS/Car.h"
+#include "ADASManager/PAS/Road.h"
 
 namespace Harman {
 namespace Adas {
@@ -55,6 +56,7 @@ static BYTE* MallocBufferBackGround()
 }
 
 BYTE* PasManager::m_pHasCompoundedBackGround = MallocBufferBackGround();
+BYTE* PasManager::m_pRoadBuffer = m_pHasCompoundedBackGround;
 
 static BYTE* MallocBufferCar()
 {
@@ -118,6 +120,9 @@ PasManager::PasManager()
 
     m_pCar = new Car("Car", m_pCarBuffer);
     m_pCar->CompoundArea();
+
+    m_pRoad = new Road("Road", m_pRoadBuffer);
+    m_pRoad->CompoundArea();
 }
 
 PasManager::~PasManager()
@@ -165,6 +170,11 @@ PasManager::~PasManager()
     if(nullptr != m_pCar){
         delete m_pCar;
         m_pCar = nullptr;
+    }
+
+    if(nullptr != m_pRoad){
+        delete m_pRoad;
+        m_pRoad = nullptr;
     }
 
     if(nullptr != m_pHasCompoundedArea){

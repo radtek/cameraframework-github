@@ -42,6 +42,7 @@ public:
     RadarSenser* m_pRearRightInside = nullptr;
 
     ColorBlock* m_pCar = nullptr;
+    ColorBlock* m_pRoad = nullptr;
 
     static PasManager* m_pInstance;
 
@@ -50,6 +51,8 @@ public:
     static BYTE* m_pHasCompoundedBackGround;
 
     static BYTE* m_pCarBuffer;
+
+    static BYTE* m_pRoadBuffer;
 };
 
 } // namespace ADASManager
